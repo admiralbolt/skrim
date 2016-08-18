@@ -1,9 +1,9 @@
-package yourmod.skrim.item;
+package avi.mod.skrim.items;
 
 import net.minecraft.item.Item;
 
 public interface ItemModelProvider {
 
-	void registerItemModel(Item item);
+	public void registerItemModel(Item item);
 
 }

@@ -1,8 +1,8 @@
-package yourmod.skrim.item;
+package avi.mod.skrim.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import yourmod.skrim.TutorialMod;
+import avi.mod.skrim.Skrim;
 
 public class ItemBase extends Item implements ItemModelProvider {
 
@@ -10,14 +10,14 @@ public class ItemBase extends Item implements ItemModelProvider {
 
   public ItemBase(String name) {
     this.name = name;
-    setUnlocalizedName(name);
-    setRegistryName(name);
-    //setCreativeTab(TutorialMod.creativeTab); //this is commented out, because we don't have our creative-tab yet.
+    this.setUnlocalizedName(name);
+    this.setRegistryName(name);
+    setCreativeTab(Skrim.creativeTab);
   }
 
   @Override
   public void registerItemModel(Item item) {
-    TutorialMod.proxy.registerItemRenderer(this, 0, name);
+    Skrim.proxy.registerItemRenderer(this, 0, name);
   }
 
   @Override
