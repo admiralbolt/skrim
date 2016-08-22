@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.handlers.CustomKeyHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
-import avi.mod.skrim.skills.mining.MiningHandler;
 
 public class ClientProxy extends CommonProxy {
 
@@ -19,7 +18,6 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
-		MinecraftForge.EVENT_BUS.register(new MiningHandler());
 		// MinecraftForge.EVENT_BUS.register(new CustomKeyHandler());
 	}
 

@@ -1,5 +1,8 @@
 package avi.mod.skrim.skills;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -9,6 +12,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraft.util.ResourceLocation;
 
 public class Skill implements ISkill {
 
@@ -17,6 +21,8 @@ public class Skill implements ISkill {
   public int level;
   public int xp;
   public int nextLevelTotal;
+  public List<String> tooltip = new ArrayList<String>();
+  public ResourceLocation iconTexture;
 
   /**
    * Optionally load a skill with the set level & xp
@@ -52,6 +58,11 @@ public class Skill implements ISkill {
     return this.nextLevelTotal - this.xp;
   }
 
+  public double getPercentToNext() {
+	  int prevLevelXp = (((this.level - 1) * (this.level - 1) + this.level - 1) / 2) * 1000;
+	  return ((double) (this.xp - prevLevelXp)) / (this.nextLevelTotal - prevLevelXp);
+  }
+
   public boolean canLevelUp() {
     return (this.xp >= this.nextLevelTotal);
   }
@@ -63,11 +74,21 @@ public class Skill implements ISkill {
       this.setNextLevelTotal();
     }
   }
-  
+
   public void overwrite(Skill skill) {
 	 this.xp = skill.xp;
 	 this.level = skill.level;
 	 this.setNextLevelTotal();
+  }
+
+  public List<String> getToolTip() {
+	  List<String> tooltip = new ArrayList<String>();
+	  tooltip.add("Tooltip for " + this.name);
+	  return tooltip;
+  }
+
+  public ResourceLocation getIconTexture() {
+    return this.iconTexture;
   }
 
   public void setBuffs(EntityPlayer player) {}

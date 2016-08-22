@@ -1,7 +1,10 @@
 package avi.mod.skrim.skills;
 
+import java.util.List;
+
 import avi.mod.skrim.skills.mining.SkillMining;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 
 public interface ISkill {
 
@@ -10,5 +13,7 @@ public interface ISkill {
   boolean canLevelUp();
   void levelUp();
   void setBuffs(EntityPlayer player);
+  List<String> getToolTip();
+  ResourceLocation getIconTexture();
 
 }
