@@ -65,11 +65,12 @@ public class SkillMining extends Skill implements ISkillMining {
 		"nether_brick_stairs",
 		"brick_stairs",
 		"sandstone_stairs",
+		"red_sandstone_stairs",
 		"purpur_block",
 		"purpur_pillar",
 		"iron_door"
 	));
-	
+
 	public static List<String> validFortuneOres = new ArrayList<String>(Arrays.asList(
 		"coal_ore",
 		"lapis_lazuli_ore",
@@ -112,7 +113,6 @@ public class SkillMining extends Skill implements ISkillMining {
 	public List<String> getToolTip() {
 		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Mining provides these benefits:");
 		tooltip.add("§a+" + fmt.format(this.getSpeedBonus()) + "§r mining speed bonus.");
 		tooltip.add("§a" + (this.getFortuneChance() * 100) + "%§r chance to §a" + this.getFortuneString() + "§r ore drops.");
 		tooltip.add("   This bonus stacks with fortune.");
@@ -137,7 +137,7 @@ public class SkillMining extends Skill implements ISkillMining {
 			|| block instanceof BlockRedSandstone
 			) ? true : false;
 	}
-	
+
 	private boolean validFortuneTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String blockName = Utils.snakeCase(block.getLocalizedName());
@@ -177,7 +177,7 @@ public class SkillMining extends Skill implements ISkillMining {
 		IBlockState state = event.getState();
 		if (this.validFortuneTarget(state)) {
 			EntityPlayer player = event.getHarvester();
-			if (player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+			if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
 				SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
 				double random = Math.random();
 				System.out.println("random number: " + random + " chance: " + mining.getFortuneChance());

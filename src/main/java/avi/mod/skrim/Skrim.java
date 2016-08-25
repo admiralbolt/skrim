@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
 @Mod(modid = Skrim.modId, name = Skrim.name, version = Skrim.version, acceptedMinecraftVersions = "[1.10.2]")
 public class Skrim {
@@ -40,6 +42,12 @@ public class Skrim {
 	public void postInit(FMLPostInitializationEvent event) {
 		System.out.println(this.name + " is in postinit.");
 		this.proxy.postInit(event);
+	}
+	
+	@Mod.EventHandler
+	public void onItemSmelted(PlayerEvent.ItemSmeltedEvent event) {
+		System.out.println("In skrim main handling.");
+		System.out.println(event.smelting);
 	}
 
 }

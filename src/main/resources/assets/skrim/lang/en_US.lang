@@ -1,0 +1,17 @@
+item.overwrite_porkchop.name=Cooked Porkchop
+item.overwrite_baked_potato.name=Baked Potato
+item.overwrite_beetroot_soup.name=Beetroot Soup
+item.overwrite_bread.name=Bread
+item.overwrite_chicken.name=Cooked Chicken
+item.overwrite_fish.name=Cooked Fish
+item.overwrite_mutton.name=Cooked Mutton
+item.overwrite_salmon.name=Cooked Salmon
+item.overwrite_cookie.name=Cookie
+item.overwrite_mushroom_stew.name=Mushroom Stew
+item.overwrite_pumpkin_pie.name=Pumpkin Pie
+item.overwrite_rabbit_stew.name=Rabbit Stew
+item.overwrite_steak.name=Steak
+item.overwrite_rabbit.name=Cooked Rabbit
+
+
+item.tux.name=Tux
