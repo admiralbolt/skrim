@@ -10,6 +10,7 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.inventory.IInventory;
@@ -106,9 +107,10 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
 	@Override
 	public List<String> getToolTip() {
+		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Your cooking provides §a+" + (int)(extraFood(this.level) * 100) + "%§r food.");
-		tooltip.add("Your cooking provides §a+" + (int)(extraSaturation(this.level) * 100) + "%§r saturation");
+		tooltip.add("Your cooking provides §a+" + fmt.format(extraFood(this.level) * 100) + "%§r food.");
+		tooltip.add("Your cooking provides §a+" + fmt.format(extraSaturation(this.level) * 100) + "%§r saturation");
 		tooltip.add("Shift clicking crafted items provides §aregular and modded§r food.");
 		tooltip.add("§eWe swear this is a feature and not a bug...§r");
 		if (overFull(this.level)) {
@@ -161,7 +163,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
 
 				if (stack.stackSize == 0) {
-					int newStackSize = (event instanceof ItemSmeltedEvent) ? this.lastItemNumber : 1;
+					int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
 					ItemStack newStack = new ItemStack(replaceFood, newStackSize);
 					NBTTagCompound newCompound = new NBTTagCompound();
 					newCompound.setInteger("level", cooking.level);
@@ -170,9 +172,9 @@ public class SkillCooking extends Skill implements ISkillCooking {
 					player.inventory.addItemStackToInventory(newStack);
 				}
 
-				if (player instanceof EntityPlayerSP) {
-					this.xp += this.getXp(foodName);
-					this.levelUp();
+				if (player instanceof EntityPlayerMP) {
+					cooking.xp += this.getXp(foodName);
+					cooking.levelUp((EntityPlayerMP) player);
 				}
 			}
 		}
@@ -198,7 +200,11 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			Slot output = please.getSlot(2);
 			ItemStack yas = output.getStack();
 			if (yas != null) {
-				this.lastItemNumber = yas.stackSize;
+				EntityPlayer player = event.getEntityPlayer();
+				if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
+					SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+					cooking.lastItemNumber = yas.stackSize;
+				}
 			}
 		}
 	}

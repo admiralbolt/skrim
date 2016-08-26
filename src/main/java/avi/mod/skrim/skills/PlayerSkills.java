@@ -5,9 +5,13 @@ import avi.mod.skrim.skills.cooking.CookingProvider;
 import avi.mod.skrim.skills.digging.DiggingProvider;
 import avi.mod.skrim.skills.fishing.FishingProvider;
 import avi.mod.skrim.skills.farming.FarmingProvider;
+import avi.mod.skrim.skills.melee.MeleeProvider;
 import avi.mod.skrim.skills.mining.MiningProvider;
+import avi.mod.skrim.skills.ranged.RangedProvider;
 import avi.mod.skrim.skills.smelting.SmeltingProvider;
 import avi.mod.skrim.skills.woodcutting.WoodcuttingProvider;
+import avi.mod.skrim.skills.demolition.DemolitionProvider;
+import avi.mod.skrim.skills.defense.DefenseProvider;
 
 public class PlayerSkills {
 
@@ -20,6 +24,10 @@ public class PlayerSkills {
     CookingProvider.register();
     SmeltingProvider.register();
     FishingProvider.register();
+    DemolitionProvider.register();
+    MeleeProvider.register();
+    RangedProvider.register();
+    DefenseProvider.register();
   }
 
 }

@@ -27,6 +27,7 @@ import net.minecraft.block.BlockRedSandstone;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -147,17 +148,22 @@ public class SkillMining extends Skill implements ISkillMining {
 	@SubscribeEvent
 	public void onBlockBreak(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
-		IBlockState state = event.getState();
-		Block target = state.getBlock();
-		String blockName;
-		if (target instanceof BlockStone) {
-			blockName = state.getValue(BlockStone.VARIANT).toString();
-		} else {
-			blockName = Utils.snakeCase(target.getLocalizedName());
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+			IBlockState state = event.getState();
+			Block target = state.getBlock();
+			String blockName;
+			if (target instanceof BlockStone) {
+				blockName = state.getValue(BlockStone.VARIANT).toString();
+			} else {
+				blockName = Utils.snakeCase(target.getLocalizedName());
+			}
+			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+			int addXp = this.getXp(blockName);
+			if (addXp > 0) {
+				mining.xp += this.getXp(blockName);
+				mining.levelUp((EntityPlayerMP) player);
+			}
 		}
-		this.xp += this.getXp(blockName);
-		this.levelUp();
-		// System.out.println("name: " + Utils.snakeCase(target.getLocalizedName()) + ", class: " + target.getClass());
 	}
 
 	@SubscribeEvent
@@ -167,7 +173,7 @@ public class SkillMining extends Skill implements ISkillMining {
 			EntityPlayer player = event.getEntityPlayer();
 			if (player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
 				SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
-				event.setNewSpeed((float) (event.getOriginalSpeed() + this.getSpeedBonus()));
+				event.setNewSpeed((float) (event.getOriginalSpeed() + mining.getSpeedBonus()));
 			}
 		}
 	}
@@ -180,9 +186,7 @@ public class SkillMining extends Skill implements ISkillMining {
 			if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
 				SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
 				double random = Math.random();
-				System.out.println("random number: " + random + " chance: " + mining.getFortuneChance());
 				if (random < mining.getFortuneChance()) {
-					System.out.println("Fortune activated!");
 					List<ItemStack> drops = event.getDrops();
 					ItemStack copyDrop = drops.get(0);
 					// Let's not loop infinitely, that seems like a good idea.

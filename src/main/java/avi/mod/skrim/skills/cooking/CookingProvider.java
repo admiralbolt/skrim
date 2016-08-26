@@ -1,25 +1,17 @@
 package avi.mod.skrim.skills.cooking;
 
-import java.util.Map;
-import java.util.concurrent.Callable;
-
-import com.sun.istack.internal.Nullable;
-import avi.mod.skrim.Skrim;
-import avi.mod.skrim.skills.SkillProvider;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import avi.mod.skrim.Skrim;
+import avi.mod.skrim.skills.SkillProvider;
 
 public class CookingProvider {
 

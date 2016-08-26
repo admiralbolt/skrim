@@ -3,8 +3,12 @@ package avi.mod.skrim.skills;
 import java.util.ArrayList;
 import java.util.List;
 
+import avi.mod.skrim.network.SkillPacket;
+import avi.mod.skrim.network.SkrimPacketHandler;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -17,7 +21,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class Skill implements ISkill {
 
-  private Minecraft mc;
+  // private Minecraft mc;
   public String name;
   public int level;
   public int xp;
@@ -29,7 +33,6 @@ public class Skill implements ISkill {
    * Optionally load a skill with the set level & xp
    */
   public Skill(String name, int level, int xp) {
-    this.mc = Minecraft.getMinecraft();
     this.name = name;
     this.level = level;
     this.xp = xp;
@@ -55,25 +58,34 @@ public class Skill implements ISkill {
     this.nextLevelTotal = 1000 * ((this.level * this.level + this.level) / 2);
   }
 
+  public int getNextLevelTotal() {
+    return 1000 * ((this.level * this.level + this.level) / 2);
+  }
+
   public int getXpNeeded() {
     return this.nextLevelTotal - this.xp;
   }
 
   public double getPercentToNext() {
 	  int prevLevelXp = (((this.level - 1) * (this.level - 1) + this.level - 1) / 2) * 1000;
-	  return ((double) (this.xp - prevLevelXp)) / (this.nextLevelTotal - prevLevelXp);
+    if (this.level > 1) {
+	     System.out.println("this.name: " + this.name + ", this.level: " + this.level + ", prevXp: " + prevLevelXp + ", nextTotaL: " + this.getNextLevelTotal());
+    }
+	  return ((double) (this.xp - prevLevelXp)) / (this.getNextLevelTotal() - prevLevelXp);
   }
 
   public boolean canLevelUp() {
     return (this.xp >= this.nextLevelTotal);
   }
 
-  public void levelUp() {
+  public void levelUp(EntityPlayerMP player) {
     if (this.canLevelUp()) {
       this.level++;
-      this.mc.thePlayer.sendChatMessage("Level up! " + this.name + " is now level " + this.level);
+      // this.mc.thePlayer.sendChatMessage("Level up! " + this.name + " is now level " + this.level);
       this.setNextLevelTotal();
     }
+    System.out.println("Creating packet in level up...");
+    SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
   }
 
   public void overwrite(Skill skill) {
@@ -91,7 +103,5 @@ public class Skill implements ISkill {
   public ResourceLocation getIconTexture() {
     return this.iconTexture;
   }
-
-  public void setBuffs(EntityPlayer player) {}
 
 }

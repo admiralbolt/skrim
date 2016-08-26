@@ -9,16 +9,19 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.handlers.CustomKeyHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
+import avi.mod.skrim.network.SkrimPacketHandler;
 
 public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void init(FMLInitializationEvent event) {
+		SkrimPacketHandler.registerSkillPackets();
 		super.init(event);
+		System.out.println("client proxy is registering skill packets");
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
-		// MinecraftForge.EVENT_BUS.register(new CustomKeyHandler());
 	}
 
 	@Override

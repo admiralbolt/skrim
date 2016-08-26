@@ -43,11 +43,5 @@ public class Skrim {
 		System.out.println(this.name + " is in postinit.");
 		this.proxy.postInit(event);
 	}
-	
-	@Mod.EventHandler
-	public void onItemSmelted(PlayerEvent.ItemSmeltedEvent event) {
-		System.out.println("In skrim main handling.");
-		System.out.println(event.smelting);
-	}
 
 }

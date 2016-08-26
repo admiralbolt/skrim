@@ -44,7 +44,7 @@ public class SkillScreen extends GuiScreen {
   /**
    * Max scroll position.
    */
-  private int maxScroll = 1000;
+  private int maxScroll = 340;
   private int scrollBarWidth = 6;
   private int scrollBarHeight = 40;
   private int scrollPaddingLeft = 5;
@@ -59,8 +59,8 @@ public class SkillScreen extends GuiScreen {
   private int skillPaddingDesc = 5;
   private int skillPaddingTop = 10 + this.dividerPadding;
   private int levelTextLeft;
-  
-  
+
+
 
   private int levelBarHeight = 9;
   private int levelBarWidth = 176 - this.paddingRight - this.scrollBarWidth - this.scrollPaddingLeft - this.skillPaddingLeft - this.skillHeight - this.skillPaddingDesc;
@@ -92,7 +92,6 @@ public class SkillScreen extends GuiScreen {
     this.drawTexturedModalRect(this.left, this.top, 0, 0, 176, 176);
     this.drawScrollBar();
     this.drawSkills(mouseX, mouseY);
-
     super.drawScreen(mouseX, mouseY, partialTicks);
   }
 
@@ -154,11 +153,10 @@ public class SkillScreen extends GuiScreen {
     int levelBottom = levelTop + this.levelBarHeight;
     if (shouldRender(levelTop, levelBottom)) {
       this.drawRect(levelLeft, levelTop, levelRight, levelBottom, this.levelBarColor);
-      String levelText = skill.xp + " / " + skill.nextLevelTotal;
+      String levelText = skill.xp + " / " + skill.getNextLevelTotal();
       int levelTextWidth = this.mc.fontRendererObj.getStringWidth(levelText);
       int levelTextLeft = levelLeft + (int) (this.levelBarWidth / 2) - (int) ((double) levelTextWidth / 2);
       this.mc.fontRendererObj.drawString(levelText, levelTextLeft, levelTop + 1, this.levelBarTextColor);
-      // this.drawHorizontalLine(left, left + this.levelBarWidth, levelBottom + this.dividerPadding, this.dividerColor);
     }
   }
 

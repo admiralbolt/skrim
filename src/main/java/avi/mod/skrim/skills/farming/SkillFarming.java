@@ -17,6 +17,7 @@ import net.minecraft.block.BlockStem;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -71,23 +72,11 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		}
 	}
 
-	private String getFortuneString() {
-		if (this.level >= 75) {
-			return "quintuple";
-		} else if (this.level >= 50) {
-			return "quadruple";
-		} else if (this.level >= 25) {
-			return "triple";
-		} else {
-			return "double";
-		}
-	}
-
 	@Override
 	public List<String> getToolTip() {
 		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + (this.getFortuneChance() * 100) + "%§r chance to §a" + this.getFortuneString() + "§r harvest drops.");
+		tooltip.add("§a" + (this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r harvest drops.");
 		tooltip.add("   This bonus stacks with fortune.");
 		if (this.getGrowthStage() > 0) {
 			tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
@@ -131,10 +120,16 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	@SubscribeEvent
 	public void onBlockBreak(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
-		IBlockState state = event.getState();
-		Block target = state.getBlock();
-		this.xp += this.getXp(Utils.getBlockName(target));
-		this.levelUp();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			Block target = state.getBlock();
+			int addXp = this.getXp(Utils.getBlockName(target));
+			if (addXp > 0) {
+				farming.xp += this.getXp(Utils.getBlockName(target));
+				farming.levelUp((EntityPlayerMP) player);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -143,7 +138,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		if (this.validFortuneTarget(state)) {
 			Block block = state.getBlock();
 			EntityPlayer player = event.getHarvester();
-			if (player != null && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 				SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 				double random = Math.random();
 				if (random < farming.getFortuneChance()) {
@@ -155,8 +150,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
               drops.add(drops.get(i).copy());
             }
           }
-          this.xp += 100; // And 100 xp!
-          this.levelUp();
+          farming.xp += 100; // And 100 xp!
+          farming.levelUp((EntityPlayerMP) player);
 				}
 			}
 		}

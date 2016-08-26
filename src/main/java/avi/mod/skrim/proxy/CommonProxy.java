@@ -5,8 +5,11 @@ import avi.mod.skrim.Config;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.capabilities.ModCapabilities;
+import avi.mod.skrim.handlers.GuiEventHandler;
+import avi.mod.skrim.handlers.JoinWorldHandler;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.GuiHandler;
+import avi.mod.skrim.network.SkrimPacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +32,7 @@ public class CommonProxy {
 		ModItems.createItems();
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
-		// ModPackets.createPackets();
+		MinecraftForge.EVENT_BUS.register(new JoinWorldHandler());
 	}
 
 	public void init(FMLInitializationEvent event) {

@@ -17,6 +17,7 @@ import net.minecraft.block.BlockWoodSlab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -122,19 +123,23 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		IBlockState state = event.getState();
 		Block target = state.getBlock();
 		if (target instanceof BlockOldLog || target instanceof BlockNewLog) {
-			if (Math.random() < this.getHewingChance()) {
-				BlockPos start = event.getPos();
-				this.hewTree(event.getWorld(), start);
+			EntityPlayer player = event.getPlayer();
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
+				if (Math.random() < this.getHewingChance()) {
+					BlockPos start = event.getPos();
+					this.hewTree(event.getWorld(), woodcutting, start);
+				}
+				woodcutting.xp += this.getXp(this.getWoodName(state));
+				woodcutting.levelUp((EntityPlayerMP) player);
 			}
-			this.xp += this.getXp(this.getWoodName(state));
-			this.levelUp();
 		}
 	}
 
-	public void hewTree(World world, BlockPos pos) {
+	public void hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
 		Block tree = state.getBlock();
-		this.xp += this.getXp(this.getWoodName(state));
+		woodcutting.xp += this.getXp(this.getWoodName(state));
 		world.destroyBlock(pos, true);
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -143,7 +148,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 					IBlockState targetState = world.getBlockState(targetPos);
 					Block targetBlock = targetState.getBlock();
 					if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-						this.hewTree(world, targetPos);
+						this.hewTree(world, woodcutting, targetPos);
 					}
 				}
 			}
@@ -157,7 +162,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			EntityPlayer player = event.getEntityPlayer();
 			if (player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
-				event.setNewSpeed((float) (event.getOriginalSpeed() + this.getSpeedBonus()));
+				event.setNewSpeed((float) (event.getOriginalSpeed() + woodcutting.getSpeedBonus()));
 			}
 		}
 	}

@@ -17,7 +17,6 @@ public class SkillStorage<T> implements IStorage<T> {
   }
 
   public void readNBT(Capability<T> capability, T instance, EnumFacing side, NBTBase nbt) {
-    System.out.println("Loading NBT...");
     NBTTagCompound compound = (NBTTagCompound) nbt;
     final Skill loadSkill = (Skill) instance;
     loadSkill.xp = compound.getInteger(loadSkill.name + "-xp");

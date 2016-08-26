@@ -2,7 +2,6 @@ package avi.mod.skrim.skills.fishing;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,27 +9,30 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
 
 public class SkillFishing extends Skill implements ISkillFishing {
 
@@ -96,17 +98,17 @@ public class SkillFishing extends Skill implements ISkillFishing {
 	private boolean isValidFish(EntityItem item) {
 		return this.canCatch && this.xpMap.containsKey(Utils.snakeCase(item.getName()));
 	}
-	
+
 	private int randomXPOrb() {
 		int min = this.getMinXP();
 		int max = this.getMaxXP();
 		return xpRand.nextInt(max - min) + min;
 	}
-	
+
 	private int getMinXP() {
 		return (int) (this.level * 0.3) + 1;
 	}
-	
+
 	private int getMaxXP() {
 		return (int) (this.level * 0.6) + 2;
 	}
@@ -127,29 +129,30 @@ public class SkillFishing extends Skill implements ISkillFishing {
 			Item item = stack.getItem();
 			if (item != null && item == Items.FISHING_ROD) {
 				EntityPlayer player = event.getEntityPlayer();
-				Entity entity = event.getEntity();
-				EntityFishHook fishHook = player.fishEntity;
-				if (fishHook != null) {
-					if (!fishHook.isAirBorne) {
-						if (fishHook.onGround) {
-							if (this.canGrapple()) {
-								MinecraftServer server = Minecraft.getMinecraft().getIntegratedServer();
-								ICommandManager cm = server.getCommandManager();
-								BlockPos pos = fishHook.getPosition();
-								cm.executeCommand(server, "/tp @p " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+				if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+					Entity entity = event.getEntity();
+					EntityFishHook fishHook = player.fishEntity;
+					if (fishHook != null) {
+						if (!fishHook.isAirBorne) {
+							final SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
+							if (fishHook.onGround) {
+								if (fishing.canGrapple()) {
+									MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+									ICommandManager cm = server.getCommandManager();
+									BlockPos pos = fishHook.getPosition();
+									cm.executeCommand(server, "/tp " + player.getName() + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+								}
+							} else if (fishHook.isInWater()) {
+								fishing.canCatch = true;
+								new Timer().schedule(
+									new TimerTask() {
+										@Override
+										public void run() {
+											fishing.canCatch = false;
+										}
+									}, 900
+								);
 							}
-						} else if (fishHook.isInWater()) {
-							System.out.println("canCatch = true");
-							this.canCatch = true;
-							new Timer().schedule(
-								new TimerTask() {
-									@Override
-									public void run() {
-										System.out.println("setting canCatch to false.");
-										SkillFishing.this.canCatch = false;
-									}
-								}, 1000
-							);
 						}
 					}
 				}
@@ -159,22 +162,20 @@ public class SkillFishing extends Skill implements ISkillFishing {
 
 	@SubscribeEvent
 	public void onItemPickup(EntityItemPickupEvent event) {
-		System.out.println("Picked up item: " + Utils.snakeCase(event.getItem().getName()));
 		EntityPlayer player = event.getEntityPlayer();
-		if (player != null) {
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
 			EntityItem item = event.getItem();
-			System.out.println("caught item.");
 			if (this.isValidFish(item)) {
+				SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
 				double random = Math.random();
-				System.out.println("'Fish' caught!");
-				this.canCatch = false;
-				this.xp += this.getXp(Utils.snakeCase(event.getItem().getName()));
+				fishing.canCatch = false;
+				fishing.xp += this.getXp(Utils.snakeCase(event.getItem().getName()));
 				player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX, player.posY, player.posZ, this.randomXPOrb()));
 				if (random < this.getTreasureChance()) {
 					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, RandomTreasure.generate()));
-					this.xp += 50; // And an xp bonus!
+					fishing.xp += 50; // And an xp bonus!
 				}
-				this.levelUp();
+				fishing.levelUp((EntityPlayerMP) player);
 			}
 		}
 	}

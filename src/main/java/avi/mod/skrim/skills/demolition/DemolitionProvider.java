@@ -1,4 +1,4 @@
-package avi.mod.skrim.skills.woodcutting;
+package avi.mod.skrim.skills.demolition;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,15 +13,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.skills.SkillProvider;
 
-public class WoodcuttingProvider {
+public class DemolitionProvider {
 
-    @CapabilityInject(ISkillWoodcutting.class)
-    public static final Capability<ISkillWoodcutting> WOODCUTTING = null;
+    @CapabilityInject(ISkillDemolition.class)
+    public static final Capability<ISkillDemolition> DEMOLITION = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillWoodcutting");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillDemolition");
 
     public static void register() {
-      CapabilityManager.INSTANCE.register(ISkillWoodcutting.class, SkillWoodcutting.skillStorage, SkillWoodcutting.class);
+      CapabilityManager.INSTANCE.register(ISkillDemolition.class, SkillDemolition.skillStorage, SkillDemolition.class);
       MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
@@ -31,8 +31,8 @@ public class WoodcuttingProvider {
       public void attachCapabilities(AttachCapabilitiesEvent.Entity event) {
         Entity player = event.getEntity();
         if (player instanceof EntityPlayer) {
-          if (!player.hasCapability(WOODCUTTING, EnumFacing.NORTH)) {
-            event.addCapability(ID, SkillWoodcuttingProvider.instance);
+          if (!player.hasCapability(DEMOLITION, EnumFacing.NORTH)) {
+            event.addCapability(ID, SkillDemolitionProvider.instance);
           }
         }
       }
@@ -47,17 +47,17 @@ public class WoodcuttingProvider {
      * registered with the capabilities, but doing so with separate instances
      * creates issues with duplicate events firing.
      */
-    public static class SkillWoodcuttingProvider extends SkillProvider<ISkillWoodcutting> {
+    public static class SkillDemolitionProvider extends SkillProvider<ISkillDemolition> {
 
-      public static SkillWoodcuttingProvider instance = new SkillWoodcuttingProvider();
+      public static SkillDemolitionProvider instance = new SkillDemolitionProvider();
       private Entity player;
 
-      public SkillWoodcuttingProvider() {
-        this(new SkillWoodcutting());
+      public SkillDemolitionProvider() {
+        this(new SkillDemolition());
       }
 
-      public SkillWoodcuttingProvider(ISkillWoodcutting skill) {
-        super(skill, WOODCUTTING);
+      public SkillDemolitionProvider(ISkillDemolition skill) {
+        super(skill, DEMOLITION);
       }
 
     }

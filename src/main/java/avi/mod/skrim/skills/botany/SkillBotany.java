@@ -11,6 +11,7 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -98,9 +99,16 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
 	@SubscribeEvent
 	public void onBlockBreak(BlockEvent.BreakEvent event) {
-		IBlockState state = event.getState();
-		this.xp += this.getXp(this.getFlowerName(state));
-		this.levelUp();
+		EntityPlayer player = event.getPlayer();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			int addXp = this.getXp(this.getFlowerName(state));
+			if (addXp > 0) {
+				botany.xp += this.getXp(this.getFlowerName(state));
+				botany.levelUp((EntityPlayerMP) player);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -113,7 +121,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			 * DOUBLE Plants are coded weirdly, so currently fortune WON'T apply to them.
 			 * EDIT: Won't apply to some of them...? Why you do dis.
 			 */
-			if (player != null && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 				SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 				double random = Math.random();
 				if (random < botany.getFortuneChance()) {
@@ -125,21 +133,11 @@ public class SkillBotany extends Skill implements ISkillBotany {
               drops.add(drops.get(i).copy());
             }
           }
-          this.xp += 100; // And 100 xp!
-          this.levelUp();
+          botany.xp += 100; // And 100 xp!
+          botany.levelUp((EntityPlayerMP) player);
 				}
 			}
 		}
 	}
-
-	// @SubscribeEvent
-	// public void asdf(ItemSmeltedEvent event) {
-	// 	System.out.println(event.player);
-	// 	System.out.println(event.toString());
-	// 	System.out.println(event.getResult());
-	// 	System.out.println("FUCK YEAH");
-	// 	System.out.println(event.smelting);
-	// 	System.out.println(event.hashCode());
-	// }
 
 }

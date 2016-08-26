@@ -10,6 +10,7 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.inventory.IInventory;
@@ -37,6 +38,7 @@ import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.cooking.SkillCooking;
 import net.minecraftforge.common.ForgeHooks;
 
 public class SkillSmelting extends Skill implements ISkillSmelting {
@@ -85,8 +87,9 @@ public class SkillSmelting extends Skill implements ISkillSmelting {
 
 	@Override
 	public List<String> getToolTip() {
+		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Smelting provides §a+" + (int)(this.extraIngot() * 100) + "%§r items.");
+		tooltip.add("Smelting provides §a+" + fmt.format(this.extraIngot() * 100) + "%§r items.");
 		tooltip.add("Shift clicking crafted items provides §amostly accurate extra items§r.");
 		tooltip.add("§eWe swear this is a bug and not a feature...§r");
 		return tooltip;
@@ -99,20 +102,18 @@ public class SkillSmelting extends Skill implements ISkillSmelting {
 
   @SubscribeEvent
   public void onItemSmelted(ItemSmeltedEvent event) {
-		System.out.println("Smelting size: " + event.smelting.stackSize + ", lastSize: " + this.lastItemNumber);
-		System.out.println("Item smelted: " + event.smelting.getItem() + ", calc_name: " + Utils.snakeCase(event.smelting.getItem().getUnlocalizedName()));
 		if (this.validSmeltingTarget(event.smelting) && event.player != null && event.player.hasCapability(Skills.SMELTING, EnumFacing.NORTH)) {
 			SkillSmelting smelting = (SkillSmelting) event.player.getCapability(Skills.SMELTING, EnumFacing.NORTH);
-			int stackSize = (event.smelting.stackSize == 0) ? this.lastItemNumber : event.smelting.stackSize;
+			int stackSize = (event.smelting.stackSize == 0) ? smelting.lastItemNumber : event.smelting.stackSize;
 			int addItemSize = (int) (smelting.extraIngot() * stackSize); // OOO
-			System.out.println("addItemSize: " + addItemSize);
 			if (addItemSize > 0) {
 				ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
 				event.player.inventory.addItemStackToInventory(newStack);
 			}
-			if (event.player instanceof EntityPlayerSP) {
-				this.xp += stackSize * this.getXp(this.getSmeltingName(event.smelting));
-				this.levelUp();
+			if (event.player instanceof EntityPlayerMP) {
+				// Give xp for bonus items too!
+				smelting.xp += (stackSize + addItemSize) * this.getXp(this.getSmeltingName(event.smelting));
+				smelting.levelUp((EntityPlayerMP) event.player);
 			}
 		}
   }
@@ -120,14 +121,18 @@ public class SkillSmelting extends Skill implements ISkillSmelting {
 	/**
 	 * The hackiest of hacks.  Why does this always happen.
 	 */
-	@SubscribeEvent
-	public void onContainerEvent(PlayerContainerEvent.Open event) {
+  @SubscribeEvent
+  public void onContainerEvent(PlayerContainerEvent.Open event) {
 		Container please = event.getContainer();
 		if (please instanceof ContainerFurnace) {
 			Slot output = please.getSlot(2);
 			ItemStack yas = output.getStack();
 			if (yas != null) {
-				this.lastItemNumber = yas.stackSize;
+				EntityPlayer player = event.getEntityPlayer();
+				if (player != null && player.hasCapability(Skills.SMELTING, EnumFacing.NORTH)) {
+					SkillSmelting smelting = (SkillSmelting) player.getCapability(Skills.SMELTING, EnumFacing.NORTH);
+					smelting.lastItemNumber = yas.stackSize;
+				}
 			}
 		}
 	}

@@ -54,11 +54,11 @@ public class ModItems {
     overwriteRabbitStew = register(new CustomFood("overwrite_rabbit_stew", 10, 1.2F, false).setCreativeTab(Skrim.creativeTab));
     overwriteSteak = register(new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
     overwriteRabbit = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
-    
+
     registerRabbitStew();
   }
 
-  
+
   /**
    * We have to be explicit with our recipes.
    * Which means since we're injecting our own food....
@@ -72,9 +72,8 @@ public class ModItems {
   		for (Item potato: potatoes) {
 				if (rabbit != Items.COOKED_RABBIT || potato != Items.BAKED_POTATO) {
 					for (BlockBush mushroom: mushrooms) {
-						System.out.println("addReciping... with rabbit: " + rabbit + ", potato: " + potato + ", mushrrom: " + mushroom);
 						GameRegistry.addRecipe(
-							new ItemStack(Items.RABBIT_STEW), 
+							new ItemStack(Items.RABBIT_STEW),
 							" a ",
 							"bcd",
 							" e ",

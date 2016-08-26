@@ -13,13 +13,6 @@ public class CustomKeyHandler {
   public void onKeyInput(InputEvent.KeyInputEvent event) {
     Minecraft mc = Minecraft.getMinecraft();
     GameSettings settings = mc.gameSettings;
-    // System.out.println("KeyInputEvent detected");
-    // if (mc.currentScreen instanceof SkillScreen && settings.keyBindInventory.isPressed()) {
-    //   mc.displayGuiScreen(null);
-    //   if (mc.currentScreen == null) {
-    //       mc.setIngameFocus();
-    //   }
-    // }
   }
 
 }

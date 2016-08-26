@@ -15,6 +15,7 @@ import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,9 +23,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.RandomCollection;
 import avi.mod.skrim.Utils;
+import avi.mod.skrim.network.SkillPacket;
+import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
@@ -109,10 +113,17 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	@SubscribeEvent
 	public void onBlockBreak(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
-		IBlockState state = event.getState();
-		Block target = state.getBlock();
-		this.xp += this.getXp(this.getDirtName(state));
-		this.levelUp();
+		System.out.println("player instanceof EntityPlayerMP: " + (player instanceof EntityPlayerMP));
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+			SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			Block target = state.getBlock();
+			int addXp = this.getXp(this.getDirtName(state));
+			if (addXp > 0) {
+				digging.xp += this.getXp(this.getDirtName(state));
+				digging.levelUp((EntityPlayerMP) player);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -122,7 +133,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 			EntityPlayer player = event.getEntityPlayer();
 			if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
 				SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-				event.setNewSpeed((float) (event.getOriginalSpeed() + this.getSpeedBonus()));
+				event.setNewSpeed((float) (event.getOriginalSpeed() + digging.getSpeedBonus()));
 			}
 		}
 	}
@@ -132,15 +143,15 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		IBlockState state = event.getState();
 		if (this.validTreasureTarget(state)) {
 			EntityPlayer player = event.getHarvester();
-			if (player != null && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
 				SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
 				double random = Math.random();
 				if (random < digging.getTreasureChance()) {
 					ItemStack treasure = RandomTreasure.generate();
 					List<ItemStack> drops = event.getDrops();
 					drops.add(treasure);
-					this.xp += 100; // And 100 xp!
-					this.levelUp();
+					digging.xp += 100; // And 100 xp!
+					digging.levelUp((EntityPlayerMP) player);
 				}
 			}
 		}
