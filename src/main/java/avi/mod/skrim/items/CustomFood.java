@@ -2,6 +2,7 @@ package avi.mod.skrim.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -48,8 +49,23 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 				float newSaturation = playerStats.getSaturationLevel() +
 						(satMod * additionalHeal + (int)(extraSaturation * (foodHeal + additionalHeal)));
 
-				playerStats.setFoodLevel((newFood > 20 && !overFull) ? 20 : newFood);
-				playerStats.setFoodSaturationLevel((newSaturation > playerStats.getFoodLevel() && !overFull) ? playerStats.getFoodLevel() : newSaturation);
+				newFood = (newFood > 20 && !overFull) ? 20 : newFood;
+				newSaturation = (newSaturation > newFood && !overFull) ? newFood : newSaturation;
+				/**
+				 * A valiant attempt to keep me from over-filling.
+				 * But not valiant enough.
+				 * For some reason setFoodSaturationLevel is client side only.
+				 * But setFoodLevel bypasses the maximum for food...
+				 * BUT, addStats will reset the maximums for both.....
+				 * BUUTTT, readNBT(NBTTagCompound compound) assigns directly so.....
+				 * we need to set foodLevel, foodTimer, foodSaturationLevel, foodExhaustionLevel
+				 */
+				NBTTagCompound storeCompound = new NBTTagCompound();
+				storeCompound.setInteger("foodLevel", newFood);
+				storeCompound.setInteger("foodTimer", 0); // Starts at 0, counts up to 80 ticks
+				storeCompound.setFloat("foodSaturationLevel", newSaturation);
+				storeCompound.setFloat("foodExhaustionLevel", 0); // Food exhaustion max 40 when fully exhausted
+				playerStats.readNBT(storeCompound);
 			}
 		}
 	}
