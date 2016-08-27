@@ -32,7 +32,7 @@ public class DiggingProvider {
         Entity player = event.getEntity();
         if (player instanceof EntityPlayer) {
           if (!player.hasCapability(DIGGING, EnumFacing.NORTH)) {
-            event.addCapability(ID, SkillDiggingProvider.instance);
+            event.addCapability(ID, new SkillDiggingProvider());
           }
         }
       }
@@ -49,7 +49,6 @@ public class DiggingProvider {
      */
     public static class SkillDiggingProvider extends SkillProvider<ISkillDigging> {
 
-      public static SkillDiggingProvider instance = new SkillDiggingProvider();
       private Entity player;
 
       public SkillDiggingProvider() {

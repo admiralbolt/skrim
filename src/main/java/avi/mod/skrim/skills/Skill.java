@@ -81,7 +81,7 @@ public class Skill implements ISkill {
       // this.mc.thePlayer.sendChatMessage("Level up! " + this.name + " is now level " + this.level);
       this.setNextLevelTotal();
     }
-    SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
+    SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.getLevel(player), this.getXp(player)), player);
   }
 
   public void overwrite(Skill skill) {
