@@ -68,9 +68,6 @@ public class Skill implements ISkill {
 
   public double getPercentToNext() {
 	  int prevLevelXp = (((this.level - 1) * (this.level - 1) + this.level - 1) / 2) * 1000;
-    if (this.level > 1) {
-	     System.out.println("this.name: " + this.name + ", this.level: " + this.level + ", prevXp: " + prevLevelXp + ", nextTotaL: " + this.getNextLevelTotal());
-    }
 	  return ((double) (this.xp - prevLevelXp)) / (this.getNextLevelTotal() - prevLevelXp);
   }
 
@@ -84,7 +81,6 @@ public class Skill implements ISkill {
       // this.mc.thePlayer.sendChatMessage("Level up! " + this.name + " is now level " + this.level);
       this.setNextLevelTotal();
     }
-    System.out.println("Creating packet in level up...");
     SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
   }
 
