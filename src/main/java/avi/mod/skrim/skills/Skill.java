@@ -100,4 +100,24 @@ public class Skill implements ISkill {
     return this.iconTexture;
   }
 
+  public int getLevel(EntityPlayerMP player) {
+    Capability<? extends ISkill> cap = Skills.skillMap.get(this.name);
+    if (player.hasCapability(cap, EnumFacing.NORTH)) {
+      Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
+      return skill.level;
+    } else {
+      return 1;
+    }
+  }
+
+  public int getXp(EntityPlayerMP player) {
+    Capability<? extends ISkill> cap = Skills.skillMap.get(this.name);
+    if (player.hasCapability(cap, EnumFacing.NORTH)) {
+      Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
+      return skill.xp;
+    } else {
+      return 0;
+    }
+  }
+
 }
