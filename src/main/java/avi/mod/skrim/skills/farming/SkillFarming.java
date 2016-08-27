@@ -9,10 +9,12 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeetroot;
 import net.minecraft.block.BlockCarrot;
+import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockMelon;
 import net.minecraft.block.BlockPotato;
+import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -35,12 +37,12 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("crops", 20); // Wheat is worth 20, 50 for all else.
+		xpMap.put("crops", 20);
 		xpMap.put("beetroots", 50);
 		xpMap.put("potatoes", 50);
 		xpMap.put("carrots", 50);
-		xpMap.put("pumpkin", 50);
-		xpMap.put("melon", 50);
+		xpMap.put("pumpkin", 10);
+		xpMap.put("melon", 60);
 	}
 
 	public SkillFarming() {
@@ -90,6 +92,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				|| block instanceof BlockCarrot
 				|| block instanceof BlockPotato
 				|| block instanceof BlockCrops
+				|| block instanceof BlockCocoa
 				);
 	}
 
@@ -108,12 +111,17 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		 * They decided to make every plants growth go from 0-7 EXCEPT for beets
 		 * for some reason they go from 0-3.  I guess you could say it...
 		 * Beets me!  AHAHAHAHAHAHAHAHA! (Can't wake up)
+		 *
+		 * UPDATE: Okay seriously?  Cocoa beans have 3 stages, but instead of
+		 * using 0-1-2 like the established standard, they use 2/6/10?
+		 * WTF?
 		 */
 		return (block instanceof BlockMelon
 				|| ((block instanceof BlockCarrot || block instanceof BlockPotato)
 						&& block.getMetaFromState(state) == 7)
 				|| (block instanceof BlockCrops && block.getMetaFromState(state) == 7)
 				|| (block instanceof BlockBeetroot && block.getMetaFromState(state) == 3)
+				|| (block instanceof BlockCocoa && block.getMetaFromState(state) == 10)
 				) ? true : false;
 	}
 
@@ -124,10 +132,16 @@ public class SkillFarming extends Skill implements ISkillFarming {
 			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 			IBlockState state = event.getState();
 			Block target = state.getBlock();
-			int addXp = this.getXp(Utils.getBlockName(target));
-			if (addXp > 0) {
-				farming.xp += this.getXp(Utils.getBlockName(target));
-				farming.levelUp((EntityPlayerMP) player);
+			if (target instanceof BlockCocoa) {
+				System.out.println("broke cocoa, meta: " + target.getMetaFromState(state));
+			}
+			// Don't want to always give xp, only for fully grown stuff.
+			if (this.validFortuneTarget(state) || target instanceof BlockPumpkin) {
+				int addXp = this.getXp(Utils.getBlockName(target));
+				if (addXp > 0) {
+					farming.xp += this.getXp(Utils.getBlockName(target));
+					farming.levelUp((EntityPlayerMP) player);
+				}
 			}
 		}
 	}
@@ -174,6 +188,10 @@ public class SkillFarming extends Skill implements ISkillFarming {
   			if (growthStage > 2) {
   				growthStage = 2;
   			}
+			} else if (placedBlock instanceof BlockCocoa) {
+				// Because fuck it.
+				int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6};
+				growthStage = cocoaStages[growthStage];
   		} else if (placedBlock instanceof BlockCrops) {
   			prop = BlockCrops.AGE;
   		}
