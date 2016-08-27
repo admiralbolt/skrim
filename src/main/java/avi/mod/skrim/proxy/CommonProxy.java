@@ -5,6 +5,7 @@ import avi.mod.skrim.Config;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.capabilities.ModCapabilities;
+import avi.mod.skrim.handlers.DeathEvent;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.JoinWorldHandler;
 import avi.mod.skrim.items.ModItems;
@@ -32,7 +33,7 @@ public class CommonProxy {
 		ModItems.createItems();
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
-		MinecraftForge.EVENT_BUS.register(new JoinWorldHandler());
+		MinecraftForge.EVENT_BUS.register(new DeathEvent());
 	}
 
 	public void init(FMLInitializationEvent event) {

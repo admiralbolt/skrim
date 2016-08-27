@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 @Mod(modid = Skrim.modId, name = Skrim.name, version = Skrim.version, acceptedMinecraftVersions = "[1.10.2]")
 public class Skrim {
 
-	@SidedProxy(serverSide = "avi.mod.skrim.proxy.CommonProxy", clientSide = "avi.mod.skrim.proxy.ClientProxy")
+	@SidedProxy(serverSide = "avi.mod.skrim.proxy.ServerProxy", clientSide = "avi.mod.skrim.proxy.ClientProxy")
 	public static CommonProxy proxy;
 
 	public static final String modId = "skrim";

@@ -41,6 +41,7 @@ public class Skill implements ISkill {
      * Skills get xp based on actions, so we need to register them
      * to the event bus.
      */
+    System.out.println("registering event.");
     MinecraftForge.EVENT_BUS.register(this);
   }
 
@@ -98,6 +99,22 @@ public class Skill implements ISkill {
 
   public ResourceLocation getIconTexture() {
     return this.iconTexture;
+  }
+  
+  public void setXp(int xp) {
+  	this.xp = xp;
+  }
+  
+  public void setLevel(int level) {
+  	this.level = level;
+  }
+  
+  public int getXp() {
+  	return this.xp;
+  }
+  
+  public int getLevel() {
+  	return this.level;
   }
 
 }
