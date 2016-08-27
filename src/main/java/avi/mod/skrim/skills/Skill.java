@@ -81,7 +81,7 @@ public class Skill implements ISkill {
       // this.mc.thePlayer.sendChatMessage("Level up! " + this.name + " is now level " + this.level);
       this.setNextLevelTotal();
     }
-    SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.getLevel(player), this.getXp(player)), player);
+    SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
   }
 
   public void overwrite(Skill skill) {
@@ -98,26 +98,6 @@ public class Skill implements ISkill {
 
   public ResourceLocation getIconTexture() {
     return this.iconTexture;
-  }
-
-  public int getLevel(EntityPlayerMP player) {
-    Capability<? extends ISkill> cap = Skills.skillMap.get(this.name);
-    if (player.hasCapability(cap, EnumFacing.NORTH)) {
-      Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
-      return skill.level;
-    } else {
-      return 1;
-    }
-  }
-
-  public int getXp(EntityPlayerMP player) {
-    Capability<? extends ISkill> cap = Skills.skillMap.get(this.name);
-    if (player.hasCapability(cap, EnumFacing.NORTH)) {
-      Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
-      return skill.xp;
-    } else {
-      return 0;
-    }
   }
 
 }

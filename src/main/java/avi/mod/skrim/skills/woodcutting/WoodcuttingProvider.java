@@ -32,34 +32,19 @@ public class WoodcuttingProvider {
         Entity player = event.getEntity();
         if (player instanceof EntityPlayer) {
           if (!player.hasCapability(WOODCUTTING, EnumFacing.NORTH)) {
-            event.addCapability(ID, SkillWoodcuttingProvider.instance);
+            event.addCapability(ID, createProvider());
           }
         }
       }
 
     }
 
-    /**
-     * I honestly have no idea if this is bad code or not,
-     * but since i don't realy want to fuck with capabilities anymore,
-     * they all get to pass around the same singleton.
-     * It seems like both EntityPlayerSP and EntityPlayerMP need to be
-     * registered with the capabilities, but doing so with separate instances
-     * creates issues with duplicate events firing.
-     */
-    public static class SkillWoodcuttingProvider extends SkillProvider<ISkillWoodcutting> {
+    public static SkillProvider<ISkillWoodcutting> createProvider() {
+    	return new SkillProvider<ISkillWoodcutting>(WOODCUTTING, EnumFacing.NORTH);
+    }
 
-      public static SkillWoodcuttingProvider instance = new SkillWoodcuttingProvider();
-      private Entity player;
-
-      public SkillWoodcuttingProvider() {
-        this(new SkillWoodcutting());
-      }
-
-      public SkillWoodcuttingProvider(ISkillWoodcutting skill) {
-        super(skill, WOODCUTTING);
-      }
-
+    public static SkillProvider<ISkillWoodcutting> createProvider(ISkillWoodcutting woodcutting) {
+    	return new SkillProvider<ISkillWoodcutting>(WOODCUTTING, EnumFacing.NORTH, woodcutting);
     }
 
 }

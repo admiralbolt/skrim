@@ -32,34 +32,19 @@ public class RangedProvider {
         Entity player = event.getEntity();
         if (player instanceof EntityPlayer) {
           if (!player.hasCapability(RANGED, EnumFacing.NORTH)) {
-            event.addCapability(ID, SkillRangedProvider.instance);
+            event.addCapability(ID, createProvider());
           }
         }
       }
 
     }
 
-    /**
-     * I honestly have no idea if this is bad code or not,
-     * but since i don't realy want to fuck with capabilities anymore,
-     * they all get to pass around the same singleton.
-     * It seems like both EntityPlayerSP and EntityPlayerMP need to be
-     * registered with the capabilities, but doing so with separate instances
-     * creates issues with duplicate events firing.
-     */
-    public static class SkillRangedProvider extends SkillProvider<ISkillRanged> {
+    public static SkillProvider<ISkillRanged> createProvider() {
+    	return new SkillProvider<ISkillRanged>(RANGED, EnumFacing.NORTH);
+    }
 
-      public static SkillRangedProvider instance = new SkillRangedProvider();
-      private Entity player;
-
-      public SkillRangedProvider() {
-        this(new SkillRanged());
-      }
-
-      public SkillRangedProvider(ISkillRanged skill) {
-        super(skill, RANGED);
-      }
-
+    public static SkillProvider<ISkillRanged> createProvider(ISkillRanged ranged) {
+    	return new SkillProvider<ISkillRanged>(RANGED, EnumFacing.NORTH, ranged);
     }
 
 }

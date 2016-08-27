@@ -25,7 +25,7 @@ public class JoinWorldHandler {
 				if (player.hasCapability(cap, EnumFacing.NORTH)) {
 					Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
 					System.out.println("Sending packet for skill: " + skill.name);
-					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.getLevel(player), skill.getXp(player)), player);
+					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
 				}
 			}
 		}

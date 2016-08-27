@@ -16,7 +16,4 @@ public interface ISkill {
   List<String> getToolTip();
   ResourceLocation getIconTexture();
 
-  int getLevel(EntityPlayerMP player);
-  int getXp(EntityPlayerMP player);
-
 }

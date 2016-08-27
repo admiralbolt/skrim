@@ -43,6 +43,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		xpMap.put("carrots", 50);
 		xpMap.put("pumpkin", 10);
 		xpMap.put("melon", 60);
+		xpMap.put("cocoa", 75);
 	}
 
 	public SkillFarming() {
@@ -133,7 +134,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 			IBlockState state = event.getState();
 			Block target = state.getBlock();
 			if (target instanceof BlockCocoa) {
-				System.out.println("broke cocoa, meta: " + target.getMetaFromState(state));
+				System.out.println("broke cocoa, meta: " + target.getMetaFromState(state) + ", name: " + Utils.getBlockName(target));
 			}
 			// Don't want to always give xp, only for fully grown stuff.
 			if (this.validFortuneTarget(state) || target instanceof BlockPumpkin) {
