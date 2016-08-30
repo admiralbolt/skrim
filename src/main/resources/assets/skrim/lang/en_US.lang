@@ -12,6 +12,10 @@ item.overwrite_pumpkin_pie.name=Pumpkin Pie
 item.overwrite_rabbit_stew.name=Rabbit Stew
 item.overwrite_steak.name=Steak
 item.overwrite_rabbit.name=Cooked Rabbit
+item.canes_chicken.name=Raising Cane's® Chicken Strip
 
+
+item.boots_of_springheel_jak.name=Boots of Springheel Jak
+item.raising_canes_fry_sword.name=Raising Cane's® Sword of Frying
 
 item.tux.name=Tux
