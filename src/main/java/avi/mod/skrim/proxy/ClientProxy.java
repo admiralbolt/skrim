@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.capabilities.ModCapabilities;
+import avi.mod.skrim.handlers.ArtifactHandler;
 import avi.mod.skrim.handlers.CustomKeyHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -20,6 +21,7 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
+		ArtifactHandler.register();
 	}
 
 	@Override

@@ -1,8 +1,10 @@
 package avi.mod.skrim.handlers.artifacts;
 
 import avi.mod.skrim.items.ModItems;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -34,12 +36,17 @@ public class SpringheelHandler {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			ItemStack stack = player.inventory.armorItemInSlot(0);
-			if (stack != null) {
-				Item boots = stack.getItem();
-				if (boots == ModItems.bootsOfSpringheelJak) {
-					event.setDistance(0);
-					event.setCanceled(true);
+			InventoryPlayer inventory = player.inventory;
+			if (inventory != null) {
+				System.out.println(inventory.armorInventory[0]);
+				ItemStack stack = inventory.armorInventory[0];
+				System.out.println(stack);
+				if (stack != null) {
+					Item boots = stack.getItem();
+					if (boots == ModItems.bootsOfSpringheelJak) {
+						event.setDistance(0);
+						event.setCanceled(true);
+					}
 				}
 			}
 		}
