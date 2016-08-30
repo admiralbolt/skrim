@@ -3,6 +3,7 @@ package avi.mod.skrim.skills;
 import java.util.ArrayList;
 import java.util.List;
 
+import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 
@@ -25,7 +26,6 @@ public class Skill implements ISkill {
   public String name;
   public int level;
   public int xp;
-  public int nextLevelTotal;
   public List<String> tooltip = new ArrayList<String>();
   public ResourceLocation iconTexture;
 
@@ -36,13 +36,6 @@ public class Skill implements ISkill {
     this.name = name;
     this.level = level;
     this.xp = xp;
-    this.setNextLevelTotal();
-    /**
-     * Skills get xp based on actions, so we need to register them
-     * to the event bus.
-     */
-    System.out.println("registering event.");
-    MinecraftForge.EVENT_BUS.register(this);
   }
 
   /**
@@ -55,16 +48,12 @@ public class Skill implements ISkill {
   /**
    * D&D 3.5 XP. Ahhhh fuck yeah.
    */
-  public void setNextLevelTotal() {
-    this.nextLevelTotal = 1000 * ((this.level * this.level + this.level) / 2);
-  }
-
   public int getNextLevelTotal() {
     return 1000 * ((this.level * this.level + this.level) / 2);
   }
 
   public int getXpNeeded() {
-    return this.nextLevelTotal - this.xp;
+    return this.getNextLevelTotal() - this.xp;
   }
 
   public double getPercentToNext() {
@@ -73,22 +62,15 @@ public class Skill implements ISkill {
   }
 
   public boolean canLevelUp() {
-    return (this.xp >= this.nextLevelTotal);
+    return (this.xp >= this.getNextLevelTotal());
   }
 
   public void levelUp(EntityPlayerMP player) {
     if (this.canLevelUp()) {
       this.level++;
-      // this.mc.thePlayer.sendChatMessage("Level up! " + this.name + " is now level " + this.level);
-      this.setNextLevelTotal();
+      SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
     }
     SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
-  }
-
-  public void overwrite(Skill skill) {
-	 this.xp = skill.xp;
-	 this.level = skill.level;
-	 this.setNextLevelTotal();
   }
 
   public List<String> getToolTip() {
@@ -100,19 +82,19 @@ public class Skill implements ISkill {
   public ResourceLocation getIconTexture() {
     return this.iconTexture;
   }
-  
+
   public void setXp(int xp) {
   	this.xp = xp;
   }
-  
+
   public void setLevel(int level) {
   	this.level = level;
   }
-  
+
   public int getXp() {
   	return this.xp;
   }
-  
+
   public int getLevel() {
   	return this.level;
   }

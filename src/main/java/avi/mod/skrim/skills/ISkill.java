@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 public interface ISkill {
 
-  void setNextLevelTotal();
+  int getNextLevelTotal();
   int getXpNeeded();
   boolean canLevelUp();
   void levelUp(EntityPlayerMP player);
@@ -17,7 +17,7 @@ public interface ISkill {
   ResourceLocation getIconTexture();
   void setXp(int xp);
   void setLevel(int level);
-  
+
   int getXp();
   int getLevel();
 

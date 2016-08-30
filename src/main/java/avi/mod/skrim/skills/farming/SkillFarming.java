@@ -55,31 +55,23 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/farming.png");
 	}
 
-	private int getXp(String blockName) {
+	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
-	private double getFortuneChance() {
+	public double getFortuneChance() {
 		return 0.01 * this.level;
 	}
 
-	private int getFortuneAmount() {
-		if (this.level >= 75) {
-			return 5;
-		} else if (this.level >= 50) {
-			return 4;
-		} else if (this.level >= 25) {
-			return 3;
-		} else {
-			return 2;
-		}
+	public int getFortuneAmount() {
+		return 2 + (int) (this.level / 25);
 	}
 
 	@Override
 	public List<String> getToolTip() {
 		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + (this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r harvest drops.");
+		tooltip.add("§a" + fmt.format(this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r harvest drops.");
 		tooltip.add("   This bonus stacks with fortune.");
 		if (this.getGrowthStage() > 0) {
 			tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
@@ -87,7 +79,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		return tooltip;
 	}
 
-	private boolean validCrop(IBlockState state) {
+	public boolean validCrop(IBlockState state) {
 		Block block = state.getBlock();
 		return (block instanceof BlockStem
 				|| block instanceof BlockCarrot
@@ -101,12 +93,12 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	 * Need to cap this shit @ 6 to avoid super OPNESS
 	 * Still pretty OPOP
 	 */
-	private int getGrowthStage() {
+	public int getGrowthStage() {
 		int growthStage = (int) Math.floor((double) this.level / 10);
 		return (growthStage > 6) ? 6 : growthStage;
 	}
 
-	private boolean validFortuneTarget(IBlockState state) {
+	public boolean validFortuneTarget(IBlockState state) {
 		Block block = state.getBlock();
 		/**
 		 * They decided to make every plants growth go from 0-7 EXCEPT for beets
@@ -125,79 +117,5 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				|| (block instanceof BlockCocoa && block.getMetaFromState(state) == 10)
 				) ? true : false;
 	}
-
-	@SubscribeEvent
-	public void onBlockBreak(BlockEvent.BreakEvent event) {
-		EntityPlayer player = event.getPlayer();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-			IBlockState state = event.getState();
-			Block target = state.getBlock();
-			if (target instanceof BlockCocoa) {
-				System.out.println("broke cocoa, meta: " + target.getMetaFromState(state) + ", name: " + Utils.getBlockName(target));
-			}
-			// Don't want to always give xp, only for fully grown stuff.
-			if (this.validFortuneTarget(state) || target instanceof BlockPumpkin) {
-				int addXp = this.getXp(Utils.getBlockName(target));
-				if (addXp > 0) {
-					farming.xp += this.getXp(Utils.getBlockName(target));
-					farming.levelUp((EntityPlayerMP) player);
-				}
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onHarvestPlant(BlockEvent.HarvestDropsEvent event) {
-		IBlockState state = event.getState();
-		if (this.validFortuneTarget(state)) {
-			Block block = state.getBlock();
-			EntityPlayer player = event.getHarvester();
-			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-				SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-				double random = Math.random();
-				if (random < farming.getFortuneChance()) {
-					List<ItemStack> drops = event.getDrops();
-					// Let's not loop infinitely, that seems like a good idea.
-					int dropSize = drops.size();
-          for (int j = 0; j < this.getFortuneAmount() - 1; j++) {
-            for (int i = 0; i < dropSize; i++) {
-              drops.add(drops.get(i).copy());
-            }
-          }
-          farming.xp += 100; // And 100 xp!
-          farming.levelUp((EntityPlayerMP) player);
-				}
-			}
-		}
-	}
-
-  @SubscribeEvent
-  public void onSeedPlanted(BlockEvent.PlaceEvent event) {
-  	IBlockState placedState = event.getPlacedBlock();
-  	IBlockState targetState = event.getPlacedAgainst();
-  	Block placedBlock = placedState.getBlock();
-  	Block targetBlock = targetState.getBlock();
-  	if (this.validCrop(placedState) && targetBlock instanceof BlockFarmland) {
-  		World world = event.getWorld();
-  		PropertyInteger prop = null;
-  		int growthStage = this.getGrowthStage();
-  		if (placedBlock instanceof BlockStem) {
-  			prop = BlockStem.AGE;
-  		} else if (placedBlock instanceof BlockBeetroot) {
-  			prop = BlockBeetroot.BEETROOT_AGE;
-  			if (growthStage > 2) {
-  				growthStage = 2;
-  			}
-			} else if (placedBlock instanceof BlockCocoa) {
-				// Because fuck it.
-				int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6};
-				growthStage = cocoaStages[growthStage];
-  		} else if (placedBlock instanceof BlockCrops) {
-  			prop = BlockCrops.AGE;
-  		}
-  		world.setBlockState(event.getPos(), placedState.withProperty(prop, growthStage));
-  	}
-  }
 
 }

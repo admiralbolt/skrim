@@ -6,10 +6,4 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public interface ISkillRanged extends ISkill {
 
-  /**
-   * This should be overriden in the implementation
-   * to gain xp when breaking specific types of blocks.
-   */
-  public void onPlayerHurt(LivingHurtEvent event);
-
 }

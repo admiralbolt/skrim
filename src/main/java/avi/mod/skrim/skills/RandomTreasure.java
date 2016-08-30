@@ -9,13 +9,14 @@ public class RandomTreasure {
 
   private static RandomCollection<Item> treasure = new RandomCollection<Item>();
 	static {
+    treasure.add(0.09, Items.STRING);
 		treasure.add(0.2, Items.GOLD_NUGGET);
 		treasure.add(0.01, Items.SADDLE);
     treasure.add(0.01, Items.NAME_TAG);
 		treasure.add(0.1, Items.FEATHER);
 		treasure.add(0.12, Items.GUNPOWDER);
 		treasure.add(0.001, Items.DIAMOND_SWORD);
-		treasure.add(0.0005, Items.ELYTRA);
+		treasure.add(0.0003, Items.ELYTRA);
 		treasure.add(0.002, Items.MAP);
 		treasure.add(0.06, Items.ARROW);
 		treasure.add(0.01, Items.EMERALD);

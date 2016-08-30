@@ -16,7 +16,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DeathEvent {
-	
+
 	@SubscribeEvent
 	public void onPlayerDeath(PlayerEvent.Clone event) {
 		if (event.isWasDeath()) {
@@ -26,12 +26,11 @@ public class DeathEvent {
 				for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
 					ISkill oldSkill = original.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
 					Skill yeOldeSkill = (Skill) oldSkill;
-					MinecraftForge.EVENT_BUS.unregister(yeOldeSkill);
 					ISkill newSkill = newPlayer.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
 					newSkill.setLevel(oldSkill.getLevel());
 					newSkill.setXp(oldSkill.getXp());
 					Skill skill = (Skill) newSkill;
-					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) newPlayer);
+					//SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) newPlayer);
 				}
 			}
 		}

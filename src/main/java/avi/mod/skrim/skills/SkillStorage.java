@@ -21,7 +21,6 @@ public class SkillStorage<T> implements IStorage<T> {
     final Skill loadSkill = (Skill) instance;
     loadSkill.xp = compound.getInteger(loadSkill.name + "-xp");
     loadSkill.level = compound.getInteger(loadSkill.name + "-level");
-    loadSkill.setNextLevelTotal();
   }
-  
+
 }

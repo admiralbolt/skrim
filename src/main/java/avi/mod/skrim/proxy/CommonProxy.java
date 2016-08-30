@@ -8,6 +8,7 @@ import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.handlers.DeathEvent;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.JoinWorldHandler;
+import avi.mod.skrim.handlers.SkillHandler;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -26,23 +27,23 @@ public class CommonProxy {
 	public static Configuration config;
 
 	public void preInit(FMLPreInitializationEvent event) {
-		System.out.println("CommonProxy is in preInit.");
 		File directory = event.getModConfigurationDirectory();
 		config = new Configuration(new File(directory.getPath(), "modtut.cfg"));
 		Config.readConfig();
 		ModItems.createItems();
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
+		SkillHandler.register();
+		MinecraftForge.EVENT_BUS.register(new JoinWorldHandler());
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
 	}
 
 	public void init(FMLInitializationEvent event) {
-		System.out.println("CommonProxy is in init.");
+		SkrimPacketHandler.registerSkillPackets();
 		NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		System.out.println("CommonProxy is in postinit.");
 		if (config.hasChanged()) {
 			config.save();
 		}

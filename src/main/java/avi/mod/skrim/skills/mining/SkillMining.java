@@ -7,35 +7,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockNetherBrick;
+import net.minecraft.block.BlockNetherrack;
+import net.minecraft.block.BlockObsidian;
+import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockRedSandstone;
+import net.minecraft.block.BlockRedstoneOre;
+import net.minecraft.block.BlockSandStone;
+import net.minecraft.block.BlockStone;
+import net.minecraft.block.BlockStoneBrick;
+import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.BlockStoneSlabNew;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
 import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockObsidian;
-import net.minecraft.block.BlockOre;
-import net.minecraft.block.BlockRedstoneOre;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockStone;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.block.BlockNetherBrick;
-import net.minecraft.block.BlockNetherrack;
-import net.minecraft.block.BlockStoneSlab;
-import net.minecraft.block.BlockStoneSlabNew;
-import net.minecraft.block.BlockSandStone;
-import net.minecraft.block.BlockRedSandstone;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SkillMining extends Skill implements ISkillMining {
 
@@ -90,37 +78,34 @@ public class SkillMining extends Skill implements ISkillMining {
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/mining.png");
 	}
 
-	private int getXp(String blockName) {
+	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
-	private double getSpeedBonus() {
+	public double getSpeedBonus() {
 		return 0.1 * this.level;
 	}
 
-	private double getFortuneChance() {
+	public double getFortuneChance() {
 		return 0.003 * this.level;
 	}
 
-	private int getFortuneAmount() {
-		return (this.level >= 50) ? 3 : 2;
-	}
-
-	private String getFortuneString() {
-		return (this.level >= 50) ? "triple" : "double";
+	public int getFortuneAmount() {
+		return 2 + (int) (this.level / 50);
 	}
 
 	@Override
 	public List<String> getToolTip() {
 		DecimalFormat fmt = new DecimalFormat("0.0");
+		DecimalFormat three_dec = new DecimalFormat("0.00");
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("§a+" + fmt.format(this.getSpeedBonus()) + "§r mining speed bonus.");
-		tooltip.add("§a" + (this.getFortuneChance() * 100) + "%§r chance to §a" + this.getFortuneString() + "§r ore drops.");
+		tooltip.add("§a" + three_dec.format(this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r ore drops.");
 		tooltip.add("   This bonus stacks with fortune.");
 		return tooltip;
 	}
 
-	private boolean validSpeedTarget(IBlockState state) {
+	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
 		return ((harvestTool != null && harvestTool.toLowerCase().equals("pickaxe"))
@@ -139,64 +124,10 @@ public class SkillMining extends Skill implements ISkillMining {
 			) ? true : false;
 	}
 
-	private boolean validFortuneTarget(IBlockState state) {
+	public boolean validFortuneTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String blockName = Utils.snakeCase(block.getLocalizedName());
 		return ((block instanceof BlockOre || block instanceof BlockRedstoneOre) && validFortuneOres.contains(blockName));
-	}
-
-	@SubscribeEvent
-	public void onBlockBreak(BlockEvent.BreakEvent event) {
-		EntityPlayer player = event.getPlayer();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
-			IBlockState state = event.getState();
-			Block target = state.getBlock();
-			String blockName;
-			if (target instanceof BlockStone) {
-				blockName = state.getValue(BlockStone.VARIANT).toString();
-			} else {
-				blockName = Utils.snakeCase(target.getLocalizedName());
-			}
-			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
-			int addXp = this.getXp(blockName);
-			if (addXp > 0) {
-				mining.xp += this.getXp(blockName);
-				mining.levelUp((EntityPlayerMP) player);
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void breakSpeed(PlayerEvent.BreakSpeed event) {
-		IBlockState state = event.getState();
-		if (this.validSpeedTarget(state)) {
-			EntityPlayer player = event.getEntityPlayer();
-			if (player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
-				SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
-				event.setNewSpeed((float) (event.getOriginalSpeed() + mining.getSpeedBonus()));
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onMineOre(BlockEvent.HarvestDropsEvent event) {
-		IBlockState state = event.getState();
-		if (this.validFortuneTarget(state)) {
-			EntityPlayer player = event.getHarvester();
-			if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
-				SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
-				double random = Math.random();
-				if (random < mining.getFortuneChance()) {
-					List<ItemStack> drops = event.getDrops();
-					ItemStack copyDrop = drops.get(0);
-					// Let's not loop infinitely, that seems like a good idea.
-					int dropSize = drops.size();
-					for (int i = 0; i < (dropSize * (this.getFortuneAmount() - 1)); i++) {
-						drops.add(copyDrop.copy());
-					}
-				}
-			}
-		}
 	}
 
 }

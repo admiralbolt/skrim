@@ -83,23 +83,23 @@ public class SkillFishing extends Skill implements ISkillFishing {
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/fishing.png");
 	}
 
-	private int getXp(String blockName) {
+	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
-	private boolean canGrapple() {
+	public boolean canGrapple() {
 		return (this.level >= 25);
 	}
 
-	private double getTreasureChance() {
+	public double getTreasureChance() {
 		return 0.01 * this.level;
 	}
 
-	private boolean isValidFish(EntityItem item) {
+	public boolean isValidFish(EntityItem item) {
 		return this.canCatch && this.xpMap.containsKey(Utils.snakeCase(item.getName()));
 	}
 
-	private int randomXPOrb() {
+	public int randomXPOrb() {
 		int min = this.getMinXP();
 		int max = this.getMaxXP();
 		return xpRand.nextInt(max - min) + min;
@@ -117,67 +117,9 @@ public class SkillFishing extends Skill implements ISkillFishing {
 	public List<String> getToolTip() {
 		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + (this.getTreasureChance() * 100) + "%§r chance to fish additional treasure.");
+		tooltip.add("§a" + fmt.format(this.getTreasureChance() * 100) + "%§r chance to fish additional treasure.");
 		tooltip.add("Fishing provides an additional §a" + this.getMinXP() + "§r-§a" + this.getMaxXP() + "§r xp.");
 		return tooltip;
-	}
-
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void onFishEvent(PlayerInteractEvent event) {
-		ItemStack stack = event.getItemStack();
-		if (stack != null) {
-			Item item = stack.getItem();
-			if (item != null && item == Items.FISHING_ROD) {
-				EntityPlayer player = event.getEntityPlayer();
-				if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
-					Entity entity = event.getEntity();
-					EntityFishHook fishHook = player.fishEntity;
-					if (fishHook != null) {
-						if (!fishHook.isAirBorne) {
-							final SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
-							if (fishHook.onGround) {
-								if (fishing.canGrapple()) {
-									MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-									ICommandManager cm = server.getCommandManager();
-									BlockPos pos = fishHook.getPosition();
-									cm.executeCommand(server, "/tp " + player.getName() + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
-								}
-							} else if (fishHook.isInWater()) {
-								fishing.canCatch = true;
-								new Timer().schedule(
-									new TimerTask() {
-										@Override
-										public void run() {
-											fishing.canCatch = false;
-										}
-									}, 900
-								);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onItemPickup(EntityItemPickupEvent event) {
-		EntityPlayer player = event.getEntityPlayer();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
-			EntityItem item = event.getItem();
-			if (this.isValidFish(item)) {
-				SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
-				double random = Math.random();
-				fishing.canCatch = false;
-				fishing.xp += this.getXp(Utils.snakeCase(event.getItem().getName()));
-				player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX, player.posY, player.posZ, this.randomXPOrb()));
-				if (random < this.getTreasureChance()) {
-					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, RandomTreasure.generate()));
-					fishing.xp += 50; // And an xp bonus!
-				}
-				fishing.levelUp((EntityPlayerMP) player);
-			}
-		}
 	}
 
 }

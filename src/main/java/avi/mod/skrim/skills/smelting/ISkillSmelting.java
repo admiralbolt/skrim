@@ -6,10 +6,4 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
 public interface ISkillSmelting extends ISkill {
 
-  /**
-   * This should be overriden in the implementation
-   * to gain xp when breaking specific types of blocks.
-   */
-  public void onItemSmelted(ItemSmeltedEvent event);
-
 }

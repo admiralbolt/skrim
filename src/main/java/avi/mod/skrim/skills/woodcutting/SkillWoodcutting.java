@@ -15,20 +15,12 @@ import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockWoodSlab;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
 
 public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
@@ -73,15 +65,15 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/woodcutting.png");
 	}
 
-	private int getXp(String blockName) {
+	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
-	private double getSpeedBonus() {
+	public double getSpeedBonus() {
 		return 0.15 * this.level;
 	}
 
-	private double getHewingChance() {
+	public double getHewingChance() {
 		return 0.01 * this.level;
 	}
 
@@ -90,11 +82,11 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("§a+" + fmt.format(this.getSpeedBonus()) + "§r woodcutting speed bonus.");
-		tooltip.add("§a" + (this.getHewingChance() * 100) + "%§r chance to level a tree.");
+		tooltip.add("§a" + fmt.format(this.getHewingChance() * 100) + "%§r chance to level a tree.");
 		return tooltip;
 	}
 
-	private boolean validSpeedTarget(IBlockState state) {
+	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
 		return ((harvestTool != null && harvestTool.toLowerCase().equals("axe"))
@@ -118,25 +110,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		}
 	}
 
-	@SubscribeEvent
-	public void onBlockBreak(BlockEvent.BreakEvent event) {
-		IBlockState state = event.getState();
-		Block target = state.getBlock();
-		if (target instanceof BlockOldLog || target instanceof BlockNewLog) {
-			EntityPlayer player = event.getPlayer();
-			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
-				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
-				if (Math.random() < this.getHewingChance()) {
-					BlockPos start = event.getPos();
-					this.hewTree(event.getWorld(), woodcutting, start);
-				}
-				woodcutting.xp += this.getXp(this.getWoodName(state));
-				woodcutting.levelUp((EntityPlayerMP) player);
-			}
-		}
-	}
-
-	public void hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos) {
+	public void hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start) {
 		IBlockState state = world.getBlockState(pos);
 		Block tree = state.getBlock();
 		woodcutting.xp += this.getXp(this.getWoodName(state));
@@ -145,26 +119,23 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			for (int j = -1; j <= 1; j++) {
 				for (int k = -1; k <= 1; k++) {
 					BlockPos targetPos = pos.add(i, j, k);
-					IBlockState targetState = world.getBlockState(targetPos);
-					Block targetBlock = targetState.getBlock();
-					if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-						this.hewTree(world, woodcutting, targetPos);
+					if (validTarget(targetPos, start)) {
+						IBlockState targetState = world.getBlockState(targetPos);
+						Block targetBlock = targetState.getBlock();
+						if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
+							this.hewTree(world, woodcutting, targetPos, start);
+						}
 					}
 				}
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void breakSpeed(PlayerEvent.BreakSpeed event) {
-		IBlockState state = event.getState();
-		if (this.validSpeedTarget(state)) {
-			EntityPlayer player = event.getEntityPlayer();
-			if (player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
-				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
-				event.setNewSpeed((float) (event.getOriginalSpeed() + woodcutting.getSpeedBonus()));
-			}
-		}
+	public static boolean validTarget(BlockPos targetPos, BlockPos start) {
+		int radius = 2;
+		return (Math.abs(targetPos.getX() - start.getX()) <= radius
+				&& Math.abs(targetPos.getZ() - start.getZ()) <= radius) ?
+						true: false;
 	}
 
 }

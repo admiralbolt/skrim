@@ -57,7 +57,7 @@ public class SkillSmelting extends Skill implements ISkillSmelting {
 		xpMap.put("item.ingotgold", 50); // Woooooo gold!
 	}
 
-	private int lastItemNumber;
+	public int lastItemNumber;
 
 	public SkillSmelting() {
 		this(1, 0);
@@ -68,7 +68,7 @@ public class SkillSmelting extends Skill implements ISkillSmelting {
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/smelting.png");
 	}
 
-	private int getXp(String blockName) {
+	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
@@ -95,46 +95,9 @@ public class SkillSmelting extends Skill implements ISkillSmelting {
 		return tooltip;
 	}
 
-  private boolean validSmeltingTarget(ItemStack stack) {
+  public boolean validSmeltingTarget(ItemStack stack) {
 		Item item = stack.getItem();
 		return xpMap.containsKey(Utils.snakeCase(item.getUnlocalizedName()));
   }
-
-  @SubscribeEvent
-  public void onItemSmelted(ItemSmeltedEvent event) {
-		if (this.validSmeltingTarget(event.smelting) && event.player != null && event.player.hasCapability(Skills.SMELTING, EnumFacing.NORTH)) {
-			SkillSmelting smelting = (SkillSmelting) event.player.getCapability(Skills.SMELTING, EnumFacing.NORTH);
-			int stackSize = (event.smelting.stackSize == 0) ? smelting.lastItemNumber : event.smelting.stackSize;
-			int addItemSize = (int) (smelting.extraIngot() * stackSize); // OOO
-			if (addItemSize > 0) {
-				ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
-				event.player.inventory.addItemStackToInventory(newStack);
-			}
-			if (event.player instanceof EntityPlayerMP) {
-				// Give xp for bonus items too!
-				smelting.xp += (stackSize + addItemSize) * this.getXp(this.getSmeltingName(event.smelting));
-				smelting.levelUp((EntityPlayerMP) event.player);
-			}
-		}
-  }
-
-	/**
-	 * The hackiest of hacks.  Why does this always happen.
-	 */
-  @SubscribeEvent
-  public void onContainerEvent(PlayerContainerEvent.Open event) {
-		Container please = event.getContainer();
-		if (please instanceof ContainerFurnace) {
-			Slot output = please.getSlot(2);
-			ItemStack yas = output.getStack();
-			if (yas != null) {
-				EntityPlayer player = event.getEntityPlayer();
-				if (player != null && player.hasCapability(Skills.SMELTING, EnumFacing.NORTH)) {
-					SkillSmelting smelting = (SkillSmelting) player.getCapability(Skills.SMELTING, EnumFacing.NORTH);
-					smelting.lastItemNumber = yas.stackSize;
-				}
-			}
-		}
-	}
 
 }

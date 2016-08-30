@@ -18,9 +18,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void init(FMLInitializationEvent event) {
-		SkrimPacketHandler.registerSkillPackets();
 		super.init(event);
-		System.out.println("client proxy is registering skill packets");
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
 	}
 

@@ -14,25 +14,10 @@ import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import avi.mod.skrim.RandomCollection;
 import avi.mod.skrim.Utils;
-import avi.mod.skrim.network.SkillPacket;
-import avi.mod.skrim.network.SkrimPacketHandler;
-import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
 
 public class SkillDigging extends Skill implements ISkillDigging {
 
@@ -60,28 +45,29 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/digging.png");
 	}
 
-	private int getXp(String blockName) {
+	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
-	private double getSpeedBonus() {
+	public double getSpeedBonus() {
 		return 0.1 * this.level;
 	}
 
-	private double getTreasureChance() {
-		return 0.003 * this.level;
+	public double getTreasureChance() {
+		return 0.002 * this.level;
 	}
 
 	@Override
 	public List<String> getToolTip() {
 		DecimalFormat fmt = new DecimalFormat("0.0");
+		DecimalFormat three_dec = new DecimalFormat("0.00");
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("§a+" + fmt.format(this.getSpeedBonus()) + "§r digging speed bonus.");
-		tooltip.add("§a" + (this.getTreasureChance() * 100) + "%§r chance to find treasure.");
+		tooltip.add("§a" + three_dec.format(this.getTreasureChance() * 100) + "%§r chance to find treasure.");
 		return tooltip;
 	}
 
-	private boolean validSpeedTarget(IBlockState state) {
+	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
 		return ((harvestTool != null && harvestTool.toLowerCase().equals("shovel"))
@@ -89,7 +75,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 			) ? true : false;
 	}
 
-	private boolean validTreasureTarget(IBlockState state) {
+	public boolean validTreasureTarget(IBlockState state) {
 		Block block = state.getBlock();
 		return (block instanceof BlockDirt
 			|| block instanceof BlockGrass
@@ -99,7 +85,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 			|| block instanceof BlockSoulSand);
 	}
 
-  private String getDirtName(IBlockState state) {
+  public String getDirtName(IBlockState state) {
     Block block = state.getBlock();
     if (block instanceof BlockDirt) {
     	return state.getValue(BlockDirt.VARIANT).toString();
@@ -109,52 +95,5 @@ public class SkillDigging extends Skill implements ISkillDigging {
       return Utils.getBlockName(block);
     }
   }
-
-	@SubscribeEvent
-	public void onBlockBreak(BlockEvent.BreakEvent event) {
-		EntityPlayer player = event.getPlayer();
-		System.out.println("player instanceof EntityPlayerMP: " + (player instanceof EntityPlayerMP));
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-			SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-			IBlockState state = event.getState();
-			Block target = state.getBlock();
-			int addXp = this.getXp(this.getDirtName(state));
-			if (addXp > 0) {
-				digging.xp += this.getXp(this.getDirtName(state));
-				digging.levelUp((EntityPlayerMP) player);
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void breakSpeed(PlayerEvent.BreakSpeed event) {
-		IBlockState state = event.getState();
-		if (this.validSpeedTarget(state)) {
-			EntityPlayer player = event.getEntityPlayer();
-			if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-				SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-				event.setNewSpeed((float) (event.getOriginalSpeed() + digging.getSpeedBonus()));
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onFindTreasure(BlockEvent.HarvestDropsEvent event) {
-		IBlockState state = event.getState();
-		if (this.validTreasureTarget(state)) {
-			EntityPlayer player = event.getHarvester();
-			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-				SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-				double random = Math.random();
-				if (random < digging.getTreasureChance()) {
-					ItemStack treasure = RandomTreasure.generate();
-					List<ItemStack> drops = event.getDrops();
-					drops.add(treasure);
-					digging.xp += 100; // And 100 xp!
-					digging.levelUp((EntityPlayerMP) player);
-				}
-			}
-		}
-	}
 
 }

@@ -10,13 +10,13 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.handlers.DeathEvent;
 import avi.mod.skrim.handlers.JoinWorldHandler;
+import avi.mod.skrim.handlers.SkillHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
 
 public class ServerProxy extends CommonProxy {
 
 
 	public void preInit(FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(new JoinWorldHandler());
 		super.preInit(event);
 	}
 

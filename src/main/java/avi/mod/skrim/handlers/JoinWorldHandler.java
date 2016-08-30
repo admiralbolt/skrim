@@ -17,14 +17,27 @@ public class JoinWorldHandler {
 
 	@SubscribeEvent
 	public void onLoggedIn(PlayerLoggedInEvent event) {
-		System.out.println("LOGGED IN EVENT: entity is MP: " + (event.player instanceof EntityPlayerMP));
 		if (event.player instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) event.player;
 			for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
 				Capability<? extends ISkill> cap = Skills.ALL_SKILLS.get(i);
 				if (player.hasCapability(cap, EnumFacing.NORTH)) {
 					Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
-					System.out.println("Sending packet for skill: " + skill.name);
+					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onJoinedWorld(EntityJoinWorldEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) entity;
+			for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
+				Capability<? extends ISkill> cap = Skills.ALL_SKILLS.get(i);
+				if (player.hasCapability(cap, EnumFacing.NORTH)) {
+					Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
 					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
 				}
 			}
