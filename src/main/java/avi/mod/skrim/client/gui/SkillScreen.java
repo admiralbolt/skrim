@@ -55,15 +55,18 @@ public class SkillScreen extends GuiScreen {
 
   private int dividerPadding = 2;
   private int skillPaddingLeft = 5;
-  private int skillHeight = 30;
+  private int skillHeight = 39;
+  private int skillIconSize = 30;
   private int skillPaddingDesc = 5;
   private int skillPaddingTop = 10 + this.dividerPadding;
+  private int skillHeaderHeight = 11;
   private int levelTextLeft;
 
-
+  private int abilityIconSize = 18;
+  private int abilityIconPadding = 10;
 
   private int levelBarHeight = 9;
-  private int levelBarWidth = 176 - this.paddingRight - this.scrollBarWidth - this.scrollPaddingLeft - this.skillPaddingLeft - this.skillHeight - this.skillPaddingDesc;
+  private int levelBarWidth = 176 - this.paddingRight - this.scrollBarWidth - this.scrollPaddingLeft - this.skillPaddingLeft;
 
   private int headerColor = 0xFF333333;
   private int levelBarColor = 0x8055dd55;
@@ -122,8 +125,11 @@ public class SkillScreen extends GuiScreen {
      * of any gui element.  Since we can't, we have to control
      * the order we draw things in. IE loop over the skills first
      * THEN the functions.
+     *
+     * Hello again, time to make this worse.  We want to draw ability
+     * icons AND hover text which means two more in the right places!
      */
-    for (int q = 0; q <= 3; q++) {
+    for (int q = 0; q <= 5; q++) {
       for (int i = 0; i < skills.size(); i++) {
         if (q == 0) {
           this.drawSkillHeader(skills.get(i), leftValues.get(i), topValues.get(i));
@@ -132,6 +138,10 @@ public class SkillScreen extends GuiScreen {
         } else if (q == 2) {
           this.drawSkillIcon(skills.get(i), leftValues.get(i), topValues.get(i));
         } else if (q == 3) {
+          this.drawAbilityIcons(skills.get(i), leftValues.get(i), topValues.get(i));
+        } else if (q == 4) {
+          this.drawAbilityHoverText(skills.get(i), leftValues.get(i), topValues.get(i), mouseX, mouseY);
+        } else if (q == 5) {
           this.drawSkillHoverText(skills.get(i), leftValues.get(i), topValues.get(i), mouseX, mouseY);
         }
       }
@@ -139,7 +149,7 @@ public class SkillScreen extends GuiScreen {
   }
 
   public void drawSkillHeader(Skill skill, int left, int top) {
-    int textLeft = left + this.skillPaddingDesc + this.skillHeight;
+    int textLeft = left + this.skillPaddingDesc + this.skillIconSize;
     if (this.shouldRender(top, top + 7)) {
       this.mc.fontRendererObj.drawString(skill.name, textLeft, top, this.headerColor);
       this.mc.fontRendererObj.drawString("Level " + skill.level, this.levelTextLeft, top, this.headerColor);
@@ -147,8 +157,8 @@ public class SkillScreen extends GuiScreen {
   }
 
   public void drawSkillLevelUp(Skill skill, int left, int top) {
-    int levelLeft = left + this.skillPaddingDesc + this.skillHeight;
-    int levelTop = top + this.skillHeight - this.levelBarHeight;
+    int levelLeft = left;
+    int levelTop = top + this.skillIconSize + this.dividerPadding;
     int levelRight = levelLeft + (int) Math.floor(this.levelBarWidth * skill.getPercentToNext());
     int levelBottom = levelTop + this.levelBarHeight;
     if (shouldRender(levelTop, levelBottom)) {
@@ -163,23 +173,64 @@ public class SkillScreen extends GuiScreen {
   public void drawSkillIcon(Skill skill, int left, int top) {
     this.mc.getTextureManager().bindTexture(skill.getIconTexture());
     int dist;
-    if ((top < this.boundTop) && ((top + this.skillHeight) > this.boundTop)) {
+    if ((top < this.boundTop) && ((top + this.skillIconSize) > this.boundTop)) {
       int start = this.boundTop - top;
-      dist = this.skillHeight - start;
-      this.drawTexturedModalRect(left, this.boundTop, 0, start, this.skillHeight, dist);
-    } else if (this.boundBottom > top && top + this.skillHeight > this.boundBottom) {
+      dist = this.skillIconSize - start;
+      this.drawTexturedModalRect(left, this.boundTop, 0, start, this.skillIconSize, dist);
+    } else if (this.boundBottom > top && top + this.skillIconSize > this.boundBottom) {
       dist = this.boundBottom - top;
-      this.drawTexturedModalRect(left, top, 0, 0, this.skillHeight, dist);
-    } else if (shouldRenderIcon(top, top + this.skillHeight)) {
-      this.drawTexturedModalRect(left, top, 0, 0, this.skillHeight, this.skillHeight);
+      this.drawTexturedModalRect(left, top, 0, 0, this.skillIconSize, dist);
+    } else if (shouldRenderIcon(top, top + this.skillIconSize)) {
+      this.drawTexturedModalRect(left, top, 0, 0, this.skillIconSize, this.skillIconSize);
     }
   }
 
   public void drawSkillHoverText(Skill skill, int left, int top, int mouseX, int mouseY) {
-    if (shouldRender(top, top + this.skillHeight)) {
-      if (Utils.isPointInRegion(left, top, left + this.skillHeight, top + this.skillHeight, mouseX, mouseY)) {
+    if (shouldRender(top, top + this.skillIconSize)) {
+      if (Utils.isPointInRegion(left, top, left + this.skillIconSize, top + this.skillIconSize, mouseX, mouseY)) {
   		  this.drawHoveringText(skill.getToolTip(), mouseX, mouseY);
   	  }
+    }
+  }
+
+  public void drawAbilityIcons(Skill skill, int left, int top) {
+    int startLeft = left + this.skillPaddingDesc + this.skillIconSize;
+    int abilityTop = top + this.skillHeaderHeight;
+    int abilityBottom = abilityTop + this.abilityIconSize;
+    for (int i = 1; i <= 4; i++) {
+      int abilityLeft = startLeft + (i - 1) * (this.abilityIconSize + this.abilityIconPadding);
+      int abilityRight = abilityLeft + this.abilityIconSize;
+      int dist;
+      if ((abilityTop < this.boundTop) && ((abilityTop + this.abilityIconSize) > this.boundTop)) {
+        int start = this.boundTop - abilityTop;
+        dist = this.abilityIconSize - start;
+        // this.drawTexturedModalRect(abilityLeft, this.boundTop, 0, start, this.abilityIconSize, dist);
+        this.drawRect(abilityLeft, this.boundTop, abilityRight, abilityBottom, 0xFFAAAAFF);
+      } else if (this.boundBottom > abilityTop && abilityTop + this.abilityIconSize > this.boundBottom) {
+        dist = this.boundBottom - abilityTop;
+        // this.drawTexturedModalRect(abilityLeft, abilityTop, 0, 0, this.abilityIconSize, dist);
+        this.drawRect(abilityLeft, abilityTop, abilityRight, abilityTop + dist, 0xFFAAAAFF);
+      } else if (shouldRenderIcon(abilityTop, abilityTop + this.abilityIconSize)) {
+        // this.drawTexturedModalRect(abilityLeft, abilityTop, 0, 0, this.abilityIconSize, this.abilityIconSize);
+        this.drawRect(abilityLeft, abilityTop, abilityRight, abilityBottom, 0xFFAAAAFF);
+      }
+    }
+  }
+
+  public void drawAbilityHoverText(Skill skill, int left, int top, int mouseX, int mouseY) {
+    int startLeft = left + this.skillPaddingDesc + this.skillIconSize;
+    int abilityTop = top + this.skillHeaderHeight;
+    int abilityBottom = abilityTop + this.abilityIconSize;
+    if (shouldRender(abilityTop, abilityBottom)) {
+      for (int i = 1; i <= 4; i++) {
+        int abilityLeft = startLeft + (i - 1) * (this.abilityIconSize + this.abilityIconPadding);
+        int abilityRight = abilityLeft + this.abilityIconSize;
+        if (Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) {
+          List<String> abilityText = new ArrayList<String>();
+          abilityText.add("default ability hover text.");
+          this.drawHoveringText(abilityText, mouseX, mouseY);
+        }
+      }
     }
   }
 
