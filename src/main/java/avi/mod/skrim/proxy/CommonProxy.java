@@ -35,6 +35,7 @@ public class CommonProxy {
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
 		SkillHandler.register();
+		ArtifactHandler.register();
 		MinecraftForge.EVENT_BUS.register(new JoinWorldHandler());
 		MinecraftForge.EVENT_BUS.register(new DeathEvent());
 	}
