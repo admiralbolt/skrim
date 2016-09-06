@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 
@@ -70,9 +71,16 @@ public class SkillFishing extends Skill implements ISkillFishing {
 		 * easily change experience in the future.
 		 */
 		for (String itemName : validItems) {
-			xpMap.put(itemName, 75);
+			xpMap.put(itemName, 100);
 		}
 	}
+
+	public static SkillAbility batman = new SkillAbility(
+		"Batman",
+		25,
+		"na na na na na na na na",
+		"Your fishing rod can now be used as a grappling hook."
+	);
 
 	public SkillFishing() {
 		this(1, 0);
@@ -81,18 +89,19 @@ public class SkillFishing extends Skill implements ISkillFishing {
 	public SkillFishing(int level, int currentXp) {
 		super("Fishing", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/fishing.png");
+		this.addAbilities(batman);
 	}
 
 	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
-	public boolean canGrapple() {
-		return (this.level >= 25);
-	}
-
 	public double getTreasureChance() {
 		return 0.01 * this.level;
+	}
+
+	public double getDelayReduction() {
+		return 0.0075 * this.level;
 	}
 
 	public boolean isValidFish(EntityItem item) {
@@ -106,17 +115,18 @@ public class SkillFishing extends Skill implements ISkillFishing {
 	}
 
 	private int getMinXP() {
-		return (int) (this.level * 0.3) + 1;
+		return (int) (this.level * 0.5) + 1;
 	}
 
 	private int getMaxXP() {
-		return (int) (this.level * 0.6) + 2;
+		return (int) (this.level * 1.1) + 2;
 	}
 
 	@Override
 	public List<String> getToolTip() {
 		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
+		tooltip.add("§a" + fmt.format(this.getDelayReduction() * 100) + "%§r reduced fishing time.");
 		tooltip.add("§a" + fmt.format(this.getTreasureChance() * 100) + "%§r chance to fish additional treasure.");
 		tooltip.add("Fishing provides an additional §a" + this.getMinXP() + "§r-§a" + this.getMaxXP() + "§r xp.");
 		return tooltip;

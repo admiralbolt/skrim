@@ -15,10 +15,13 @@ public interface ISkill {
   void levelUp(EntityPlayerMP player);
   List<String> getToolTip();
   ResourceLocation getIconTexture();
+  ResourceLocation getAbilityTexture(int abilityLevel);
+  boolean hasAbility(int abilityLevel);
+  List<String> getAbilityTooltip(int abilityLevel);
   void setXp(int xp);
   void setLevel(int level);
-
   int getXp();
   int getLevel();
+  void addXp(EntityPlayerMP player, int xp);
 
 }

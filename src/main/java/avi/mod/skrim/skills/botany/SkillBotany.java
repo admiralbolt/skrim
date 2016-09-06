@@ -13,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 
 public class SkillBotany extends Skill implements ISkillBotany {

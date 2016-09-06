@@ -3,11 +3,13 @@ package avi.mod.skrim;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.proxy.CommonProxy;
 import avi.mod.skrim.client.TestTab;
+import avi.mod.skrim.commands.SetSkillCommand;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
@@ -42,6 +44,11 @@ public class Skrim {
 	public void postInit(FMLPostInitializationEvent event) {
 		System.out.println(this.name + " is in postinit.");
 		this.proxy.postInit(event);
+	}
+
+	@Mod.EventHandler
+	public void serverLoad(FMLServerStartingEvent event) {
+		event.registerServerCommand(new SetSkillCommand());
 	}
 
 }

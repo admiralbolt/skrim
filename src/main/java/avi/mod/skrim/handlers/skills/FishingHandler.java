@@ -42,7 +42,7 @@ public class FishingHandler {
 						if (!fishHook.isAirBorne) {
 							final SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
 							if (fishHook.onGround) {
-								if (fishing.canGrapple()) {
+								if (fishing.hasAbility(1)) {
 									MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 									ICommandManager cm = server.getCommandManager();
 									BlockPos pos = fishHook.getPosition();
@@ -75,13 +75,13 @@ public class FishingHandler {
 			if (fishing.isValidFish(item)) {
 				double random = Math.random();
 				fishing.canCatch = false;
-				fishing.xp += fishing.getXp(Utils.snakeCase(event.getItem().getName()));
+        int addXp = fishing.getXp(Utils.snakeCase(event.getItem().getName()));
 				player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX, player.posY, player.posZ, fishing.randomXPOrb()));
 				if (random < fishing.getTreasureChance()) {
 					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, RandomTreasure.generate()));
-					fishing.xp += 50; // And an xp bonus!
+          addXp += 50;
 				}
-				fishing.levelUp((EntityPlayerMP) player);
+        fishing.addXp((EntityPlayerMP) player, addXp);
 			}
 		}
 	}

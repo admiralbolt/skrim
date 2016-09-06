@@ -10,7 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 
 public class Utils {
-	
+
 	public static String[] tuplets = {"zero-adsf", "one-asdf", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octople", "nontople", "decuple"};
 
 	public static boolean isPointInRegion(int left, int top, int right, int bottom, int pointX, int pointY) {
@@ -32,6 +32,10 @@ public class Utils {
 
 	public static String getFortuneString(int fortuneAmount) {
 		return tuplets[fortuneAmount];
+	}
+
+	public static int gaussianSum(int n) {
+		return (n * n + n) / 2;
 	}
 
 }

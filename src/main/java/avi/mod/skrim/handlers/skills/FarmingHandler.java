@@ -7,6 +7,7 @@ import net.minecraft.block.BlockBeetroot;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.properties.PropertyInteger;
@@ -34,10 +35,7 @@ public class FarmingHandler {
 			// Don't want to always give xp, only for fully grown stuff.
 			if (farming.validFortuneTarget(state) || target instanceof BlockPumpkin) {
 				int addXp = farming.getXp(Utils.getBlockName(target));
-				if (addXp > 0) {
-					farming.xp += addXp;
-					farming.levelUp((EntityPlayerMP) player);
-				}
+				farming.addXp((EntityPlayerMP) player, addXp);
 			}
 		}
 	}
@@ -60,8 +58,7 @@ public class FarmingHandler {
               drops.add(drops.get(i).copy());
             }
           }
-          farming.xp += 100; // And 100 xp!
-          farming.levelUp((EntityPlayerMP) player);
+          farming.addXp((EntityPlayerMP) player, 100);
 				}
 			}
 		}
@@ -76,7 +73,7 @@ public class FarmingHandler {
 	  	IBlockState targetState = event.getPlacedAgainst();
 	  	Block placedBlock = placedState.getBlock();
 	  	Block targetBlock = targetState.getBlock();
-	  	if (farming.validCrop(placedState) && targetBlock instanceof BlockFarmland) {
+	  	if (farming.validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
 	  		World world = event.getWorld();
 	  		PropertyInteger prop = null;
 	  		int growthStage = farming.getGrowthStage();
@@ -89,7 +86,7 @@ public class FarmingHandler {
 	  			}
 				} else if (placedBlock instanceof BlockCocoa) {
 					// Because fuck it.
-					int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6};
+					int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6};
 					growthStage = cocoaStages[growthStage];
 	  		} else if (placedBlock instanceof BlockCrops) {
 	  			prop = BlockCrops.AGE;

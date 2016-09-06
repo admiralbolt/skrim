@@ -9,6 +9,7 @@ import org.lwjgl.input.Mouse;
 import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.ISkill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.Skills;
 
 import net.minecraft.block.BlockTNT;
@@ -85,7 +86,7 @@ public class SkillScreen extends GuiScreen {
     this.top = top;
     this.boundTop = this.top + 3;
     this.boundBottom = this.top + 165 - 3;
-    this.levelTextLeft = this.left + 176 - 50;
+    this.levelTextLeft = this.left + 176 - 55;
   }
 
   @Override
@@ -226,9 +227,7 @@ public class SkillScreen extends GuiScreen {
         int abilityLeft = startLeft + (i - 1) * (this.abilityIconSize + this.abilityIconPadding);
         int abilityRight = abilityLeft + this.abilityIconSize;
         if (Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) {
-          List<String> abilityText = new ArrayList<String>();
-          abilityText.add("default ability hover text.");
-          this.drawHoveringText(abilityText, mouseX, mouseY);
+          this.drawHoveringText(SkillAbility.getAbilityTooltip(skill.getAbility(i), skill.hasAbility(i)), mouseX, mouseY);
         }
       }
     }

@@ -8,7 +8,9 @@ import java.util.Map;
 import scala.actors.threadpool.Arrays;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.items.CustomFishHook;
 import net.minecraft.block.BlockBush;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -19,12 +21,18 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModItems {
 
@@ -46,6 +54,8 @@ public class ModItems {
   public static CustomFood overwriteRabbitStew;
   public static CustomFood overwriteSteak;
 	public static CustomFood canesChicken;
+	
+	public static CustomFishingRod fishingRod;
 
   public static EnumRarity ARTIFACT_RARITY = EnumHelper.addRarity("artifact", TextFormatting.GOLD, "Artifact");
 
@@ -76,7 +86,13 @@ public class ModItems {
     overwriteSteak = register(new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
     overwriteRabbit = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
 		canesChicken = register(new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab));
-
+		
+		// Overwrite that fishing rod!
+		fishingRod = register(new CustomFishingRod("fishing_rod"));
+		EntityRegistry.registerModEntity(CustomFishHook.class, "CustomFishHook", 0, Skrim.instance, 64, 5, true);
+		EntityRegistration customFishHookRegistration = EntityRegistry.instance().lookupModSpawn(CustomFishHook.class, false);
+		customFishHookRegistration.setCustomSpawning(null, true);
+		
     // Artifact Armors
     bootsOfSpringheelJak = register(new ArtifactArmor("boots_of_springheel_jak", ARTIFACT_DARK, 1, EntityEquipmentSlot.FEET));
 
@@ -84,6 +100,11 @@ public class ModItems {
     raisingCanesFrySword = register(new ArtifactSword("raising_canes_fry_sword", ARTIFACT_DEFAULT));
 
     registerRabbitStew();
+  }
+  
+  @SideOnly(Side.CLIENT)
+  private static void registerRendering() {
+  	RenderingRegistry.registerEntityRenderingHandler(CustomFishHook.class, new RenderCustomFish());
   }
 
 

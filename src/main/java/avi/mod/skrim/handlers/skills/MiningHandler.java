@@ -1,22 +1,39 @@
 package avi.mod.skrim.handlers.skills;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IThreadListener;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.Utils;
+import avi.mod.skrim.network.FallDistancePacket;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.mining.SkillMining;
 
 public class MiningHandler {
+	
+	public List<EntityPlayer> shouldRemove = new ArrayList<EntityPlayer>();
 
   @SubscribeEvent
 	public void onBlockBreak(BlockEvent.BreakEvent event) {
@@ -71,5 +88,73 @@ public class MiningHandler {
 			}
 		}
 	}
+
+  @SubscribeEvent
+  public void onFireDamage(LivingHurtEvent event) {
+    Entity entity = event.getEntity();
+    if (entity instanceof EntityPlayer) {
+      final EntityPlayer player = (EntityPlayer) entity;
+      if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+        Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+        if (mining.hasAbility(2)) {
+        	BlockPos pos = player.getPosition();
+        	if (pos.getY() <= 40) {
+            DamageSource source = event.getSource();
+		        if (source.getDamageType().equals("lava") || source.getDamageType().equals("inFire")) {
+		        	event.setAmount((float) (event.getAmount() * 0.5));
+		        	player.extinguish();
+		        	new Timer().schedule(
+								new TimerTask() {
+									@Override
+									public void run() {
+										player.extinguish();
+									}
+								}, 400
+							);
+		        }
+        	}
+        }
+      }
+    }
+  }
+  
+  @SubscribeEvent
+  public void climbWall(LivingUpdateEvent event) {
+  	Entity entity = event.getEntity();
+    if (entity instanceof EntityPlayer) {
+      final EntityPlayer player = (EntityPlayer) entity;
+      if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+      	Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+      	if (mining.hasAbility(1)) {
+      		BlockPos pos = player.getPosition();
+      		if (pos.getY() <= 40) {
+      			player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 60, 1, true, false));
+      			if (!this.shouldRemove.contains(player)) {
+      				shouldRemove.add(player);
+      			}
+      		} else {
+      			if (this.shouldRemove.contains(player)) {
+      				player.removePotionEffect(Potion.getPotionById(16));
+      				shouldRemove.remove(player);
+      			}
+      		}
+      	}
+        if (mining.hasAbility(3)) {
+        	if (player.isCollidedHorizontally) {
+        		System.out.println("player.side: " + player.worldObj.isRemote + ", fall distance: " + player.fallDistance);
+        		System.out.println("player instanceof: " + (player instanceof EntityPlayerMP));
+        		player.motionY = Math.min(0.5, player.motionY + 0.2);
+        		if (player.motionY > 0) {
+        			player.fallDistance = 0.0F;
+        		} else {
+        			player.fallDistance -= 1F;
+        		}
+        		// SkrimPacketHandler.INSTANCE.sendToServer(new FallDistancePacket(player.fallDistance));
+        	}
+        	
+        }
+      }
+    }
+  }
 
 }

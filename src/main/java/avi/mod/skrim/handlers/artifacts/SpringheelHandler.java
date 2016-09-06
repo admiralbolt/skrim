@@ -45,6 +45,7 @@ public class SpringheelHandler {
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
 			InventoryPlayer inventory = player.inventory;
+			System.out.println("fall Distance: " + player.fallDistance + ", event.distance = " + event.getDistance());
 			if (inventory != null) {
 				ItemStack stack = inventory.armorInventory[0];
 				if (stack != null) {

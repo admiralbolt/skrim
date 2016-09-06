@@ -41,7 +41,7 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent event) {
-		SkrimPacketHandler.registerSkillPackets();
+		SkrimPacketHandler.registerPackets();
 		NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
 	}
 

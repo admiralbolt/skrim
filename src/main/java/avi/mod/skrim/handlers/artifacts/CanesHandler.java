@@ -29,9 +29,11 @@ public class CanesHandler {
     if (entity instanceof EntityPlayer) {
       EntityPlayer player = (EntityPlayer) entity;
       ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-      Item sword = stack.getItem();
-      if (sword == ModItems.raisingCanesFrySword) {
-      	event.setAmount(event.getAmount() * 10);
+      if (stack != null) {
+	      Item sword = stack.getItem();
+	      if (sword == ModItems.raisingCanesFrySword) {
+	      	event.setAmount(event.getAmount() * 10);
+	      }
       }
     }
   }
