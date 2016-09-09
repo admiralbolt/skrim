@@ -1,18 +1,15 @@
 package avi.mod.skrim.items;
 
-import avi.mod.skrim.items.CustomFishHook;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderFish;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -21,10 +18,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCustomFish extends Render<CustomFishHook> {
+public class RenderCustomFishHook extends Render<CustomFishHook> {
 	private static final ResourceLocation FISH_PARTICLES = new ResourceLocation("textures/particle/particles.png");
 
-	public RenderCustomFish(RenderManager renderManagerIn) {
+	public RenderCustomFishHook(RenderManager renderManagerIn) {
 		super(renderManagerIn);
 	}
 
@@ -121,7 +118,7 @@ public class RenderCustomFish extends Render<CustomFishHook> {
 			tessellator.draw();
 			GlStateManager.enableLighting();
 			GlStateManager.enableTexture2D();
-			super.doRender(entity, x, y, z, entityYaw, partialTicks);
+			// super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		}
 	}
 
@@ -131,5 +128,4 @@ public class RenderCustomFish extends Render<CustomFishHook> {
 	protected ResourceLocation getEntityTexture(CustomFishHook entity) {
 		return FISH_PARTICLES;
 	}
-	
 }

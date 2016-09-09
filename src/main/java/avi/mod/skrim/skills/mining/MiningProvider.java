@@ -12,6 +12,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.skills.SkillProvider;
+import avi.mod.skrim.skills.Skills;
 
 public class MiningProvider {
 

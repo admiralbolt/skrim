@@ -39,6 +39,7 @@ public class Skill implements ISkill {
     this.name = name;
     this.level = level;
     this.xp = xp;
+    this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/" + name.toLowerCase() + ".png");
   }
 
   /**

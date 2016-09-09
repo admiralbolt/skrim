@@ -74,7 +74,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("§a" + fmt.format(this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r harvest drops.");
 		tooltip.add("   This bonus stacks with fortune.");
-		if (this.getGrowthStage() > 0) {
+		if (this.getGrowthStage() > 1) {
 			tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
 		}
 		return tooltip;
@@ -95,7 +95,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	 * Still pretty OPOP
 	 */
 	public int getGrowthStage() {
-		int growthStage = (int) Math.floor((double) this.level / 10);
+		int growthStage = (int) Math.floor((double) this.level / 10) + 1;
 		return (growthStage > 6) ? 6 : growthStage;
 	}
 

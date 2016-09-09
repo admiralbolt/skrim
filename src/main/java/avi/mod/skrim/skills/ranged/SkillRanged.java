@@ -4,9 +4,16 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
 
 public class SkillRanged extends Skill implements ISkillRanged {
 
@@ -31,6 +38,21 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("Ranged attacks deal §a" + fmt.format(this.getExtraDamage() * 100) + "%§r extra damage.");
 		return tooltip;
+	}
+
+	public static void applyRanged(LivingHurtEvent event) {
+		DamageSource source = event.getSource();
+		Entity entity = source.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
+				if (source.damageType == "arrow") {
+					SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);
+					event.setAmount(event.getAmount() + (float) (ranged.getExtraDamage() * event.getAmount()));
+					ranged.addXp((EntityPlayerMP) player, (int) (event.getAmount() * 10));
+				}
+			}
+		}
 	}
 
 }

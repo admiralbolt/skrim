@@ -7,6 +7,7 @@ import avi.mod.skrim.skills.mining.ISkillMining;
 import avi.mod.skrim.skills.mining.SkillMining;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.common.capabilities.Capability;
@@ -18,6 +19,10 @@ import io.netty.buffer.ByteBuf;
 public class FallDistancePacket implements IMessage {
 	
 	public float distance;
+	
+	public FallDistancePacket() {
+		
+	}
 	
 	public FallDistancePacket(float distance) {
 		this.distance = distance;
@@ -36,11 +41,9 @@ public class FallDistancePacket implements IMessage {
 	public static class FallDistancePacketHandler implements IMessageHandler<FallDistancePacket, IMessage> {
 		
 		public IMessage onMessage(final FallDistancePacket message, MessageContext ctx) {
-			System.out.println("message receieved.");
     	if (ctx.side.isServer()) {
-        final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
         if (player != null) {
-      		System.out.println("setting fall distance.");
       		IThreadListener mainThread = Minecraft.getMinecraft();
       		mainThread.addScheduledTask(new Runnable() {
       			@Override

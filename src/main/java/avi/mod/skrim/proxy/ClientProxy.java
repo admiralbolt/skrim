@@ -6,14 +6,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.capabilities.ModCapabilities;
-import avi.mod.skrim.handlers.ArtifactHandler;
-import avi.mod.skrim.handlers.CustomKeyHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
-import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.items.CustomFishHook;
+import avi.mod.skrim.items.RenderCustomFishHook;
 
 public class ClientProxy extends CommonProxy {
 
@@ -21,6 +20,7 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
+		RenderingRegistry.registerEntityRenderingHandler(CustomFishHook.class, new RenderCustomFishHook(Minecraft.getMinecraft().getRenderManager()));
 	}
 
 	@Override

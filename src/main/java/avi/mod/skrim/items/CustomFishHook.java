@@ -1,19 +1,27 @@
 package avi.mod.skrim.items;
 
+import io.netty.buffer.ByteBuf;
+
 import java.util.List;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+
+import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.fishing.SkillFishing;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.command.ICommandManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
@@ -25,6 +33,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -39,197 +48,167 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CustomFishHook extends EntityFishHook {
-	
-	private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.<Integer>createKey(EntityFishHook.class, DataSerializers.VARINT);
-  private BlockPos field_189740_d;
-  public int shake;
-  public EntityPlayer angler;
-  public Entity bobber;
-  private int xTile;
-  private int yTile;
-  private int zTile;
-  private Block inTile;
-  private boolean inGround;
-  private int ticksInGround;
-  private int ticksInAir;
-  private int baseCatchTime = 300;
-  private int ticksCatchable;
-  private int fishPosRotationIncrements;
-  private double fishX;
-  private double fishY;
-  private double fishZ;
-  private double fishYaw;
-  private double fishPitch;
-  @SideOnly(Side.CLIENT)
-  private double velocityX;
-  @SideOnly(Side.CLIENT)
-  private double velocityY;
-  @SideOnly(Side.CLIENT)
-  private double velocityZ;
+public class CustomFishHook extends EntityFishHook implements IEntityAdditionalSpawnData{
 
-  private boolean isAdmin = false;
+	private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.<Integer> createKey(EntityFishHook.class, DataSerializers.VARINT);
+	private BlockPos field_189740_d;
+	public int shake;
+	public EntityPlayer angler;
+	public Entity bobber;
+	private int xTile;
+	private int yTile;
+	private int zTile;
+	private Block inTile;
+	private boolean inGround;
+	private int ticksInGround;
+	private int ticksInAir;
+	private int baseCatchTime = 300;
+	private int ticksCatchable;
+	private int fishPosRotationIncrements;
+	private double fishX;
+	private double fishY;
+	private double fishZ;
+	private double fishYaw;
+	private double fishPitch;
+	@SideOnly(Side.CLIENT)
+	private double velocityX;
+	@SideOnly(Side.CLIENT)
+	private double velocityY;
+	@SideOnly(Side.CLIENT)
+	private double velocityZ;
+
+	private boolean isAdmin = false;
 	private int ticksCaughtDelay;
 	private int ticksCatchableDelay;
 	private float fishApproachAngle;
 
-  public CustomFishHook(World par1World) {
-      super(par1World);
-      this.xTile = -1;
-      this.yTile = -1;
-      this.zTile = -1;
-      this.inGround = false;
-      this.shake = 0;
-      this.ticksInAir = 0;
-      this.ticksCatchable = 0;
-      this.bobber = null;
-      this.setSize(0.25F, 0.25F);
-      this.ignoreFrustumCheck = true;
-  }
+	public CustomFishHook(World par1World) {
+		super(par1World);
+		this.xTile = -1;
+		this.yTile = -1;
+		this.zTile = -1;
+		this.inGround = false;
+		this.shake = 0;
+		this.ticksInAir = 0;
+		this.ticksCatchable = 0;
+		this.bobber = null;
+		this.field_189740_d = new BlockPos(-1, -1, -1);
+		this.setSize(0.25F, 0.25F);
+		this.ignoreFrustumCheck = true;
+	}
 
-  @SideOnly(Side.CLIENT)
-  public CustomFishHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
-      super(par1World, par2, par4, par6, par8EntityPlayer);
-      this.setPosition(par2, par4, par6);
-      this.ignoreFrustumCheck = true;
-      this.angler = par8EntityPlayer;
-      par8EntityPlayer.fishEntity = this;
+	@SideOnly(Side.CLIENT)
+	public CustomFishHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
+		super(par1World, par2, par4, par6, par8EntityPlayer);
+		this.setPosition(par2, par4, par6);
+		this.ignoreFrustumCheck = true;
+		this.angler = par8EntityPlayer;
+		par8EntityPlayer.fishEntity = this;
 
-      this.xTile = -1;
-      this.yTile = -1;
-      this.zTile = -1;
-      this.inGround = false;
-      this.shake = 0;
-      this.ticksInAir = 0;
-      this.ticksCatchable = 0;
-      this.bobber = null;
-      this.setSize(0.25F, 0.25F);
-      this.ignoreFrustumCheck = true;
-  }
+		this.xTile = -1;
+		this.yTile = -1;
+		this.zTile = -1;
+		this.inGround = false;
+		this.shake = 0;
+		this.ticksInAir = 0;
+		this.ticksCatchable = 0;
+		this.bobber = null;
+		this.setSize(0.25F, 0.25F);
+		this.ignoreFrustumCheck = true;
+		this.field_189740_d = new BlockPos(par2, par4, par6);
+	}
 
-  public CustomFishHook(World par1World, EntityPlayer par2EntityPlayer) {
-      super(par1World, par2EntityPlayer);
-      this.xTile = -1;
-      this.yTile = -1;
-      this.zTile = -1;
-      this.inGround = false;
-      this.shake = 0;
-      this.ticksInAir = 0;
-      this.ticksCatchable = 0;
-      this.bobber = null;
-      this.ignoreFrustumCheck = true;
-      this.angler = par2EntityPlayer;
-      this.angler.fishEntity = this;
-      this.setSize(0.25F, 0.25F);
-      this.setLocationAndAngles(par2EntityPlayer.posX, par2EntityPlayer.posY + par2EntityPlayer.getEyeHeight(), par2EntityPlayer.posZ, par2EntityPlayer.rotationYaw, par2EntityPlayer.rotationPitch);
-      this.posX -= MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
-      this.posY -= 0.10000000149011612D;
-      this.posZ -= MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
-      this.setPosition(this.posX, this.posY, this.posZ);
-      float f = 0.4F;
-      this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f;
-      this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f;
-      this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI) * f;
+	public CustomFishHook(World par1World, EntityPlayer par2EntityPlayer) {
+		super(par1World, par2EntityPlayer);
+		this.xTile = -1;
+		this.yTile = -1;
+		this.zTile = -1;
+		this.inGround = false;
+		this.shake = 0;
+		this.ticksInAir = 0;
+		this.ticksCatchable = 0;
+		this.bobber = null;
+		this.ignoreFrustumCheck = true;
+		this.angler = par2EntityPlayer;
+		this.angler.fishEntity = this;
+		this.setSize(0.25F, 0.25F);
+		this.setLocationAndAngles(par2EntityPlayer.posX, par2EntityPlayer.posY + par2EntityPlayer.getEyeHeight(), par2EntityPlayer.posZ, par2EntityPlayer.rotationYaw, par2EntityPlayer.rotationPitch);
+		this.posX -= MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
+		this.posY -= 0.10000000149011612D;
+		this.posZ -= MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F;
+		this.setPosition(this.posX, this.posY, this.posZ);
+		this.field_189740_d = new BlockPos(this.posX, this.posY, this.posZ);
+		float f = 0.4F;
+		this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f;
+		this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f;
+		this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI) * f;
 
-      float velocity = 1.5F;
-//      if (shortCast > 0) {
-//          velocity *= (0.1F * shortCast);
-//      }
-//      if (longCast > 0) {
-//          velocity += velocity * (0.2F * longCast);
-//      }
+		float velocity = 1.7F;
 
-      this.calculateVelocity(this.motionX, this.motionY, this.motionZ, velocity, 1.0F);
-  }
+		this.calculateVelocity(this.motionX, this.motionY, this.motionZ, velocity, 1.0F);
+	}
 
-  public CustomFishHook(World world, EntityPlayer entityplayer, boolean b) {
-      this(world, entityplayer);
+	public CustomFishHook(World world, EntityPlayer entityplayer, boolean b) {
+		this(world, entityplayer);
+		isAdmin = b;
+	}
 
-      isAdmin = b;
-  }
+	public void setBaseCatchTime(int amount) {
+		this.baseCatchTime = amount;
+	}
 
-  public void setBaseCatchTime(int amount) {
-      this.baseCatchTime = amount;
-  }
+	@Override
+	protected void entityInit() {
+		this.getDataManager().register(DATA_HOOKED_ENTITY, Integer.valueOf(0));
+	}
 
-  @Override
-  protected void entityInit() {
-  }
+	public void calculateVelocity(double par1, double par3, double par5, float par7, float par8) {
+		float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
+		par1 /= f2;
+		par3 /= f2;
+		par5 /= f2;
+		par1 += this.rand.nextGaussian() * 0.007499999832361937D * par8;
+		par3 += this.rand.nextGaussian() * 0.007499999832361937D * par8;
+		par5 += this.rand.nextGaussian() * 0.007499999832361937D * par8;
+		par1 *= par7;
+		par3 *= par7;
+		par5 *= par7;
+		this.motionX = par1;
+		this.motionY = par3;
+		this.motionZ = par5;
+		float f3 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
+		this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
+		this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(par3, f3) * 180.0D / Math.PI);
+		this.ticksInGround = 0;
+	}
 
-  public void calculateVelocity(double par1, double par3, double par5, float par7, float par8) {
-    float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
-    par1 /= f2;
-    par3 /= f2;
-    par5 /= f2;
-    par1 += this.rand.nextGaussian() * 0.007499999832361937D * par8;
-    par3 += this.rand.nextGaussian() * 0.007499999832361937D * par8;
-    par5 += this.rand.nextGaussian() * 0.007499999832361937D * par8;
-    par1 *= par7;
-    par3 *= par7;
-    par5 *= par7;
-    this.motionX = par1;
-    this.motionY = par3;
-    this.motionZ = par5;
-    float f3 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
-    this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
-    this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(par3, f3) * 180.0D / Math.PI);
-    this.ticksInGround = 0;
-  }
+	public boolean isFishingRod(ItemStack stack) {
+		Item item = stack.getItem();
+		return (item instanceof CustomFishingRod);
+	}
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  /**
-   * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
-   * posY, posZ, yaw, pitch
-   */
-  public void setPositionAndRotationDirect(double par1, double par3, double par5, float par7, float par8, int par9, boolean p_180426_10_) {
-      this.fishX = par1;
-      this.fishY = par3;
-      this.fishZ = par5;
-      this.fishYaw = par7;
-      this.fishPitch = par8;
-      this.fishPosRotationIncrements = par9;
-      this.motionX = this.velocityX;
-      this.motionY = this.velocityY;
-      this.motionZ = this.velocityZ;
-  }
+	/**
+	 * Called to update the entity's position/logic.
+	 */
+	@Override
+	public void onUpdate() {
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  /**
-   * Sets the velocity to the args. Args: x, y, z
-   */
-  public void setVelocity(double par1, double par3, double par5) {
-      this.velocityX = this.motionX = par1;
-      this.velocityY = this.motionY = par3;
-      this.velocityZ = this.motionZ = par5;
-  }
-
-  public boolean isFishingRod(ItemStack stack) {
-      Item item = stack.getItem();
-      return (item instanceof CustomFishingRod);
-  }
-
-  /**
-   * Called to update the entity's position/logic.
-   */
-  public void onUpdate() {
-  	
 		if (this.worldObj.isRemote) {
-			int i = ((Integer) this.getDataManager().get(DATA_HOOKED_ENTITY)) .intValue();
+			int i = ((Integer) this.getDataManager().get(DATA_HOOKED_ENTITY)).intValue();
 			if (i > 0 && this.caughtEntity == null) {
 				this.caughtEntity = this.worldObj.getEntityByID(i - 1);
+				this.inGround = false;
 			}
 		} else {
 			if (this.angler != null) {
 				ItemStack itemstack = this.angler.getHeldItemMainhand();
-	
-				if (this.angler.isDead || !this.angler.isEntityAlive()
-						|| itemstack == null || itemstack.getItem() != ModItems.fishingRod
-						|| this.getDistanceSqToEntity(this.angler) > 1024.0D) {
+
+				if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() != ModItems.fishingRod || this.getDistanceSqToEntity(this.angler) > 1024.0D) {
 					this.setDead();
 					this.angler.fishEntity = null;
 					return;
@@ -267,7 +246,7 @@ public class CustomFishHook extends EntityFishHook {
 				if (this.worldObj.getBlockState(this.field_189740_d).getBlock() == this.inTile) {
 					++this.ticksInGround;
 
-					if (this.ticksInGround == 1200) {
+					if (this.ticksInGround == 600) {
 						this.setDead();
 					}
 					return;
@@ -426,7 +405,6 @@ public class CustomFishHook extends EntityFishHook {
 							}
 						}
 					} else if (this.ticksCaughtDelay > 0) {
-						System.out.println("ticksCaughtDelay: " + ticksCaughtDelay);
 						this.ticksCaughtDelay -= i1;
 						float f4 = 0.15F;
 
@@ -484,35 +462,29 @@ public class CustomFishHook extends EntityFishHook {
 				this.setPosition(this.posX, this.posY, this.posZ);
 			}
 		}
-  }
+	}
 
-  /**
-   * (abstract) Protected helper method to write subclass entity data to NBT.
-   */
-  @Override
-  public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-      par1NBTTagCompound.setShort("xTile", (short) this.xTile);
-      par1NBTTagCompound.setShort("yTile", (short) this.yTile);
-      par1NBTTagCompound.setShort("zTile", (short) this.zTile);
-      par1NBTTagCompound.setByte("inTile", (byte) Block.getIdFromBlock(this.inTile));
-      par1NBTTagCompound.setByte("shake", (byte) this.shake);
-      par1NBTTagCompound.setByte("inGround", (byte) (this.inGround ? 1 : 0));
-  }
+	@Override
+	protected void bringInHookedEntity() {
+		double d0 = this.angler.posX - this.posX;
+		double d1 = this.angler.posY - this.posY;
+		double d2 = this.angler.posZ - this.posZ;
+		double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
+		double d4 = 0.1D;
+		this.caughtEntity.motionX += d0 * 0.1D;
+		double addY = d1 * 0.1D + (double) MathHelper.sqrt_double(d3) * 0.08D;
+		if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+			SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
+			if (fishing.hasAbility(4)) {
+				addY = 5;
+			}
+		}
+		this.caughtEntity.motionY += addY;
+		this.caughtEntity.motionZ += d2 * 0.1D;
+	}
 
-  /**
-   * (abstract) Protected helper method to read subclass entity data from NBT.
-   */
-  @Override
-  public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-      this.xTile = par1NBTTagCompound.getShort("xTile");
-      this.yTile = par1NBTTagCompound.getShort("yTile");
-      this.zTile = par1NBTTagCompound.getShort("zTile");
-      this.inTile = Block.getBlockById(par1NBTTagCompound.getByte("inTile") & 255);
-      this.shake = par1NBTTagCompound.getByte("shake") & 255;
-      this.inGround = par1NBTTagCompound.getByte("inGround") == 1;
-  }
-  
-  public int handleHookRetraction() {
+	@Override
+	public int handleHookRetraction() {
 		if (this.worldObj.isRemote) {
 			return 0;
 		} else {
@@ -538,30 +510,73 @@ public class CustomFishHook extends EntityFishHook {
 					entityitem.motionZ = d2 * 0.1D;
 					this.worldObj.spawnEntityInWorld(entityitem);
 					this.angler.worldObj.spawnEntityInWorld(new EntityXPOrb(this.angler.worldObj, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
+					if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+						SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
+						if (fishing.hasAbility(2)) {
+							for (int q = 0; q < 2; q++) {
+								EntityItem copy = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, itemstack);
+								copy.motionX = d0 * 0.1D;
+								copy.motionY = d1 * 0.1D + (double) MathHelper.sqrt_double(d3) * 0.08D;
+								copy.motionZ = d2 * 0.1D;
+								this.worldObj.spawnEntityInWorld(copy);
+							}
+						}
+					}
+				}
+				if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+					SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
+					fishing.addXp((EntityPlayerMP) this.angler, 50);
+					if (this.rand.nextDouble() < fishing.getTreasureChance()) {
+						EntityItem treasure = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, RandomTreasure.generate());
+						double d0 = this.angler.posX - this.posX;
+						double d1 = this.angler.posY - this.posY;
+						double d2 = this.angler.posZ - this.posZ;
+						double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
+						treasure.motionX = d0 * 0.1D;
+						treasure.motionY = d1 * 0.1D + (double) MathHelper.sqrt_double(d3) * 0.08D;
+						treasure.motionZ = d2 * 0.1D;
+						this.worldObj.spawnEntityInWorld(treasure);
+						fishing.addXp((EntityPlayerMP) this.angler, 50);
+					}
+					if (fishing.hasAbility(3)) {
+						this.angler.worldObj.spawnEntityInWorld(new EntityXPOrb(this.angler.worldObj, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(16) + 9));
+					}
 				}
 
 				i = 1;
 			}
 
 			if (this.inGround) {
-				i = 2;
+				if (this.isDead) {
+					if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+						SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
+						if (fishing.hasAbility(1)) {
+							MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+							ICommandManager cm = server.getCommandManager();
+							BlockPos pos = this.getPosition();
+							cm.executeCommand(server, "/tp " + this.angler.getName() + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+						}
+						i = 0;
+					} else {
+						i = 2;
+					}
+				}
 			}
 
 			this.setDead();
 			this.angler.fishEntity = null;
 			return i;
 		}
-  }
+	}
 
-  /**
-   * Will get destroyed next tick.
-   */
-  @Override
-  public void setDead() {
-      super.setDead();
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		buffer.writeInt(this.angler != null ? this.angler.getEntityId() : 0);
+	}
 
-      if (this.angler != null) {
-          this.angler.fishEntity = null;
-      }
-  }
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		this.angler = (EntityPlayer) this.worldObj.getEntityByID(additionalData.readInt());
+	}
+	
 }

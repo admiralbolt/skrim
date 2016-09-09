@@ -1,11 +1,11 @@
 package avi.mod.skrim.capabilities;
 
-import avi.mod.skrim.skills.PlayerSkills;
+import avi.mod.skrim.skills.Skills;
 
 public class ModCapabilities {
 
   public static void registerCapabilities() {
-    PlayerSkills.register();
+    Skills.register();
   }
 
 }

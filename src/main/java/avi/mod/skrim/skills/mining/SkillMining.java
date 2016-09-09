@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherBrick;
@@ -20,14 +22,33 @@ import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.BlockStoneSlabNew;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import avi.mod.skrim.Utils;
+import avi.mod.skrim.network.FallDistancePacket;
+import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
 
 public class SkillMining extends Skill implements ISkillMining {
 
 	public static SkillStorage<ISkillMining> skillStorage = new SkillStorage<ISkillMining>();
+	public static List<EntityPlayer> shouldRemove = new ArrayList<EntityPlayer>();
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
@@ -129,5 +150,122 @@ public class SkillMining extends Skill implements ISkillMining {
 		String blockName = Utils.snakeCase(block.getLocalizedName());
 		return ((block instanceof BlockOre || block instanceof BlockRedstoneOre) && validFortuneOres.contains(blockName));
 	}
+
+	public static void addMiningXp(BlockEvent.BreakEvent event) {
+		EntityPlayer player = event.getPlayer();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+			IBlockState state = event.getState();
+			Block target = state.getBlock();
+			String blockName;
+			if (target instanceof BlockStone) {
+				blockName = state.getValue(BlockStone.VARIANT).toString();
+			} else {
+				blockName = Utils.snakeCase(target.getLocalizedName());
+			}
+			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+			int addXp = mining.getXp(blockName);
+			if (addXp > 0) {
+				mining.addXp((EntityPlayerMP) player, addXp);
+			}
+		}
+	}
+
+	public static void mineFaster(PlayerEvent.BreakSpeed event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			if (mining.validSpeedTarget(state)) {
+				event.setNewSpeed((float) (event.getOriginalSpeed() + mining.getSpeedBonus()));
+			}
+		}
+	}
+
+	public static void onMineOre(BlockEvent.HarvestDropsEvent event) {
+		EntityPlayer player = event.getHarvester();
+		if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			if (mining.validFortuneTarget(state)) {
+				double random = Math.random();
+				if (random < mining.getFortuneChance()) {
+					List<ItemStack> drops = event.getDrops();
+					ItemStack copyDrop = drops.get(0);
+					// Let's not loop infinitely, that seems like a good idea.
+					int dropSize = drops.size();
+					for (int i = 0; i < (dropSize * (mining.getFortuneAmount() - 1)); i++) {
+						drops.add(copyDrop.copy());
+					}
+				}
+			}
+		}
+	}
+
+  public static void reduceLava(LivingHurtEvent event) {
+    Entity entity = event.getEntity();
+    if (entity instanceof EntityPlayer) {
+      final EntityPlayer player = (EntityPlayer) entity;
+      if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+        Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+        if (mining.hasAbility(2)) {
+        	BlockPos pos = player.getPosition();
+        	if (pos.getY() <= 40) {
+            DamageSource source = event.getSource();
+		        if (source.getDamageType().equals("lava") || source.getDamageType().equals("inFire")) {
+							System.out.println("input amount: " + event.getAmount());
+		        	event.setAmount((float) (event.getAmount() * 0.5));
+		        	player.extinguish();
+		        	new Timer().schedule(
+								new TimerTask() {
+									@Override
+									public void run() {
+										player.extinguish();
+									}
+								}, 400
+							);
+		        }
+        	}
+        }
+      }
+    }
+  }
+
+  public static void climbWall(LivingUpdateEvent event) {
+  	Entity entity = event.getEntity();
+    if (entity instanceof EntityPlayer) {
+      final EntityPlayer player = (EntityPlayer) entity;
+      if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+      	Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+      	if (mining.hasAbility(1)) {
+      		BlockPos pos = player.getPosition();
+      		if (pos.getY() <= 40) {
+      			player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 60, 1, true, false));
+      			if (!shouldRemove.contains(player)) {
+      				shouldRemove.add(player);
+      			}
+      		} else {
+      			if (shouldRemove.contains(player)) {
+      				player.removePotionEffect(Potion.getPotionById(16));
+      				shouldRemove.remove(player);
+      			}
+      		}
+      	}
+        if (mining.hasAbility(3)) {
+        	if (player.isCollidedHorizontally) {
+        		KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
+        		if (jumpKey.isKeyDown()) {
+	        		player.motionY = Math.min(0.4, player.motionY + 0.1);
+	        		if (player.motionY > 0) {
+	        			player.fallDistance = 0.0F;
+	        		} else {
+	        			player.fallDistance -= 1F;
+	        		}
+	        		SkrimPacketHandler.INSTANCE.sendToServer(new FallDistancePacket(player.fallDistance));
+        		}
+        	}
+        }
+      }
+    }
+  }
 
 }

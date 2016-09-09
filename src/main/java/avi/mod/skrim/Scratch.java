@@ -1,6 +1,25 @@
 package avi.mod.skrim;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.event.brewing.PotionBrewEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+
 public class Scratch {
+	
+	@SubscribeEvent
+	private void onRepair(AnvilRepairEvent event) {
+		ItemStack leftInput = event.getItemInput();
+		ItemStack rightInput = event.getIngredientInput();
+		ItemStack output = event.getItemResult();
+	}
 
   //  @SubscribeEvent
 //  private void animalTest(EntityInteract event) {
@@ -12,15 +31,21 @@ public class Scratch {
 //	  }
 //  }
 
-//  @SubscribeEvent
-//  private void onBrew(PotionBrewEvent.Post event) {
-//	 event.getItem(index)
-//  }
+  @SubscribeEvent
+  private void onBrew(PotionBrewEvent.Post event) {
+  	event.getItem(0);
+  }
 //
-//  @SubscribeEvent
-//  private void onDamage(LivingHurtEvent event) {
-//
-//  }
+  @SubscribeEvent
+  private void onDamage(LivingHurtEvent event) {
+  	Entity asdf = event.getEntityLiving();
+  	if (asdf instanceof EntityPlayer) {
+  		EntityPlayer player = (EntityPlayer) asdf;
+  		player.getAttributeMap();
+  		IAttributeInstance maxHealth = player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+  		maxHealth.applyModifier(new AttributeModifier("more max health!", 0, 0));
+  	}
+  }
 //
 //  @SubscribeEvent
 //  private void onEnchantment(EnchantmentEvent event) {

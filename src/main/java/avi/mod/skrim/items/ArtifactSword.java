@@ -93,8 +93,6 @@ public class ArtifactSword extends ItemSword implements ItemModelProvider {
 	public static void doFireSweep(EntityPlayer player, EntityLivingBase targetEntity) {
 		for (EntityLivingBase entitylivingbase : player.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
 			if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase) && player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {
-//				entitylivingbase.knockBack(player, 0.4F, (double)MathHelper.sin(player.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(player.rotationYaw * 0.017453292F)));
-//	      entitylivingbase.attackEntityFrom(DamageSource.causePlayerDamage(player), 1.0F);
 	      entitylivingbase.setFire(4);
 	    }
 		}

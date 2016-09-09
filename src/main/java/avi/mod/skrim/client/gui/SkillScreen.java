@@ -45,7 +45,7 @@ public class SkillScreen extends GuiScreen {
   /**
    * Max scroll position.
    */
-  private int maxScroll = 340;
+  private int maxScroll = 500;
   private int scrollBarWidth = 6;
   private int scrollBarHeight = 40;
   private int scrollPaddingLeft = 5;
@@ -132,18 +132,21 @@ public class SkillScreen extends GuiScreen {
      */
     for (int q = 0; q <= 5; q++) {
       for (int i = 0; i < skills.size(); i++) {
+      	Skill skill = skills.get(i);
+      	int left = leftValues.get(i);
+      	int top = topValues.get(i);
         if (q == 0) {
-          this.drawSkillHeader(skills.get(i), leftValues.get(i), topValues.get(i));
+          this.drawSkillHeader(skill, left, top);
         } else if (q == 1) {
-          this.drawSkillLevelUp(skills.get(i), leftValues.get(i), topValues.get(i));
+          this.drawSkillLevelUp(skill, left, top);
         } else if (q == 2) {
-          this.drawSkillIcon(skills.get(i), leftValues.get(i), topValues.get(i));
+          this.drawSkillIcon(skill, left, top);
         } else if (q == 3) {
-          this.drawAbilityIcons(skills.get(i), leftValues.get(i), topValues.get(i));
+          this.drawAbilityIcons(skill, left, top);
         } else if (q == 4) {
-          this.drawAbilityHoverText(skills.get(i), leftValues.get(i), topValues.get(i), mouseX, mouseY);
+          this.drawAbilityHoverText(skill, left, top, mouseX, mouseY);
         } else if (q == 5) {
-          this.drawSkillHoverText(skills.get(i), leftValues.get(i), topValues.get(i), mouseX, mouseY);
+          this.drawSkillHoverText(skill, left, top, mouseX, mouseY);
         }
       }
     }

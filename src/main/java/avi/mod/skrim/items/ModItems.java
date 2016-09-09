@@ -90,8 +90,6 @@ public class ModItems {
 		// Overwrite that fishing rod!
 		fishingRod = register(new CustomFishingRod("fishing_rod"));
 		EntityRegistry.registerModEntity(CustomFishHook.class, "CustomFishHook", 0, Skrim.instance, 64, 5, true);
-		EntityRegistration customFishHookRegistration = EntityRegistry.instance().lookupModSpawn(CustomFishHook.class, false);
-		customFishHookRegistration.setCustomSpawning(null, true);
 		
     // Artifact Armors
     bootsOfSpringheelJak = register(new ArtifactArmor("boots_of_springheel_jak", ARTIFACT_DARK, 1, EntityEquipmentSlot.FEET));
@@ -100,11 +98,6 @@ public class ModItems {
     raisingCanesFrySword = register(new ArtifactSword("raising_canes_fry_sword", ARTIFACT_DEFAULT));
 
     registerRabbitStew();
-  }
-  
-  @SideOnly(Side.CLIENT)
-  private static void registerRendering() {
-  	RenderingRegistry.registerEntityRenderingHandler(CustomFishHook.class, new RenderCustomFish());
   }
 
 
