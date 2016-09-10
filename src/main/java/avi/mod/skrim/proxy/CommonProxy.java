@@ -18,7 +18,6 @@ import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.handlers.DeathEvent;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.JoinWorldHandler;
-import avi.mod.skrim.handlers.skills.BotanyHandler;
 import avi.mod.skrim.handlers.skills.CookingHandler;
 import avi.mod.skrim.handlers.skills.DiggingHandler;
 import avi.mod.skrim.handlers.skills.FarmingHandler;
@@ -65,7 +64,6 @@ public class CommonProxy {
 	}
 	
 	public static void registerSkills() {
-    MinecraftForge.EVENT_BUS.register(new BotanyHandler());
     MinecraftForge.EVENT_BUS.register(new CookingHandler());
     MinecraftForge.EVENT_BUS.register(new DiggingHandler());
     MinecraftForge.EVENT_BUS.register(new FarmingHandler());

@@ -72,8 +72,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	}
 
 	public double getCritChance() {
-		return 1;
-		// return this.level * 0.0075;
+		return this.level * 0.005;
 	}
 
 	@Override
@@ -120,8 +119,8 @@ public class SkillMelee extends Skill implements ISkillMelee {
 							player.worldObj.addWeatherEffect(smite);
 							if (!player.worldObj.isRemote) {
 								BlockPos blockpos = new BlockPos(targetEntity);
-                if (player.worldObj.getGameRules().getBoolean("doFireTick") 
-              		&& player.worldObj.isAreaLoaded(blockpos, 10) 
+                if (player.worldObj.getGameRules().getBoolean("doFireTick")
+              		&& player.worldObj.isAreaLoaded(blockpos, 10)
               		&& player.worldObj.getBlockState(blockpos).getMaterial() == Material.AIR
               		&& Blocks.FIRE.canPlaceBlockAt(player.worldObj, blockpos)) {
                     player.worldObj.setBlockState(blockpos, Blocks.FIRE.getDefaultState());

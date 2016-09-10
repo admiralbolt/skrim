@@ -23,8 +23,10 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import avi.mod.skrim.Utils;
+import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
@@ -46,6 +48,18 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	}
 
 	public int lastItemNumber;
+	public static List<Item> obsidianItems = new ArrayList<Item>();
+	static {
+		obsidianItems.add(ModItems.obsidianAxe);
+		obsidianItems.add(ModItems.obsidianBoots);
+		obsidianItems.add(ModItems.obsidianChest);
+		obsidianItems.add(ModItems.obsidianHelmet);
+		obsidianItems.add(ModItems.obsidianHoe);
+		obsidianItems.add(ModItems.obsidianPants);
+		obsidianItems.add(ModItems.obsidianPickaxe);
+		obsidianItems.add(ModItems.obsidianShovel);
+		obsidianItems.add(ModItems.obsidianSword);
+	}
 
 	public SkillBlacksmithing() {
 		this(1, 0);
@@ -189,6 +203,15 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	public static void verifyObsidian(ItemCraftedEvent event) {
+		Item targetItem = event.crafting.getItem();
+		if (targetItem != null && obsidianItems.contains(targetItem)) {
+			if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
+				Skills.replaceWithComponents(event);
 			}
 		}
 	}

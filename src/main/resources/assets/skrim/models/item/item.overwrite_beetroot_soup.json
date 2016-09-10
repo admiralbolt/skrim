@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "skrim:items/beetroot_soup"
+    "layer0": "skrim:food/beetroot_soup"
   }
 }

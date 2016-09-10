@@ -5,7 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import avi.mod.skrim.skills.*;
 import avi.mod.skrim.skills.blacksmithing.BlacksmithingProvider;
 import avi.mod.skrim.skills.blacksmithing.ISkillBlacksmithing;
@@ -107,5 +113,58 @@ public class Skills {
 		skillMap.put("ranged", RANGED);
 		skillMap.put("woodcutting", WOODCUTTING);
   }
+	
+	public static boolean canCraft(EntityPlayer player, Capability<? extends ISkill> cap, int level) {
+		if (player != null && player.hasCapability(cap, EnumFacing.NORTH)) {
+			Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
+			if (skill.level >= level) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void replaceWithComponents(ItemCraftedEvent event) {
+		if (event.player.inventory != null) {
+			Item targetItem = event.crafting.getItem();
+			event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
+			event.crafting.stackSize = 1;
+			ItemStack slot;
+			Item slotItem;
+			ItemStack addStack;
+			boolean first = true;
+			for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
+				slot = event.craftMatrix.getStackInSlot(i);
+				if (slot != null) {
+					slotItem = slot.getItem();
+					if (slotItem != null) {
+						addStack = new ItemStack(slotItem, 1);
+						if (first) {
+							event.crafting.setItem(slotItem);
+							first = false;
+						} else {
+							event.player.inventory.addItemStackToInventory(addStack);
+						}
+					}
+				}
+			}
+			/**
+			 * Iterate through slots and destroy all items :/
+			 */
+			ItemStack inventoryAt;
+			Item itemAt;
+			for (int i = 0; i < event.player.inventory.getSizeInventory(); i++) {
+				inventoryAt = event.player.inventory.getStackInSlot(i);
+				if (inventoryAt != null) {
+					itemAt = inventoryAt.getItem();
+					if (itemAt != null && itemAt == targetItem) {
+						event.player.inventory.removeStackFromSlot(i);
+					}
+				}
+			}
+		}
+	}
+	
+	
 
 }

@@ -1,7 +1,7 @@
 {
     "parent": "item/handheld_rod",
     "textures": {
-        "layer0": "skrim:items/fishing_rod_uncast"
+        "layer0": "skrim:tools/fishing_rod_uncast"
     },
     "overrides": [
         {

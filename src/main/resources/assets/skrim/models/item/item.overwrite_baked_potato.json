@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "skrim:items/baked_potato"
+    "layer0": "skrim:food/baked_potato"
   }
 }

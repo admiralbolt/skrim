@@ -16,6 +16,16 @@ item.canes_chicken.name=Raising Cane's® Chicken Strip
 
 item.fishing_rod.name=Skrim Fishing Rod
 
+item.obsidian_sword.name=Obsidian Sword
+item.obsidian_hoe.name=Obsidian Hoe
+item.obsidian_axe.name=Obsidian Axe
+item.obsidian_pickaxe.name=Obsidian Pickaxe
+item.obsidian_spade.name=Obsidian Shovel
+item.obsidian_boots.name=Obsidian Boots
+item.obsidian_pants.name=Obsidian Leggings
+item.obsidian_chest.name=Obsidian Chestplate
+item.obsidian_helmet.name=Obsidian Helmet
+
 
 item.boots_of_springheel_jak.name=Boots of Springheel Jak
 item.raising_canes_fry_sword.name=Raising Cane's® Sword of Frying

@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import avi.mod.skrim.items.CustomAxe;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
 
@@ -29,7 +30,7 @@ public class WoodcuttingHandler {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				ItemStack stack = player.getHeldItemMainhand();
 				Item item = (stack == null) ? null : stack.getItem();
-				if (Math.random() < woodcutting.getHewingChance() && item != null && item instanceof ItemAxe) {
+				if (Math.random() < woodcutting.getHewingChance() && item != null && (item instanceof ItemAxe || item instanceof CustomAxe)) {
 					BlockPos start = event.getPos();
 					woodcutting.hewTree(event.getWorld(), woodcutting, start, start);
 				}

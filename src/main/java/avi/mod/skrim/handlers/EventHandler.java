@@ -1,6 +1,10 @@
 package avi.mod.skrim.handlers;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -14,9 +18,12 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import avi.mod.skrim.client.gui.ArmorOverlay;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
+import avi.mod.skrim.skills.botany.SkillBotany;
 import avi.mod.skrim.skills.defense.SkillDefense;
 import avi.mod.skrim.skills.demolition.SkillDemolition;
 import avi.mod.skrim.skills.melee.SkillMelee;
@@ -29,11 +36,11 @@ public class EventHandler {
 	public void onLivingHurt(LivingHurtEvent event) {
 		SkillMelee.applyMelee(event);
 		SkillRanged.applyRanged(event);
-		SkillDefense.reduceDamage(event);
+		SkillDefense.applyDefense(event);
 		SkillDemolition.reduceExplosion(event);
 		SkillMining.reduceLava(event);
 		SkillBlacksmithing.ironHeart(event);
-		
+		SkillBotany.thornStyle(event);
 		ArtifactHandler.CanesHandler.slayChicken(event);
 	}
 
@@ -50,6 +57,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onBlockPlaced(BlockEvent.PlaceEvent event) {
 		SkillDemolition.onTntPlaced(event);
+		SkillBotany.flowerSplosion(event);
 	}
 
 	@SubscribeEvent
@@ -65,6 +73,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onHarvest(BlockEvent.HarvestDropsEvent event) {
 		SkillMining.onMineOre(event);
+		SkillBotany.soManyFlowers(event);
 	}
 
 	@SubscribeEvent
@@ -75,41 +84,52 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
 		SkillMining.addMiningXp(event);
+		SkillBotany.addBotanyXp(event);
 	}
 
 	@SubscribeEvent
 	public void onLivingDrop(LivingDropsEvent event) {
 		ArtifactHandler.CanesHandler.fryChicken(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onJump(LivingEvent.LivingJumpEvent event) {
 		ArtifactHandler.SpringheelHandler.jumpHigh(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onFall(LivingFallEvent event) {
 		ArtifactHandler.SpringheelHandler.preventFallDamage(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onTick(PlayerTickEvent event) {
 		SkillMelee.tickLeft(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onItemRepair(AnvilRepairEvent event) {
 		SkillBlacksmithing.enhanceRepair(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onItemSmelted(ItemSmeltedEvent event) {
 		SkillBlacksmithing.giveMoreIngots(event);
 	}
-	
+
+	@SubscribeEvent
+	public void onItemCrafted(ItemCraftedEvent event) {
+		SkillBlacksmithing.verifyObsidian(event);
+	}
+
 	@SubscribeEvent
 	public void onContainerOpen(PlayerContainerEvent.Open event) {
 		SkillBlacksmithing.saveItemNumber(event);
+	}
+
+	@SubscribeEvent
+	public void onRenderOverlay(RenderGameOverlayEvent.Pre event) {
+		SkillDefense.renderArmor(event);
 	}
 
 }

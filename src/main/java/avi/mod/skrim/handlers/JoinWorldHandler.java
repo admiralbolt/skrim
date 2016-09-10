@@ -5,7 +5,11 @@ import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.ISkill;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.defense.SkillDefense;
+import avi.mod.skrim.utils.Reflection;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -24,6 +28,10 @@ public class JoinWorldHandler {
 				if (player.hasCapability(cap, EnumFacing.NORTH)) {
 					Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
 					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
+					if (cap == Skills.DEFENSE) {
+						IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+						Reflection.hackAttributeTo(armor, "maximumValue", 20.0 + ((SkillDefense) skill).getExtraArmor());
+					}
 				}
 			}
 		}
@@ -39,6 +47,10 @@ public class JoinWorldHandler {
 				if (player.hasCapability(cap, EnumFacing.NORTH)) {
 					Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
 					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
+					if (cap == Skills.DEFENSE) {
+						IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+						Reflection.hackAttributeTo(armor, "maximumValue", 20.0 + ((SkillDefense) skill).getExtraArmor());
+					}
 				}
 			}
 		}
