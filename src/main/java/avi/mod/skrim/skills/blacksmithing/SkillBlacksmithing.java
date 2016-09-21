@@ -25,11 +25,11 @@ import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
-import avi.mod.skrim.Utils;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 
 public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
@@ -40,11 +40,11 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		xpMap.put("tile.stone", 1);
 		xpMap.put("tile.stonebricksmooth", 2);
 		xpMap.put("item.netherbrick", 3); // nether bonus
-		xpMap.put("tile.glass", 5);
-		xpMap.put("item.brick", 10);
-		xpMap.put("tile.clayhardened", 42); // xp bonus for crafting, also 42 is based
-		xpMap.put("item.ingotiron", 20);
-		xpMap.put("item.ingotgold", 50); // Woooooo gold!
+		xpMap.put("tile.glass", 4);
+		xpMap.put("item.brick", 5);
+		xpMap.put("tile.clayhardened", 21); // xp bonus for crafting
+		xpMap.put("item.ingotiron", 10);
+		xpMap.put("item.ingotgold", 25); // Woooooo gold!
 	}
 
 	public int lastItemNumber;
@@ -75,9 +75,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	}
 
 	public double extraIngot() {
-		return 0.02 * this.level;
+		return 0.015 * this.level;
 	}
-	
+
 	public double extraRepair() {
 		return 0.02 * this.level;
 	}
@@ -100,7 +100,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		Item item = stack.getItem();
 		return xpMap.containsKey(Utils.snakeCase(item.getUnlocalizedName()));
   }
-  
+
   public static void giveMoreIngots(ItemSmeltedEvent event) {
   	if (event.player != null && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
   		SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
@@ -136,7 +136,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       }
     }
   }
-  
+
   public static void ironHeart(LivingHurtEvent event) {
   	Entity entity = event.getEntity();
   	if (entity instanceof EntityPlayer) {
@@ -161,7 +161,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 			ItemStack left = event.getItemInput();
 			ItemStack middle = event.getIngredientInput();
 			ItemStack output = event.getItemResult();
-			
+
 			int baseRepair = left.getItemDamage() - output.getItemDamage();
 			blacksmithing.addXp((EntityPlayerMP) player, (int) (baseRepair * (1 + blacksmithing.extraRepair())));
 			int finalRepair = output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair());
@@ -206,7 +206,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 			}
 		}
 	}
-	
+
 	public static void verifyObsidian(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
 		if (targetItem != null && obsidianItems.contains(targetItem)) {

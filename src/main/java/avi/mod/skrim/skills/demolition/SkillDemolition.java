@@ -8,10 +8,14 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
@@ -19,12 +23,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
 
 public class SkillDemolition extends Skill implements ISkillDemolition {
 
@@ -118,6 +120,20 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 				if (player != null && player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 					SkillDemolition demo = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
 					event.setAmount(event.getAmount() - (float) (event.getAmount() * demo.getResistance()));
+				}
+			}
+		}
+	}
+
+	public static void onKillCrepper(LivingDeathEvent event) {
+		Entity sourceEntity = event.getSource().getEntity();
+		if (sourceEntity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) sourceEntity;
+			Entity targetEntity = event.getEntity();
+			if (targetEntity instanceof EntityCreeper) {
+				if (player != null && player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
+					SkillDemolition demo = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
+					demo.addXp((EntityPlayerMP) player, 5);
 				}
 			}
 		}

@@ -68,7 +68,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	}
 
 	public double getExtraDamage() {
-		return this.level * 0.01;
+		return this.level * 0.0075;
 	}
 
 	public double getCritChance() {
@@ -127,7 +127,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
                 }
               }
 						}
-						addXp += 50;
+						addXp += 25;
 					}
 					addXp += (int) event.getAmount() * 10;
 					melee.addXp((EntityPlayerMP) player, addXp);

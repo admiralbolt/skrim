@@ -20,6 +20,35 @@ public class Reflection {
 		}
 	}
 	
+	public static Object getPrivateField(Object instance, String fieldName) {
+		Field field;
+		try {
+			field = instance.getClass().getDeclaredField(fieldName);
+			return getFieldValue(instance, field);
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Object getFieldValue(Object instance, Field field) {
+		field.setAccessible(true);
+		try {
+			return field.get(instance);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static void setFieldValue(Object instance, Field field, Object value) {
 		field.setAccessible(true);
 		try {

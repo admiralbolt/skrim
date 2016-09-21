@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import avi.mod.skrim.Utils;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.ISkill;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;

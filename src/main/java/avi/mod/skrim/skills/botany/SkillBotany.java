@@ -6,13 +6,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.blocks.flowers.EnchantedFlowerVariants;
+import avi.mod.skrim.blocks.flowers.GlowFlower;
+import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.SpawnHeartPacket;
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -21,12 +33,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import avi.mod.skrim.Utils;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class SkillBotany extends Skill implements ISkillBotany {
 
@@ -35,24 +47,24 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	static {
 		xpMap = new HashMap<String, Integer>();
 		// The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
-		xpMap.put("dandelion", 10);
-		xpMap.put("poppy", 10);
+		xpMap.put("dandelion", 5);
+		xpMap.put("poppy", 5);
 		// 3 Biomes
-		xpMap.put("houstonia", 20); // azure_bluet
-		xpMap.put("red_tulip", 20);
-		xpMap.put("orange_tulip", 20);
-		xpMap.put("white_tulip", 20);
-		xpMap.put("pink_tulip", 20);
-		xpMap.put("oxeye_daisy", 20);
+		xpMap.put("houstonia", 10); // azure_bluet
+		xpMap.put("red_tulip", 10);
+		xpMap.put("orange_tulip", 10);
+		xpMap.put("white_tulip", 10);
+		xpMap.put("pink_tulip", 10);
+		xpMap.put("oxeye_daisy", 10);
 		// Only swamp, can respawn
-		xpMap.put("blue_orchid", 30);
+		xpMap.put("blue_orchid", 15);
 		// Only forest & flower forest on generation
-		xpMap.put("syringa", 40); // lilac
-		xpMap.put("rose_bush", 40);
-		xpMap.put("paeonia", 40); // peony
-		xpMap.put("allium", 40);
+		xpMap.put("syringa", 20); // lilac
+		xpMap.put("rose_bush", 20);
+		xpMap.put("paeonia", 20); // peony
+		xpMap.put("allium", 20);
 		// Only sunflower plains on generation
-		xpMap.put("sunflower", 50);
+		xpMap.put("sunflower", 25);
 	}
 
 	public SkillBotany() {
@@ -68,23 +80,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 	
-	public boolean validFlowerStack(ItemStack stack) {
-		if (stack != null) {
-			Item item = stack.getItem();
-			String name = Utils.snakeCase(item.getItemStackDisplayName(stack));
-			if (item != null && (
-					xpMap.containsKey(name)
-					|| name.equals("azure_bluet")
-					|| name.equals("lilac")
-					|| name.equals("peony")
-				)
-			) {
-				return true;
-			}
-		}
-		return false;
+	public double getSplosionChance() {
+		return this.level * 0.01;
 	}
-
+	
+	public int getSplosionRadius() {
+		return (int) (this.level / 25) + 1;
+	}
+	
 	public double getFortuneChance() {
 		return 0.01 * this.level;
 	}
@@ -92,8 +95,27 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	public int getFortuneAmount() {
 		return (int) (((double) this.level) / 12) + 2;
 	}
+	
+	public static boolean validFlowerStack(ItemStack stack) {
+		if (stack != null) {
+			Item item = stack.getItem();
+			Block block = Block.getBlockFromItem(stack.getItem());
+			String name = Utils.snakeCase(item.getItemStackDisplayName(stack));
+			if ((item != null
+					&& (
+						xpMap.containsKey(name)
+						|| name.equals("azure_bluet")
+						|| name.equals("lilac")
+						|| name.equals("peony")
+					)
+			) || (block != null && validFlowerBlock(block))) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	public String getFlowerName(IBlockState state) {
+	public static String getFlowerName(IBlockState state) {
 		Block block = state.getBlock();
 		if (block instanceof BlockFlower) {
 			BlockFlower flower = (BlockFlower) block;
@@ -104,13 +126,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			return "";
 		}
 	}
+	
+	public static boolean validFlowerBlock(Block block) {
+		return (block instanceof BlockFlower || block instanceof GlowFlower);
+	}
 
-	public boolean validFlower(IBlockState state) {
+	public static boolean validFlowerState(IBlockState state) {
 		Block flower = state.getBlock();
-		String flowerName = this.getFlowerName(state);
-		return (flower instanceof BlockFlower
-			// || (flower instanceof BlockDoublePlant && !(flowerName.equals("double_tallgrass")) && !(flowerName.equals("large_fern"))	)
-		);
+		return validFlowerBlock(flower);
 	}
 
 	@Override
@@ -138,13 +161,13 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		EntityPlayer player = event.getHarvester();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
-			if (botany.validFlower(state)) {
+			if (botany.validFlowerState(state)) {
 				Block block = state.getBlock();
 				/**
 				 * DOUBLE Plants are coded weirdly, so currently fortune WON'T apply to them.
 				 * EDIT: Won't apply to some of them...? Why you do dis.
 				 */
-				double random = Math.random();
+				double random = Utils.rand.nextDouble();
 				if (random < botany.getFortuneChance()) {
 					List<ItemStack> drops = event.getDrops();
 					// Let's not loop infinitely, that seems like a good idea.
@@ -164,14 +187,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		EntityPlayer player = event.getPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
-			if (botany.hasAbility(1)) {
+			if (Utils.rand.nextDouble() < botany.getSplosionChance()) {
 				IBlockState placedState = event.getPlacedBlock();
-				if (botany.validFlower(placedState)) {
+				if (botany.validFlowerState(placedState)) {
 					BlockPos placedPos = event.getPos();
-					for (int i = -1; i <= 1; i++) {
-						for (int j = -1; j <= 1; j++) {
+					int radius = botany.getSplosionRadius();
+					for (int i = -radius; i <= radius; i++) {
+						for (int j = -radius; j <= radius; j++) {
 							if (i != 0 || j != 0) {
-								System.out.println("checking pos: (" + (placedPos.getX() + i) + ", " + placedPos.getY() + ", " + (placedPos.getZ() + j) + ")");
 								BlockPos airPos = new BlockPos(placedPos.getX() + i, placedPos.getY(), placedPos.getZ() + j);
 								IBlockState airState = player.worldObj.getBlockState(airPos);
 								if (airState != null) {
@@ -183,7 +206,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 										IBlockState dirtState = player.worldObj.getBlockState(dirtPos);
 										if (dirtState != null) {
 											Block dirtBlock = dirtState.getBlock();
-											if (dirtBlock instanceof BlockDirt || dirtBlock instanceof BlockGrass) {
+											if (dirtBlock instanceof BlockDirt || dirtBlock instanceof BlockGrass || dirtBlock instanceof BlockFarmland) {
 												player.worldObj.setBlockState(airPos, placedState);
 											}
 										}
@@ -205,16 +228,65 @@ public class SkillBotany extends Skill implements ISkillBotany {
 				SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 				if (botany.hasAbility(2)) {
 					ItemStack mainStack = player.getHeldItemMainhand();
-					if (botany.validFlowerStack(mainStack)) {
-						System.out.println("fuck yeah");
+					ItemStack offStack = player.getHeldItemOffhand();
+					if (botany.validFlowerStack(mainStack) || botany.validFlowerStack(offStack)) {
 						DamageSource source = event.getSource();
 						if (source.damageType == "mob" || source.damageType == "player") {
 							Entity target = source.getEntity();
-							System.out.println("attacking back");
-							target.attackEntityFrom(DamageSource.magic, (float) (event.getAmount() * 0.3));
+							target.attackEntityFrom(DamageSource.magic, (float) (event.getAmount() * 0.25));
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	public static void seduceVillager(PlayerInteractEvent.EntityInteract event) {
+		EntityPlayer player = event.getEntityPlayer();
+		Entity targetEntity = event.getTarget();
+		if (targetEntity instanceof EntityVillager) {
+			System.out.println("target is villager");
+			EntityVillager villager = (EntityVillager) targetEntity;
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+				SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
+				if (botany.hasAbility(3)) {
+					ItemStack mainStack = player.getHeldItemMainhand();
+					if (botany.validFlowerStack(mainStack)) {
+						villager.setIsWillingToMate(true);
+						MerchantRecipeList buyingList = (MerchantRecipeList) Reflection.getPrivateField(villager, "buyingList");
+						for (MerchantRecipe recipe : buyingList) {
+							ItemStack first = recipe.getItemToBuy();
+							if (first.stackSize > 4) {
+								first.stackSize--;
+							}
+							if (recipe.hasSecondItemToBuy()) {
+								ItemStack second = recipe.getSecondItemToBuy();
+								if (second.stackSize > 4) {
+									second.stackSize--;
+								}
+							}
+						}
+						SkrimPacketHandler.INSTANCE.sendTo(new SpawnHeartPacket(villager.posX, villager.posY, villager.posZ, villager.height, villager.width), (EntityPlayerMP) player);
+						mainStack.stackSize--;
+						if (mainStack.stackSize == 0) {
+							player.inventory.deleteStack(mainStack);
+						}
+						event.setCanceled(true);
+					}
+				}
+			}
+		}
+	}
+	
+	public static void verifyFlowers(ItemCraftedEvent event) {
+		Item targetItem = event.crafting.getItem();
+		if (targetItem != null && targetItem instanceof GlowFlowerVariants) {
+			if (!Skills.canCraft(event.player, Skills.BOTANY, 25)) {
+				Skills.replaceWithComponents(event);
+			}
+		} else if (targetItem != null && targetItem instanceof EnchantedFlowerVariants) {
+			if (!Skills.canCraft(event.player, Skills.BOTANY, 100)) {
+				Skills.replaceWithComponents(event);
 			}
 		}
 	}

@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.lwjgl.input.Mouse;
 
-import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.ISkill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.Minecraft;

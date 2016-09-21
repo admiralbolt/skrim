@@ -28,12 +28,14 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import avi.mod.skrim.Utils;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 
 public class SkillFishing extends Skill implements ISkillFishing {
 
@@ -130,6 +132,30 @@ public class SkillFishing extends Skill implements ISkillFishing {
 		tooltip.add("§a" + fmt.format(this.getTreasureChance() * 100) + "%§r chance to fish additional treasure.");
 		tooltip.add("Fishing provides an additional §a" + this.getMinXP() + "§r-§a" + this.getMaxXP() + "§r xp.");
 		return tooltip;
+	}
+	
+	
+	public static void pickupSkrimRod(EntityItemPickupEvent event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+			SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
+			EntityItem eitem = event.getItem();
+			ItemStack stack = eitem.getEntityItem();
+			Item item = stack.getItem();
+			if (item == Items.FISHING_ROD) {
+				stack.setItem(ModItems.fishingRod);
+			}
+		}
+	}
+	
+	public static void craftSkrimRod(ItemCraftedEvent event) {
+		EntityPlayer player = event.player;
+		if (player != null && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+			Item item = event.crafting.getItem();
+			if (item == Items.FISHING_ROD) {
+				event.crafting.setItem(ModItems.fishingRod);
+			}
+		}
 	}
 
 }

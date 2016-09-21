@@ -536,7 +536,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 						treasure.motionY = d1 * 0.1D + (double) MathHelper.sqrt_double(d3) * 0.08D;
 						treasure.motionZ = d2 * 0.1D;
 						this.worldObj.spawnEntityInWorld(treasure);
-						fishing.addXp((EntityPlayerMP) this.angler, 50);
+						fishing.addXp((EntityPlayerMP) this.angler, 25);
 					}
 					if (fishing.hasAbility(3)) {
 						this.angler.worldObj.spawnEntityInWorld(new EntityXPOrb(this.angler.worldObj, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(16) + 9));
@@ -578,5 +578,5 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 	public void readSpawnData(ByteBuf additionalData) {
 		this.angler = (EntityPlayer) this.worldObj.getEntityByID(additionalData.readInt());
 	}
-	
+
 }

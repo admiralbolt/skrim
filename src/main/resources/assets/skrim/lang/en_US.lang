@@ -26,6 +26,32 @@ item.obsidian_pants.name=Obsidian Leggings
 item.obsidian_chest.name=Obsidian Chestplate
 item.obsidian_helmet.name=Obsidian Helmet
 
+tile.glow_flower_yellow.name=Glow Flower
+tile.glow_flower_yellow.dandelion.name=Glow Dandelion
+tile.glow_flower_red.name=Glow Flower
+tile.glow_flower_red.poppy.name=Glow Poppy
+tile.glow_flower_red.blue_orchid.name=Glow Blue Orchid
+tile.glow_flower_red.allium.name=Glow Allium
+tile.glow_flower_red.houstonia.name=Glow Azure Bluet
+tile.glow_flower_red.red_tulip.name=Glow Red Tulip
+tile.glow_flower_red.orange_tulip.name=Glow Orange Tulip
+tile.glow_flower_red.white_tulip.name=Glow White Tulip
+tile.glow_flower_red.pink_tulip.name=Glow Pink Tulip
+tile.glow_flower_red.oxeye_daisy.name=Glow Oxeye Daisy
+
+tile.enchanted_flower_yellow.name=Enchanted Flower
+tile.enchanted_flower_yellow.dandelion.name=Enchanted Dandelion
+tile.enchanted_flower_red.name=Enchanted Flower
+tile.enchanted_flower_red.poppy.name=Enchanted Poppy
+tile.enchanted_flower_red.blue_orchid.name=Enchanted Blue Orchid
+tile.enchanted_flower_red.allium.name=Enchanted Allium
+tile.enchanted_flower_red.houstonia.name=Enchanted Azure Bluet
+tile.enchanted_flower_red.red_tulip.name=Enchanted Red Tulip
+tile.enchanted_flower_red.orange_tulip.name=Enchanted Orange Tulip
+tile.enchanted_flower_red.white_tulip.name=Enchanted White Tulip
+tile.enchanted_flower_red.pink_tulip.name=Enchanted Pink Tulip
+tile.enchanted_flower_red.oxeye_daisy.name=Enchanted Oxeye Daisy
+
 
 item.boots_of_springheel_jak.name=Boots of Springheel Jak
 item.raising_canes_fry_sword.name=Raising Cane's® Sword of Frying

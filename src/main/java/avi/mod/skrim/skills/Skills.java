@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -113,7 +114,7 @@ public class Skills {
 		skillMap.put("ranged", RANGED);
 		skillMap.put("woodcutting", WOODCUTTING);
   }
-	
+
 	public static boolean canCraft(EntityPlayer player, Capability<? extends ISkill> cap, int level) {
 		if (player != null && player.hasCapability(cap, EnumFacing.NORTH)) {
 			Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
@@ -123,7 +124,7 @@ public class Skills {
 		}
 		return false;
 	}
-	
+
 	public static void replaceWithComponents(ItemCraftedEvent event) {
 		if (event.player.inventory != null) {
 			Item targetItem = event.crafting.getItem();
@@ -138,9 +139,16 @@ public class Skills {
 				if (slot != null) {
 					slotItem = slot.getItem();
 					if (slotItem != null) {
-						addStack = new ItemStack(slotItem, 1);
-						if (first) {
+						addStack = new ItemStack(slotItem, 1, slot.getMetadata());
+						/**
+						 * I honestly have no clue why this is happening.  It's
+						 * recognizing the item, but can't find it's model.  If you
+						 * drop then re-pick it up everything works.  Point is, we don't ever
+						 * want to put glowstone in the hands of the player after crafting.
+						 */
+						if (first && slotItem != Items.GLOWSTONE_DUST) {
 							event.crafting.setItem(slotItem);
+							event.crafting.setItemDamage(slot.getMetadata());
 							first = false;
 						} else {
 							event.player.inventory.addItemStackToInventory(addStack);
@@ -165,6 +173,19 @@ public class Skills {
 		}
 	}
 	
-	
+	public static int getTotalSkillLevels(EntityPlayer player) {
+		int totalLevels = 0;
+		for (Capability<? extends ISkill> cap : ALL_SKILLS) {
+			if (player.hasCapability(cap, EnumFacing.NORTH)) {
+				Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
+				totalLevels += skill.level;
+			}
+ 		}
+		return totalLevels;
+	}
+
+	public static double getTotalXpBonus(EntityPlayer player) {
+		return (0.01 * player.experienceLevel) + (0.001 * getTotalSkillLevels(player));
+	}
 
 }

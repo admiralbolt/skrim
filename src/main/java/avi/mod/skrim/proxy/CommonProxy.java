@@ -2,8 +2,20 @@ package avi.mod.skrim.proxy;
 
 import java.io.File;
 
+import avi.mod.skrim.Config;
+import avi.mod.skrim.Skrim;
+import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.VariantEnum;
+import avi.mod.skrim.capabilities.ModCapabilities;
+import avi.mod.skrim.handlers.EventHandler;
+import avi.mod.skrim.handlers.LoadSkillsHandler;
+import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.network.GuiHandler;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.tileentity.ModTileEntities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -11,21 +23,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import avi.mod.skrim.Config;
-import avi.mod.skrim.Skrim;
-import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.capabilities.ModCapabilities;
-import avi.mod.skrim.handlers.DeathEvent;
-import avi.mod.skrim.handlers.EventHandler;
-import avi.mod.skrim.handlers.JoinWorldHandler;
-import avi.mod.skrim.handlers.skills.CookingHandler;
-import avi.mod.skrim.handlers.skills.DiggingHandler;
-import avi.mod.skrim.handlers.skills.FarmingHandler;
-import avi.mod.skrim.handlers.skills.FishingHandler;
-import avi.mod.skrim.handlers.skills.WoodcuttingHandler;
-import avi.mod.skrim.items.ModItems;
-import avi.mod.skrim.network.GuiHandler;
-import avi.mod.skrim.network.SkrimPacketHandler;
 
 public class CommonProxy {
 
@@ -38,9 +35,8 @@ public class CommonProxy {
 		ModItems.createItems();
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
-		registerSkills(); // Will be removed once all skills updated to new style of events.
-		MinecraftForge.EVENT_BUS.register(new JoinWorldHandler());
-		MinecraftForge.EVENT_BUS.register(new DeathEvent());
+		ModTileEntities.register();
+		MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
@@ -63,12 +59,12 @@ public class CommonProxy {
 
 	}
 	
-	public static void registerSkills() {
-    MinecraftForge.EVENT_BUS.register(new CookingHandler());
-    MinecraftForge.EVENT_BUS.register(new DiggingHandler());
-    MinecraftForge.EVENT_BUS.register(new FarmingHandler());
-    MinecraftForge.EVENT_BUS.register(new FishingHandler());
-    MinecraftForge.EVENT_BUS.register(new WoodcuttingHandler());
-  }
+	public void registerMinecraftItemRenderer(Item item, int meta, String resource) {
+		
+	}
+	
+	public void registerBlockVariant(ItemBlock block, VariantEnum types[]) {
+		
+	}
 
 }

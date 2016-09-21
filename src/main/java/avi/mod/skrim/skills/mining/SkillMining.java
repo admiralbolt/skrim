@@ -38,12 +38,12 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import avi.mod.skrim.Utils;
 import avi.mod.skrim.network.FallDistancePacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 
 public class SkillMining extends Skill implements ISkillMining {
 
@@ -53,19 +53,19 @@ public class SkillMining extends Skill implements ISkillMining {
 	static {
 		xpMap = new HashMap<String, Integer>();
 		xpMap.put("stone", 1);
-		xpMap.put("netherrack", 3); // Extra bonus for being in the nether
-		xpMap.put("granite", 5);
-		xpMap.put("andesite", 5);
-		xpMap.put("diorite", 5);
-		xpMap.put("coal_ore", 10);
-		xpMap.put("iron_ore", 20);
-		xpMap.put("quartz_ore", 25); // Extra bonus for being in the nether ~same rarity as iron
-		xpMap.put("redstone_ore", 35);
-		xpMap.put("obsidian", 50); // Common but takes a while to mine
-		xpMap.put("gold_ore", 100);
-		xpMap.put("lapis_lazuli_ore", 150); // Lapis_lazuil not just lapis, also barely rarer than diamond
-		xpMap.put("diamond_ore", 250);
-		xpMap.put("emerald_ore", 500); // Nice xp bonus for an otherwise useless ore
+		xpMap.put("netherrack", 2); // Extra bonus for being in the nether
+		xpMap.put("granite", 3);
+		xpMap.put("andesite", 3);
+		xpMap.put("diorite", 3);
+		xpMap.put("coal_ore", 5);
+		xpMap.put("iron_ore", 10);
+		xpMap.put("quartz_ore", 15); // Extra bonus for being in the nether ~same rarity as iron
+		xpMap.put("redstone_ore", 20);
+		xpMap.put("obsidian", 20); // Common but takes a while to mine
+		xpMap.put("gold_ore", 35);
+		xpMap.put("lapis_lazuli_ore", 40); // Lapis_lazuil not just lapis, also barely rarer than diamond
+		xpMap.put("diamond_ore", 50);
+		xpMap.put("emerald_ore", 100); // Nice xp bonus for an otherwise useless ore
 	}
 
 	public static List<String> validMiningBlocks = new ArrayList<String>(Arrays.asList(
@@ -181,7 +181,7 @@ public class SkillMining extends Skill implements ISkillMining {
 		}
 	}
 
-	public static void onMineOre(BlockEvent.HarvestDropsEvent event) {
+	public static void giveMoreOre(BlockEvent.HarvestDropsEvent event) {
 		EntityPlayer player = event.getHarvester();
 		if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
 			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
@@ -196,6 +196,7 @@ public class SkillMining extends Skill implements ISkillMining {
 					for (int i = 0; i < (dropSize * (mining.getFortuneAmount() - 1)); i++) {
 						drops.add(copyDrop.copy());
 					}
+					mining.addXp((EntityPlayerMP) player, 25);
 				}
 			}
 		}

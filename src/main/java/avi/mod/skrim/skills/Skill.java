@@ -51,7 +51,7 @@ public class Skill implements ISkill {
 
   public void addXp(EntityPlayerMP player, int xp) {
     if (xp > 0) {
-      this.xp += xp;
+      this.xp += (xp + xp * Skills.getTotalXpBonus(player));
       this.levelUp(player);
     }
   }

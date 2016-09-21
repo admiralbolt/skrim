@@ -14,10 +14,19 @@ import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import avi.mod.skrim.Utils;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 
 public class SkillDigging extends Skill implements ISkillDigging {
 
@@ -25,15 +34,15 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("dirt", 2);
-		xpMap.put("sand", 3);
-		xpMap.put("grass_block", 5); // Bonus for grass!
-		xpMap.put("gravel", 10); // Fuck gravel
-		xpMap.put("coarse_dirt", 7); // Requires 2 dirt & 2 gravel to make 4, is worth slightly more than the components
-		xpMap.put("podzol", 25); // Only in taiga
-		xpMap.put("red_sand", 35); // Only in mesa
-		xpMap.put("soul_sand", 55); // Only in nether & not to common
-		xpMap.put("mycelium", 100); // Only in.. mushroom biomes?
+		xpMap.put("dirt", 1);
+		xpMap.put("sand", 2);
+		xpMap.put("grass_block", 3); // Bonus for grass!
+		xpMap.put("gravel", 4); // Fuck gravel
+		xpMap.put("coarse_dirt", 11); // Requires 2 dirt & 2 gravel to make 4, is worth slightly more than the components
+		xpMap.put("podzol", 10); // Only in taiga
+		xpMap.put("red_sand", 15); // Only in mesa
+		xpMap.put("soul_sand", 20); // Only in nether & not to common
+		xpMap.put("mycelium", 25); // Only in.. mushroom biomes?
 	}
 
 	public SkillDigging() {
@@ -93,6 +102,47 @@ public class SkillDigging extends Skill implements ISkillDigging {
     	return state.getValue(BlockSand.VARIANT).toString();
     } else {
       return Utils.getBlockName(block);
+    }
+  }
+  
+  public static void addDiggingXp(BlockEvent.BreakEvent event) {
+    EntityPlayer player = event.getPlayer();
+    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+      SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+      IBlockState state = event.getState();
+      Block target = state.getBlock();
+      int addXp = digging.getXp(digging.getDirtName(state));
+      if (addXp > 0) {
+      	digging.addXp((EntityPlayerMP) player, addXp);
+      }
+    }
+  }
+  
+  public static void digFaster(PlayerEvent.BreakSpeed event) {
+  	EntityPlayer player = event.getEntityPlayer();
+    SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+    if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+    	IBlockState state = event.getState();
+    	if (digging.validSpeedTarget(state)) {
+        event.setNewSpeed((float) (event.getOriginalSpeed() + digging.getSpeedBonus()));
+      }
+    }
+  }
+
+  public static void findTreasure(BlockEvent.HarvestDropsEvent event) {
+  	EntityPlayer player = event.getHarvester();
+    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+      SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+      IBlockState state = event.getState();
+      if (digging.validTreasureTarget(state)) {
+        double random = Math.random();
+        if (random < digging.getTreasureChance()) {
+          ItemStack treasure = RandomTreasure.generate();
+          List<ItemStack> drops = event.getDrops();
+          drops.add(treasure);
+          digging.addXp((EntityPlayerMP) player, 25);
+        }
+      }
     }
   }
 

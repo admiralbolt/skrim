@@ -1,4 +1,4 @@
-package avi.mod.skrim;
+package avi.mod.skrim.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,8 @@ import net.minecraft.block.state.IBlockState;
 public class Utils {
 
 	public static String[] tuplets = {"zero-adsf", "one-asdf", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octople", "nontople", "decuple"};
-
+	public static Random rand = new Random();
+	
 	public static boolean isPointInRegion(int left, int top, int right, int bottom, int pointX, int pointY) {
 		return (pointX > left && pointX < right && pointY > top && pointY < bottom);
 	}

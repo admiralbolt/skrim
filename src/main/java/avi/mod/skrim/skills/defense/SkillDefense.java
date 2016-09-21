@@ -42,7 +42,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	}
 
 	public double getDamageReduction() {
-		return this.level * 0.0075;
+		return this.level * 0.005;
 	}
 
 	public int getExtraArmor() {

@@ -13,6 +13,7 @@ import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockMelon;
+import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPotato;
 import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockStem;
@@ -26,11 +27,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import avi.mod.skrim.Utils;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 
 public class SkillFarming extends Skill implements ISkillFarming {
 
@@ -38,13 +39,13 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("crops", 20);
-		xpMap.put("beetroots", 50);
-		xpMap.put("potatoes", 50);
-		xpMap.put("carrots", 50);
-		xpMap.put("pumpkin", 10);
-		xpMap.put("melon", 60);
-		xpMap.put("cocoa", 75);
+		xpMap.put("crops", 10);
+		xpMap.put("beetroots", 25);
+		xpMap.put("potatoes", 25);
+		xpMap.put("carrots", 25);
+		xpMap.put("pumpkin", 5);
+		xpMap.put("melon", 30);
+		xpMap.put("cocoa", 35);
 	}
 
 	public SkillFarming() {
@@ -118,5 +119,73 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				|| (block instanceof BlockCocoa && block.getMetaFromState(state) == 10)
 				) ? true : false;
 	}
+	
+	public static void addFarmingXp(BlockEvent.BreakEvent event) {
+		EntityPlayer player = event.getPlayer();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			Block target = state.getBlock();
+			// Don't want to always give xp, only for fully grown stuff.
+			if (farming.validFortuneTarget(state) || target instanceof BlockPumpkin) {
+				int addXp = farming.getXp(Utils.getBlockName(target));
+				farming.addXp((EntityPlayerMP) player, addXp);
+			}
+		}
+	}
+
+	public static void giveMoreCrops(BlockEvent.HarvestDropsEvent event) {
+		EntityPlayer player = event.getHarvester();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			if (farming.validFortuneTarget(state)) {
+				Block block = state.getBlock();
+				double random = Math.random();
+				if (random < farming.getFortuneChance()) {
+					List<ItemStack> drops = event.getDrops();
+					// Let's not loop infinitely, that seems like a good idea.
+					int dropSize = drops.size();
+          for (int j = 0; j < farming.getFortuneAmount() - 1; j++) {
+            for (int i = 0; i < dropSize; i++) {
+              drops.add(drops.get(i).copy());
+            }
+          }
+          farming.addXp((EntityPlayerMP) player, 25);
+				}
+			}
+		}
+	}
+
+  public static void applyGrowth(BlockEvent.PlaceEvent event) {
+  	EntityPlayer player = event.getPlayer();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+	  	IBlockState placedState = event.getPlacedBlock();
+	  	IBlockState targetState = event.getPlacedAgainst();
+	  	Block placedBlock = placedState.getBlock();
+	  	Block targetBlock = targetState.getBlock();
+	  	if (farming.validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
+	  		World world = event.getWorld();
+	  		PropertyInteger prop = null;
+	  		int growthStage = farming.getGrowthStage();
+	  		if (placedBlock instanceof BlockStem) {
+	  			prop = BlockStem.AGE;
+	  		} else if (placedBlock instanceof BlockBeetroot) {
+	  			prop = BlockBeetroot.BEETROOT_AGE;
+	  			if (growthStage > 2) {
+	  				growthStage = 2;
+	  			}
+				} else if (placedBlock instanceof BlockCocoa) {
+					// Because fuck it.
+					int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6};
+					growthStage = cocoaStages[growthStage];
+	  		} else if (placedBlock instanceof BlockCrops) {
+	  			prop = BlockCrops.AGE;
+	  		}
+	  		world.setBlockState(event.getPos(), placedState.withProperty(prop, growthStage));
+	  	}
+		}
+  }
 
 }
