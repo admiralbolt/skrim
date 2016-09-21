@@ -9,6 +9,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import avi.mod.skrim.network.FallDistancePacket;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNetherBrick;
 import net.minecraft.block.BlockNetherrack;
@@ -24,26 +30,30 @@ import net.minecraft.block.BlockStoneSlabNew;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import avi.mod.skrim.network.FallDistancePacket;
-import avi.mod.skrim.network.SkrimPacketHandler;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Utils;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class SkillMining extends Skill implements ISkillMining {
 
@@ -68,27 +78,9 @@ public class SkillMining extends Skill implements ISkillMining {
 		xpMap.put("emerald_ore", 100); // Nice xp bonus for an otherwise useless ore
 	}
 
-	public static List<String> validMiningBlocks = new ArrayList<String>(Arrays.asList(
-		"cobblestone_stairs",
-		"stone_brick_stairs",
-		"quartz_stairs",
-		"nether_brick_stairs",
-		"brick_stairs",
-		"sandstone_stairs",
-		"red_sandstone_stairs",
-		"purpur_block",
-		"purpur_pillar",
-		"iron_door"
-	));
+	public static List<String> validMiningBlocks = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs", "nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));
 
-	public static List<String> validFortuneOres = new ArrayList<String>(Arrays.asList(
-		"coal_ore",
-		"lapis_lazuli_ore",
-		"diamond_ore",
-		"emerald_ore",
-		"redstone_ore",
-		"quartz_ore"
-	));
+	public static List<String> validFortuneOres = new ArrayList<String>(Arrays.asList("coal_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
 
 	public SkillMining() {
 		this(1, 0);
@@ -129,20 +121,8 @@ public class SkillMining extends Skill implements ISkillMining {
 	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
-		return ((harvestTool != null && harvestTool.toLowerCase().equals("pickaxe"))
-			|| validMiningBlocks.contains(Utils.getBlockName(block))
-			|| block instanceof BlockOre
-			|| block instanceof BlockRedstoneOre
-			|| block instanceof BlockStone
-			|| block instanceof BlockStoneSlab
-			|| block instanceof BlockStoneSlabNew
-			|| block instanceof BlockObsidian
-			|| block instanceof BlockStoneBrick
-			|| block instanceof BlockNetherBrick
-			|| block instanceof BlockNetherrack
-			|| block instanceof BlockSandStone
-			|| block instanceof BlockRedSandstone
-			) ? true : false;
+		return ((harvestTool != null && harvestTool.toLowerCase().equals("pickaxe")) || validMiningBlocks.contains(Utils.getBlockName(block)) || block instanceof BlockOre || block instanceof BlockRedstoneOre || block instanceof BlockStone || block instanceof BlockStoneSlab || block instanceof BlockStoneSlabNew || block instanceof BlockObsidian || block instanceof BlockStoneBrick || block instanceof BlockNetherBrick || block instanceof BlockNetherrack || block instanceof BlockSandStone
+				|| block instanceof BlockRedSandstone) ? true : false;
 	}
 
 	public boolean validFortuneTarget(IBlockState state) {
@@ -187,7 +167,7 @@ public class SkillMining extends Skill implements ISkillMining {
 			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
 			IBlockState state = event.getState();
 			if (mining.validFortuneTarget(state)) {
-				double random = Math.random();
+				double random = Utils.rand.nextDouble();
 				if (random < mining.getFortuneChance()) {
 					List<ItemStack> drops = event.getDrops();
 					ItemStack copyDrop = drops.get(0);
@@ -202,71 +182,111 @@ public class SkillMining extends Skill implements ISkillMining {
 		}
 	}
 
-  public static void reduceLava(LivingHurtEvent event) {
-    Entity entity = event.getEntity();
-    if (entity instanceof EntityPlayer) {
-      final EntityPlayer player = (EntityPlayer) entity;
-      if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
-        Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
-        if (mining.hasAbility(2)) {
-        	BlockPos pos = player.getPosition();
-        	if (pos.getY() <= 40) {
-            DamageSource source = event.getSource();
-		        if (source.getDamageType().equals("lava") || source.getDamageType().equals("inFire")) {
-							System.out.println("input amount: " + event.getAmount());
-		        	event.setAmount((float) (event.getAmount() * 0.5));
-		        	player.extinguish();
-		        	new Timer().schedule(
-								new TimerTask() {
-									@Override
-									public void run() {
-										player.extinguish();
-									}
-								}, 400
-							);
-		        }
-        	}
-        }
-      }
-    }
-  }
+	public static void reduceLava(LivingHurtEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			final EntityPlayer player = (EntityPlayer) entity;
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+				Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+				if (mining.hasAbility(2)) {
+					BlockPos pos = player.getPosition();
+					if (pos.getY() <= 40) {
+						DamageSource source = event.getSource();
+						if (source.getDamageType().equals("lava") || source.getDamageType().equals("inFire")) {
+							event.setAmount((float) (event.getAmount() * 0.5));
+							player.extinguish();
+							new Timer().schedule(new TimerTask() {
+								@Override
+								public void run() {
+									player.extinguish();
+								}
+							}, 400);
+						}
+					}
+				}
+			}
+		}
+	}
 
-  public static void climbWall(LivingUpdateEvent event) {
-  	Entity entity = event.getEntity();
-    if (entity instanceof EntityPlayer) {
-      final EntityPlayer player = (EntityPlayer) entity;
-      if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
-      	Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
-      	if (mining.hasAbility(1)) {
-      		BlockPos pos = player.getPosition();
-      		if (pos.getY() <= 40) {
-      			player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 60, 1, true, false));
-      			if (!shouldRemove.contains(player)) {
-      				shouldRemove.add(player);
-      			}
-      		} else {
-      			if (shouldRemove.contains(player)) {
-      				player.removePotionEffect(Potion.getPotionById(16));
-      				shouldRemove.remove(player);
-      			}
-      		}
-      	}
-        if (mining.hasAbility(3)) {
-        	if (player.isCollidedHorizontally) {
-        		KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
-        		if (jumpKey.isKeyDown()) {
-	        		player.motionY = Math.min(0.4, player.motionY + 0.1);
-	        		if (player.motionY > 0) {
-	        			player.fallDistance = 0.0F;
-	        		} else {
-	        			player.fallDistance -= 1F;
-	        		}
-	        		SkrimPacketHandler.INSTANCE.sendToServer(new FallDistancePacket(player.fallDistance));
-        		}
-        	}
-        }
-      }
-    }
-  }
+	public static void climbWall(LivingUpdateEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			final EntityPlayer player = (EntityPlayer) entity;
+			if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+				Skill mining = (Skill) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+				if (mining.hasAbility(1)) {
+					BlockPos pos = player.getPosition();
+					if (pos.getY() <= 40) {
+						if (player.worldObj.getTotalWorldTime() % 80L == 0L) {
+							player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 300, 1, true, false));
+							if (!shouldRemove.contains(player)) {
+								shouldRemove.add(player);
+							}
+						}
+					} else {
+						if (shouldRemove.contains(player)) {
+							player.removePotionEffect(Potion.getPotionById(16));
+							shouldRemove.remove(player);
+						}
+					}
+				}
+				if (mining.hasAbility(3)) {
+					if (player.isCollidedHorizontally) {
+						KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
+						if (jumpKey.isKeyDown()) {
+							player.motionY = Math.min(0.4, player.motionY + 0.1);
+							if (player.motionY > 0) {
+								player.fallDistance = 0.0F;
+							} else {
+								player.fallDistance -= 1F;
+							}
+							SkrimPacketHandler.INSTANCE.sendToServer(new FallDistancePacket(player.fallDistance));
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void drill(PlayerInteractEvent.RightClickBlock event) {
+		EntityPlayer player = event.getEntityPlayer();
+		RayTraceResult result = player.rayTrace(5.0D, 1.0F);
+		if (!player.worldObj.isRemote) {
+			if (result != null) {
+				if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
+					if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+						SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+						if (mining.hasAbility(4)) {
+							ItemStack mainStack = event.getItemStack();
+							if (mainStack != null) {
+								Item mainItem = mainStack.getItem();
+								if (mainItem != null && mainItem instanceof ItemPickaxe) {
+									player.swingArm(EnumHand.MAIN_HAND);
+									ItemPickaxe pic = (ItemPickaxe) mainItem;
+									BlockPos targetPos = result.getBlockPos();
+									IBlockState targetState = player.worldObj.getBlockState(targetPos);
+									Block targetBlock = targetState.getBlock();
+									blockDrill: for (int y = targetPos.getY(); y >= 1; y--) {
+										if (targetBlock.canEntityDestroy(targetState, player.worldObj, targetPos, player)) {
+											if (targetBlock.canHarvestBlock(player.worldObj, targetPos, player)) {
+												targetBlock.harvestBlock(player.worldObj, player, targetPos, targetState, null, mainStack);
+											}
+											player.worldObj.destroyBlock(targetPos, false);
+											mainStack.onBlockDestroyed(player.worldObj, targetState, targetPos, player);
+										} else {
+											break blockDrill;
+										}
+										targetPos = targetPos.add(0, -1, 0);
+										targetState = player.worldObj.getBlockState(targetPos);
+										targetBlock = targetState.getBlock();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

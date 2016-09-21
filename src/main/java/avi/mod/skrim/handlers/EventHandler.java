@@ -60,6 +60,11 @@ public class EventHandler {
 	public void onInteract(PlayerInteractEvent.RightClickItem event) {
 		SkillMelee.handleDual(event);
 	}
+	
+	@SubscribeEvent
+	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		SkillMining.drill(event);
+	}
 
 	@SubscribeEvent
 	public void onBlockPlaced(BlockEvent.PlaceEvent event) {
