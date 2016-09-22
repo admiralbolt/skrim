@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "skrim:food/pumpkin_pie"
+    "layer0": "minecraft:items/pumpkin_pie"
   }
 }

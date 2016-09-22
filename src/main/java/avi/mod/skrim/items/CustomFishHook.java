@@ -151,7 +151,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 		this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f;
 		this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI) * f;
 
-		float velocity = 1.7F;
+		float velocity = 2.2F;
 
 		this.calculateVelocity(this.motionX, this.motionY, this.motionZ, velocity, 1.0F);
 		this.canTeleport = false;

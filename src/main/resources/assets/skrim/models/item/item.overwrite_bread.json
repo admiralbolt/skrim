@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "skrim:food/bread"
+    "layer0": "minecraft:items/bread"
   }
 }

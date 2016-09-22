@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "skrim:food/cooked_rabbit"
+    "layer0": "minecraft:items/rabbit_cooked"
   }
 }
