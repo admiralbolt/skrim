@@ -45,7 +45,7 @@ public class SkillScreen extends GuiScreen {
   /**
    * Max scroll position.
    */
-  private int maxScroll = 500;
+  private int maxScroll = 490;
   private int scrollBarWidth = 6;
   private int scrollBarHeight = 40;
   private int scrollPaddingLeft = 5;
@@ -53,6 +53,9 @@ public class SkillScreen extends GuiScreen {
   private int paddingBottom = 5;
   private int paddingRight = 5;
   private double scrollMultiplier = 0.03;
+
+  private int titleHeight = 30;
+  private int titlePaddingLeft = 5;
 
   private int dividerPadding = 2;
   private int skillPaddingLeft = 5;
@@ -95,6 +98,7 @@ public class SkillScreen extends GuiScreen {
     this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim", "textures/guis/skills/background.png"));
     this.drawTexturedModalRect(this.left, this.top, 0, 0, 176, 176);
     this.drawScrollBar();
+    this.drawTitleBar();
     this.drawSkills(mouseX, mouseY);
     super.drawScreen(mouseX, mouseY, partialTicks);
   }
@@ -108,6 +112,20 @@ public class SkillScreen extends GuiScreen {
 	  this.drawRect(left, top, right, bottom, 0xAAAAAAAA);
   }
 
+  public void drawTitleBar() {
+  	int textLeft = this.left + this.scrollPaddingLeft + this.scrollBarWidth + this.titlePaddingLeft;
+  	int titleTop = this.top + this.paddingTop - this.scrollY;
+  	if (shouldRender(titleTop, titleTop + 7)) {
+  		this.mc.fontRendererObj.drawString("Total Skill Level: " + Skills.getTotalSkillLevels(this.player), textLeft, titleTop, this.headerColor);
+  	}
+    if (shouldRender(titleTop + 12, titleTop + 19)) {
+  		this.mc.fontRendererObj.drawString("Total Experience Boost: " + Utils.formatPercent(Skills.getTotalXpBonus(this.player)) + "%" , textLeft, titleTop + 12, this.headerColor);
+    }
+    if (shouldRender(titleTop + 23, titleTop + 25)) {
+    	this.drawHorizontalLine(textLeft, textLeft + this.levelBarWidth, titleTop + 24, this.dividerColor);
+    }
+   }
+
   public void drawSkills(int mouseX, int mouseY) {
     List<Integer> leftValues = new ArrayList<Integer>();
     List<Integer> topValues = new ArrayList<Integer>();
@@ -115,7 +133,7 @@ public class SkillScreen extends GuiScreen {
     for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
       skills.add((Skill) this.player.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH));
   	  leftValues.add(this.left + this.scrollPaddingLeft + this.scrollBarWidth + this.skillPaddingLeft);
-  	  int top = this.top + this.paddingTop - this.scrollY + i * this.skillHeight;
+  	  int top = this.top + this.titleHeight + this.paddingTop - this.scrollY + i * this.skillHeight;
       if (i > 0) {
   	  	top += this.skillPaddingTop * i;
   	  }
@@ -202,21 +220,19 @@ public class SkillScreen extends GuiScreen {
     int abilityTop = top + this.skillHeaderHeight;
     int abilityBottom = abilityTop + this.abilityIconSize;
     for (int i = 1; i <= 4; i++) {
+    	this.mc.getTextureManager().bindTexture(skill.getAbilityTexture(i));
       int abilityLeft = startLeft + (i - 1) * (this.abilityIconSize + this.abilityIconPadding);
       int abilityRight = abilityLeft + this.abilityIconSize;
       int dist;
       if ((abilityTop < this.boundTop) && ((abilityTop + this.abilityIconSize) > this.boundTop)) {
         int start = this.boundTop - abilityTop;
         dist = this.abilityIconSize - start;
-        // this.drawTexturedModalRect(abilityLeft, this.boundTop, 0, start, this.abilityIconSize, dist);
-        this.drawRect(abilityLeft, this.boundTop, abilityRight, abilityBottom, 0xFFAAAAFF);
+        this.drawTexturedModalRect(abilityLeft, this.boundTop, 0, start, this.abilityIconSize, dist);
       } else if (this.boundBottom > abilityTop && abilityTop + this.abilityIconSize > this.boundBottom) {
         dist = this.boundBottom - abilityTop;
-        // this.drawTexturedModalRect(abilityLeft, abilityTop, 0, 0, this.abilityIconSize, dist);
-        this.drawRect(abilityLeft, abilityTop, abilityRight, abilityTop + dist, 0xFFAAAAFF);
+        this.drawTexturedModalRect(abilityLeft, abilityTop, 0, 0, this.abilityIconSize, dist);
       } else if (shouldRenderIcon(abilityTop, abilityTop + this.abilityIconSize)) {
-        // this.drawTexturedModalRect(abilityLeft, abilityTop, 0, 0, this.abilityIconSize, this.abilityIconSize);
-        this.drawRect(abilityLeft, abilityTop, abilityRight, abilityBottom, 0xFFAAAAFF);
+        this.drawTexturedModalRect(abilityLeft, abilityTop, 0, 0, this.abilityIconSize, this.abilityIconSize);
       }
     }
   }

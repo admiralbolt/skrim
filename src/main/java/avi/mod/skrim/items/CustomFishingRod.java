@@ -30,12 +30,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CustomFishingRod extends Item implements ItemModelProvider {
-	
+
 	private static Set<Block> effectiveBlockSet = Sets.newHashSet(new Block[] {});
 	protected String name;
 	public String type;
 	public int enchantability;
-	
+
 	public CustomFishingRod(String name) {
 		this.name = name;
 		this.setUnlocalizedName(name);
@@ -48,7 +48,7 @@ public class CustomFishingRod extends Item implements ItemModelProvider {
     	@SideOnly(Side.CLIENT)
       public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
       {
-          return entityIn == null ? 0.0F : (entityIn.getHeldItemMainhand() == stack && entityIn instanceof EntityPlayer && ((EntityPlayer)entityIn).fishEntity != null ? 1.0F : 0.0F);
+        return entityIn == null ? 0.0F : (entityIn.getHeldItemMainhand() == stack && entityIn instanceof EntityPlayer && ((EntityPlayer)entityIn).fishEntity != null ? 1.0F : 0.0F);
       }
     });
 	}
@@ -57,7 +57,7 @@ public class CustomFishingRod extends Item implements ItemModelProvider {
   public void registerItemModel(Item item) {
     Skrim.proxy.registerItemRenderer(this, 0, this.getUnlocalizedName());
   }
-	
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
     if (playerIn.fishEntity != null) {
@@ -90,6 +90,5 @@ public class CustomFishingRod extends Item implements ItemModelProvider {
   public int getItemEnchantability() {
       return 1;
   }
-	
-}
 
+}

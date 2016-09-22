@@ -68,11 +68,9 @@ public class SkillDigging extends Skill implements ISkillDigging {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
-		DecimalFormat three_dec = new DecimalFormat("0.00");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a+" + fmt.format(this.getSpeedBonus()) + "§r digging speed bonus.");
-		tooltip.add("§a" + three_dec.format(this.getTreasureChance() * 100) + "%§r chance to find treasure.");
+		tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r digging speed bonus.");
+		tooltip.add("§a" + Utils.formatPercent(this.getTreasureChance()) + "%§r chance to find treasure.");
 		return tooltip;
 	}
 
@@ -104,7 +102,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
       return Utils.getBlockName(block);
     }
   }
-  
+
   public static void addDiggingXp(BlockEvent.BreakEvent event) {
     EntityPlayer player = event.getPlayer();
     if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
@@ -117,7 +115,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
       }
     }
   }
-  
+
   public static void digFaster(PlayerEvent.BreakSpeed event) {
   	EntityPlayer player = event.getEntityPlayer();
     SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);

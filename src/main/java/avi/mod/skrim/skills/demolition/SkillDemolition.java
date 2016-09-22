@@ -1,6 +1,5 @@
 package avi.mod.skrim.skills.demolition;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.TimerTask;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.state.IBlockState;
@@ -56,12 +56,11 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Passively gain §a" + fmt.format(this.getResistance() * 100) + "%§r explosive resistance.");
+		tooltip.add("Passively gain §a" + Utils.formatPercent(this.getResistance()) + "%§r explosive resistance.");
 		int maxAdditional = this.getMaxAdditional();
 		for (int i = 0; i <= maxAdditional; i++) {
-			tooltip.add("Your TNT has a §a" + fmt.format(this.getExplosionChance(2 + i) * 100) + "%§r chance to cause an §aadditional explosion§r.");
+			tooltip.add("Your TNT has a §a" + Utils.formatPercent(this.getExplosionChance(2 + i)) + "%§r chance to cause an §aadditional explosion§r.");
 		}
 		return tooltip;
 	}

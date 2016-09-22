@@ -91,7 +91,7 @@ public class Skill implements ISkill {
   }
 
   public ResourceLocation getAbilityTexture(int abilityLevel) {
-    return null;
+    return SkillAbility.getAbilityIcon(this.getAbility(abilityLevel), this.hasAbility(abilityLevel));
   }
 
   public List<String> getAbilityTooltip(int abilityLevel) {

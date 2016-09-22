@@ -71,9 +71,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + fmt.format(this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r harvest drops.");
+		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r harvest drops.");
 		tooltip.add("   This bonus stacks with fortune.");
 		if (this.getGrowthStage() > 1) {
 			tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
@@ -119,7 +118,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				|| (block instanceof BlockCocoa && block.getMetaFromState(state) == 10)
 				) ? true : false;
 	}
-	
+
 	public static void addFarmingXp(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {

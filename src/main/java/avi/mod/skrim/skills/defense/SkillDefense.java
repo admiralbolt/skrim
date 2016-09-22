@@ -27,6 +27,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.utils.Utils;
 
 public class SkillDefense extends Skill implements ISkillDefense {
 
@@ -74,9 +75,9 @@ public class SkillDefense extends Skill implements ISkillDefense {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.00");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Take §a" + fmt.format(this.getDamageReduction() * 100) + "%§r less damage from mob.");
+		tooltip.add("Take §a" + Utils.formatPercent(this.getDamageReduction()) + "%§r less damage from mob and players.");
+		tooltip.add("Gain an additional §a" + this.getExtraArmor() + "§r max armor.");
 		return tooltip;
 	}
 

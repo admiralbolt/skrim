@@ -12,6 +12,7 @@ import java.util.TimerTask;
 import avi.mod.skrim.network.FallDistancePacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
@@ -30,12 +31,9 @@ import net.minecraft.block.BlockStoneSlabNew;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
@@ -47,13 +45,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class SkillMining extends Skill implements ISkillMining {
 
@@ -82,6 +78,34 @@ public class SkillMining extends Skill implements ISkillMining {
 
 	public static List<String> validFortuneOres = new ArrayList<String>(Arrays.asList("coal_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
 
+	public static SkillAbility darkvision = new SkillAbility(
+		"Darkvision",
+		25,
+		"I was born in the darkness.",
+		"While close to the bottom of the world you have a constant night vision effect."
+	);
+
+	public static SkillAbility lavaSwimmer = new SkillAbility(
+		"Lava Swimmer",
+		50,
+		"Reducing the number of 'oh shit' moments.",
+		"While close to the bottom of the world you take §a50%" + SkillAbility.descColor + " damage from lava, and don't get set on fire by it."
+	);
+
+	public static SkillAbility spelunker = new SkillAbility(
+		"Spelunker",
+		75,
+		"Spelunkey?  More like Spedunkey.  AHAHAHAHA.",
+		"Allows you to climb walls while holding jump."
+	);
+
+	public static SkillAbility drill = new SkillAbility(
+		"Drill",
+		100,
+		"Without the risk of earthquakes!",
+		"Right clicking with a pickaxe instantly mines to bedrock."
+	);
+
 	public SkillMining() {
 		this(1, 0);
 	}
@@ -89,6 +113,7 @@ public class SkillMining extends Skill implements ISkillMining {
 	public SkillMining(int level, int currentXp) {
 		super("Mining", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/mining.png");
+		this.addAbilities(darkvision, lavaSwimmer, spelunker, drill);
 	}
 
 	public int getXp(String blockName) {
@@ -109,11 +134,9 @@ public class SkillMining extends Skill implements ISkillMining {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
-		DecimalFormat three_dec = new DecimalFormat("0.00");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a+" + fmt.format(this.getSpeedBonus()) + "§r mining speed bonus.");
-		tooltip.add("§a" + three_dec.format(this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r ore drops.");
+		tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r mining speed bonus.");
+		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r ore drops.");
 		tooltip.add("   This bonus stacks with fortune.");
 		return tooltip;
 	}

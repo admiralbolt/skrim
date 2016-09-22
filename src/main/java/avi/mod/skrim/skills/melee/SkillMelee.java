@@ -1,11 +1,18 @@
 package avi.mod.skrim.skills.melee;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,27 +23,22 @@ import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -47,17 +49,40 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 public class SkillMelee extends Skill implements ISkillMelee {
 
 	public static SkillStorage<ISkillMelee> skillStorage = new SkillStorage<ISkillMelee>();
 	public int ticksSinceLastLeft = 0;
+
+	public static SkillAbility vampirism = new SkillAbility(
+		"Vampirism",
+		25,
+		"What I need is your blood. What I don't need is your permission.",
+		"Killing an enemy restores §a1" + SkillAbility.descColor + " heart."
+	);
+
+	public static SkillAbility spinSlash = new SkillAbility(
+		"Spin Slash",
+		50,
+		"Spin to win.",
+		"Critting an enemy deals massive AOE damage."
+	);
+
+	public static SkillAbility dualWielding = new SkillAbility(
+		"Dual Wielding",
+		75,
+		"Two swords are better than one.",
+		"Allows you to swing your off hand if you have two swords equipped.",
+		"Each hand uses a separate exhaustion meter for damage & swipe attacks."
+	);
+
+	public static SkillAbility grandSmite = new SkillAbility(
+		"Grand Smite",
+		100,
+		"DESTRUUUUCTIOOONNN",
+		"Criitting an enemy call down lightning."
+	);
 
 	public SkillMelee() {
 		this(1, 0);
@@ -65,6 +90,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
 	public SkillMelee(int level, int currentXp) {
 		super("Melee", level, currentXp);
+		this.addAbilities(vampirism, spinSlash, dualWielding, grandSmite);
 	}
 
 	public double getExtraDamage() {
@@ -77,10 +103,9 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Melee attacks deal §a" + fmt.format(this.getExtraDamage() * 100) + "%§r extra damage.");
-		tooltip.add("Melee attacks have a §a" + fmt.format(this.getCritChance() * 100) + "%§r chance to critically strike.");
+		tooltip.add("Melee attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
+		tooltip.add("Melee attacks have a §a" + Utils.formatPercent(this.getCritChance()) + "%§r chance to critically strike.");
 		return tooltip;
 	}
 

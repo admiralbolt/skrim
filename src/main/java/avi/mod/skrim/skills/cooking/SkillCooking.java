@@ -6,6 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.items.CustomFood;
+import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
@@ -19,16 +26,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
-import avi.mod.skrim.items.CustomFood;
-import avi.mod.skrim.items.ModItems;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Utils;
 
 public class SkillCooking extends Skill implements ISkillCooking {
 
@@ -61,6 +61,13 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		addFood("cookie", ModItems.overwriteCookie, 5);
 	}
 
+	public static SkillAbility overfull = new SkillAbility(
+		"Overfull",
+		25,
+		"Just keep eating, just keep eating, just keep eating...",
+		"Your cooked food now ignores food and saturation limits."
+	);
+
 	public SkillCooking() {
 		this(1, 0);
 	}
@@ -68,6 +75,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public SkillCooking(int level, int currentXp) {
 		super("Cooking", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/cooking.png");
+		this.addAbilities(overfull);
 	}
 
 	public CustomFood getOverwriteFood(String name) {
@@ -97,10 +105,9 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Your cooking provides §a+" + fmt.format(extraFood(this.level) * 100) + "%§r food.");
-		tooltip.add("Your cooking provides §a+" + fmt.format(extraSaturation(this.level) * 100) + "%§r saturation");
+		tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraFood(this.level)) + "%§r food.");
+		tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
 		tooltip.add("Shift clicking crafted items provides §aregular and modded§r food.");
 		tooltip.add("§eWe swear this is a feature and not a bug...§r");
 		if (overFull(this.level)) {
@@ -134,7 +141,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
   		return null;
   	}
   }
-  
+
   public static void injectFakeFood(PlayerEvent event, ItemStack stack, EntityPlayer player) {
   	if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
   		SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
@@ -143,12 +150,12 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				CustomFood replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
 				if (replaceFood != null) {
 					stack.setItem(replaceFood);
-	
+
 					NBTTagCompound compound = new NBTTagCompound();
 					compound.setInteger("level", cooking.level);
 					stack.setTagCompound(compound);
 					stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
-	
+
 					if (stack.stackSize == 0) {
 						int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
 						ItemStack newStack = new ItemStack(replaceFood, newStackSize);
@@ -158,7 +165,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 						newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
 						player.inventory.addItemStackToInventory(newStack);
 					}
-	
+
 					if (player instanceof EntityPlayerMP) {
 						cooking.addXp((EntityPlayerMP) player, cooking.getXp(foodName));
 					}

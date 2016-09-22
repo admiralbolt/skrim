@@ -53,9 +53,9 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CustomFishHook extends EntityFishHook implements IEntityAdditionalSpawnData{
+public class CustomFishHook extends EntityFishHook implements IEntityAdditionalSpawnData {
 
-	private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.<Integer> createKey(EntityFishHook.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.<Integer>createKey(EntityFishHook.class, DataSerializers.VARINT);
 	private BlockPos field_189740_d;
 	public int shake;
 	public EntityPlayer angler;
@@ -82,6 +82,8 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 	@SideOnly(Side.CLIENT)
 	private double velocityZ;
 
+	private boolean canTeleport;
+
 	private boolean isAdmin = false;
 	private int ticksCaughtDelay;
 	private int ticksCatchableDelay;
@@ -100,6 +102,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 		this.field_189740_d = new BlockPos(-1, -1, -1);
 		this.setSize(0.25F, 0.25F);
 		this.ignoreFrustumCheck = true;
+		this.canTeleport = false;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -109,7 +112,6 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 		this.ignoreFrustumCheck = true;
 		this.angler = par8EntityPlayer;
 		par8EntityPlayer.fishEntity = this;
-
 		this.xTile = -1;
 		this.yTile = -1;
 		this.zTile = -1;
@@ -121,6 +123,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 		this.setSize(0.25F, 0.25F);
 		this.ignoreFrustumCheck = true;
 		this.field_189740_d = new BlockPos(par2, par4, par6);
+		this.canTeleport = false;
 	}
 
 	public CustomFishHook(World par1World, EntityPlayer par2EntityPlayer) {
@@ -151,11 +154,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 		float velocity = 1.7F;
 
 		this.calculateVelocity(this.motionX, this.motionY, this.motionZ, velocity, 1.0F);
-	}
-
-	public CustomFishHook(World world, EntityPlayer entityplayer, boolean b) {
-		this(world, entityplayer);
-		isAdmin = b;
+		this.canTeleport = false;
 	}
 
 	public void setBaseCatchTime(int amount) {
@@ -243,24 +242,31 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 			this.setRotation(this.rotationYaw, this.rotationPitch);
 		} else {
 			if (this.inGround) {
+				if (!this.inWater) {
+					this.canTeleport = true;
+				}
 				if (this.worldObj.getBlockState(this.field_189740_d).getBlock() == this.inTile) {
+					this.motionX = 0;
+					this.motionY = 0;
+					this.motionZ = 0;
 					++this.ticksInGround;
 
-					if (this.ticksInGround == 600) {
-						this.setDead();
-					}
-					return;
-				}
+          if (this.ticksInGround == 1200) {
+          	this.setDead();
+          }
 
-				this.inGround = false;
-				this.motionX *= (double) (this.rand.nextFloat() * 0.2F);
-				this.motionY *= (double) (this.rand.nextFloat() * 0.2F);
-				this.motionZ *= (double) (this.rand.nextFloat() * 0.2F);
-				this.ticksInGround = 0;
-				this.ticksInAir = 0;
-			} else {
-				++this.ticksInAir;
-			}
+          return;
+        }
+
+        this.inGround = false;
+        this.motionX *= (double)(this.rand.nextFloat() * 0.2F);
+        this.motionY *= (double)(this.rand.nextFloat() * 0.2F);
+        this.motionZ *= (double)(this.rand.nextFloat() * 0.2F);
+        this.ticksInGround = 0;
+        this.ticksInAir = 0;
+    } else {
+			this.ticksInAir++;
+		}
 
 			if (!this.worldObj.isRemote) {
 				Vec3d vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
@@ -462,6 +468,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 				this.setPosition(this.posX, this.posY, this.posZ);
 			}
 		}
+
 	}
 
 	@Override
@@ -546,20 +553,20 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 				i = 1;
 			}
 
-			if (this.inGround) {
-				if (this.isDead) {
-					if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
-						SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
-						if (fishing.hasAbility(1)) {
-							MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-							ICommandManager cm = server.getCommandManager();
-							BlockPos pos = this.getPosition();
-							cm.executeCommand(server, "/tp " + this.angler.getName() + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
-						}
-						i = 0;
-					} else {
-						i = 2;
+			Block block = this.angler.worldObj.getBlockState(new BlockPos((int) this.posX, (int) MathHelper.floor_double(this.getEntityBoundingBox().minY), (int) this.posZ)).getBlock();
+
+			if (block != Blocks.WATER && block != Blocks.FLOWING_WATER && this.canTeleport) {
+				if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+					SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
+					if (fishing.hasAbility(1)) {
+						MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+						ICommandManager cm = server.getCommandManager();
+						BlockPos pos = this.getPosition();
+						cm.executeCommand(server, "/tp " + this.angler.getName() + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
 					}
+					i = 0;
+				} else {
+					i = 2;
 				}
 			}
 
@@ -569,12 +576,10 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 		}
 	}
 
-	@Override
 	public void writeSpawnData(ByteBuf buffer) {
 		buffer.writeInt(this.angler != null ? this.angler.getEntityId() : 0);
 	}
 
-	@Override
 	public void readSpawnData(ByteBuf additionalData) {
 		this.angler = (EntityPlayer) this.worldObj.getEntityByID(additionalData.readInt());
 	}

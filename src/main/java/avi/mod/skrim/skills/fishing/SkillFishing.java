@@ -40,48 +40,33 @@ import avi.mod.skrim.utils.Utils;
 public class SkillFishing extends Skill implements ISkillFishing {
 
 	public static SkillStorage<ISkillFishing> skillStorage = new SkillStorage<ISkillFishing>();
-	private static Random xpRand = new Random();
-
-	public boolean canCatch = false;
-	public static Map<String, Integer> xpMap;
-	static {
-		xpMap = new HashMap<String, Integer>();
-		String[] validItems = {
-			"item.item.fish.cod.raw",
-			"item.item.fish.salmon.raw",
-			"item.item.fish.clownfish.raw",
-			"item.item.fish.pufferfish.raw",
-			"item.item.bow",
-			"item.item.enchantedbook",
-			"item.item.fishingrod",
-			"item.item.nametag",
-			"item.item.saddle",
-			"item.item.waterlily",
-			"item.item.bowl",
-			"item.item.leather",
-			"item.item.bootscloth",
-			"item.item.rottenflesh",
-			"item.item.stick",
-			"item.item.string",
-			"item.item.potion",
-			"item.item.bone",
-			"item.item.dyepowder.black",
-			"item.tile.tripwiresource"
-		};
-		/**
-		 * This may be unnecessary, but we want to keep this way so we can
-		 * easily change experience in the future.
-		 */
-		for (String itemName : validItems) {
-			xpMap.put(itemName, 100);
-		}
-	}
 
 	public static SkillAbility batman = new SkillAbility(
 		"Batman",
 		25,
 		"na na na na na na na na",
 		"Your fishing rod can now be used as a grappling hook."
+	);
+
+	public static SkillAbility tripleHook = new SkillAbility(
+		"Triple Hook",
+		50,
+		"Triple the hooks, triple the pleasure.",
+		"You now catch §a3x" + SkillAbility.descColor + " as many items."
+	);
+
+	public static SkillAbility bountifulCatch = new SkillAbility(
+		"Bountiful Catch",
+		75,
+		"On that E-X-P grind.",
+		"Catching a fish provides an additional§a 9-24" + SkillAbility.descColor + " xp."
+	);
+
+	public static SkillAbility fling = new SkillAbility(
+		"Fling",
+		100,
+		"Sometimes I don't know my own strength.",
+		"Launch hooked entities into the air."
 	);
 
 	public SkillFishing() {
@@ -91,11 +76,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
 	public SkillFishing(int level, int currentXp) {
 		super("Fishing", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/fishing.png");
-		this.addAbilities(batman);
-	}
-
-	public int getXp(String blockName) {
-		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
+		this.addAbilities(batman, tripleHook, bountifulCatch, fling);
 	}
 
 	public double getTreasureChance() {
@@ -106,35 +87,15 @@ public class SkillFishing extends Skill implements ISkillFishing {
 		return 0.0075 * this.level;
 	}
 
-	public boolean isValidFish(EntityItem item) {
-		return this.canCatch && this.xpMap.containsKey(Utils.snakeCase(item.getName()));
-	}
-
-	public int randomXPOrb() {
-		int min = this.getMinXP();
-		int max = this.getMaxXP();
-		return xpRand.nextInt(max - min) + min;
-	}
-
-	private int getMinXP() {
-		return (int) (this.level * 0.5) + 1;
-	}
-
-	private int getMaxXP() {
-		return (int) (this.level * 1.1) + 2;
-	}
-
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + fmt.format(this.getDelayReduction() * 100) + "%§r reduced fishing time.");
-		tooltip.add("§a" + fmt.format(this.getTreasureChance() * 100) + "%§r chance to fish additional treasure.");
-		tooltip.add("Fishing provides an additional §a" + this.getMinXP() + "§r-§a" + this.getMaxXP() + "§r xp.");
+		tooltip.add("§a" + Utils.formatPercentTwo(this.getDelayReduction()) + "%§r reduced fishing time.");
+		tooltip.add("§a" + Utils.formatPercent(this.getTreasureChance()) + "%§r chance to fish additional treasure.");
 		return tooltip;
 	}
-	
-	
+
+
 	public static void pickupSkrimRod(EntityItemPickupEvent event) {
 		EntityPlayer player = event.getEntityPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
@@ -147,7 +108,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
 			}
 		}
 	}
-	
+
 	public static void craftSkrimRod(ItemCraftedEvent event) {
 		EntityPlayer player = event.player;
 		if (player != null && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {

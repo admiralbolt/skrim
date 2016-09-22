@@ -42,10 +42,8 @@ public abstract class FlowerBase extends BlockBush implements ItemModelProvider 
 	public void registerItemModel(Item item) {
 		if (item instanceof ItemBlock) {
 			ItemBlock itemBlock = (ItemBlock) item;
-			System.out.println("trykng to register itmeBoakc: " + itemBlock);
 			Block block = itemBlock.getBlock();
 			if (block instanceof FlowerBase) {
-				System.out.println("is instance!");
 				FlowerBase flower = (FlowerBase) block;
 				Skrim.proxy.registerBlockVariant(itemBlock, FlowerBase.EnumFlowerType.getTypes(flower.getBlockType()));
 			}
@@ -87,7 +85,7 @@ public abstract class FlowerBase extends BlockBush implements ItemModelProvider 
 	 * Get the Type of this flower (Yellow/Red)
 	 */
 	public abstract FlowerBase.EnumFlowerColor getBlockType();
-	
+
 	public ItemStack getMinecraftFlower(int meta) {
 		if (this.getBlockType() == EnumFlowerColor.RED) {
 			return new ItemStack(Blocks.RED_FLOWER, 1, meta);

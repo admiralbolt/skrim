@@ -90,10 +90,9 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a+" + fmt.format(this.getSpeedBonus()) + "§r woodcutting speed bonus.");
-		tooltip.add("§a" + fmt.format(this.getHewingChance() * 100) + "%§r chance to level a tree.");
+		tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r woodcutting speed bonus.");
+		tooltip.add("§a" + Utils.formatPercent(this.getHewingChance()) + "%§r chance to level a tree.");
 		return tooltip;
 	}
 
@@ -148,7 +147,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 				&& Math.abs(targetPos.getZ() - start.getZ()) <= radius) ?
 						true: false;
 	}
-	
+
 	public static void addWoodcuttingXp(BlockEvent.BreakEvent event) {
 		IBlockState state = event.getState();
 		Block target = state.getBlock();

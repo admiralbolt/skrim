@@ -1,12 +1,12 @@
 package avi.mod.skrim.skills.ranged;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityBlaze;
@@ -44,16 +44,16 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public double getExtraDamage() {
 		return this.level * 0.0075;
 	}
-	
+
 	public double getHeadshotDamage() {
 		return this.level * 0.0075;
 	}
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Ranged attacks deal §a" + fmt.format(this.getExtraDamage() * 100) + "%§r extra damage.");
+		tooltip.add("Ranged attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
+		tooltip.add("Headshot deal §a" + Utils.formatPercentTwo(this.getHeadshotDamage()) + "%§r extra damage.");
 		return tooltip;
 	}
 
@@ -85,16 +85,16 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	}
 
 	public static boolean canHeadshot(Entity entity) {
-		return (entity instanceof EntityPlayer 
-				|| entity instanceof EntityVillager 
-				|| entity instanceof EntityZombie 
-				|| entity instanceof EntitySkeleton 
-				|| entity instanceof EntityCreeper 
-				|| entity instanceof EntityDragon 
-				|| entity instanceof EntitySpider 
-				|| entity instanceof EntityBlaze 
-				|| entity instanceof EntityWitch 
-				|| entity instanceof EntityWolf 
+		return (entity instanceof EntityPlayer
+				|| entity instanceof EntityVillager
+				|| entity instanceof EntityZombie
+				|| entity instanceof EntitySkeleton
+				|| entity instanceof EntityCreeper
+				|| entity instanceof EntityDragon
+				|| entity instanceof EntitySpider
+				|| entity instanceof EntityBlaze
+				|| entity instanceof EntityWitch
+				|| entity instanceof EntityWolf
 				|| entity instanceof EntityOcelot
 			);
 	}

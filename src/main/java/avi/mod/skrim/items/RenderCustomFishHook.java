@@ -115,9 +115,9 @@ public class RenderCustomFishHook extends Render<CustomFishHook> {
 				vertexbuffer.pos(x + d10 * (double) f10, y + d11 * (double) (f10 * f10 + f10) * 0.5D + 0.25D, z + d12 * (double) f10).color(0, 0, 0, 255).endVertex();
 			}
 
-			tessellator.draw();
-			GlStateManager.enableLighting();
-			GlStateManager.enableTexture2D();
+			// tessellator.draw();
+			// GlStateManager.enableLighting();
+			// GlStateManager.enableTexture2D();
 			// super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		}
 	}

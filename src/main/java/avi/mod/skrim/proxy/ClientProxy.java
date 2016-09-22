@@ -22,12 +22,12 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class ClientProxy extends CommonProxy {
-	
+
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
-		RenderingRegistry.registerEntityRenderingHandler(CustomFishHook.class, new RenderCustomFishHook(Minecraft.getMinecraft().getRenderManager()));
+		// RenderingRegistry.registerEntityRenderingHandler(CustomFishHook.class, new RenderCustomFishHook(Minecraft.getMinecraft().getRenderManager()));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchantedFlower.class, new TileEntityEnchantedFlowerRenderer());
 	}
 
@@ -40,15 +40,13 @@ public class ClientProxy extends CommonProxy {
 	public void registerMinecraftItemRenderer(Item item, int meta, String resource) {
 		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(resource));
 	}
-	
+
 	@Override
 	public void registerBlockVariant(ItemBlock itemBlock, VariantEnum types[]) {
 		Block block = itemBlock.getBlock();
 		String baseName = block.getUnlocalizedName();
 		Item item = itemBlock.getItemFromBlock(block);
-		System.out.println("in register block variant, baseName: " + baseName);
 		for (VariantEnum type : types) {
-			System.out.println("parsing VariantEnum [" + type.getMeta() + ", " + type.getName() + "]");
 			ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(Skrim.modId + ":" + baseName + "_" + type.getName(), "inventory");
 			ModelLoader.setCustomModelResourceLocation(item, type.getMeta(), itemModelResourceLocation);
 			ModelBakery.registerItemVariants(item, itemModelResourceLocation);

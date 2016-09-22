@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -22,14 +28,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
-import avi.mod.skrim.items.ModItems;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Utils;
 
 public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
@@ -61,6 +61,35 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		obsidianItems.add(ModItems.obsidianSword);
 	}
 
+	public static SkillAbility persistence = new SkillAbility(
+		"Persistence",
+		25,
+		"3 days later...",
+		"Remove prior work cost when repairing items."
+	);
+
+	public static SkillAbility masterCraftsPerson = new SkillAbility(
+		"Master Craftsperson",
+		50,
+		"Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
+		"No longer risk breaking the anvil when repairing items.",
+		"Repairing an item with an undamaged equivalent provides a one time §a+25%" + SkillAbility.descColor + " durability bonus."
+	);
+
+	public static SkillAbility ironHeart = new SkillAbility(
+		"Iron Heart",
+		75,
+		"Can still pump blood.",
+		"Passively gain §a50%" + SkillAbility.descColor + " fire resistance."
+	);
+
+	public static SkillAbility obsidianSmith = new SkillAbility(
+		"Obsidian Smith",
+		100,
+		"How can obsidian be real if our eyes aren't real?",
+		"Allows you to craft obsidian armor, weapons, and tools."
+	);
+
 	public SkillBlacksmithing() {
 		this(1, 0);
 	}
@@ -68,6 +97,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	public SkillBlacksmithing(int level, int currentXp) {
 		super("Blacksmithing", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/blacksmithing.png");
+		this.addAbilities(persistence, masterCraftsPerson, ironHeart, obsidianSmith);
 	}
 
 	public int getXp(String blockName) {
@@ -88,9 +118,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("Smelting provides §a+" + fmt.format(this.extraIngot() * 100) + "%§r items.");
+		tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
+		tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
 		tooltip.add("Shift clicking crafted items provides §amostly accurate extra items§r.");
 		tooltip.add("§eWe swear this is a bug and not a feature...§r");
 		return tooltip;

@@ -12,6 +12,7 @@ import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SpawnHeartPacket;
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Reflection;
@@ -67,6 +68,34 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		xpMap.put("sunflower", 25);
 	}
 
+	public static SkillAbility sunFlower = new SkillAbility(
+		"Sun Flower",
+		25,
+		"It was either this or mariglow, don't know which one is worse.",
+		"Enables you to craft glowing flowers with a flower & glowstone dust."
+	);
+
+	public static SkillAbility thornStyle = new SkillAbility(
+		"Thorn Style",
+		50,
+		"I'll let you try my thorn style.",
+		"While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage."
+	);
+
+	public static SkillAbility seduceVillager = new SkillAbility(
+		"Seduce Villager",
+		75,
+		"[Tongue waggling intensifies]",
+		"Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + "."
+	);
+
+	public static SkillAbility enchantedFlower = new SkillAbility(
+		"Enchanted Flower",
+		100,
+		"It shares a giant friendliness beam! :D",
+		"Enables you to craft enchanted flowers that function like speed beacons."
+	);
+
 	public SkillBotany() {
 		this(1, 0);
 	}
@@ -74,20 +103,21 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	public SkillBotany(int level, int currentXp) {
 		super("Botany", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/botany.png");
+		this.addAbilities(sunFlower, thornStyle, seduceVillager, enchantedFlower);
 	}
 
 	public int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
-	
+
 	public double getSplosionChance() {
 		return this.level * 0.01;
 	}
-	
+
 	public int getSplosionRadius() {
 		return (int) (this.level / 25) + 1;
 	}
-	
+
 	public double getFortuneChance() {
 		return 0.01 * this.level;
 	}
@@ -95,7 +125,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	public int getFortuneAmount() {
 		return (int) (((double) this.level) / 12) + 2;
 	}
-	
+
 	public static boolean validFlowerStack(ItemStack stack) {
 		if (stack != null) {
 			Item item = stack.getItem();
@@ -126,7 +156,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			return "";
 		}
 	}
-	
+
 	public static boolean validFlowerBlock(Block block) {
 		return (block instanceof BlockFlower || block instanceof GlowFlower);
 	}
@@ -138,9 +168,9 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
 	@Override
 	public List<String> getToolTip() {
-		DecimalFormat fmt = new DecimalFormat("0.0");
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + fmt.format(this.getFortuneChance() * 100) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r flower drops.");
+		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r flower drops.");
+		tooltip.add("§a" + Utils.formatPercent(this.getSplosionChance()) + "%§r chance to cause a flowersplosion with radius §a" + this.getSplosionRadius() + "§r.");
 		return tooltip;
 	}
 
@@ -240,7 +270,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			}
 		}
 	}
-	
+
 	public static void seduceVillager(PlayerInteractEvent.EntityInteract event) {
 		EntityPlayer player = event.getEntityPlayer();
 		Entity targetEntity = event.getTarget();
@@ -277,7 +307,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			}
 		}
 	}
-	
+
 	public static void verifyFlowers(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
 		if (targetItem != null && targetItem instanceof GlowFlowerVariants) {
