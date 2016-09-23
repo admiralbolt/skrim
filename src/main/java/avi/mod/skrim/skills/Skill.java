@@ -8,18 +8,8 @@ import java.util.Map;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.Capability.IStorage;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraft.util.ResourceLocation;
 
 public class Skill implements ISkill {
@@ -31,6 +21,9 @@ public class Skill implements ISkill {
   public List<String> tooltip = new ArrayList<String>();
   public ResourceLocation iconTexture;
   public Map<Integer, SkillAbility> abilities = new HashMap<Integer, SkillAbility>();
+
+  public static int xpMult = 10;
+  public static int xpFactor = 10000;
 
   /**
    * Optionally load a skill with the set level & xp
@@ -51,7 +44,7 @@ public class Skill implements ISkill {
 
   public void addXp(EntityPlayerMP player, int xp) {
     if (xp > 0) {
-      this.xp += (xp + xp * Skills.getTotalXpBonus(player));
+      this.xp += (int) ((xp * Skills.getTotalXpBonus(player) + xp) * xpMult);
       this.levelUp(player);
     }
   }
@@ -60,7 +53,7 @@ public class Skill implements ISkill {
    * D&D 3.5 XP. Ahhhh fuck yeah.
    */
   public int getNextLevelTotal() {
-    return 1000 * ((this.level * this.level + this.level) / 2);
+    return xpFactor * ((this.level * this.level + this.level) / 2);
   }
 
   public int getXpNeeded() {
@@ -68,7 +61,7 @@ public class Skill implements ISkill {
   }
 
   public double getPercentToNext() {
-	  int prevLevelXp = (((this.level - 1) * (this.level - 1) + this.level - 1) / 2) * 1000;
+    int prevLevelXp = Utils.gaussianSum(this.level - 1) * xpFactor;
 	  return ((double) (this.xp - prevLevelXp)) / (this.getNextLevelTotal() - prevLevelXp);
   }
 

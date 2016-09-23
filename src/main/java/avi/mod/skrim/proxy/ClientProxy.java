@@ -1,7 +1,9 @@
 package avi.mod.skrim.proxy;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.blocks.VariantEnum;
+import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.client.renderer.TileEntityEnchantedFlowerRenderer;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.items.CustomFishHook;
@@ -42,11 +44,11 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void registerBlockVariant(ItemBlock itemBlock, VariantEnum types[]) {
+	public void registerBlockVariant(ItemBlock itemBlock, EnumFlowerType types[]) {
 		Block block = itemBlock.getBlock();
 		String baseName = block.getUnlocalizedName();
 		Item item = itemBlock.getItemFromBlock(block);
-		for (VariantEnum type : types) {
+		for (EnumFlowerType type : types) {
 			ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(Skrim.modId + ":" + baseName + "_" + type.getName(), "inventory");
 			ModelLoader.setCustomModelResourceLocation(item, type.getMeta(), itemModelResourceLocation);
 			ModelBakery.registerItemVariants(item, itemModelResourceLocation);

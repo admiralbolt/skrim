@@ -28,7 +28,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 
-public abstract class FlowerBase extends BlockBush implements ItemModelProvider {
+public class FlowerBase extends BlockBush implements ItemModelProvider {
 
 	protected String name;
 
@@ -84,7 +84,9 @@ public abstract class FlowerBase extends BlockBush implements ItemModelProvider 
 	/**
 	 * Get the Type of this flower (Yellow/Red)
 	 */
-	public abstract FlowerBase.EnumFlowerColor getBlockType();
+	public FlowerBase.EnumFlowerColor getBlockType() {
+		return null;
+	}
 
 	public ItemStack getMinecraftFlower(int meta) {
 		if (this.getBlockType() == EnumFlowerColor.RED) {
@@ -180,7 +182,6 @@ public abstract class FlowerBase extends BlockBush implements ItemModelProvider 
 		/**
 		 * Get all FlowerTypes that are applicable for the given Flower block ("yellow", "red")
 		 */
-		@SideOnly(Side.CLIENT)
 		public static FlowerBase.EnumFlowerType[] getTypes(FlowerBase.EnumFlowerColor flowerColor) {
 			return TYPES_FOR_BLOCK[flowerColor.ordinal()];
 		}

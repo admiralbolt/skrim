@@ -91,18 +91,6 @@ public class SkillDefense extends Skill implements ISkillDefense {
 					SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
 					defense.addXp((EntityPlayerMP) player, defense.getXp(event.getAmount()));
 					event.setAmount(event.getAmount() - (float) (defense.getDamageReduction() * event.getAmount()));
-					ItemStack offStack = player.getHeldItemOffhand();
-					if (offStack != null) {
-						Item offItem = offStack.getItem();
-						if (offItem != null && offItem instanceof ItemShield) {
-							System.out.println("is shield!, worldObj.isRemote: " + player.worldObj.isRemote);
-							if (player.worldObj.isRemote) {
-								if (Minecraft.getMinecraft().gameSettings.keyBindUseItem.isKeyDown()) {
-									System.out.println("mwahahahahaha");
-								}
-							}
-						}
-					}
 				}
 			}
 		}
@@ -110,8 +98,8 @@ public class SkillDefense extends Skill implements ISkillDefense {
 
 	public static void renderArmor(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() == ElementType.ARMOR) {
-			event.setCanceled(true);
-			new ArmorOverlay(Minecraft.getMinecraft());
+			// event.setCanceled(true);
+			// new ArmorOverlay(Minecraft.getMinecraft());
 		}
 	}
 

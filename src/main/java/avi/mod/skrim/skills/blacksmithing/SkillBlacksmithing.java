@@ -176,7 +176,6 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	  		if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
 	  			SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
 	  			if (blacksmithing.hasAbility(3)) {
-	  				System.out.println("input amount: " + event.getAmount());
 	  				event.setAmount(event.getAmount() / 2);
 	  			}
 	  		}

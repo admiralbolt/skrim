@@ -20,6 +20,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -54,6 +55,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("Ranged attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
 		tooltip.add("Headshot deal §a" + Utils.formatPercentTwo(this.getHeadshotDamage()) + "%§r extra damage.");
+		tooltip.add("§eYou'll know you've gotten a headshot when you hear horses.§r");
 		return tooltip;
 	}
 
@@ -68,16 +70,13 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					event.setAmount(event.getAmount() + (float) (ranged.getExtraDamage() * event.getAmount()));
 					Entity arrow = source.getSourceOfDamage();
 					Entity targetEntity = event.getEntity();
-					System.out.println("canHeadhost: " + canHeadshot(targetEntity));
-					System.out.println("headshotRange: (" + (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow) + ", " + (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh) + ")");
-					System.out.println("arrowHeight: " + arrow.posY);
 					int addXp = 0;
 					if (canHeadshot(targetEntity) && (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow < arrow.posY) && (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh > arrow.posY)) {
-						System.out.println("Boom, headshot.");
+						player.worldObj.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
 						addXp = 25;
 					}
-					addXp += event.getAmount() * 10;
+					addXp += event.getAmount() * 3;
 					ranged.addXp((EntityPlayerMP) player, addXp);
 				}
 			}

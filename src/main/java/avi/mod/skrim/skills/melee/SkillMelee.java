@@ -154,7 +154,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						}
 						addXp += 25;
 					}
-					addXp += (int) event.getAmount() * 10;
+					addXp += (int) event.getAmount() * 3;
 					melee.addXp((EntityPlayerMP) player, addXp);
 				}
 			}

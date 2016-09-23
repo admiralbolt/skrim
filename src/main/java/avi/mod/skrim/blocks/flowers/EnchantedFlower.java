@@ -43,7 +43,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class EnchantedFlower extends FlowerBase implements ITileEntityProvider {
+public class EnchantedFlower extends FlowerBase implements ITileEntityProvider {
 
 	public EnchantedFlower() {
 		super();
@@ -52,7 +52,6 @@ public abstract class EnchantedFlower extends FlowerBase implements ITileEntityP
 	}
 
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		System.out.println("creating new tile entity.");
 		return new TileEntityEnchantedFlower();
 	}
 
@@ -79,11 +78,9 @@ public abstract class EnchantedFlower extends FlowerBase implements ITileEntityP
 	 */
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-		System.out.println(stack.hasDisplayName());
 		if (stack.hasDisplayName()) {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
-			
-			System.out.println(tileentity);
+
 			if (tileentity instanceof TileEntityEnchantedFlower) {
 				((TileEntityEnchantedFlower) tileentity).setName(stack.getDisplayName());
 			}
@@ -100,5 +97,5 @@ public abstract class EnchantedFlower extends FlowerBase implements ITileEntityP
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

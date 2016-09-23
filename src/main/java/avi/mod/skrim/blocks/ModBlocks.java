@@ -9,6 +9,7 @@ import avi.mod.skrim.blocks.flowers.EnchantedFlowerRed;
 import avi.mod.skrim.blocks.flowers.EnchantedFlowerVariants;
 import avi.mod.skrim.blocks.flowers.EnchantedFlowerYellow;
 import avi.mod.skrim.blocks.flowers.FlowerBase;
+import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlowerRed;
 import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
@@ -21,6 +22,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public final class ModBlocks {
 
@@ -80,21 +83,16 @@ public final class ModBlocks {
     itemBlock.setRegistryName(block.getRegistryName());
     return register(block, itemBlock);
   }
-  
   private static void addGlowFlowerRecipes(GlowFlower flower, ItemBlock itemBlock) {
-		VariantEnum types[] = FlowerBase.EnumFlowerType.getTypes(flower.getBlockType());
-		List<ItemStack> glowItems = new ArrayList<ItemStack>();
-		itemBlock.getSubItems(itemBlock.getItemFromBlock(flower), Skrim.creativeTab, glowItems);
-		for (ItemStack stack : glowItems) {
+		for (EnumFlowerType type : FlowerBase.EnumFlowerType.getTypes(flower.getBlockType())) {
+			ItemStack stack = new ItemStack(flower, 1, type.getMeta());
 			GameRegistry.addShapelessRecipe(stack, flower.getMinecraftFlower(stack.getMetadata()), Items.GLOWSTONE_DUST);
 		}
   }
   
   private static void addEnchantedFlowerRecipes(EnchantedFlower flower, ItemBlock itemBlock) {
-  	VariantEnum types[] = FlowerBase.EnumFlowerType.getTypes(flower.getBlockType());
-  	List<ItemStack> enchantedItems = new ArrayList<ItemStack>();
-		itemBlock.getSubItems(itemBlock.getItemFromBlock(flower), Skrim.creativeTab, enchantedItems);
-  	for (ItemStack stack : enchantedItems) {
+		for (EnumFlowerType type : FlowerBase.EnumFlowerType.getTypes(flower.getBlockType())) {
+			ItemStack stack = new ItemStack(flower, 1, type.getMeta());
   		GameRegistry.addRecipe(stack, "ABA", "CDC", "ABA", 'A', Items.DIAMOND, 'B', Blocks.OBSIDIAN, 'C', Blocks.GLASS, 'D', flower.getMinecraftFlower(stack.getMetadata()));
   	}
   }

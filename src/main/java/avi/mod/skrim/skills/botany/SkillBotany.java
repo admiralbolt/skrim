@@ -229,10 +229,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
 								IBlockState airState = player.worldObj.getBlockState(airPos);
 								if (airState != null) {
 									Block airBlock = airState.getBlock();
-									System.out.println(airBlock);
 									if (airBlock.isAir(airState, player.worldObj, airPos)) {
 										BlockPos dirtPos = new BlockPos(airPos.getX(), airPos.getY() - 1, airPos.getZ());
-										System.out.println("checking dirtPos: " + dirtPos);
 										IBlockState dirtState = player.worldObj.getBlockState(dirtPos);
 										if (dirtState != null) {
 											Block dirtBlock = dirtState.getBlock();
@@ -275,7 +273,6 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		EntityPlayer player = event.getEntityPlayer();
 		Entity targetEntity = event.getTarget();
 		if (targetEntity instanceof EntityVillager) {
-			System.out.println("target is villager");
 			EntityVillager villager = (EntityVillager) targetEntity;
 			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 				SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);

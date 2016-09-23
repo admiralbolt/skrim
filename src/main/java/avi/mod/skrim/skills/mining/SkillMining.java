@@ -273,17 +273,17 @@ public class SkillMining extends Skill implements ISkillMining {
 
 	public static void drill(PlayerInteractEvent.RightClickBlock event) {
 		EntityPlayer player = event.getEntityPlayer();
-		RayTraceResult result = player.rayTrace(5.0D, 1.0F);
-		if (!player.worldObj.isRemote) {
-			if (result != null) {
-				if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
-					if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
-						SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
-						if (mining.hasAbility(4)) {
-							ItemStack mainStack = event.getItemStack();
-							if (mainStack != null) {
-								Item mainItem = mainStack.getItem();
-								if (mainItem != null && mainItem instanceof ItemPickaxe) {
+		if (player != null && player.hasCapability(Skills.MINING, EnumFacing.NORTH)) {
+			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
+			if (mining.hasAbility(4)) {
+				ItemStack mainStack = event.getItemStack();
+				if (mainStack != null) {
+					Item mainItem = mainStack.getItem();
+					if (mainItem != null && mainItem instanceof ItemPickaxe) {
+						if (!player.worldObj.isRemote) {
+							RayTraceResult result = player.rayTrace(5.0D, 1.0F);
+							if (result != null) {
+								if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
 									player.swingArm(EnumHand.MAIN_HAND);
 									ItemPickaxe pic = (ItemPickaxe) mainItem;
 									BlockPos targetPos = result.getBlockPos();

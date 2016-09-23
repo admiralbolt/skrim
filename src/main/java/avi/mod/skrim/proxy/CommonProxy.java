@@ -6,6 +6,7 @@ import avi.mod.skrim.Config;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.blocks.VariantEnum;
+import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
@@ -37,6 +38,7 @@ public class CommonProxy {
 		ModCapabilities.registerCapabilities();
 		ModTileEntities.register();
 		MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
+		System.out.println("Registring event handler...");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
@@ -63,7 +65,7 @@ public class CommonProxy {
 		
 	}
 	
-	public void registerBlockVariant(ItemBlock block, VariantEnum types[]) {
+	public void registerBlockVariant(ItemBlock block, EnumFlowerType types[]) {
 		
 	}
 

@@ -1,6 +1,7 @@
 package avi.mod.skrim.commands;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -11,7 +12,7 @@ import avi.mod.skrim.skills.ISkill;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
-
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -23,8 +24,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import scala.actors.threadpool.Arrays;
 
-public class SetSkillCommand implements ICommand {
+public class SetSkillCommand extends CommandBase implements ICommand {
 
   private final List aliases;
 
@@ -42,7 +44,7 @@ public class SetSkillCommand implements ICommand {
 
     @Override
     public String getCommandUsage(ICommandSender var1) {
-        return "setskill <name> <level>";
+        return "setskill <name> <level> [player]";
     }
 
     @Override
@@ -64,19 +66,19 @@ public class SetSkillCommand implements ICommand {
 		@Override
 		public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 			World world = sender.getEntityWorld();
-      EntityPlayer player = (EntityPlayer) sender;
 
       if (world.isRemote) {
       	System.out.println("Not processing on Client side");
       } else {
-      	if (args.length == 2) {
+        EntityPlayer player = args.length == 3 ? getPlayer(server, sender, args[2]) : getCommandSenderAsPlayer(sender);
+      	if (args.length == 2 || args.length == 3) {
       		if (Skills.skillMap.containsKey(args[0])) {
       			int level = Integer.parseInt(args[1]);
       			if (level >= 1) {
           		Capability<? extends ISkill> iskill = Skills.skillMap.get(args[0]);
           		Skill skill = (Skill) player.getCapability(iskill, EnumFacing.NORTH);
           		skill.setLevel(level);
-          		skill.setXp(1000 * Utils.gaussianSum(level) - 1);
+          		skill.setXp(Skill.xpFactor * Utils.gaussianSum(level) - 1);
           		if (player instanceof EntityPlayerMP) {
           			SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) player);
           		}
@@ -93,13 +95,10 @@ public class SetSkillCommand implements ICommand {
 		public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
       return sender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName());
 		}
-
-		@Override
-		public List<String> getTabCompletionOptions(MinecraftServer server,
-				ICommandSender sender, String[] args, @Nullable BlockPos pos) {
-			// TODO Auto-generated method stub
-			return null;
-		}
+		
+		public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
+        return args.length == 3 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : Collections.<String>emptyList();
+    }
 		
 		public int getRequiredPermissionLevel() {
 			return 2;

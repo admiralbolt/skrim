@@ -50,7 +50,7 @@ public class EventHandler {
 		SkillMelee.handleKill(event);
 		SkillDemolition.onKillCrepper(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onInteractEntity(PlayerInteractEvent.EntityInteract event) {
 		SkillBotany.seduceVillager(event);
@@ -60,7 +60,7 @@ public class EventHandler {
 	public void onInteract(PlayerInteractEvent.RightClickItem event) {
 		SkillMelee.handleDual(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		SkillMining.drill(event);
@@ -156,7 +156,7 @@ public class EventHandler {
 	public void onRenderOverlay(RenderGameOverlayEvent.Pre event) {
 		SkillDefense.renderArmor(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onItemPickup(EntityItemPickupEvent event) {
 		SkillFishing.pickupSkrimRod(event);
