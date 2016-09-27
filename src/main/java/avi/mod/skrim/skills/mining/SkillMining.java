@@ -254,16 +254,19 @@ public class SkillMining extends Skill implements ISkillMining {
 					}
 				}
 				if (mining.hasAbility(3)) {
-					if (player.isCollidedHorizontally) {
-						KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
-						if (jumpKey.isKeyDown()) {
-							player.motionY = Math.min(0.4, player.motionY + 0.1);
-							if (player.motionY > 0) {
-								player.fallDistance = 0.0F;
-							} else {
-								player.fallDistance -= 1F;
+					// Since we're using a packet only need to fire on client side.
+					if (player.worldObj.isRemote) {
+						if (player.isCollidedHorizontally) {
+							KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
+							if (jumpKey.isKeyDown()) {
+								player.motionY = Math.min(0.2, player.motionY + 0.1);
+								if (player.motionY > 0) {
+									player.fallDistance = 0.0F;
+								} else {
+									player.fallDistance -= 1F;
+								}
+								SkrimPacketHandler.INSTANCE.sendToServer(new FallDistancePacket(player.fallDistance));
 							}
-							SkrimPacketHandler.INSTANCE.sendToServer(new FallDistancePacket(player.fallDistance));
 						}
 					}
 				}

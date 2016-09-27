@@ -44,7 +44,7 @@ public class FallDistancePacket implements IMessage {
     	if (ctx.side.isServer()) {
     		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
         if (player != null) {
-      		IThreadListener mainThread = Minecraft.getMinecraft();
+      		IThreadListener mainThread = player.getServerWorld();
       		mainThread.addScheduledTask(new Runnable() {
       			@Override
       			public void run() {
