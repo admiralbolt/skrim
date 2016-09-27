@@ -61,8 +61,6 @@ public final class ModBlocks {
     enchantedFlowerYellowVariants = new EnchantedFlowerVariants(enchantedYellow);
     enchantedFlowerYellow = register(enchantedYellow, enchantedFlowerYellowVariants);
     addEnchantedFlowerRecipes(enchantedYellow, enchantedFlowerYellowVariants);
-    
-    
   }
 
   private static <T extends Block> T register (T block, ItemBlock itemBlock) {

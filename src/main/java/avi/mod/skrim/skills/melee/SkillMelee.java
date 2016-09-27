@@ -8,6 +8,8 @@ import javax.annotation.Nullable;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.skillpackets.OffHandAttackPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -206,9 +208,13 @@ public class SkillMelee extends Skill implements ISkillMelee {
 				Item offItem = (offStack == null) ? null : offStack.getItem();
 				if (mainItem != null && mainItem instanceof ItemSword && offItem != null && offItem instanceof ItemSword) {
 					player.swingArm(EnumHand.OFF_HAND);
-					Entity targetEntity = getMouseOver(player, 1.0F);
-					if (targetEntity != null) {
-						attackTargetEntityWithOffhandItem(player, targetEntity);
+					if (player.worldObj.isRemote) {
+						Entity targetEntity = getMouseOver(player, 1.0F);
+						if (targetEntity != null) {
+							SkrimPacketHandler.INSTANCE.sendToServer(
+								new OffHandAttackPacket(player.getEntityId(), targetEntity.getEntityId())
+							);
+						}
 					}
 				}
 			}
