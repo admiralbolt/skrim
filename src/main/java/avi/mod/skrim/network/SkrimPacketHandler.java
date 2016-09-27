@@ -5,6 +5,8 @@ import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
 import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
 import avi.mod.skrim.network.SpawnHeartPacket.SpawnHeartPacketHandler;
+import avi.mod.skrim.network.skillpackets.DrillPacket;
+import avi.mod.skrim.network.skillpackets.DrillPacket.DrillPacketHandler;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket.OffHandAttackPacketHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -24,6 +26,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(FallDistancePacketHandler.class, FallDistancePacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(SpawnHeartPacketHandler.class, SpawnHeartPacket.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(OffHandAttackPacketHandler.class, OffHandAttackPacket.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(DrillPacketHandler.class, DrillPacket.class, id++, Side.SERVER);
 	}
 
 }

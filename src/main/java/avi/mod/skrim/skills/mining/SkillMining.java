@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 import avi.mod.skrim.network.FallDistancePacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.skillpackets.DrillPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -283,29 +284,14 @@ public class SkillMining extends Skill implements ISkillMining {
 				if (mainStack != null) {
 					Item mainItem = mainStack.getItem();
 					if (mainItem != null && mainItem instanceof ItemPickaxe) {
-						if (!player.worldObj.isRemote) {
+						if (player.worldObj.isRemote) {
 							RayTraceResult result = player.rayTrace(5.0D, 1.0F);
 							if (result != null) {
 								if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
 									player.swingArm(EnumHand.MAIN_HAND);
 									ItemPickaxe pic = (ItemPickaxe) mainItem;
 									BlockPos targetPos = result.getBlockPos();
-									IBlockState targetState = player.worldObj.getBlockState(targetPos);
-									Block targetBlock = targetState.getBlock();
-									blockDrill: for (int y = targetPos.getY(); y >= 1; y--) {
-										if (targetBlock.canEntityDestroy(targetState, player.worldObj, targetPos, player)) {
-											if (targetBlock.canHarvestBlock(player.worldObj, targetPos, player)) {
-												targetBlock.harvestBlock(player.worldObj, player, targetPos, targetState, null, mainStack);
-											}
-											player.worldObj.destroyBlock(targetPos, false);
-											mainStack.onBlockDestroyed(player.worldObj, targetState, targetPos, player);
-										} else {
-											break blockDrill;
-										}
-										targetPos = targetPos.add(0, -1, 0);
-										targetState = player.worldObj.getBlockState(targetPos);
-										targetBlock = targetState.getBlock();
-									}
+									SkrimPacketHandler.INSTANCE.sendToServer(new DrillPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ()));
 								}
 							}
 						}
