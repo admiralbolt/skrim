@@ -200,6 +200,7 @@ public class SkillMining extends Skill implements ISkillMining {
 					for (int i = 0; i < (dropSize * (mining.getFortuneAmount() - 1)); i++) {
 						drops.add(copyDrop.copy());
 					}
+					Skills.playFortuneSound(player);
 					mining.addXp((EntityPlayerMP) player, 25);
 				}
 			}

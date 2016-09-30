@@ -388,7 +388,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 							float f6 = (float) MathHelper.floor_double(this.getEntityBoundingBox().minY);
 							worldserver.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX, (double) (f6 + 1.0F), this.posZ, (int) (1.0F + this.width * 20.0F), (double) this.width, 0.0D, (double) this.width, 0.20000000298023224D, new int[0]);
 							worldserver.spawnParticle(EnumParticleTypes.WATER_WAKE, this.posX, (double) (f6 + 1.0F), this.posZ, (int) (1.0F + this.width * 20.0F), (double) this.width, 0.0D, (double) this.width, 0.20000000298023224D, new int[0]);
-							this.ticksCatchable = MathHelper.getRandomIntegerInRange(this.rand, 10, 30);
+							this.ticksCatchable = 40;
 						} else {
 							this.fishApproachAngle = (float) ((double) this.fishApproachAngle + this.rand.nextGaussian() * 4.0D);
 							float f5 = this.fishApproachAngle * 0.017453292F;
@@ -543,6 +543,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 						treasure.motionY = d1 * 0.1D + (double) MathHelper.sqrt_double(d3) * 0.08D;
 						treasure.motionZ = d2 * 0.1D;
 						this.worldObj.spawnEntityInWorld(treasure);
+						Skills.playFortuneSound(this.angler);
 						fishing.addXp((EntityPlayerMP) this.angler, 25);
 					}
 					if (fishing.hasAbility(3)) {

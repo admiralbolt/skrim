@@ -10,6 +10,7 @@ import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
@@ -24,7 +25,6 @@ import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPotato;
 import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockStem;
-import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -167,6 +167,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
               drops.add(drops.get(i).copy());
             }
           }
+					Skills.playFortuneSound(player);
           farming.addXp((EntityPlayerMP) player, 25);
 				}
 			}

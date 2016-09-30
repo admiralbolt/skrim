@@ -1,6 +1,5 @@
 package avi.mod.skrim.skills.botany;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +27,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -207,7 +207,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
               drops.add(drops.get(i).copy());
             }
           }
-          botany.addXp((EntityPlayerMP) player, 50); // and 50 xp!
+          Skills.playFortuneSound(player);
+          botany.addXp((EntityPlayerMP) player, 25); // and 25 xp!
 				}
 			}
 		}

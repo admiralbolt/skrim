@@ -220,14 +220,18 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 	public static void sawTree(BlockEvent.HarvestDropsEvent event) {
 		EntityPlayer player = event.getHarvester();
-		ItemStack mainStack = player.getHeldItemMainhand();
-		Item mainItem = mainStack.getItem();
-		if (mainItem instanceof HandSaw) {
-			IBlockState state = event.getState();
-			Block block = state.getBlock();
-			if (block instanceof BlockOldLog || block instanceof BlockNewLog) {
-				event.getDrops().clear();
-				event.getDrops().add(new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state))));
+		if (player != null) {
+			ItemStack mainStack = player.getHeldItemMainhand();
+			if (mainStack != null) {
+				Item mainItem = mainStack.getItem();
+				if (mainItem instanceof HandSaw) {
+					IBlockState state = event.getState();
+					Block block = state.getBlock();
+					if (block instanceof BlockOldLog || block instanceof BlockNewLog) {
+						event.getDrops().clear();
+						event.getDrops().add(new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state))));
+					}
+				}
 			}
 		}
 	}

@@ -123,6 +123,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					int addXp = 0;
 					if (Math.random() < melee.getCritChance()) {
 						EntityLivingBase targetEntity = event.getEntityLiving();
+						player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() * 2);
 						// Spin slash
 						if (melee.hasAbility(2)) {

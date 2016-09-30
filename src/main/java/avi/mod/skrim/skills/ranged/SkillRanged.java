@@ -32,7 +32,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
 	public static SkillStorage<ISkillRanged> skillStorage = new SkillStorage<ISkillRanged>();
 
-	public static float headshotBufferLow = 0.0F;
+	public static float headshotBufferLow = -0.1F;
 	public static float headshotBufferHigh = 2.2F;
 
 	public static SkillAbility sneakAttack = new SkillAbility(

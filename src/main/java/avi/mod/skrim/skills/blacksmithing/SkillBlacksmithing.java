@@ -40,11 +40,11 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		xpMap.put("tile.stone", 1);
 		xpMap.put("tile.stonebricksmooth", 2);
 		xpMap.put("item.netherbrick", 3); // nether bonus
-		xpMap.put("tile.glass", 4);
-		xpMap.put("item.brick", 5);
-		xpMap.put("tile.clayhardened", 21); // xp bonus for crafting
-		xpMap.put("item.ingotiron", 10);
-		xpMap.put("item.ingotgold", 25); // Woooooo gold!
+		xpMap.put("tile.glass", 5);
+		xpMap.put("item.brick", 8);
+		xpMap.put("tile.clayhardened", 35); // xp bonus for crafting
+		xpMap.put("item.ingotiron", 15);
+		xpMap.put("item.ingotgold", 30); // Woooooo gold!
 	}
 
 	public int lastItemNumber;

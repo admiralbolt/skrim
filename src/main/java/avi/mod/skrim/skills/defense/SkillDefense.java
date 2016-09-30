@@ -63,7 +63,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	}
 
 	public int getXp(float amount) {
-		return (int) (amount * 10);
+		return (int) (amount * 12.5);
 	}
 
 	@Override

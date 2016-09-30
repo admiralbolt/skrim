@@ -195,4 +195,8 @@ public class Skills {
 		return (0.01 * player.experienceLevel) + (0.001 * getTotalSkillLevels(player));
 	}
 
+	public static void playFortuneSound(EntityPlayer player) {
+		player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 0.4F, 1.0F);
+	}
+
 }
