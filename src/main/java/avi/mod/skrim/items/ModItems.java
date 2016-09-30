@@ -64,7 +64,8 @@ public class ModItems {
 	 */
 	public static ArmorMaterial ARTIFACT_DARK = EnumHelper.addArmorMaterial("artifact_dark", "skrim:artifact_dark", 50, new int[] { 3, 8, 6, 3 }, 30, null, 0.0F);
 	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 10, 8, 4 }, 20, null, 3.0F);
-
+	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] {1, 3, 2, 1}, 15, null, 0.0F);
+	
 	/**
 	 * Default ToolMaterials HarvestLevel: wood: 0 stone: 1 iron: 2 diamond: 3 Durability: wood: 59 stone: 131 iron: 250 gold: 32 diamond: 1561 Mining Speed: wood: 2.0F stone: 4.0F iron: 6.0F gold: 12.0F diamond: 8.0F Damage vs. Entity wood: 0.0F stone: 1.0F iron: 2.0F gold: 0.0F diamond: 3.0F Enchantability: wood: 15 stone: 5 iron: 14 gold: 22 diamond: 10
 	 */
@@ -82,9 +83,12 @@ public class ModItems {
 	public static CustomArmor obsidianPants;
 	public static CustomArmor obsidianChest;
 	public static CustomArmor obsidianHelmet;
+	public static CustomArmor overalls;
 
 	public static ArtifactArmor bootsOfSpringheelJak;
 	public static ArtifactSword raisingCanesFrySword;
+	
+	public static HandSaw handSaw;
 
 	public static void createItems() {
 		tux = register(new ItemBase("tux").setCreativeTab(Skrim.creativeTab));
@@ -110,18 +114,20 @@ public class ModItems {
 		fishingRod = register(new CustomFishingRod("fishing_rod"));
 		EntityRegistry.registerModEntity(CustomFishHook.class, "CustomFishHook", 0, Skrim.instance, 64, 5, true);
 
-		// Obsidian tools
+		// Obsidian tools & armor
 		obsidianSword = register(new CustomSword("obsidian_sword", OBSIDIAN_TOOL));
 		obsidianHoe = register(new CustomHoe("obsidian_hoe", OBSIDIAN_TOOL));
 		obsidianShovel = register(new CustomSpade("obsidian_spade", OBSIDIAN_TOOL));
 		obsidianAxe = register(new CustomAxe("obsidian_axe", OBSIDIAN_TOOL));
 		obsidianPickaxe = register(new CustomPickaxe("obsidian_pickaxe", OBSIDIAN_TOOL));
-
-		// Obsidian armor
 		obsidianBoots = register(new CustomArmor("obsidian_boots", OBSIDIAN_ARMOR, 1, EntityEquipmentSlot.FEET));
 		obsidianPants = register(new CustomArmor("obsidian_pants", OBSIDIAN_ARMOR, 2, EntityEquipmentSlot.LEGS));
 		obsidianChest = register(new CustomArmor("obsidian_chest", OBSIDIAN_ARMOR, 3, EntityEquipmentSlot.CHEST));
 		obsidianHelmet = register(new CustomArmor("obsidian_helmet", OBSIDIAN_ARMOR, 4, EntityEquipmentSlot.HEAD));
+		
+		// More stoof
+		handSaw = register(new HandSaw("hand_saw", ToolMaterial.IRON));
+		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
 
 		// Artifact Armors
 		bootsOfSpringheelJak = register(new ArtifactArmor("boots_of_springheel_jak", ARTIFACT_DARK, 1, EntityEquipmentSlot.FEET));
@@ -139,6 +145,8 @@ public class ModItems {
 	public static void registerCraftingRecipes() {
 		registerRabbitStew();
 		registerObsidian();
+		registerHandSaw();
+		registerOveralls();
 	}
 
 	/**
@@ -157,6 +165,15 @@ public class ModItems {
 				}
 			}
 		}
+	}
+	
+	public static void registerHandSaw() {
+		GameRegistry.addRecipe(new ItemStack(handSaw), " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
+		GameRegistry.addRecipe(new ItemStack(handSaw), "   ", " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
+	}
+	
+	public static void registerOveralls() {
+		GameRegistry.addRecipe(new ItemStack(overalls), "A A", "ALA", "LLL", 'A', new ItemStack(Items.DYE, 1, 4), 'L', new ItemStack(Items.LEATHER));
 	}
 
 	private static void addToolRecipes(ItemStack recipeItemStack, Item axe, Item hoe, Item pickaxe, Item spade) {

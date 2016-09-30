@@ -64,15 +64,15 @@ public class SkillMining extends Skill implements ISkillMining {
 		xpMap.put("granite", 3);
 		xpMap.put("andesite", 3);
 		xpMap.put("diorite", 3);
-		xpMap.put("coal_ore", 5);
-		xpMap.put("iron_ore", 10);
-		xpMap.put("quartz_ore", 15); // Extra bonus for being in the nether ~same rarity as iron
-		xpMap.put("redstone_ore", 20);
-		xpMap.put("obsidian", 20); // Common but takes a while to mine
-		xpMap.put("gold_ore", 35);
-		xpMap.put("lapis_lazuli_ore", 40); // Lapis_lazuil not just lapis, also barely rarer than diamond
-		xpMap.put("diamond_ore", 50);
-		xpMap.put("emerald_ore", 100); // Nice xp bonus for an otherwise useless ore
+		xpMap.put("coal_ore", 8);
+		xpMap.put("iron_ore", 16);
+		xpMap.put("quartz_ore", 20); // Extra bonus for being in the nether ~same rarity as iron
+		xpMap.put("obsidian", 25); // Common but takes a while to mine
+		xpMap.put("redstone_ore", 32);
+		xpMap.put("gold_ore", 40);
+		xpMap.put("lapis_lazuli_ore", 50); // Lapis_lazuil not just lapis, also barely rarer than diamond
+		xpMap.put("diamond_ore", 100);
+		xpMap.put("emerald_ore", 150); // Nice xp bonus for an otherwise useless ore
 	}
 
 	public static List<String> validMiningBlocks = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs", "nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));

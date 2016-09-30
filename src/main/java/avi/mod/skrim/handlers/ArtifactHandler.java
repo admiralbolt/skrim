@@ -94,10 +94,6 @@ public class ArtifactHandler {
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
 				InventoryPlayer inventory = player.inventory;
-				event.setDistance(player.fallDistance);
-				if (player.worldObj.isRemote && player.motionY > -0.08) {
-					event.setDistance(0.0F);
-				}
 				if (inventory != null) {
 					ItemStack stack = inventory.armorInventory[0];
 					if (stack != null) {

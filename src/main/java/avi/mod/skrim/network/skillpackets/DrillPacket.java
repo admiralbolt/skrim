@@ -13,38 +13,37 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class DrillPacket implements IMessage {
-	
+
 	public int x;
 	public int y;
 	public int z;
-	
+
 	public DrillPacket() {
-		
+
 	}
-	
+
 	public DrillPacket(int x, int y, int z) {
-		System.out.println("off hand attack packet constructed.");
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
-	
+
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(this.x);
 		buf.writeInt(this.y);
 		buf.writeInt(this.z);
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.x = buf.readInt();
 		this.y = buf.readInt();
 		this.z = buf.readInt();
 	}
-	
+
 	public static class DrillPacketHandler implements IMessageHandler<DrillPacket, IMessage> {
-		
+
 		public IMessage onMessage(final DrillPacket message, MessageContext ctx) {
     	if (ctx.side.isServer()) {
     		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
@@ -79,7 +78,7 @@ public class DrillPacket implements IMessage {
     	}
     	return null;
 		}
-		
+
 	}
 
 }

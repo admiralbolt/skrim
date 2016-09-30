@@ -26,6 +26,8 @@ item.obsidian_pants.name=Obsidian Leggings
 item.obsidian_chest.name=Obsidian Chestplate
 item.obsidian_helmet.name=Obsidian Helmet
 
+item.hand_saw.name=Hand Saw
+
 tile.glow_flower_yellow.name=Glow Flower
 tile.glow_flower_yellow.dandelion.name=Glow Dandelion
 tile.glow_flower_red.name=Glow Flower
@@ -51,6 +53,8 @@ tile.enchanted_flower_red.orange_tulip.name=Enchanted Orange Tulip
 tile.enchanted_flower_red.white_tulip.name=Enchanted White Tulip
 tile.enchanted_flower_red.pink_tulip.name=Enchanted Pink Tulip
 tile.enchanted_flower_red.oxeye_daisy.name=Enchanted Oxeye Daisy
+
+tile.dynamite.name=Dynamite
 
 
 item.boots_of_springheel_jak.name=Boots of Springheel Jak

@@ -1,11 +1,16 @@
 package avi.mod.skrim.skills.digging;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.skills.RandomTreasure;
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
@@ -14,19 +19,16 @@ import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import avi.mod.skrim.skills.RandomTreasure;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Utils;
 
 public class SkillDigging extends Skill implements ISkillDigging {
 
@@ -38,12 +40,19 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		xpMap.put("sand", 2);
 		xpMap.put("grass_block", 3); // Bonus for grass!
 		xpMap.put("gravel", 4); // Fuck gravel
-		xpMap.put("coarse_dirt", 11); // Requires 2 dirt & 2 gravel to make 4, is worth slightly more than the components
+		xpMap.put("coarse_dirt", 5); // Requires 2 dirt & 2 gravel to make 4, is worth slightly more than the components
 		xpMap.put("podzol", 10); // Only in taiga
 		xpMap.put("red_sand", 15); // Only in mesa
 		xpMap.put("soul_sand", 20); // Only in nether & not to common
 		xpMap.put("mycelium", 25); // Only in.. mushroom biomes?
 	}
+
+	public static SkillAbility vitalicBreathing = new SkillAbility(
+		"Vitalic Breathing",
+		25,
+		"Breathe, breathe in the ...dirt?",
+		"No longer take suffocation damage from being trapped in walls."
+	);
 
 	public SkillDigging() {
 		this(1, 0);
@@ -52,6 +61,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public SkillDigging(int level, int currentXp) {
 		super("Digging", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/digging.png");
+		this.addAbilities(vitalicBreathing);
 	}
 
 	public int getXp(String blockName) {
@@ -142,6 +152,21 @@ public class SkillDigging extends Skill implements ISkillDigging {
         }
       }
     }
+  }
+
+  public static void vitalicBreathing(LivingHurtEvent event) {
+  	Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			final EntityPlayer player = (EntityPlayer) entity;
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+				Skill Digging = (Skill) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+				if (Digging.hasAbility(1)) {
+					if (event.getSource() == DamageSource.inWall) {
+						event.setAmount(0F);
+					}
+				}
+			}
+		}
   }
 
 }

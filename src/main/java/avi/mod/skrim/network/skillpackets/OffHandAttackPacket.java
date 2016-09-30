@@ -19,34 +19,33 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
 public class OffHandAttackPacket implements IMessage {
-	
+
 	public int playerId;
 	public int targetId;
-	
+
 	public OffHandAttackPacket() {
-		
+
 	}
-	
+
 	public OffHandAttackPacket(int playerId, int targetId) {
-		System.out.println("off hand attack packet constructed.");
 		this.playerId = playerId;
 		this.targetId = targetId;
 	}
-	
+
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(this.playerId);
 		buf.writeInt(this.targetId);
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.playerId = buf.readInt();
 		this.targetId = buf.readInt();
 	}
-	
+
 	public static class OffHandAttackPacketHandler implements IMessageHandler<OffHandAttackPacket, IMessage> {
-		
+
 		public IMessage onMessage(final OffHandAttackPacket message, MessageContext ctx) {
     	if (ctx.side.isServer()) {
     		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
@@ -64,7 +63,7 @@ public class OffHandAttackPacket implements IMessage {
     	}
     	return null;
 		}
-		
+
 	}
 
 }

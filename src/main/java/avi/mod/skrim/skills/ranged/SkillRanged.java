@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -33,6 +35,13 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public static float headshotBufferLow = 0.0F;
 	public static float headshotBufferHigh = 2.2F;
 
+	public static SkillAbility sneakAttack = new SkillAbility(
+		"Sneak Attack",
+		25,
+		"Surprise Motherfucker.",
+		"Deal 25% extra damage to enemies while crouching & undetected."
+	);
+
 	public SkillRanged() {
 		this(1, 0);
 	}
@@ -40,6 +49,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public SkillRanged(int level, int currentXp) {
 		super("Ranged", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/ranged.png");
+		this.addAbilities(sneakAttack);
 	}
 
 	public double getExtraDamage() {
@@ -69,12 +79,19 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);
 					event.setAmount(event.getAmount() + (float) (ranged.getExtraDamage() * event.getAmount()));
 					Entity arrow = source.getSourceOfDamage();
-					Entity targetEntity = event.getEntity();
+					EntityLivingBase targetEntity = event.getEntityLiving();
 					int addXp = 0;
 					if (canHeadshot(targetEntity) && (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow < arrow.posY) && (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh > arrow.posY)) {
 						player.worldObj.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
-						addXp = 25;
+						addXp = 5;
+					}
+					if (ranged.hasAbility(1)) {
+						if (player.isSneaking() && targetEntity.getAITarget() != player) {
+							event.setAmount((float) (event.getAmount() * 1.25));
+							player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F, 1.0F);
+							addXp += 5;
+						}
 					}
 					addXp += event.getAmount() * 3;
 					ranged.addXp((EntityPlayerMP) player, addXp);

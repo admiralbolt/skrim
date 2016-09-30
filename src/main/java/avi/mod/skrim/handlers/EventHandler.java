@@ -41,6 +41,7 @@ public class EventHandler {
 		SkillRanged.applyRanged(event);
 		SkillDefense.applyDefense(event);
 		SkillDemolition.reduceExplosion(event);
+		SkillDigging.vitalicBreathing(event);
 		SkillMining.reduceLava(event);
 		SkillBlacksmithing.ironHeart(event);
 		SkillBotany.thornStyle(event);
@@ -66,6 +67,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		SkillMining.drill(event);
+		SkillFarming.applyOveralls(event);
 	}
 
 	@SubscribeEvent
@@ -83,6 +85,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		SkillMining.climbWall(event);
+		SkillDefense.riteOfPassage(event);
 	}
 
 	@SubscribeEvent
@@ -91,6 +94,7 @@ public class EventHandler {
 		SkillBotany.soManyFlowers(event);
 		SkillDigging.findTreasure(event);
 		SkillFarming.giveMoreCrops(event);
+		SkillWoodcutting.sawTree(event);
 	}
 
 	@SubscribeEvent
@@ -123,6 +127,7 @@ public class EventHandler {
 	public void onFall(LivingFallEvent event) {
 		ArtifactHandler.SpringheelHandler.preventFallDamage(event);
 	}
+	
 
 	@SubscribeEvent
 	public void onTick(PlayerTickEvent event) {
@@ -146,6 +151,9 @@ public class EventHandler {
 		SkillBotany.verifyFlowers(event);
 		SkillCooking.injectCraftedFood(event);
 		SkillFishing.craftSkrimRod(event);
+		SkillDemolition.verifyExplosives(event);
+		SkillWoodcutting.verifyItems(event);
+		SkillFarming.verifyItems(event);
 	}
 
 	@SubscribeEvent

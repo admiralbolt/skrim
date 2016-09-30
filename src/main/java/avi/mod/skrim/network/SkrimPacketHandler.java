@@ -1,10 +1,13 @@
 package avi.mod.skrim.network;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.network.ExplosionPacket.ExplosionPacketHandler;
 import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
 import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
 import avi.mod.skrim.network.SpawnHeartPacket.SpawnHeartPacketHandler;
+import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
+import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket.ApplyBonemealPacketHandler;
 import avi.mod.skrim.network.skillpackets.DrillPacket;
 import avi.mod.skrim.network.skillpackets.DrillPacket.DrillPacketHandler;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket;
@@ -27,6 +30,8 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(SpawnHeartPacketHandler.class, SpawnHeartPacket.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(OffHandAttackPacketHandler.class, OffHandAttackPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(DrillPacketHandler.class, DrillPacket.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(ExplosionPacketHandler.class, ExplosionPacket.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, id++, Side.SERVER);
 	}
 
 }

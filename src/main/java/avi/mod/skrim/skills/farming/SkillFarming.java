@@ -1,11 +1,18 @@
 package avi.mod.skrim.skills.farming;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.items.CustomHoe;
+import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeetroot;
 import net.minecraft.block.BlockCarrot;
@@ -17,21 +24,23 @@ import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPotato;
 import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockStem;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillAbility;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Utils;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class SkillFarming extends Skill implements ISkillFarming {
 
@@ -47,6 +56,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		xpMap.put("melon", 30);
 		xpMap.put("cocoa", 35);
 	}
+
+	public static SkillAbility overalls = new SkillAbility(
+		"Overalls",
+		25,
+		"Overall, this ability seems pretty good! AHAHAHA Get it?  (Please help me I need sleep.)",
+		"Grants you the ability to craft overalls.",
+		"While worn, right clicking with a hoe acts like applying bonemeal."
+	);
 
 	public SkillFarming() {
 		this(1, 0);
@@ -80,7 +97,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		return tooltip;
 	}
 
-	public boolean validCrop(IBlockState state) {
+	public static boolean validCrop(IBlockState state) {
 		Block block = state.getBlock();
 		return (block instanceof BlockStem
 				|| block instanceof BlockCarrot
@@ -164,7 +181,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	  	IBlockState targetState = event.getPlacedAgainst();
 	  	Block placedBlock = placedState.getBlock();
 	  	Block targetBlock = targetState.getBlock();
-	  	if (farming.validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
+	  	if (validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
 	  		World world = event.getWorld();
 	  		PropertyInteger prop = null;
 	  		int growthStage = farming.getGrowthStage();
@@ -186,5 +203,44 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	  	}
 		}
   }
+
+	public static void verifyItems(ItemCraftedEvent event) {
+		Item targetItem = event.crafting.getItem();
+		if (targetItem != null && targetItem == ModItems.overalls) {
+			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
+				Skills.replaceWithComponents(event);
+			}
+		}
+	}
+
+	public static void applyOveralls(PlayerInteractEvent.RightClickBlock event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player.worldObj.isRemote) {
+			RayTraceResult result = player.rayTrace(5.0D, 1.0F);
+			if (result != null) {
+				if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
+					BlockPos targetPos = result.getBlockPos();
+					IBlockState targetState = player.worldObj.getBlockState(targetPos);
+					Block targetBlock = targetState.getBlock();
+					if (validCrop(targetState)) {
+						InventoryPlayer inventory = player.inventory;
+						if (inventory != null) {
+							ItemStack stack = inventory.armorInventory[2];
+							if (stack != null) {
+								Item chest = stack.getItem();
+								if (chest == ModItems.overalls) {
+									ItemStack mainStack = player.getHeldItemMainhand();
+									Item mainItem = mainStack.getItem();
+									if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe) {
+										SkrimPacketHandler.INSTANCE.sendToServer(new ApplyBonemealPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ()));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

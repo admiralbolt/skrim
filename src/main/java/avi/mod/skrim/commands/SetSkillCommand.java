@@ -95,11 +95,11 @@ public class SetSkillCommand extends CommandBase implements ICommand {
 		public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
       return sender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName());
 		}
-		
+
 		public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
         return args.length == 3 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : Collections.<String>emptyList();
     }
-		
+
 		public int getRequiredPermissionLevel() {
 			return 2;
 		}

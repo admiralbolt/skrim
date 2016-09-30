@@ -125,6 +125,13 @@ public class Skills {
 		return false;
 	}
 
+	public static void destroyComponents(ItemCraftedEvent event) {
+		if (event.player.inventory != null) {
+			event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
+			event.crafting.stackSize = 0;
+		}
+	}
+
 	public static void replaceWithComponents(ItemCraftedEvent event) {
 		if (event.player.inventory != null) {
 			Item targetItem = event.crafting.getItem();
@@ -172,7 +179,7 @@ public class Skills {
 			}
 		}
 	}
-	
+
 	public static int getTotalSkillLevels(EntityPlayer player) {
 		int totalLevels = 0;
 		for (Capability<? extends ISkill> cap : ALL_SKILLS) {

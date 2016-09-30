@@ -1,14 +1,9 @@
 package avi.mod.skrim.proxy;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.blocks.VariantEnum;
 import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
-import avi.mod.skrim.client.renderer.TileEntityEnchantedFlowerRenderer;
+import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.handlers.GuiEventHandler;
-import avi.mod.skrim.items.CustomFishHook;
-import avi.mod.skrim.items.RenderCustomFishHook;
-import avi.mod.skrim.tileentity.TileEntityEnchantedFlower;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -18,8 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
@@ -29,8 +22,7 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
-		// RenderingRegistry.registerEntityRenderingHandler(CustomFishHook.class, new RenderCustomFishHook(Minecraft.getMinecraft().getRenderManager()));
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchantedFlower.class, new TileEntityEnchantedFlowerRenderer());
+		CustomRenderers.register();
 	}
 
 	@Override

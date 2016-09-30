@@ -155,8 +155,9 @@ public class SkillCooking extends Skill implements ISkillCooking {
 					compound.setInteger("level", cooking.level);
 					stack.setTagCompound(compound);
 					stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
+					int stackSize = stack.stackSize;
 
-					if (stack.stackSize == 0) {
+					if (stackSize == 0) {
 						int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
 						ItemStack newStack = new ItemStack(replaceFood, newStackSize);
 						NBTTagCompound newCompound = new NBTTagCompound();
@@ -164,10 +165,11 @@ public class SkillCooking extends Skill implements ISkillCooking {
 						newStack.setTagCompound(newCompound);
 						newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
 						player.inventory.addItemStackToInventory(newStack);
+						stackSize = newStack.stackSize;
 					}
 
 					if (player instanceof EntityPlayerMP) {
-						cooking.addXp((EntityPlayerMP) player, cooking.getXp(foodName));
+						cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
 					}
 				}
   		}

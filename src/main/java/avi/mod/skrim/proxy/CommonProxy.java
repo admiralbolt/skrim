@@ -38,7 +38,6 @@ public class CommonProxy {
 		ModCapabilities.registerCapabilities();
 		ModTileEntities.register();
 		MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
-		System.out.println("Registring event handler...");
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
@@ -60,13 +59,13 @@ public class CommonProxy {
 	public void registerItemRenderer(Item item, int meta, String id) {
 
 	}
-	
+
 	public void registerMinecraftItemRenderer(Item item, int meta, String resource) {
-		
+
 	}
-	
+
 	public void registerBlockVariant(ItemBlock block, EnumFlowerType types[]) {
-		
+
 	}
 
 }

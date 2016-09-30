@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
@@ -18,6 +20,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -27,11 +31,20 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class SkillDemolition extends Skill implements ISkillDemolition {
 
 	public static SkillStorage<ISkillDemolition> skillStorage = new SkillStorage<ISkillDemolition>();
 	public static Map<BlockPos, EntityPlayer> validGoBoom = new HashMap<BlockPos, EntityPlayer>();
+
+	public static SkillAbility dynamite = new SkillAbility(
+		"Dynamite",
+		25,
+		"Boom goes the dynamite.",
+		"Grants you the ability to craft dynamite with tnt & a pickaxe.",
+		"Dynamite has a larger blast radius and a 100% chance to drop blocks."
+	);
 
 	public SkillDemolition() {
 		this(1, 0);
@@ -40,6 +53,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public SkillDemolition(int level, int currentXp) {
 		super("Demolition", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/demolition.png");
+		this.addAbilities(dynamite);
 	}
 
 	public double getResistance() {
@@ -134,6 +148,17 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 					SkillDemolition demo = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
 					demo.addXp((EntityPlayerMP) player, 5);
 				}
+			}
+		}
+	}
+
+	public static void verifyExplosives(ItemCraftedEvent event) {
+		Item targetItem = event.crafting.getItem();
+		Item dynamite = new ItemStack(ModBlocks.dynamite).getItem();
+		if (targetItem != null && targetItem == dynamite) {
+			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
+				Skills.destroyComponents(event);
+				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 4.0F, true);
 			}
 		}
 	}

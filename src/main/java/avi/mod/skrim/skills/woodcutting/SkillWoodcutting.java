@@ -1,12 +1,19 @@
 package avi.mod.skrim.skills.woodcutting;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.items.CustomAxe;
+import avi.mod.skrim.items.HandSaw;
+import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
+import avi.mod.skrim.skills.SkillStorage;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -15,8 +22,10 @@ import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockWoodSlab;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
@@ -26,16 +35,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import avi.mod.skrim.items.CustomAxe;
-import avi.mod.skrim.skills.Skill;
-import avi.mod.skrim.skills.SkillStorage;
-import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Utils;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 	public static SkillStorage<ISkillWoodcutting> skillStorage = new SkillStorage<ISkillWoodcutting>();
+	/**
+	 * maps wood meta values to plank meta values.
+	 */
+	public static Map<String, Integer> plankMap;
+	static {
+		plankMap = new HashMap<String, Integer>();
+		plankMap.put("oak", 0);
+		plankMap.put("spruce", 1);
+		plankMap.put("birch", 2);
+		plankMap.put("jungle", 3);
+		plankMap.put("acacia", 4);
+		plankMap.put("dark_oak", 5);
+	}
+
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
@@ -67,6 +85,14 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			"sign"
 	));
 
+	public static SkillAbility handSaw = new SkillAbility(
+		"Hand Saw",
+		25,
+		"Wee Saw!",
+		"Allows you to craft a hand saw!",
+		"Hand saws instantly convert broken wood logs into 8 planks."
+	);
+
 	public SkillWoodcutting() {
 		this(1, 0);
 	}
@@ -74,6 +100,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public SkillWoodcutting(int level, int currentXp) {
 		super("Woodcutting", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/woodcutting.png");
+		this.addAbilities(handSaw);
 	}
 
 	public int getXp(String blockName) {
@@ -109,7 +136,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	}
 
 	// Assuming its a wood block
-	public String getWoodName(IBlockState state) {
+	public static String getWoodName(IBlockState state) {
 		Block block = state.getBlock();
 		if (block instanceof BlockOldLog) {
 			return Utils.snakeCase(state.getValue(BlockOldLog.VARIANT).toString());
@@ -120,11 +147,16 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		}
 	}
 
-	public void hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start) {
+	public void hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, boolean withSaw) {
 		IBlockState state = world.getBlockState(pos);
 		Block tree = state.getBlock();
-		woodcutting.xp += this.getXp(this.getWoodName(state));
-		world.destroyBlock(pos, true);
+		woodcutting.xp += this.getXp(getWoodName(state));
+		if (withSaw) {
+			world.destroyBlock(pos, false);
+			world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state)))));
+		} else {
+			world.destroyBlock(pos, true);
+		}
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				for (int k = -1; k <= 1; k++) {
@@ -133,7 +165,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 						IBlockState targetState = world.getBlockState(targetPos);
 						Block targetBlock = targetState.getBlock();
 						if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-							this.hewTree(world, woodcutting, targetPos, start);
+							this.hewTree(world, woodcutting, targetPos, start, withSaw);
 						}
 					}
 				}
@@ -159,9 +191,9 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 				Item item = (stack == null) ? null : stack.getItem();
 				if (Math.random() < woodcutting.getHewingChance() && item != null && (item instanceof ItemAxe || item instanceof CustomAxe)) {
 					BlockPos start = event.getPos();
-					woodcutting.hewTree(event.getWorld(), woodcutting, start, start);
+					woodcutting.hewTree(event.getWorld(), woodcutting, start, start, (item instanceof HandSaw));
 				}
-				woodcutting.addXp((EntityPlayerMP) player, woodcutting.getXp(woodcutting.getWoodName(state)));
+				woodcutting.addXp((EntityPlayerMP) player, woodcutting.getXp(getWoodName(state)));
 			}
 		}
 	}
@@ -173,6 +205,29 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			IBlockState state = event.getState();
 			if (woodcutting.validSpeedTarget(state)) {
 				event.setNewSpeed((float) (event.getOriginalSpeed() + woodcutting.getSpeedBonus()));
+			}
+		}
+	}
+
+	public static void verifyItems(ItemCraftedEvent event) {
+		Item targetItem = event.crafting.getItem();
+		if (targetItem != null && targetItem == ModItems.handSaw) {
+			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 25)) {
+				Skills.replaceWithComponents(event);
+			}
+		}
+	}
+
+	public static void sawTree(BlockEvent.HarvestDropsEvent event) {
+		EntityPlayer player = event.getHarvester();
+		ItemStack mainStack = player.getHeldItemMainhand();
+		Item mainItem = mainStack.getItem();
+		if (mainItem instanceof HandSaw) {
+			IBlockState state = event.getState();
+			Block block = state.getBlock();
+			if (block instanceof BlockOldLog || block instanceof BlockNewLog) {
+				event.getDrops().clear();
+				event.getDrops().add(new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state))));
 			}
 		}
 	}

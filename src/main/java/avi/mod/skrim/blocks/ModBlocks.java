@@ -14,13 +14,18 @@ import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlowerRed;
 import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
 import avi.mod.skrim.blocks.flowers.GlowFlowerYellow;
+import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
+import avi.mod.skrim.blocks.tnt.Dynamite;
+import avi.mod.skrim.items.CustomFishHook;
 import avi.mod.skrim.items.ItemModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,6 +43,8 @@ public final class ModBlocks {
   public static EnchantedFlowerVariants enchantedFlowerRedVariants;
   public static EnchantedFlower enchantedFlowerYellow;
   public static EnchantedFlowerVariants enchantedFlowerYellowVariants;
+  
+  public static Dynamite dynamite;
   
   public static void createBlocks() {
     orePenguin = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
@@ -61,7 +68,13 @@ public final class ModBlocks {
     enchantedFlowerYellowVariants = new EnchantedFlowerVariants(enchantedYellow);
     enchantedFlowerYellow = register(enchantedYellow, enchantedFlowerYellowVariants);
     addEnchantedFlowerRecipes(enchantedYellow, enchantedFlowerYellowVariants);
+    
+    dynamite = register(new Dynamite("dynamite"));
+		EntityRegistry.registerModEntity(CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20, 5, true);
+		addDynamiteRecipes();
   }
+  
+
 
   private static <T extends Block> T register (T block, ItemBlock itemBlock) {
     GameRegistry.register(block);
@@ -92,6 +105,13 @@ public final class ModBlocks {
 		for (EnumFlowerType type : FlowerBase.EnumFlowerType.getTypes(flower.getBlockType())) {
 			ItemStack stack = new ItemStack(flower, 1, type.getMeta());
   		GameRegistry.addRecipe(stack, "ABA", "CDC", "ABA", 'A', Items.DIAMOND, 'B', Blocks.OBSIDIAN, 'C', Blocks.GLASS, 'D', flower.getMinecraftFlower(stack.getMetadata()));
+  	}
+  }
+  
+  private static void addDynamiteRecipes() {
+  	Item[] pics = {Items.WOODEN_PICKAXE, Items.STONE_PICKAXE};
+  	for (Item pic : pics) {
+  		GameRegistry.addShapelessRecipe(new ItemStack(dynamite), Blocks.TNT, pic);
   	}
   }
 
