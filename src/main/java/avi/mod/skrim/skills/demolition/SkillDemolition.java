@@ -105,7 +105,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 							}, delay
 						);
 						delay += 500;
-						demolition.addXp((EntityPlayerMP) player, 50);
+						demolition.addXp((EntityPlayerMP) player, 25);
 					}
 				}
 			}
