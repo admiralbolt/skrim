@@ -7,10 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.skills.cooking.SkillCooking;
+import avi.mod.skrim.utils.PotionList;
 
 public class CustomFood extends ItemFood implements ItemModelProvider {
 
@@ -38,7 +40,11 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 				float satMod = food.getSaturationModifier(stack);
 				int foodHeal = food.getHealAmount(stack);
 				int level = compound.getInteger("level");
-				boolean overFull = SkillCooking.overFull(level);
+
+				boolean overFull = level >= 25;
+				boolean panacea = level >= 50;
+				boolean superFood = level >= 75;
+
 				double extraFood = SkillCooking.extraFood(level);
 				double extraSaturation = SkillCooking.extraSaturation(level);
 				FoodStats playerStats = player.getFoodStats();
@@ -51,6 +57,17 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 
 				newFood = (newFood > 20 && !overFull) ? 20 : newFood;
 				newSaturation = (newSaturation > newFood && !overFull) ? newFood : newSaturation;
+
+				if (panacea) {
+					player.removePotionEffect(PotionList.POISON);
+					player.removePotionEffect(PotionList.HUNGER);
+					player.removePotionEffect(PotionList.NAUSEAU);
+				}
+
+				if (superFood) {
+					player.addPotionEffect(PotionList.REGENERATION, 200, 1, false, false);
+					player.addPotionEffect(PotionList.SPEED, 200, 1, false, false);
+				}
 				/**
 				 * A valiant attempt to keep me from over-filling.
 				 * But not valiant enough.
