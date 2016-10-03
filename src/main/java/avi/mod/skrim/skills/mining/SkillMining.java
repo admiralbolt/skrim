@@ -1,6 +1,5 @@
 package avi.mod.skrim.skills.mining;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,6 +34,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
@@ -243,7 +243,7 @@ public class SkillMining extends Skill implements ISkillMining {
 					BlockPos pos = player.getPosition();
 					if (pos.getY() <= 40) {
 						if (player.worldObj.getTotalWorldTime() % 80L == 0L) {
-							player.addPotionEffect(new PotionEffect(Potion.getPotionById(16), 300, 1, true, false));
+							player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 1, true, false));
 							if (!shouldRemove.contains(player)) {
 								shouldRemove.add(player);
 							}

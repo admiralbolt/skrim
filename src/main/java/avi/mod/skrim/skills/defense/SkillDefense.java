@@ -17,7 +17,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -118,7 +118,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 					SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
 					if (defense.hasAbility(1)) {
 						if (defense.canRegen && player.getHealth() <= (float) (defense.healthPercent * player.getMaxHealth())) {
-							player.addPotionEffect(new PotionEffect(Potion.getPotionById(10), regenLength));
+							player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, regenLength));
 							defense.canRegen = false;
 						} else if (!defense.canRegen && player.getHealth() == player.getMaxHealth()) {
 							defense.canRegen = true;
