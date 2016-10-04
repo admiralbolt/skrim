@@ -4,16 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import avi.mod.skrim.skills.*;
 import avi.mod.skrim.skills.blacksmithing.BlacksmithingProvider;
 import avi.mod.skrim.skills.blacksmithing.ISkillBlacksmithing;
 import avi.mod.skrim.skills.botany.BotanyProvider;
@@ -22,10 +14,11 @@ import avi.mod.skrim.skills.cooking.CookingProvider;
 import avi.mod.skrim.skills.cooking.ISkillCooking;
 import avi.mod.skrim.skills.defense.DefenseProvider;
 import avi.mod.skrim.skills.defense.ISkillDefense;
+import avi.mod.skrim.skills.defense.SkillDefense;
 import avi.mod.skrim.skills.demolition.DemolitionProvider;
 import avi.mod.skrim.skills.demolition.ISkillDemolition;
-import avi.mod.skrim.skills.digging.ISkillDigging;
 import avi.mod.skrim.skills.digging.DiggingProvider;
+import avi.mod.skrim.skills.digging.ISkillDigging;
 import avi.mod.skrim.skills.farming.FarmingProvider;
 import avi.mod.skrim.skills.farming.ISkillFarming;
 import avi.mod.skrim.skills.fishing.FishingProvider;
@@ -38,6 +31,19 @@ import avi.mod.skrim.skills.ranged.ISkillRanged;
 import avi.mod.skrim.skills.ranged.RangedProvider;
 import avi.mod.skrim.skills.woodcutting.ISkillWoodcutting;
 import avi.mod.skrim.skills.woodcutting.WoodcuttingProvider;
+import avi.mod.skrim.utils.Utils;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class Skills {
 
@@ -197,6 +203,29 @@ public class Skills {
 
 	public static void playFortuneSound(EntityPlayer player) {
 		player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 0.4F, 1.0F);
+	}
+
+	public static void applyAttributes(LivingUpdateEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			Map<IAttribute, AttributeModifier> attributeMap = new HashMap<IAttribute, AttributeModifier>();
+			if (player.hasCapability(Skills.DEFENSE, EnumFacing.NORTH)) {
+				SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
+				System.out.println("checking defense");
+				Entry<IAttribute, AttributeModifier> overshields = defense.getAttributeModifier();
+				System.out.println("get attribute modifier");
+				if (overshields != null) {
+					attributeMap.put(overshields.getKey(), overshields.getValue());
+				}
+			}
+			System.out.println("attributeMap: " + attributeMap);
+			if (!attributeMap.isEmpty()) {
+				System.out.println("applying");
+				Utils.applyAttributesModifiersToEntity(player, attributeMap, 0);
+			}
+
+		}
 	}
 
 }

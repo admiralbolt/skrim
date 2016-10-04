@@ -1,7 +1,10 @@
 package avi.mod.skrim.skills.defense;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.UUID;
 
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
@@ -14,6 +17,8 @@ import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -32,6 +37,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public static SkillStorage<ISkillDefense> skillStorage = new SkillStorage<ISkillDefense>();
 	public int ticks = 0;
 	public boolean canRegen = true;
+	public boolean shouldUpdateAttribute = true;
 	private static double healthPercent = 0.3;
 	private static int regenLength = 15 * 20;
 
@@ -127,6 +133,21 @@ public class SkillDefense extends Skill implements ISkillDefense {
 				}
 			}
 		}
+	}
+
+	public Entry<IAttribute, AttributeModifier> getAttributeModifier() {
+		if (this.hasAbility(2)) {
+			System.out.println("has ability 2");
+			if (this.shouldUpdateAttribute) {
+				System.out.println("should update attribute");
+				this.shouldUpdateAttribute = false;
+				return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(
+					SharedMonsterAttributes.MAX_HEALTH,
+					new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", 4.0D, 0)
+				);
+			}
+		}
+		return null;
 	}
 
 	public static void renderArmor(RenderGameOverlayEvent.Pre event) {

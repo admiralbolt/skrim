@@ -1,5 +1,6 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.skills.botany.SkillBotany;
 import avi.mod.skrim.skills.cooking.SkillCooking;
@@ -12,6 +13,8 @@ import avi.mod.skrim.skills.melee.SkillMelee;
 import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -86,6 +89,7 @@ public class EventHandler {
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		SkillMining.climbWall(event);
 		SkillDefense.riteOfPassage(event);
+		Skills.applyAttributes(event);
 	}
 
 	@SubscribeEvent
@@ -127,7 +131,7 @@ public class EventHandler {
 	public void onFall(LivingFallEvent event) {
 		ArtifactHandler.SpringheelHandler.preventFallDamage(event);
 	}
-	
+
 
 	@SubscribeEvent
 	public void onTick(PlayerTickEvent event) {

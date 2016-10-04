@@ -68,6 +68,20 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		"Your cooked food now ignores food and saturation limits."
 	);
 
+	public static SkillAbility panacea = new SkillAbility(
+		"Panacea",
+		50,
+		"Cures everything that's less than half dead.",
+		"Your cooked food now removes nausea, hunger, and poison."
+	);
+
+	public static SkillAbility superFood = new SkillAbility(
+		"Super Food",
+		75,
+		"You won't believe how good these 11 foods are for you!",
+		"Your cooked food now grants a speed boost and a short period of regeneration."
+	);
+
 	public SkillCooking() {
 		this(1, 0);
 	}
@@ -75,7 +89,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public SkillCooking(int level, int currentXp) {
 		super("Cooking", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/cooking.png");
-		this.addAbilities(overfull);
+		this.addAbilities(overfull, panacea, superFood);
 	}
 
 	public CustomFood getOverwriteFood(String name) {

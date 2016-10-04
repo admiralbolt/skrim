@@ -1,6 +1,19 @@
 Changelog
 ==========
 
+Version 1.1.2
+---------------
+### New Features
+* Added the level 50 & 75 Cooking abilities.
+* Added the level 50 defense ability.
+
+### Balance Changes
+
+### Bug Fixes
+
+### Quality of Life
+
+
 Version 1.1.1
 --------------
 
@@ -25,4 +38,3 @@ Version 1.1.1
 * Increased the window that you can catch a fish.  Previously it was a random time frame from 0.5s-1.5s.  Now it is a fixed 2s.
 * Added a small sound effect whenever a fortune event triggers from Botany, Digging, Farming, Fishing or Mining.
 * Added a small sound effect whenever you critically strike.
-
