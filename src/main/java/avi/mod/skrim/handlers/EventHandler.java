@@ -13,8 +13,11 @@ import avi.mod.skrim.skills.melee.SkillMelee;
 import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
+import avi.mod.skrim.utils.Utils;
+import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -78,6 +81,13 @@ public class EventHandler {
 		SkillDemolition.onTntPlaced(event);
 		SkillBotany.flowerSplosion(event);
 		SkillFarming.applyGrowth(event);
+		IBlockState state = event.getPlacedBlock();
+		Block block = state.getBlock();
+		if (Utils.isRawXpBlock(block)) {
+			World world = event.getWorld();
+			System.out.println("isRaw, remote: " + world.isRemote);
+			PlayerPlacedBlocks.addBlock(world, event.getPos());
+		}
 	}
 
 	@SubscribeEvent
@@ -94,7 +104,9 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onHarvest(BlockEvent.HarvestDropsEvent event) {
-		SkillMining.giveMoreOre(event);
+		if (!event.isSilkTouching()) {
+			SkillMining.giveMoreOre(event);
+		}
 		SkillBotany.soManyFlowers(event);
 		SkillDigging.findTreasure(event);
 		SkillFarming.giveMoreCrops(event);
@@ -110,11 +122,20 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		SkillMining.addMiningXp(event);
-		SkillBotany.addBotanyXp(event);
-		SkillDigging.addDiggingXp(event);
-		SkillFarming.addFarmingXp(event);
-		SkillWoodcutting.addWoodcuttingXp(event);
+		World world = event.getWorld();
+		System.out.println("break is remote: " + world.isRemote);
+		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
+			if (!Utils.isSilkTouching(event)) {
+				SkillMining.addMiningXp(event);
+			}
+			SkillBotany.addBotanyXp(event);
+			SkillDigging.addDiggingXp(event);
+			SkillFarming.addFarmingXp(event);
+			SkillWoodcutting.addWoodcuttingXp(event);
+		} else {
+			System.out.println("UNNATURAL! Preventing xp.");
+		}
+		PlayerPlacedBlocks.removeBlock(world, event.getPos());
 	}
 
 	@SubscribeEvent

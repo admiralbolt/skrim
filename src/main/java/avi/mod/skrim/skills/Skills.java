@@ -212,16 +212,12 @@ public class Skills {
 			Map<IAttribute, AttributeModifier> attributeMap = new HashMap<IAttribute, AttributeModifier>();
 			if (player.hasCapability(Skills.DEFENSE, EnumFacing.NORTH)) {
 				SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
-				System.out.println("checking defense");
 				Entry<IAttribute, AttributeModifier> overshields = defense.getAttributeModifier();
-				System.out.println("get attribute modifier");
 				if (overshields != null) {
 					attributeMap.put(overshields.getKey(), overshields.getValue());
 				}
 			}
-			System.out.println("attributeMap: " + attributeMap);
 			if (!attributeMap.isEmpty()) {
-				System.out.println("applying");
 				Utils.applyAttributesModifiersToEntity(player, attributeMap, 0);
 			}
 

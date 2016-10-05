@@ -137,9 +137,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 
 	public Entry<IAttribute, AttributeModifier> getAttributeModifier() {
 		if (this.hasAbility(2)) {
-			System.out.println("has ability 2");
 			if (this.shouldUpdateAttribute) {
-				System.out.println("should update attribute");
 				this.shouldUpdateAttribute = false;
 				return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(
 					SharedMonsterAttributes.MAX_HEALTH,
