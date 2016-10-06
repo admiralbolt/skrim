@@ -84,16 +84,16 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					if (canHeadshot(targetEntity) && (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow < arrow.posY) && (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh > arrow.posY)) {
 						player.worldObj.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
-						addXp = 5;
+						addXp = 50;
 					}
 					if (ranged.hasAbility(1)) {
 						if (player.isSneaking() && targetEntity.getAITarget() != player) {
 							event.setAmount((float) (event.getAmount() * 1.25));
 							player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F, 1.0F);
-							addXp += 5;
+							addXp += 50;
 						}
 					}
-					addXp += event.getAmount() * 3;
+					addXp += event.getAmount() * 30;
 					ranged.addXp((EntityPlayerMP) player, addXp);
 				}
 			}

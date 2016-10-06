@@ -165,6 +165,8 @@ public class CustomTNTPrimed extends Entity {
 	public static Explosion createExplosion(String explosionType, World worldIn, Entity entityIn, double x, double y, double z) {
 		if (explosionType.equals("dynamite")) {
 			return new DynamiteExplosion(worldIn, entityIn, x, y, z);
+		} else if (explosionType.equals("napalm")) {
+			return new NapalmExplosion(worldIn, entityIn, x, y, z);
 		}
 		return null;
 	}

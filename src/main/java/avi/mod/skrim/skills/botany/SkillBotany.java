@@ -16,6 +16,7 @@ import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
+import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
@@ -48,24 +49,24 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	static {
 		xpMap = new HashMap<String, Integer>();
 		// The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
-		xpMap.put("dandelion", 5);
-		xpMap.put("poppy", 5);
+		xpMap.put("dandelion", 50);
+		xpMap.put("poppy", 50);
 		// 3 Biomes
-		xpMap.put("houstonia", 10); // azure_bluet
-		xpMap.put("red_tulip", 10);
-		xpMap.put("orange_tulip", 10);
-		xpMap.put("white_tulip", 10);
-		xpMap.put("pink_tulip", 10);
-		xpMap.put("oxeye_daisy", 10);
+		xpMap.put("houstonia", 100); // azure_bluet
+		xpMap.put("red_tulip", 100);
+		xpMap.put("orange_tulip", 100);
+		xpMap.put("white_tulip", 100);
+		xpMap.put("pink_tulip", 100);
+		xpMap.put("oxeye_daisy", 100);
 		// Only swamp, can respawn
-		xpMap.put("blue_orchid", 15);
+		xpMap.put("blue_orchid", 200);
+		xpMap.put("allium", 200);
 		// Only forest & flower forest on generation
-		xpMap.put("syringa", 20); // lilac
-		xpMap.put("rose_bush", 20);
-		xpMap.put("paeonia", 20); // peony
-		xpMap.put("allium", 20);
+		xpMap.put("syringa", 500); // lilac
+		xpMap.put("rose_bush", 500);
+		xpMap.put("paeonia", 500); // peony
 		// Only sunflower plains on generation
-		xpMap.put("sunflower", 25);
+		xpMap.put("sunflower", 1000);
 	}
 
 	public static SkillAbility sunFlower = new SkillAbility(
@@ -208,7 +209,9 @@ public class SkillBotany extends Skill implements ISkillBotany {
             }
           }
           Skills.playFortuneSound(player);
-          botany.addXp((EntityPlayerMP) player, 25); // and 25 xp!
+					if (PlayerPlacedBlocks.isNaturalBlock(event.getWorld(), event.getPos())) {
+          	botany.addXp((EntityPlayerMP) player, 200); // and 200 xp!
+					}
 				}
 			}
 		}

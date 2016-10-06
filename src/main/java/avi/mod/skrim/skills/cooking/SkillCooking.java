@@ -45,20 +45,26 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	static {
 		foodMap = new HashMap<String, CustomFood>();
 		xpMap = new HashMap<String, Integer>();
-		addFood("bread", ModItems.overwriteBread, 10);
-		addFood("cooked_fish", ModItems.overwriteFish, 15);
-		addFood("cooked_salmon", ModItems.overwriteSalmon, 15);
-		addFood("beefcooked", ModItems.overwriteSteak, 10);
-		addFood("porkchopcooked", ModItems.overwritePorkchop, 10);
-		addFood("chickencooked", ModItems.overwriteChicken, 10);
-		addFood("rabbitcooked", ModItems.overwriteRabbit, 25);
-		addFood("potatobaked", ModItems.overwriteBakedPotato, 5);
-		addFood("muttoncooked", ModItems.overwriteMutton, 10);
-		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 30);
-		addFood("mushroomstew", ModItems.overwriteMushroomStew, 30);
-		addFood("rabbitstew", ModItems.overwriteRabbitStew, 35);
-		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 25);
+		addFood("bread", ModItems.overwriteBread, 30);
 		addFood("cookie", ModItems.overwriteCookie, 5);
+
+		addFood("potatobaked", ModItems.overwriteBakedPotato, 50);
+
+		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 80);
+		addFood("mushroomstew", ModItems.overwriteMushroomStew, 80);
+
+		addFood("muttoncooked", ModItems.overwriteMutton, 125);
+		addFood("beefcooked", ModItems.overwriteSteak, 125);
+		addFood("porkchopcooked", ModItems.overwritePorkchop, 125);
+		addFood("chickencooked", ModItems.overwriteChicken, 125);
+
+		addFood("cooked_fish", ModItems.overwriteFish, 150);
+		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 175);
+		addFood("cooked_salmon", ModItems.overwriteSalmon, 200);
+
+		addFood("rabbitcooked", ModItems.overwriteRabbit, 250);
+		addFood("rabbitstew", ModItems.overwriteRabbitStew, 300);
+
 	}
 
 	public static SkillAbility overfull = new SkillAbility(
@@ -179,7 +185,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 						newStack.setTagCompound(newCompound);
 						newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
 						player.inventory.addItemStackToInventory(newStack);
-						stackSize = newStack.stackSize;
+						stackSize = newStackSize;
 					}
 
 					if (player instanceof EntityPlayerMP) {

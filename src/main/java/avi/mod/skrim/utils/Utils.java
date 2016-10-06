@@ -11,9 +11,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockGravel;
+import net.minecraft.block.BlockMelon;
 import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockOldLog;
+import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockRedFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
@@ -90,7 +92,7 @@ public class Utils {
 	public static double getAttributeModifierAmount(int amplifier, AttributeModifier modifier) {
   	return modifier.getAmount() * (double)(amplifier + 1);
 	}
-	
+
 	public static boolean isRawXpBlock(Block block) {
 		return (
 			block instanceof BlockOldLog ||
@@ -103,11 +105,13 @@ public class Utils {
 			block instanceof BlockMycelium ||
 			block instanceof BlockGrass ||
 			block instanceof BlockSoulSand ||
+			block instanceof BlockPumpkin ||
+			block instanceof BlockMelon ||
 			block == Blocks.IRON_ORE ||
 			block == Blocks.GOLD_ORE
 		);
 	}
-	
+
 	public static boolean isSilkTouching(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
 		ItemStack mainStack = player.getHeldItemMainhand();

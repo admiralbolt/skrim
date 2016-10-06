@@ -8,8 +8,11 @@ Version 1.1.2
 * Added the level 50 defense ability.
 
 ### Balance Changes
+* All xp has been buffed!  Look at the docs!
+* Silk touch no longer gives xp or bonus drops.
 
 ### Bug Fixes
+* Shift clicking food FINALLY givse the correct amount of xp
 
 ### Quality of Life
 

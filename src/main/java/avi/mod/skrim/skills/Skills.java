@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import avi.mod.skrim.skills.blacksmithing.BlacksmithingProvider;
 import avi.mod.skrim.skills.blacksmithing.ISkillBlacksmithing;
@@ -140,7 +142,7 @@ public class Skills {
 
 	public static void replaceWithComponents(ItemCraftedEvent event) {
 		if (event.player.inventory != null) {
-			Item targetItem = event.crafting.getItem();
+			final Item targetItem = event.crafting.getItem();
 			event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
 			event.crafting.stackSize = 1;
 			ItemStack slot;
@@ -174,13 +176,31 @@ public class Skills {
 			 */
 			ItemStack inventoryAt;
 			Item itemAt;
-			for (int i = 0; i < event.player.inventory.getSizeInventory(); i++) {
-				inventoryAt = event.player.inventory.getStackInSlot(i);
-				if (inventoryAt != null) {
-					itemAt = inventoryAt.getItem();
-					if (itemAt != null && itemAt == targetItem) {
-						event.player.inventory.removeStackFromSlot(i);
+
+			final EntityPlayer player = event.player;
+			removeTargetItem(player, targetItem);
+
+			new Timer().schedule(
+				new TimerTask() {
+					@Override
+					public void run() {
+						removeTargetItem(player, targetItem);
 					}
+				}, 1000
+			);
+
+		}
+	}
+
+	public static void removeTargetItem(EntityPlayer player, Item removeItem) {
+		ItemStack inventoryAt;
+		Item itemAt;
+		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+			inventoryAt = player.inventory.getStackInSlot(i);
+			if (inventoryAt != null) {
+				itemAt = inventoryAt.getItem();
+				if (itemAt != null && itemAt == removeItem) {
+					player.inventory.removeStackFromSlot(i);
 				}
 			}
 		}
@@ -198,7 +218,7 @@ public class Skills {
 	}
 
 	public static double getTotalXpBonus(EntityPlayer player) {
-		return (0.01 * player.experienceLevel) + (0.001 * getTotalSkillLevels(player));
+		return (0.015 * player.experienceLevel) + (0.002 * getTotalSkillLevels(player));
 	}
 
 	public static void playFortuneSound(EntityPlayer player) {

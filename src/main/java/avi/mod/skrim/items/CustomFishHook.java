@@ -532,7 +532,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 				}
 				if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
 					SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
-					fishing.addXp((EntityPlayerMP) this.angler, 50);
+					fishing.addXp((EntityPlayerMP) this.angler, 750);
 					if (this.rand.nextDouble() < fishing.getTreasureChance()) {
 						EntityItem treasure = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, RandomTreasure.generate());
 						double d0 = this.angler.posX - this.posX;
@@ -544,7 +544,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 						treasure.motionZ = d2 * 0.1D;
 						this.worldObj.spawnEntityInWorld(treasure);
 						Skills.playFortuneSound(this.angler);
-						fishing.addXp((EntityPlayerMP) this.angler, 25);
+						fishing.addXp((EntityPlayerMP) this.angler, 200);
 					}
 					if (fishing.hasAbility(3)) {
 						this.angler.worldObj.spawnEntityInWorld(new EntityXPOrb(this.angler.worldObj, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(16) + 9));

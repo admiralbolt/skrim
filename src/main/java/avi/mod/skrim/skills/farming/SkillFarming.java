@@ -13,6 +13,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeetroot;
@@ -39,6 +40,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
@@ -48,13 +50,13 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("crops", 10);
-		xpMap.put("beetroots", 25);
-		xpMap.put("potatoes", 25);
-		xpMap.put("carrots", 25);
-		xpMap.put("pumpkin", 5);
-		xpMap.put("melon", 30);
-		xpMap.put("cocoa", 35);
+		xpMap.put("crops", 30);
+		xpMap.put("beetroots", 50);
+		xpMap.put("cocoa", 100);
+		xpMap.put("potatoes", 250);
+		xpMap.put("carrots", 250);
+		xpMap.put("pumpkin", 400);
+		xpMap.put("melon", 400);
 	}
 
 	public static SkillAbility overalls = new SkillAbility(
@@ -168,7 +170,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
             }
           }
 					Skills.playFortuneSound(player);
-          farming.addXp((EntityPlayerMP) player, 25);
+          farming.addXp((EntityPlayerMP) player, 200);
 				}
 			}
 		}
@@ -240,6 +242,18 @@ public class SkillFarming extends Skill implements ISkillFarming {
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	public static void createFarmland(UseHoeEvent event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+			BlockPos targetPos = event.getPos();
+			String blockName = SkillDigging.getDirtName(event.getWorld().getBlockState(targetPos));
+			if (blockName.equals("dirt") || blockName.equals("grass_block")) {
+				farming.addXp((EntityPlayerMP) player, 10);
 			}
 		}
 	}

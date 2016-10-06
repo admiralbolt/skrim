@@ -89,7 +89,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			validGoBoom.remove(location);
 			if (player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-				demolition.addXp((EntityPlayerMP) player, blocks.size());
+				demolition.addXp((EntityPlayerMP) player, 2500);
 				int maxAdditional = demolition.getMaxAdditional();
 				int delay = 500;
 				for (int i = 0; i <= maxAdditional; i++) {
@@ -105,7 +105,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 							}, delay
 						);
 						delay += 500;
-						demolition.addXp((EntityPlayerMP) player, 25);
+						demolition.addXp((EntityPlayerMP) player, 200);
 					}
 				}
 			}
@@ -145,7 +145,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			if (targetEntity instanceof EntityCreeper) {
 				if (player != null && player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 					SkillDemolition demo = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-					demo.addXp((EntityPlayerMP) player, 5);
+					demo.addXp((EntityPlayerMP) player, 100);
 				}
 			}
 		}
@@ -154,8 +154,14 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public static void verifyExplosives(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
 		Item dynamite = new ItemStack(ModBlocks.dynamite).getItem();
+		Item napalm = new ItemStack(ModBlocks.napalm).getItem();
 		if (targetItem != null && targetItem == dynamite) {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
+				Skills.destroyComponents(event);
+				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 4.0F, true);
+			}
+		} else if (targetItem != null && targetItem == napalm) {
+			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 75)) {
 				Skills.destroyComponents(event);
 				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 4.0F, true);
 			}

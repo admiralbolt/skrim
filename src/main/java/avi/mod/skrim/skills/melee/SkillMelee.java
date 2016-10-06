@@ -96,7 +96,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	}
 
 	public double getExtraDamage() {
-		return this.level * 0.0075;
+		return this.level * 0.01;
 	}
 
 	public double getCritChance() {
@@ -142,22 +142,26 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						}
 						// Grand motherfucking smite
 						if (melee.hasAbility(4)) {
-							EntityLightningBolt smite = new EntityLightningBolt(player.worldObj, targetEntity.posX, targetEntity.posY, targetEntity.posZ, true);
-							targetEntity.attackEntityFrom(source.lightningBolt, 100.0F);
-							player.worldObj.addWeatherEffect(smite);
-							if (!player.worldObj.isRemote) {
-								BlockPos blockpos = new BlockPos(targetEntity);
-                if (player.worldObj.getGameRules().getBoolean("doFireTick")
-              		&& player.worldObj.isAreaLoaded(blockpos, 10)
-              		&& player.worldObj.getBlockState(blockpos).getMaterial() == Material.AIR
-              		&& Blocks.FIRE.canPlaceBlockAt(player.worldObj, blockpos)) {
-                    player.worldObj.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
-                }
+							ItemStack mainStack = player.getHeldItemMainhand();
+							Item mainItem = (mainStack == null) ? null : mainStack.getItem();
+							if (mainItem != null && mainItem instanceof ItemSword) {
+								EntityLightningBolt smite = new EntityLightningBolt(player.worldObj, targetEntity.posX, targetEntity.posY, targetEntity.posZ, true);
+								targetEntity.attackEntityFrom(source.lightningBolt, 100.0F);
+								player.worldObj.addWeatherEffect(smite);
+								if (!player.worldObj.isRemote) {
+									BlockPos blockpos = new BlockPos(targetEntity);
+	                if (player.worldObj.getGameRules().getBoolean("doFireTick")
+	              		&& player.worldObj.isAreaLoaded(blockpos, 10)
+	              		&& player.worldObj.getBlockState(blockpos).getMaterial() == Material.AIR
+	              		&& Blocks.FIRE.canPlaceBlockAt(player.worldObj, blockpos)) {
+	                    player.worldObj.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+	                }
+								}
               }
 						}
-						addXp += 25;
+						addXp += 200;
 					}
-					addXp += (int) event.getAmount() * 3;
+					addXp += (int) event.getAmount() * 30;
 					melee.addXp((EntityPlayerMP) player, addXp);
 				}
 			}

@@ -22,7 +22,6 @@ public class Skill implements ISkill {
   public ResourceLocation iconTexture;
   public Map<Integer, SkillAbility> abilities = new HashMap<Integer, SkillAbility>();
 
-  public static int xpMult = 10;
   public static int xpFactor = 10000;
 
   /**
@@ -44,7 +43,7 @@ public class Skill implements ISkill {
 
   public void addXp(EntityPlayerMP player, int xp) {
     if (xp > 0) {
-      this.xp += (int) ((xp * Skills.getTotalXpBonus(player) + xp) * xpMult);
+      this.xp += (int) (xp * Skills.getTotalXpBonus(player) + xp);
       this.levelUp(player);
     }
   }

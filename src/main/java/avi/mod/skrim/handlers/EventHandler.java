@@ -30,6 +30,7 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -85,7 +86,6 @@ public class EventHandler {
 		Block block = state.getBlock();
 		if (Utils.isRawXpBlock(block)) {
 			World world = event.getWorld();
-			System.out.println("isRaw, remote: " + world.isRemote);
 			PlayerPlacedBlocks.addBlock(world, event.getPos());
 		}
 	}
@@ -123,7 +123,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
 		World world = event.getWorld();
-		System.out.println("break is remote: " + world.isRemote);
+		Utils.logBlockState(event.getState());
 		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
 			if (!Utils.isSilkTouching(event)) {
 				SkillMining.addMiningXp(event);
@@ -132,8 +132,6 @@ public class EventHandler {
 			SkillDigging.addDiggingXp(event);
 			SkillFarming.addFarmingXp(event);
 			SkillWoodcutting.addWoodcuttingXp(event);
-		} else {
-			System.out.println("UNNATURAL! Preventing xp.");
 		}
 		PlayerPlacedBlocks.removeBlock(world, event.getPos());
 	}
@@ -196,6 +194,11 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onItemPickup(EntityItemPickupEvent event) {
 		SkillFishing.pickupSkrimRod(event);
+	}
+
+	@SubscribeEvent
+	public void onUseHoe(UseHoeEvent event) {
+		SkillFarming.createFarmland(event);
 	}
 
 }

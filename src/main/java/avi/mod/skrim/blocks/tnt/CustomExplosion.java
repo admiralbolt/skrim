@@ -261,4 +261,21 @@ public class CustomExplosion extends Explosion {
 	public Vec3d getPosition() {
 		return this.position;
 	}
+	
+	public double getX() {
+		return this.explosionX;
+	}
+	
+	public double getY() {
+		return this.explosionY;
+	}
+	
+	public double getZ() {
+		return this.explosionZ;
+	}
+	
+	public BlockPos getPos() {
+		return new BlockPos(this.explosionX, this.explosionY, this.explosionZ);
+	}
+	
 }

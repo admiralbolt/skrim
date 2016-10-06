@@ -11,6 +11,7 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
+import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
@@ -36,15 +37,16 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("dirt", 1);
-		xpMap.put("sand", 2);
-		xpMap.put("grass_block", 3); // Bonus for grass!
-		xpMap.put("gravel", 4); // Fuck gravel
-		xpMap.put("coarse_dirt", 5); // Requires 2 dirt & 2 gravel to make 4, is worth slightly more than the components
-		xpMap.put("podzol", 10); // Only in taiga
-		xpMap.put("red_sand", 15); // Only in mesa
-		xpMap.put("soul_sand", 20); // Only in nether & not to common
-		xpMap.put("mycelium", 25); // Only in.. mushroom biomes?
+		xpMap.put("dirt", 30);
+		xpMap.put("farmland", 30);
+		xpMap.put("sand", 30);
+		xpMap.put("snow", 30);
+		xpMap.put("grass_block", 40); // Bonus for grass!
+		xpMap.put("gravel", 100); // Fuck gravel
+		xpMap.put("soul_sand", 150); // Only in nether & not to common
+		xpMap.put("podzol", 200); // Only in taiga
+		xpMap.put("red_sand", 300); // Only in mesa
+		xpMap.put("mycelium", 400); // Only in.. mushroom biomes?
 	}
 
 	public static SkillAbility vitalicBreathing = new SkillAbility(
@@ -102,7 +104,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 			|| block instanceof BlockSoulSand);
 	}
 
-  public String getDirtName(IBlockState state) {
+  public static String getDirtName(IBlockState state) {
     Block block = state.getBlock();
     if (block instanceof BlockDirt) {
     	return state.getValue(BlockDirt.VARIANT).toString();
@@ -119,7 +121,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
       SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
       IBlockState state = event.getState();
       Block target = state.getBlock();
-      int addXp = digging.getXp(digging.getDirtName(state));
+      int addXp = digging.getXp(getDirtName(state));
       if (addXp > 0) {
       	digging.addXp((EntityPlayerMP) player, addXp);
       }
@@ -139,20 +141,22 @@ public class SkillDigging extends Skill implements ISkillDigging {
 
   public static void findTreasure(BlockEvent.HarvestDropsEvent event) {
   	EntityPlayer player = event.getHarvester();
-    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-      SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-      IBlockState state = event.getState();
-      if (digging.validTreasureTarget(state)) {
-        double random = Math.random();
-        if (random < digging.getTreasureChance()) {
-          ItemStack treasure = RandomTreasure.generate();
-          List<ItemStack> drops = event.getDrops();
-          drops.add(treasure);
-					Skills.playFortuneSound(player);
-          digging.addXp((EntityPlayerMP) player, 25);
-        }
-      }
-    }
+		if (PlayerPlacedBlocks.isNaturalBlock(event.getWorld(), event.getPos())) {
+	    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+	      SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+	      IBlockState state = event.getState();
+	      if (digging.validTreasureTarget(state)) {
+	        double random = Math.random();
+	        if (random < digging.getTreasureChance()) {
+	          ItemStack treasure = RandomTreasure.generate();
+	          List<ItemStack> drops = event.getDrops();
+	          drops.add(treasure);
+						Skills.playFortuneSound(player);
+	          digging.addXp((EntityPlayerMP) player, 200);
+	        }
+	      }
+	    }
+		}
   }
 
   public static void vitalicBreathing(LivingHurtEvent event) {
