@@ -163,7 +163,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 		} else if (targetItem != null && targetItem == napalm) {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 75)) {
 				Skills.destroyComponents(event);
-				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 4.0F, true);
+				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 12.0F, true);
 			}
 		}
 	}

@@ -6,15 +6,16 @@ Version 1.1.2
 ### New Features
 * Added the level 50 & 75 Cooking abilities.
 * Added the level 50 defense ability.
+* Added the level 75 demolition ability.
 
 ### Balance Changes
 * All xp has been buffed!  Look at the docs!
 * Silk touch no longer gives xp or bonus drops.
+* You no longer gain xp from player placed blocks.
 
 ### Bug Fixes
-* Shift clicking food FINALLY givse the correct amount of xp
-
-### Quality of Life
+* Shift clicking food FINALLY gives the correct amount of xp for cooking.
+* Shift clicking no longer bypasses skill requirements for item crafting.
 
 
 Version 1.1.1

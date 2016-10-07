@@ -92,7 +92,6 @@ public class ModItems {
 
 	public static void createItems() {
 		tux = register(new ItemBase("tux").setCreativeTab(Skrim.creativeTab));
-
 		// Food!
 		overwritePorkchop = register(new CustomFood("overwrite_porkchop", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
 		overwriteBakedPotato = register(new CustomFood("overwrite_baked_potato", 5, 1.2F, false).setCreativeTab(Skrim.creativeTab));

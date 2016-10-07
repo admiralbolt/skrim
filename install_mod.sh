@@ -1,6 +1,6 @@
 #!/bin/sh
 
-version=1.1.1
+version=1.1.2
 
 rm ~/Library/Application\ Support/minecraft/mods/skrim*.jar
 rm ~/Desktop/minecraft_server_2/mods/skrim*.jar

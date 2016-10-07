@@ -14,6 +14,7 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
+import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -147,10 +148,13 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		}
 	}
 
-	public void hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, boolean withSaw) {
+	public int hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, boolean withSaw) {
+		int addXp = 0;
 		IBlockState state = world.getBlockState(pos);
 		Block tree = state.getBlock();
-		woodcutting.xp += this.getXp(getWoodName(state));
+		if (PlayerPlacedBlocks.isNaturalBlock(world, pos)) {
+			addXp += this.getXp(getWoodName(state));
+		}
 		if (withSaw) {
 			world.destroyBlock(pos, false);
 			world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state)))));
@@ -165,12 +169,13 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 						IBlockState targetState = world.getBlockState(targetPos);
 						Block targetBlock = targetState.getBlock();
 						if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-							this.hewTree(world, woodcutting, targetPos, start, withSaw);
+							addXp += this.hewTree(world, woodcutting, targetPos, start, withSaw);
 						}
 					}
 				}
 			}
 		}
+		return addXp;
 	}
 
 	public static boolean validTarget(BlockPos targetPos, BlockPos start) {
@@ -189,11 +194,12 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				ItemStack stack = player.getHeldItemMainhand();
 				Item item = (stack == null) ? null : stack.getItem();
+				int addXp = woodcutting.getXp(getWoodName(state));
 				if (Math.random() < woodcutting.getHewingChance() && item != null && (item instanceof ItemAxe || item instanceof CustomAxe)) {
 					BlockPos start = event.getPos();
-					woodcutting.hewTree(event.getWorld(), woodcutting, start, start, (item instanceof HandSaw));
+					addXp += woodcutting.hewTree(event.getWorld(), woodcutting, start, start, (item instanceof HandSaw));
 				}
-				woodcutting.addXp((EntityPlayerMP) player, woodcutting.getXp(getWoodName(state)));
+				woodcutting.addXp((EntityPlayerMP) player, addXp);
 			}
 		}
 	}

@@ -240,6 +240,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 											Block dirtBlock = dirtState.getBlock();
 											if (dirtBlock instanceof BlockDirt || dirtBlock instanceof BlockGrass || dirtBlock instanceof BlockFarmland) {
 												player.worldObj.setBlockState(airPos, placedState);
+												PlayerPlacedBlocks.addBlock(player.worldObj, airPos);
 											}
 										}
 									}

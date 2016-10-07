@@ -43,7 +43,7 @@ public class CustomExplosion extends Explosion {
 	private final double explosionZ;
 	private final Entity exploder;
 	private final float explosionSize;
-	private final List<BlockPos> affectedBlockPositions;
+	public final List<BlockPos> affectedBlockPositions;
 	private final Map<EntityPlayer, Vec3d> playerKnockbackMap;
 	private final Vec3d position;
 
@@ -261,21 +261,21 @@ public class CustomExplosion extends Explosion {
 	public Vec3d getPosition() {
 		return this.position;
 	}
-	
+
 	public double getX() {
 		return this.explosionX;
 	}
-	
+
 	public double getY() {
 		return this.explosionY;
 	}
-	
+
 	public double getZ() {
 		return this.explosionZ;
 	}
-	
+
 	public BlockPos getPos() {
 		return new BlockPos(this.explosionX, this.explosionY, this.explosionZ);
 	}
-	
+
 }
