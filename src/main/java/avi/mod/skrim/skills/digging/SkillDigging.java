@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.items.CustomSpade;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
 import avi.mod.skrim.skills.RandomTreasure;
@@ -22,10 +23,17 @@ import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +42,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class SkillDigging extends Skill implements ISkillDigging {
 
@@ -205,5 +215,24 @@ public class SkillDigging extends Skill implements ISkillDigging {
 			}
 		}
 	}
+
+	public static void entomb(PlayerInteractEvent.EntityInteract event) {
+		EntityPlayer player = event.getEntityPlayer();
+		Entity targetEntity = event.getTarget();
+		if (!(targetEntity instanceof EntityGhast || targetEntity instanceof EntityBlaze || targetEntity instanceof EntityDragon)) {
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+				SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+				if (digging.hasAbility(3)) {
+					ItemStack mainStack = player.getHeldItemMainhand();
+					Item mainItem = mainStack.getItem();
+					if (mainItem instanceof ItemSpade || mainItem instanceof CustomSpade) {
+						targetEntity.setPosition(targetEntity.posX, targetEntity.posY - 5, targetEntity.posZ);
+						mainStack.damageItem(10, player);
+					}
+				}
+			}
+		}
+	}
+
 
 }
