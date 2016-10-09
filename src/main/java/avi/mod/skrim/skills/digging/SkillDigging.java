@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
 import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
@@ -27,6 +29,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -48,6 +53,10 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		xpMap.put("red_sand", 300); // Only in mesa
 		xpMap.put("mycelium", 400); // Only in.. mushroom biomes?
 	}
+
+	public double metalMeter = 0;
+	public static double meterFilled = 100;
+	public Vec3d lastPos = null;
 
 	public static SkillAbility vitalicBreathing = new SkillAbility(
 		"Vitalic Breathing",
@@ -90,11 +99,11 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
 		return ((harvestTool != null && harvestTool.toLowerCase().equals("shovel"))
-			|| this.validTreasureTarget(state)
+			|| validTreasureTarget(state)
 			) ? true : false;
 	}
 
-	public boolean validTreasureTarget(IBlockState state) {
+	public static boolean validTreasureTarget(IBlockState state) {
 		Block block = state.getBlock();
 		return (block instanceof BlockDirt
 			|| block instanceof BlockGrass
@@ -145,10 +154,10 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
 	      SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
 	      IBlockState state = event.getState();
-	      if (digging.validTreasureTarget(state)) {
+	      if (validTreasureTarget(state)) {
 	        double random = Math.random();
 	        if (random < digging.getTreasureChance()) {
-	          ItemStack treasure = RandomTreasure.generate();
+	          ItemStack treasure = RandomTreasure.generateStandardTreasure();
 	          List<ItemStack> drops = event.getDrops();
 	          drops.add(treasure);
 						Skills.playFortuneSound(player);
@@ -164,8 +173,8 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		if (entity instanceof EntityPlayer) {
 			final EntityPlayer player = (EntityPlayer) entity;
 			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-				Skill Digging = (Skill) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-				if (Digging.hasAbility(1)) {
+				SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+				if (digging.hasAbility(1)) {
 					if (event.getSource() == DamageSource.inWall) {
 						event.setAmount(0F);
 					}
@@ -173,5 +182,28 @@ public class SkillDigging extends Skill implements ISkillDigging {
 			}
 		}
   }
+
+	public static void metalDetector(LivingUpdateEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			final EntityPlayer player = (EntityPlayer) entity;
+			if (player.worldObj.isRemote) {
+				if (player != null && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+					SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+					if (digging.hasAbility(2)) {
+						BlockPos playerLocation = new BlockPos(player.posX, player.posY, player.posZ);
+						IBlockState onState = player.worldObj.getBlockState(playerLocation.add(0, -1, 0));
+						if (validTreasureTarget(onState)) {
+							digging.metalMeter += Math.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
+							if (digging.metalMeter >= SkillDigging.meterFilled) {
+								digging.metalMeter = 0;
+								SkrimPacketHandler.INSTANCE.sendToServer(new MetalDetectorPacket(player.posX, player.posY, player.posZ));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

@@ -99,6 +99,7 @@ public class EventHandler {
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		SkillMining.climbWall(event);
 		SkillDefense.riteOfPassage(event);
+		SkillDigging.metalDetector(event);
 		Skills.applyAttributes(event);
 	}
 

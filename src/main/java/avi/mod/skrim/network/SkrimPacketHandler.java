@@ -10,6 +10,8 @@ import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket.ApplyBonemealPacketHandler;
 import avi.mod.skrim.network.skillpackets.DrillPacket;
 import avi.mod.skrim.network.skillpackets.DrillPacket.DrillPacketHandler;
+import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
+import avi.mod.skrim.network.skillpackets.MetalDetectorPacket.MetalDetectorPacketHandler;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket.OffHandAttackPacketHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -32,6 +34,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(DrillPacketHandler.class, DrillPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(ExplosionPacketHandler.class, ExplosionPacket.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(MetalDetectorPacketHandler.class, MetalDetectorPacket.class, id++, Side.SERVER);
 	}
 
 }
