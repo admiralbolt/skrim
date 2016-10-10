@@ -59,6 +59,7 @@ public class EventHandler {
 	public void onLivingDeath(LivingDeathEvent event) {
 		SkillMelee.handleKill(event);
 		SkillDemolition.onKillCrepper(event);
+		SkillFarming.sideChick(event);
 	}
 
 	@SubscribeEvent

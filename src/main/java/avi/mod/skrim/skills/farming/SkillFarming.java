@@ -16,11 +16,14 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockBeetroot;
 import net.minecraft.block.BlockCarrot;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockMelon;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPotato;
@@ -28,9 +31,11 @@ import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
@@ -39,6 +44,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -57,6 +63,13 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		xpMap.put("carrots", 250);
 		xpMap.put("pumpkin", 400);
 		xpMap.put("melon", 400);
+	}
+	public static List<Block> cropBlocks = new ArrayList<Block>();
+	static {
+		cropBlocks.add(Blocks.WHEAT);
+		cropBlocks.add(Blocks.CARROTS);
+		cropBlocks.add(Blocks.POTATOES);
+		cropBlocks.add(Blocks.BEETROOTS);
 	}
 
 	public static SkillAbility overalls = new SkillAbility(
@@ -186,25 +199,32 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	  	Block targetBlock = targetState.getBlock();
 	  	if (validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
 	  		World world = event.getWorld();
-	  		PropertyInteger prop = null;
-	  		int growthStage = farming.getGrowthStage();
-	  		if (placedBlock instanceof BlockStem) {
-	  			prop = BlockStem.AGE;
-	  		} else if (placedBlock instanceof BlockBeetroot) {
-	  			prop = BlockBeetroot.BEETROOT_AGE;
-	  			if (growthStage > 2) {
-	  				growthStage = 2;
-	  			}
-				} else if (placedBlock instanceof BlockCocoa) {
-					// Because fuck it.
-					int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6};
-					growthStage = cocoaStages[growthStage];
-	  		} else if (placedBlock instanceof BlockCrops) {
-	  			prop = BlockCrops.AGE;
-	  		}
-	  		world.setBlockState(event.getPos(), placedState.withProperty(prop, growthStage));
+	  		world.setBlockState(event.getPos(), farming.cropWithGrowth(placedState));
 	  	}
 		}
+  }
+
+  public IBlockState cropWithGrowth(IBlockState placedState) {
+  	Block placedBlock = placedState.getBlock();
+  	PropertyInteger prop = null;
+		int growthStage = this.getGrowthStage();
+		if (placedBlock instanceof BlockStem) {
+			prop = BlockStem.AGE;
+		} else if (placedBlock instanceof BlockBeetroot) {
+			prop = BlockBeetroot.BEETROOT_AGE;
+			if (growthStage > 2) {
+				growthStage = 2;
+			}
+		} else if (placedBlock instanceof BlockCocoa) {
+			// Because fuck it.
+			int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6};
+			growthStage = cocoaStages[growthStage];
+			prop = BlockCocoa.AGE;
+		} else if (placedBlock instanceof BlockCrops) {
+			prop = BlockCrops.AGE;
+		}
+		return placedState.withProperty(prop, growthStage);
+
   }
 
 	public static void verifyItems(ItemCraftedEvent event) {
@@ -245,7 +265,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 			}
 		}
 	}
-	
+
 	public static void createFarmland(UseHoeEvent event) {
 		EntityPlayer player = event.getEntityPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
@@ -254,6 +274,43 @@ public class SkillFarming extends Skill implements ISkillFarming {
 			String blockName = SkillDigging.getDirtName(event.getWorld().getBlockState(targetPos));
 			if (blockName.equals("dirt") || blockName.equals("grass_block")) {
 				farming.addXp((EntityPlayerMP) player, 10);
+			}
+		}
+	}
+
+	public static void sideChick(LivingDeathEvent event) {
+		Entity sourceEntity = event.getSource().getEntity();
+		if (sourceEntity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) sourceEntity;
+			Entity targetEntity = event.getEntity();
+			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+				SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+				if (farming.hasAbility(2)) {
+					BlockPos aboveLocation = new BlockPos(targetEntity.posX, targetEntity.posY, targetEntity.posZ);
+					BlockPos groundLocation = new BlockPos(aboveLocation.getX(), aboveLocation.getY() - 1, aboveLocation.getZ());
+					IBlockState aboveState = player.worldObj.getBlockState(aboveLocation);
+					IBlockState groundState = player.worldObj.getBlockState(groundLocation);
+					Block aboveBlock = aboveState.getBlock();
+					Block groundBlock = groundState.getBlock();
+					if (aboveBlock instanceof BlockAir && (groundBlock instanceof BlockDirt || groundBlock instanceof BlockGrass || groundBlock instanceof BlockFarmland)) {
+						ItemStack mainStack = player.getHeldItemMainhand();
+						ItemStack offStack = player.getHeldItemOffhand();
+						if (mainStack != null || offStack != null) {
+							Item mainItem = (mainStack != null) ? mainStack.getItem() : null;
+							Item offItem = (offStack != null) ? offStack.getItem() : null;
+							if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe || offItem instanceof ItemHoe || offItem instanceof CustomHoe) {
+								player.worldObj.setBlockState(groundLocation, Blocks.FARMLAND.getDefaultState());
+								IBlockState placedState = cropBlocks.get(Utils.rand.nextInt(cropBlocks.size())).getDefaultState();
+								player.worldObj.setBlockState(
+									aboveLocation,
+									farming.cropWithGrowth(placedState)
+								);
+								farming.addXp((EntityPlayerMP) player, 200);
+								Skills.playFortuneSound(player);
+							}
+						}
+					}
+				}
 			}
 		}
 	}
