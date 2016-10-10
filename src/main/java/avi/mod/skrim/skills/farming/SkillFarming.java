@@ -36,15 +36,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -54,6 +57,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	public static SkillStorage<ISkillFarming> skillStorage = new SkillStorage<ISkillFarming>();
 	public static Map<String, Integer> xpMap;
+	public static List<Block> cropBlocks = new ArrayList<Block>();
+
 	static {
 		xpMap = new HashMap<String, Integer>();
 		xpMap.put("crops", 30);
@@ -63,14 +68,16 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		xpMap.put("carrots", 250);
 		xpMap.put("pumpkin", 400);
 		xpMap.put("melon", 400);
-	}
-	public static List<Block> cropBlocks = new ArrayList<Block>();
-	static {
+
 		cropBlocks.add(Blocks.WHEAT);
 		cropBlocks.add(Blocks.CARROTS);
 		cropBlocks.add(Blocks.POTATOES);
 		cropBlocks.add(Blocks.BEETROOTS);
 	}
+
+	public static int tanDuration = 160;
+	public static long tanCheck = 40L;
+	public int ticks = 0;
 
 	public static SkillAbility overalls = new SkillAbility(
 		"Overalls",
@@ -307,6 +314,27 @@ public class SkillFarming extends Skill implements ISkillFarming {
 								);
 								farming.addXp((EntityPlayerMP) player, 200);
 								Skills.playFortuneSound(player);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void farmersTan(LivingUpdateEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (!player.worldObj.isRemote) {
+				if (player != null && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+					SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+					if (farming.hasAbility(3)) {
+						if (player.worldObj.getTotalWorldTime() % tanCheck == 0L) {
+							BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
+							if (player.worldObj.isDaytime() && player.worldObj.canSeeSky(playerPos)) {
+								player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, tanDuration, 0, true, false));
+								player.addPotionEffect(new PotionEffect(MobEffects.SPEED, tanDuration, 0, true, false));
 							}
 						}
 					}

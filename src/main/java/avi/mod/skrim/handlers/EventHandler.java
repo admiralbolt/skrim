@@ -102,6 +102,7 @@ public class EventHandler {
 		SkillMining.climbWall(event);
 		SkillDefense.riteOfPassage(event);
 		SkillDigging.metalDetector(event);
+		SkillFarming.farmersTan(event);
 		Skills.applyAttributes(event);
 	}
 
