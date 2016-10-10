@@ -22,7 +22,9 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +36,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
 	public static float headshotBufferLow = -0.1F;
 	public static float headshotBufferHigh = 2.2F;
+	public static int glowDuration = 120;
 
 	public static SkillAbility sneakAttack = new SkillAbility(
 		"Sneak Attack",
@@ -91,6 +94,9 @@ public class SkillRanged extends Skill implements ISkillRanged {
 							event.setAmount((float) (event.getAmount() * 1.25));
 							player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F, 1.0F);
 							addXp += 50;
+						}
+						if (ranged.hasAbility(2)) {
+							targetEntity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, glowDuration, 0, true, false));
 						}
 					}
 					addXp += event.getAmount() * 30;

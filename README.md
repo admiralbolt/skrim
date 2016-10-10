@@ -1,6 +1,24 @@
 Changelog
 ==========
 
+Version 1.1.3
+--------------
+### New Features
+* Added level 50 demolition ability.
+* Added level 50 & 75 digging abilities.
+* Added level 50 & 75 farming abilities.
+* Added level 50 ranged ability.
+
+
+### Balance Changes
+
+
+### Bug Fixes
+* Fixed custom tnt primed rendering.
+
+### Quality of Life
+* Added different textures for custom tnts.
+
 Version 1.1.2
 ---------------
 ### New Features

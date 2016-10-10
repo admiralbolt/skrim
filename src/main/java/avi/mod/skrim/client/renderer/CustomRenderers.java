@@ -1,6 +1,7 @@
 package avi.mod.skrim.client.renderer;
 
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
+import avi.mod.skrim.client.renderer.EntityCustomTNTPrimedRenderer;
 import avi.mod.skrim.tileentity.TileEntityEnchantedFlower;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -15,7 +16,7 @@ public class CustomRenderers {
 	public static void register() {
 		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnchantedFlower.class, new TileEntityEnchantedFlowerRenderer());
-		RenderingRegistry.registerEntityRenderingHandler(CustomTNTPrimed.class, new TNTRenderFactory());
+		RenderingRegistry.registerEntityRenderingHandler(CustomTNTPrimed.class, new EntityCustomTNTPrimedRenderer(Minecraft.getMinecraft().getRenderManager()));
 		/**
 		 * The fishing line is jank.  It has been axed accordingly.
 		 * Sleep, sweet prince.

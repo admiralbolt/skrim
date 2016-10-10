@@ -11,6 +11,7 @@ import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlowerRed;
 import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
 import avi.mod.skrim.blocks.flowers.GlowFlowerYellow;
+import avi.mod.skrim.blocks.tnt.BioBomb;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.blocks.tnt.Dynamite;
 import avi.mod.skrim.blocks.tnt.Napalm;
@@ -41,6 +42,7 @@ public final class ModBlocks {
   public static EnchantedFlowerVariants enchantedFlowerYellowVariants;
 
   public static Dynamite dynamite;
+  public static BioBomb biobomb;
   public static Napalm napalm;
 
   public static void createBlocks() {
@@ -67,6 +69,7 @@ public final class ModBlocks {
     addEnchantedFlowerRecipes(enchantedYellow, enchantedFlowerYellowVariants);
 
     dynamite = register(new Dynamite("dynamite"));
+    biobomb = register(new BioBomb("biobomb"));
     napalm = register(new Napalm("napalm"));
 		EntityRegistry.registerModEntity(CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20, 5, true);
 		addExplosivesRecipes();
@@ -111,9 +114,9 @@ public final class ModBlocks {
   	for (Item pic : pics) {
   		GameRegistry.addShapelessRecipe(new ItemStack(dynamite), Blocks.TNT, pic);
   	}
-  	
+
   	GameRegistry.addRecipe(new ItemStack(napalm), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
-  	
+
   }
 
 }

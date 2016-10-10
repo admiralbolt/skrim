@@ -1,7 +1,9 @@
 package avi.mod.skrim.blocks.tnt;
 
+import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.network.ExplosionPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,18 +12,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SPacketExplosion;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class CustomTNTPrimed extends Entity {
 	private static final DataParameter<Integer> FUSE = EntityDataManager.<Integer>createKey(CustomTNTPrimed.class, DataSerializers.VARINT);
+	private static final DataParameter<String> EXPLOSION_TYPE = EntityDataManager.<String>createKey(CustomTNTPrimed.class, DataSerializers.STRING);
 	private EntityLivingBase tntPlacedBy;
 	/** How long the fuse is */
 	private int fuse;
-	public String explosionType;
+	private String explosionType;
 
 	public CustomTNTPrimed(World worldIn) {
 		super(worldIn);
@@ -39,6 +40,7 @@ public class CustomTNTPrimed extends Entity {
 		this.motionY = 0.20000000298023224D;
 		this.motionZ = (double) (-((float) Math.cos((double) f)) * 0.02F);
 		this.setFuse(80);
+		this.setExplosionType(explosionType);
 		this.prevPosX = x;
 		this.prevPosY = y;
 		this.prevPosZ = z;
@@ -47,6 +49,7 @@ public class CustomTNTPrimed extends Entity {
 
 	protected void entityInit() {
 		this.dataManager.register(FUSE, Integer.valueOf(80));
+		this.dataManager.register(EXPLOSION_TYPE, this.explosionType);
 	}
 
 	/**
@@ -105,6 +108,7 @@ public class CustomTNTPrimed extends Entity {
 	 */
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setShort("Fuse", (short) this.getFuse());
+		compound.setString("ExplosionType", this.getExplosionType());
 	}
 
 	/**
@@ -112,6 +116,7 @@ public class CustomTNTPrimed extends Entity {
 	 */
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 		this.setFuse(compound.getShort("Fuse"));
+		this.setExplosionType(compound.getString("ExplosionType"));
 	}
 
 	/**
@@ -130,9 +135,15 @@ public class CustomTNTPrimed extends Entity {
 		this.fuse = fuseIn;
 	}
 
+	public void setExplosionType(String explosionType) {
+		this.dataManager.set(EXPLOSION_TYPE, explosionType);
+	}
+
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		if (FUSE.equals(key)) {
 			this.fuse = this.getFuseDataManager();
+		} else if (EXPLOSION_TYPE.equals(key)) {
+			this.explosionType = this.getExplosionDataManager();
 		}
 	}
 
@@ -143,14 +154,22 @@ public class CustomTNTPrimed extends Entity {
 		return ((Integer) this.dataManager.get(FUSE)).intValue();
 	}
 
+	public String getExplosionDataManager() {
+		return this.dataManager.get(EXPLOSION_TYPE).toString();
+	}
+
 	public int getFuse() {
 		return this.fuse;
+	}
+
+	public String getExplosionType() {
+		return this.explosionType;
 	}
 
 	public Explosion explode() {
 		for (EntityPlayer entityplayer : this.worldObj.playerEntities) {
 			if (entityplayer.getDistanceSq(this.posX, this.posY, this.posZ) < 4096.0D) {
-				SkrimPacketHandler.INSTANCE.sendTo(new ExplosionPacket(this.explosionType, this.getEntityId(), this.posX, this.posY + (double) (this.height / 16.0F), this.posZ), (EntityPlayerMP) entityplayer);
+				SkrimPacketHandler.INSTANCE.sendTo(new ExplosionPacket(this.getExplosionType(), this.getEntityId(), this.posX, this.posY + (double) (this.height / 16.0F), this.posZ), (EntityPlayerMP) entityplayer);
 			}
 		}
 		Explosion explosion = createExplosion(this.explosionType, this.worldObj, this, this.posX, this.posY + (double) (this.height / 16.0F), this.posZ);
@@ -165,8 +184,22 @@ public class CustomTNTPrimed extends Entity {
 	public static Explosion createExplosion(String explosionType, World worldIn, Entity entityIn, double x, double y, double z) {
 		if (explosionType.equals("dynamite")) {
 			return new DynamiteExplosion(worldIn, entityIn, x, y, z);
+		} else if (explosionType.equals("biobomb")) {
+			return new BioBombExplosion(worldIn, entityIn, x, y, z);
 		} else if (explosionType.equals("napalm")) {
 			return new NapalmExplosion(worldIn, entityIn, x, y, z);
+		}
+		return null;
+	}
+
+	public static Block getBlock(CustomTNTPrimed entity) {
+		String explosionType = entity.getExplosionType();
+		if (explosionType.equals("dynamite")) {
+			return ModBlocks.dynamite;
+		} else if (explosionType.equals("biobomb")) {
+			return ModBlocks.biobomb;
+		} else if (explosionType.equals("napalm")) {
+			return ModBlocks.napalm;
 		}
 		return null;
 	}

@@ -15,11 +15,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-public class Dynamite extends BlockTNT implements ItemModelProvider {
+public class BioBomb extends BlockTNT implements ItemModelProvider {
 
 	public String name;
 
-	public Dynamite(String name) {
+	public BioBomb(String name) {
 		super();
 		this.name = name;
 		this.setUnlocalizedName(name);
@@ -35,7 +35,7 @@ public class Dynamite extends BlockTNT implements ItemModelProvider {
 	@Override
 	public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosionIn) {
 		if (!worldIn.isRemote) {
-			CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("dynamite", worldIn, (double) ((float) pos.getX() + 0.5F), (double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), explosionIn.getExplosivePlacedBy());
+			CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("biobomb", worldIn, (double) ((float) pos.getX() + 0.5F), (double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), explosionIn.getExplosivePlacedBy());
 			entitytntprimed.setFuse((short) (worldIn.rand.nextInt(entitytntprimed.getFuse() / 4) + entitytntprimed.getFuse() / 8));
 			worldIn.spawnEntityInWorld(entitytntprimed);
 		}
@@ -45,7 +45,7 @@ public class Dynamite extends BlockTNT implements ItemModelProvider {
 	public void explode(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase igniter) {
 		if (!worldIn.isRemote) {
 			if (((Boolean) state.getValue(EXPLODE)).booleanValue()) {
-				CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("dynamite", worldIn, (double) ((float) pos.getX() + 0.5F), (double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), igniter);
+				CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("biobomb", worldIn, (double) ((float) pos.getX() + 0.5F), (double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), igniter);
 				worldIn.spawnEntityInWorld(entitytntprimed);
 				worldIn.playSound((EntityPlayer) null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
@@ -53,7 +53,7 @@ public class Dynamite extends BlockTNT implements ItemModelProvider {
 	}
 
 	@Override
-	public Dynamite setCreativeTab(CreativeTabs tab) {
+	public BioBomb setCreativeTab(CreativeTabs tab) {
 		super.setCreativeTab(tab);
 		return this;
 	}

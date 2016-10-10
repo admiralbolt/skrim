@@ -1,14 +1,13 @@
 package avi.mod.skrim.client.renderer;
 
-import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,13 +43,14 @@ public class EntityCustomTNTPrimedRenderer extends Render<CustomTNTPrimed> {
 		this.bindEntityTexture(entity);
 		GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.translate(-0.5F, -0.5F, 0.5F);
-		blockrendererdispatcher.renderBlockBrightness(ModBlocks.dynamite.getDefaultState(), entity.getBrightness(partialTicks));
+		Block tntBlock = CustomTNTPrimed.getBlock(entity);
+		blockrendererdispatcher.renderBlockBrightness(tntBlock.getDefaultState(), entity.getBrightness(partialTicks));
 		GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
 		if (this.renderOutlines) {
 			GlStateManager.enableColorMaterial();
 			GlStateManager.enableOutlineMode(this.getTeamColor(entity));
-			blockrendererdispatcher.renderBlockBrightness(ModBlocks.dynamite.getDefaultState(), 1.0F);
+			blockrendererdispatcher.renderBlockBrightness(tntBlock.getDefaultState(), 1.0F);
 			GlStateManager.disableOutlineMode();
 			GlStateManager.disableColorMaterial();
 		} else if (entity.getFuse() / 5 % 2 == 0) {
@@ -61,7 +61,7 @@ public class EntityCustomTNTPrimedRenderer extends Render<CustomTNTPrimed> {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, f2);
 			GlStateManager.doPolygonOffset(-3.0F, -3.0F);
 			GlStateManager.enablePolygonOffset();
-			blockrendererdispatcher.renderBlockBrightness(ModBlocks.dynamite.getDefaultState(), 1.0F);
+			blockrendererdispatcher.renderBlockBrightness(tntBlock.getDefaultState(), 1.0F);
 			GlStateManager.doPolygonOffset(0.0F, 0.0F);
 			GlStateManager.disablePolygonOffset();
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

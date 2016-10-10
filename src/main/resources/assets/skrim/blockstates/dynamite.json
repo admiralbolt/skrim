@@ -3,9 +3,9 @@
   "defaults": {
     "parent": "block/cube_bottom_top",
     "textures": {
-      "bottom": "minecraft:blocks/tnt_bottom",
-      "top": "minecraft:blocks/tnt_top",
-      "side": "minecraft:blocks/tnt_side"
+      "bottom": "skrim:blocks/dynamite_bottom",
+      "top": "skrim:blocks/dynamite_top",
+      "side": "skrim:blocks/dynamite_side"
     }
   },
   "variants": {

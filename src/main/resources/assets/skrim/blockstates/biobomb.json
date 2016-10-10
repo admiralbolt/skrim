@@ -3,9 +3,9 @@
   "defaults": {
     "parent": "block/cube_bottom_top",
     "textures": {
-      "bottom": "skrim:blocks/napalm_bottom",
-      "top": "skrim:blocks/napalm_top",
-      "side": "skrim:blocks/napalm_side"
+      "bottom": "skrim:blocks/biobomb_bottom",
+      "top": "skrim:blocks/biobomb_top",
+      "side": "skrim:blocks/biobomb_side"
     }
   },
   "variants": {
