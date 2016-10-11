@@ -32,9 +32,9 @@ public class AddTreasure {
 	public static List<LootCondition> lootConditions = new ArrayList<LootCondition>();
 	public static LootPool skrimPool = null;
 
-	public static int recordWeight = 1;
+	public static int recordWeight = 30;
 	public static int recordQuality = 3;
-	public static int artifactWeight = 1230;
+	public static int artifactWeight = 1;
 	public static int artifactQuality = 10;
 
 	public static List<ResourceLocation> chests = new ArrayList<ResourceLocation>();
