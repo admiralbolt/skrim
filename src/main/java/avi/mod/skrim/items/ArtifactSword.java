@@ -63,7 +63,7 @@ public class ArtifactSword extends ItemSword implements ItemModelProvider {
 
 	@Override
 	public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
-		ItemStack asdf = new ItemStack(ModItems.raisingCanesFrySword);
+		ItemStack asdf = new ItemStack(ModItems.CANES_SWORD);
 		asdf.addEnchantment(Enchantments.FIRE_ASPECT, 2);
 		subItems.add(asdf);
 	}
@@ -73,7 +73,7 @@ public class ArtifactSword extends ItemSword implements ItemModelProvider {
 		if (attacker instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) attacker;
 			Item sword = stack.getItem();
-			if (sword == ModItems.raisingCanesFrySword) {
+			if (sword == ModItems.CANES_SWORD) {
 				if (canSweep(player, target)) {
 					doFireSweep(player, target);
 				}

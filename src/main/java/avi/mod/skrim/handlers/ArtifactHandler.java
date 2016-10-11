@@ -34,7 +34,7 @@ public class ArtifactHandler {
 		      ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
 		      if (stack != null) {
 			      Item sword = stack.getItem();
-			      if (sword == ModItems.raisingCanesFrySword) {
+			      if (sword == ModItems.CANES_SWORD) {
 			      	event.setAmount(event.getAmount() * 10);
 			      }
 		      }
@@ -50,7 +50,7 @@ public class ArtifactHandler {
 		      EntityPlayer player = (EntityPlayer) sourceEntity;
 		      ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
 		      Item sword = stack.getItem();
-		      if (sword == ModItems.raisingCanesFrySword) {
+		      if (sword == ModItems.CANES_SWORD) {
 		      	List<EntityItem> drops = event.getDrops();
 		      	for (int i = 0; i < drops.size(); i++) {
 		      		EntityItem item = drops.get(i);
@@ -79,7 +79,7 @@ public class ArtifactHandler {
 						ItemStack stack = inventory.armorInventory[0];
 						if (stack != null) {
 							Item boots = stack.getItem();
-							if (boots == ModItems.bootsOfSpringheelJak) {
+							if (boots == ModItems.SPRINGHEEL_BOOTS) {
 								player.motionY *= 3;
 								player.setVelocity(player.motionX, player.motionY, player.motionZ);
 							}
@@ -98,7 +98,7 @@ public class ArtifactHandler {
 					ItemStack stack = inventory.armorInventory[0];
 					if (stack != null) {
 						Item boots = stack.getItem();
-						if (boots == ModItems.bootsOfSpringheelJak) {
+						if (boots == ModItems.SPRINGHEEL_BOOTS) {
 							event.setDistance(0);
 							event.setCanceled(true);
 						}

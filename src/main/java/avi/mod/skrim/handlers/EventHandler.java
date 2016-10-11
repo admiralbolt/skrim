@@ -14,11 +14,15 @@ import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
 import avi.mod.skrim.utils.Utils;
+import avi.mod.skrim.world.AddTreasure;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -203,6 +207,14 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onUseHoe(UseHoeEvent event) {
 		SkillFarming.createFarmland(event);
+	}
+	
+	@SubscribeEvent
+	public void onLoadLoot(LootTableLoadEvent event) {
+		if (AddTreasure.skrimPool == null) {
+			AddTreasure.generateSkrimPool();
+		}
+		AddTreasure.addTreasure(event);
 	}
 
 }

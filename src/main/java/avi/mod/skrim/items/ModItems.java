@@ -1,8 +1,9 @@
 package avi.mod.skrim.items;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import avi.mod.skrim.Skrim;
 import net.minecraft.block.BlockBush;
@@ -51,7 +52,7 @@ public class ModItems {
 	 */
 	public static ArmorMaterial ARTIFACT_DARK = EnumHelper.addArmorMaterial("artifact_dark", "skrim:artifact_dark", 50, new int[] { 3, 8, 6, 3 }, 30, null, 0.0F);
 	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 10, 8, 4 }, 20, null, 3.0F);
-	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] {1, 3, 2, 1}, 15, null, 0.0F);
+	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
 
 	/**
 	 * Default ToolMaterials HarvestLevel: wood: 0 stone: 1 iron: 2 diamond: 3 Durability: wood: 59 stone: 131 iron: 250 gold: 32 diamond: 1561 Mining Speed: wood: 2.0F stone: 4.0F iron: 6.0F gold: 12.0F diamond: 8.0F Damage vs. Entity wood: 0.0F stone: 1.0F iron: 2.0F gold: 0.0F diamond: 3.0F Enchantability: wood: 15 stone: 5 iron: 14 gold: 22 diamond: 10
@@ -72,8 +73,8 @@ public class ModItems {
 	public static CustomArmor obsidianHelmet;
 	public static CustomArmor overalls;
 
-	public static ArtifactArmor bootsOfSpringheelJak;
-	public static ArtifactSword raisingCanesFrySword;
+	public static ArtifactArmor SPRINGHEEL_BOOTS;
+	public static ArtifactSword CANES_SWORD;
 
 	public static HandSaw handSaw;
 
@@ -129,12 +130,7 @@ public class ModItems {
 		handSaw = register(new HandSaw("hand_saw", ToolMaterial.IRON));
 		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
 
-		// Artifact Armors
-		bootsOfSpringheelJak = register(new ArtifactArmor("boots_of_springheel_jak", ARTIFACT_DARK, 1, EntityEquipmentSlot.FEET));
-
-		// Artifact Swords
-		raisingCanesFrySword = register(new ArtifactSword("raising_canes_fry_sword", ARTIFACT_DEFAULT));
-
+		registerArtifacts();
 		registerSongs();
 
 		/**
@@ -143,8 +139,36 @@ public class ModItems {
 		registerCraftingRecipes();
 	}
 
+	public static List<Item> artifacts = new ArrayList<Item>();
+
+	public static void registerArtifacts() {
+		// Artifact Armors
+		SPRINGHEEL_BOOTS = register(new ArtifactArmor("boots_of_springheel_jak", ARTIFACT_DARK, 1, EntityEquipmentSlot.FEET));
+		artifacts.add(SPRINGHEEL_BOOTS);
+
+		// Artifact Swords
+		CANES_SWORD = register(new ArtifactSword("raising_canes_fry_sword", ARTIFACT_DEFAULT));
+		artifacts.add(CANES_SWORD);
+	}
+
 	public static Map<String, CustomRecord> songs = new HashMap<String, CustomRecord>();
-	static {
+
+	public static void registerSongs() {
+		ARUARIAN_DANCE = register(new CustomRecord("aruarian_dance", registerRecordEvent("aruarian_dance")));
+		BUBBERDUCKY = register(new CustomRecord("bubberducky", registerRecordEvent("bubberducky")));
+		CASSANDRA = register(new CustomRecord("cassandra", registerRecordEvent("cassandra")));
+		COLOR = register(new CustomRecord("color", registerRecordEvent("color")));
+		DOGSONG = register(new CustomRecord("dogsong", registerRecordEvent("dogsong")));
+		GDAWG = register(new CustomRecord("gdawg", registerRecordEvent("gdawg")));
+		HEYA = register(new CustomRecord("heya", registerRecordEvent("heya")));
+		MONEY = register(new CustomRecord("money", registerRecordEvent("money")));
+		NORTH = register(new CustomRecord("north", registerRecordEvent("north")));
+		NUMBER10 = register(new CustomRecord("number10", registerRecordEvent("number10")));
+		SAMURAI = register(new CustomRecord("samurai", registerRecordEvent("samurai")));
+		TRUCK = register(new CustomRecord("truck", registerRecordEvent("truck")));
+
+		System.out.println(ARUARIAN_DANCE);
+
 		songs.put("aruarian_dance", ARUARIAN_DANCE);
 		songs.put("bubberducky", BUBBERDUCKY);
 		songs.put("cassandra", CASSANDRA);
@@ -159,15 +183,11 @@ public class ModItems {
 		songs.put("truck", TRUCK);
 	}
 
-	public static void registerSongs() {
-		for (Entry<String, CustomRecord> entry : songs.entrySet()) {
-			ResourceLocation location = new ResourceLocation(Skrim.modId, entry.getKey());
-			SoundEvent event = new SoundEvent(location);
-			GameRegistry.register(event, location);
-			CustomRecord record = entry.getValue();
-			record = register(new CustomRecord(entry.getKey(), event));
-		}
-		
+	public static SoundEvent registerRecordEvent(String recordName) {
+		ResourceLocation location = new ResourceLocation(Skrim.modId, recordName);
+		SoundEvent event = new SoundEvent(location);
+		GameRegistry.register(event, location);
+		return event;
 	}
 
 	public static void registerCraftingRecipes() {

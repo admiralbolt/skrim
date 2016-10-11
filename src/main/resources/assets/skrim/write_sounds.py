@@ -113,7 +113,7 @@ for sound in sounds:
     en_us.append("item.%s.name=%s" % (sound, song_info[sound]["name"]))
     en_us.append("item.record.%s.desc=%s - %s" % (sound, song_info[sound]["artist"], song_info[sound]["name"]))
     java_init.append("public static CustomRecord %s;" % (sound.upper(),))
-    java.append("songs.put(\"%s\", %s);" % (sound, sound.upper()))
+    java.append("%s = register(new CustomRecord(\"%s\", registerRecordEvent(\"%s\")));" % (sound.upper(), sound, sound))
 
 with open("sounds.json", "w") as wh:
     json.dump(sound_json_dict, wh, sort_keys=True, indent=2, separators=(",", ":"))
