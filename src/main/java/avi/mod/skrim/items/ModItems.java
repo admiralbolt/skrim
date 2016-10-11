@@ -1,38 +1,25 @@
 package avi.mod.skrim.items;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import scala.actors.threadpool.Arrays;
+import java.util.Map.Entry;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.items.CustomFishHook;
 import net.minecraft.block.BlockBush;
-import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.common.util.EnumHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 
@@ -65,7 +52,7 @@ public class ModItems {
 	public static ArmorMaterial ARTIFACT_DARK = EnumHelper.addArmorMaterial("artifact_dark", "skrim:artifact_dark", 50, new int[] { 3, 8, 6, 3 }, 30, null, 0.0F);
 	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 10, 8, 4 }, 20, null, 3.0F);
 	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] {1, 3, 2, 1}, 15, null, 0.0F);
-	
+
 	/**
 	 * Default ToolMaterials HarvestLevel: wood: 0 stone: 1 iron: 2 diamond: 3 Durability: wood: 59 stone: 131 iron: 250 gold: 32 diamond: 1561 Mining Speed: wood: 2.0F stone: 4.0F iron: 6.0F gold: 12.0F diamond: 8.0F Damage vs. Entity wood: 0.0F stone: 1.0F iron: 2.0F gold: 0.0F diamond: 3.0F Enchantability: wood: 15 stone: 5 iron: 14 gold: 22 diamond: 10
 	 */
@@ -87,8 +74,22 @@ public class ModItems {
 
 	public static ArtifactArmor bootsOfSpringheelJak;
 	public static ArtifactSword raisingCanesFrySword;
-	
+
 	public static HandSaw handSaw;
+
+	// La musica
+	public static CustomRecord ARUARIAN_DANCE;
+	public static CustomRecord BUBBERDUCKY;
+	public static CustomRecord CASSANDRA;
+	public static CustomRecord COLOR;
+	public static CustomRecord DOGSONG;
+	public static CustomRecord GDAWG;
+	public static CustomRecord HEYA;
+	public static CustomRecord MONEY;
+	public static CustomRecord NORTH;
+	public static CustomRecord NUMBER10;
+	public static CustomRecord SAMURAI;
+	public static CustomRecord TRUCK;
 
 	public static void createItems() {
 		tux = register(new ItemBase("tux").setCreativeTab(Skrim.creativeTab));
@@ -123,7 +124,7 @@ public class ModItems {
 		obsidianPants = register(new CustomArmor("obsidian_pants", OBSIDIAN_ARMOR, 2, EntityEquipmentSlot.LEGS));
 		obsidianChest = register(new CustomArmor("obsidian_chest", OBSIDIAN_ARMOR, 3, EntityEquipmentSlot.CHEST));
 		obsidianHelmet = register(new CustomArmor("obsidian_helmet", OBSIDIAN_ARMOR, 4, EntityEquipmentSlot.HEAD));
-		
+
 		// More stoof
 		handSaw = register(new HandSaw("hand_saw", ToolMaterial.IRON));
 		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
@@ -134,13 +135,41 @@ public class ModItems {
 		// Artifact Swords
 		raisingCanesFrySword = register(new ArtifactSword("raising_canes_fry_sword", ARTIFACT_DEFAULT));
 
-		
+		registerSongs();
+
 		/**
 		 * Register crafting recipes!
 		 */
 		registerCraftingRecipes();
 	}
-	
+
+	public static Map<String, CustomRecord> songs = new HashMap<String, CustomRecord>();
+	static {
+		songs.put("aruarian_dance", ARUARIAN_DANCE);
+		songs.put("bubberducky", BUBBERDUCKY);
+		songs.put("cassandra", CASSANDRA);
+		songs.put("color", COLOR);
+		songs.put("dogsong", DOGSONG);
+		songs.put("gdawg", GDAWG);
+		songs.put("heya", HEYA);
+		songs.put("money", MONEY);
+		songs.put("north", NORTH);
+		songs.put("number10", NUMBER10);
+		songs.put("samurai", SAMURAI);
+		songs.put("truck", TRUCK);
+	}
+
+	public static void registerSongs() {
+		for (Entry<String, CustomRecord> entry : songs.entrySet()) {
+			ResourceLocation location = new ResourceLocation(Skrim.modId, entry.getKey());
+			SoundEvent event = new SoundEvent(location);
+			GameRegistry.register(event, location);
+			CustomRecord record = entry.getValue();
+			record = register(new CustomRecord(entry.getKey(), event));
+		}
+		
+	}
+
 	public static void registerCraftingRecipes() {
 		registerRabbitStew();
 		registerObsidian();
@@ -165,12 +194,12 @@ public class ModItems {
 			}
 		}
 	}
-	
+
 	public static void registerHandSaw() {
 		GameRegistry.addRecipe(new ItemStack(handSaw), " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
 		GameRegistry.addRecipe(new ItemStack(handSaw), "   ", " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
 	}
-	
+
 	public static void registerOveralls() {
 		GameRegistry.addRecipe(new ItemStack(overalls), "A A", "ALA", "LLL", 'A', new ItemStack(Items.DYE, 1, 4), 'L', new ItemStack(Items.LEATHER));
 	}
