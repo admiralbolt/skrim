@@ -37,14 +37,14 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("tile.stone", 30);
-		xpMap.put("tile.stonebricksmooth", 30);
-		xpMap.put("item.netherbrick", 40); // nether bonus
-		xpMap.put("tile.glass", 30);
-		xpMap.put("item.brick", 600);
-		xpMap.put("tile.clayhardened", 2400); // made up of 4 clays
-		xpMap.put("item.ingotiron", 500);
-		xpMap.put("item.ingotgold", 1000); // Woooooo gold!
+		xpMap.put("tile.stone", 50);
+		xpMap.put("tile.stonebricksmooth", 50);
+		xpMap.put("item.netherbrick", 60); // nether bonus
+		xpMap.put("tile.glass", 50);
+		xpMap.put("item.brick", 200);
+		xpMap.put("tile.clayhardened", 800); // made up of 4 clays
+		xpMap.put("item.ingotiron", 1200);
+		xpMap.put("item.ingotgold", 3000); // Woooooo gold!
 	}
 
 	public int lastItemNumber;

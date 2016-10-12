@@ -49,24 +49,24 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	static {
 		xpMap = new HashMap<String, Integer>();
 		// The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
-		xpMap.put("dandelion", 50);
-		xpMap.put("poppy", 50);
+		xpMap.put("dandelion", 100);
+		xpMap.put("poppy", 100);
 		// 3 Biomes
-		xpMap.put("houstonia", 100); // azure_bluet
-		xpMap.put("red_tulip", 100);
-		xpMap.put("orange_tulip", 100);
-		xpMap.put("white_tulip", 100);
-		xpMap.put("pink_tulip", 100);
-		xpMap.put("oxeye_daisy", 100);
+		xpMap.put("houstonia", 200); // azure_bluet
+		xpMap.put("red_tulip", 200);
+		xpMap.put("orange_tulip", 200);
+		xpMap.put("white_tulip", 200);
+		xpMap.put("pink_tulip", 200);
+		xpMap.put("oxeye_daisy", 200);
 		// Only swamp, can respawn
-		xpMap.put("blue_orchid", 200);
-		xpMap.put("allium", 200);
+		xpMap.put("blue_orchid", 400);
+		xpMap.put("allium", 400);
 		// Only forest & flower forest on generation
-		xpMap.put("syringa", 500); // lilac
-		xpMap.put("rose_bush", 500);
-		xpMap.put("paeonia", 500); // peony
+		xpMap.put("syringa", 1000); // lilac
+		xpMap.put("rose_bush", 1000);
+		xpMap.put("paeonia", 1000); // peony
 		// Only sunflower plains on generation
-		xpMap.put("sunflower", 1000);
+		xpMap.put("sunflower", 2000);
 	}
 
 	public static SkillAbility sunFlower = new SkillAbility(

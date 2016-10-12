@@ -89,7 +89,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			validGoBoom.remove(location);
 			if (player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-				demolition.addXp((EntityPlayerMP) player, 2500);
+				demolition.addXp((EntityPlayerMP) player, 5000);
 				int maxAdditional = demolition.getMaxAdditional();
 				int delay = 500;
 				for (int i = 0; i <= maxAdditional; i++) {

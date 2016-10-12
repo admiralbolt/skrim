@@ -52,16 +52,16 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("dirt", 30);
-		xpMap.put("farmland", 30);
-		xpMap.put("sand", 30);
-		xpMap.put("snow", 30);
-		xpMap.put("grass_block", 40); // Bonus for grass!
-		xpMap.put("gravel", 100); // Fuck gravel
-		xpMap.put("soul_sand", 150); // Only in nether & not to common
-		xpMap.put("podzol", 200); // Only in taiga
-		xpMap.put("red_sand", 300); // Only in mesa
-		xpMap.put("mycelium", 400); // Only in.. mushroom biomes?
+		xpMap.put("dirt", 50);
+		xpMap.put("farmland", 50);
+		xpMap.put("sand", 50);
+		xpMap.put("snow", 50);
+		xpMap.put("grass_block", 60); // Bonus for grass!
+		xpMap.put("gravel", 125); // Fuck gravel
+		xpMap.put("soul_sand", 200); // Only in nether & not to common
+		xpMap.put("podzol", 250); // Only in taiga
+		xpMap.put("red_sand", 375); // Only in mesa
+		xpMap.put("mycelium", 500); // Only in.. mushroom biomes?
 	}
 
 	public double metalMeter = 0;

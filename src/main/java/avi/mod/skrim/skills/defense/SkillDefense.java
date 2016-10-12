@@ -67,11 +67,11 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	}
 
 	public int getDamageXp(float amount) {
-		return (int) (amount * 40);
+		return (int) (amount * 20);
 	}
 
 	public int getBlockingXp(float amount) {
-		return (int) (amount * 2 * 60);
+		return (int) (amount * 2 * 80);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 					if (canBlockDamageSource(player, source)) {
 						if (source.isProjectile()) {
 							int sourceId = source.getEntity().getEntityId();
-							addXp += (defense.blocked.contains(sourceId)) ? 25 : 250;
+							addXp += (defense.blocked.contains(sourceId)) ? 25 : 300;
 							defense.blocked.add(sourceId);
 						} else {
 							addXp += defense.getBlockingXp(event.getAmount());

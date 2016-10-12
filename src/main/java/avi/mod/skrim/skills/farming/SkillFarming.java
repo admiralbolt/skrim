@@ -61,13 +61,13 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("crops", 30);
-		xpMap.put("beetroots", 50);
-		xpMap.put("cocoa", 100);
-		xpMap.put("potatoes", 250);
-		xpMap.put("carrots", 250);
-		xpMap.put("pumpkin", 400);
-		xpMap.put("melon", 400);
+		xpMap.put("crops", 100);
+		xpMap.put("beetroots", 125);
+		xpMap.put("cocoa", 150);
+		xpMap.put("potatoes", 300);
+		xpMap.put("carrots", 300);
+		xpMap.put("pumpkin", 500);
+		xpMap.put("melon", 500);
 
 		cropBlocks.add(Blocks.WHEAT);
 		cropBlocks.add(Blocks.CARROTS);

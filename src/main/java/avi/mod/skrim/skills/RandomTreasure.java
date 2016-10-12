@@ -1,9 +1,11 @@
 package avi.mod.skrim.skills;
 
+import avi.mod.skrim.RandomCollection;
+import avi.mod.skrim.items.CustomRecord;
+import avi.mod.skrim.items.ModItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import avi.mod.skrim.RandomCollection;
 
 public class RandomTreasure {
 
@@ -38,7 +40,11 @@ public class RandomTreasure {
 
   private static RandomCollection<Item> treasure = new RandomCollection<Item>();
 	static {
-    treasure.add(0.09, Items.STRING);
+		treasure.add(0.08, Items.ARROW);
+    treasure.add(0.08, Items.STRING);
+    treasure.add(0.04, Items.CLAY_BALL);
+    treasure.add(0.01, Items.RABBIT_FOOT);
+    treasure.add(0.02, Items.SLIME_BALL);
 		treasure.add(0.2, Items.GOLD_NUGGET);
 		treasure.add(0.01, Items.SADDLE);
     treasure.add(0.01, Items.NAME_TAG);
@@ -51,19 +57,22 @@ public class RandomTreasure {
 		treasure.add(0.01, Items.EMERALD);
 		treasure.add(0.12, Items.COAL);
 		treasure.add(0.01, Items.EXPERIENCE_BOTTLE);
-		treasure.add(0.008, Items.RECORD_11);
-		treasure.add(0.008, Items.RECORD_13);
-		treasure.add(0.008, Items.RECORD_BLOCKS);
-		treasure.add(0.008, Items.RECORD_CAT);
-		treasure.add(0.008, Items.RECORD_CHIRP);
-		treasure.add(0.008, Items.RECORD_FAR);
-		treasure.add(0.008, Items.RECORD_MALL);
-		treasure.add(0.008, Items.RECORD_MELLOHI);
-		treasure.add(0.008, Items.RECORD_STAL);
-		treasure.add(0.008, Items.RECORD_STRAD);
-		treasure.add(0.008, Items.RECORD_WAIT);
-		treasure.add(0.008, Items.RECORD_WARD);
-		treasure.add(0.008,  Items.SPECTRAL_ARROW);
+		treasure.add(0.005, Items.RECORD_11);
+		treasure.add(0.005, Items.RECORD_13);
+		treasure.add(0.005, Items.RECORD_BLOCKS);
+		treasure.add(0.005, Items.RECORD_CAT);
+		treasure.add(0.005, Items.RECORD_CHIRP);
+		treasure.add(0.005, Items.RECORD_FAR);
+		treasure.add(0.005, Items.RECORD_MALL);
+		treasure.add(0.005, Items.RECORD_MELLOHI);
+		treasure.add(0.005, Items.RECORD_STAL);
+		treasure.add(0.005, Items.RECORD_STRAD);
+		treasure.add(0.005, Items.RECORD_WAIT);
+		treasure.add(0.005, Items.RECORD_WARD);
+		for (CustomRecord record : ModItems.songs.values()) {
+			treasure.add(0.001, record);
+		}
+		treasure.add(0.00,  Items.SPECTRAL_ARROW);
 		treasure.add(0.006, Items.DIAMOND_HORSE_ARMOR);
 		treasure.add(0.11, Items.POTATO);
 		treasure.add(0.1, Items.BOOK);
@@ -74,7 +83,7 @@ public class RandomTreasure {
   public static ItemStack generateStandardTreasure() {
 		return new ItemStack(treasure.next());
 	}
-  
+
   public static ItemStack generateMetalTreasure() {
   	return new ItemStack(metalTreasure.next());
   }

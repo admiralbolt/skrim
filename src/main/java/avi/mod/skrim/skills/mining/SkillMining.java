@@ -59,20 +59,20 @@ public class SkillMining extends Skill implements ISkillMining {
 	public static Map<String, Integer> xpMap;
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("stone", 30);
-		xpMap.put("netherrack", 40); // Extra bonus for being in the nether
-		xpMap.put("granite", 50);
-		xpMap.put("andesite", 50);
-		xpMap.put("diorite", 50);
-		xpMap.put("coal_ore", 100);
-		xpMap.put("iron_ore", 200);
-		xpMap.put("quartz_ore", 220); // Extra bonus for being in the nether ~same rarity as iron
-		xpMap.put("redstone_ore", 400);
-		xpMap.put("obsidian", 500); // Common but takes a while to mine
-		xpMap.put("gold_ore", 700);
-		xpMap.put("lapis_lazuli_ore", 950); // Lapis_lazuil not just lapis, also barely rarer than diamond
-		xpMap.put("diamond_ore", 1000);
-		xpMap.put("emerald_ore", 1500); // Nice xp bonus for an otherwise useless ore
+		xpMap.put("stone", 50);
+		xpMap.put("netherrack", 60); // Extra bonus for being in the nether
+		xpMap.put("granite", 75);
+		xpMap.put("andesite", 75);
+		xpMap.put("diorite", 75);
+		xpMap.put("coal_ore", 125);
+		xpMap.put("iron_ore", 250);
+		xpMap.put("quartz_ore", 300); // Extra bonus for being in the nether ~same rarity as iron
+		xpMap.put("redstone_ore", 500);
+		xpMap.put("obsidian", 600); // Common but takes a while to mine
+		xpMap.put("gold_ore", 1000);
+		xpMap.put("lapis_lazuli_ore", 1500); // Lapis_lazuil not just lapis, also barely rarer than diamond
+		xpMap.put("diamond_ore", 2000);
+		xpMap.put("emerald_ore", 3500); // Nice xp bonus for an otherwise useless ore
 	}
 
 	public static List<String> validMiningBlocks = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs", "nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));
