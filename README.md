@@ -8,16 +8,18 @@ Version 1.1.3
 * Added level 50 & 75 digging abilities.
 * Added level 50 & 75 farming abilities.
 * Added level 50 ranged ability.
-
+* Added custom records and artifacts to the loot tables!
 
 ### Balance Changes
-
+* A lot of xp changes, read the wiki if you want to know more.
+* Hand saw is now slightly faster than diamond at breaking wood blocks.
 
 ### Bug Fixes
 * Fixed custom tnt primed rendering.
 
 ### Quality of Life
 * Added different textures for custom tnts.
+* Added 12 new records!
 
 Version 1.1.2
 ---------------

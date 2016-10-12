@@ -123,7 +123,7 @@ public class CustomAxe extends ItemTool implements ItemModelProvider {
 	 *          state
 	 * @return
 	 */
-	private boolean checkStrVsBlock(ItemStack stack, IBlockState state) {
+	protected boolean checkStrVsBlock(ItemStack stack, IBlockState state) {
 
 		boolean b = false;
 
