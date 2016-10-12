@@ -66,8 +66,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		xpMap.put("cocoa", 150);
 		xpMap.put("potatoes", 300);
 		xpMap.put("carrots", 300);
-		xpMap.put("pumpkin", 500);
-		xpMap.put("melon", 500);
+		xpMap.put("pumpkin", 400);
+		xpMap.put("melon", 400);
 
 		cropBlocks.add(Blocks.WHEAT);
 		cropBlocks.add(Blocks.CARROTS);
