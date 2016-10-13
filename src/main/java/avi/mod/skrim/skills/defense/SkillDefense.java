@@ -50,12 +50,25 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		this(1, 0);
 	}
 
-	public static SkillAbility riteOfPassage = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
+	public static SkillAbility riteOfPassage = new SkillAbility(
+		"Rite of Passage",
+		25,
+		"It's a reference to a magic card, so you probably missed it.",
+		"Falling below 30% health activates a period of regeneration.",
+		"You must fully heal before regeneration will activate again."
+	);
+
+	public static SkillAbility overshields = new SkillAbility(
+		"Overshields",
+		50,
+		"Can be found underneath the tower on Guardian.",
+		"Gain an additional §a4" + SkillAbility.descColor + " max health."
+	);
 
 	public SkillDefense(int level, int currentXp) {
 		super("Defense", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/defense.png");
-		this.addAbilities(riteOfPassage);
+		this.addAbilities(riteOfPassage, overshields);
 	}
 
 	public double getDamageReduction() {

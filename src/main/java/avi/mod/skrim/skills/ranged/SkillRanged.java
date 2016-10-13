@@ -45,6 +45,13 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		"Deal 25% extra damage to enemies while crouching & undetected."
 	);
 
+	public static SkillAbility faerieFire = new SkillAbility(
+		"Faerie Fire",
+		50,
+		"Light that shit up.",
+		"Your arrows automatically light up the enemy."
+	);
+
 	public SkillRanged() {
 		this(1, 0);
 	}
@@ -52,7 +59,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public SkillRanged(int level, int currentXp) {
 		super("Ranged", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/ranged.png");
-		this.addAbilities(sneakAttack);
+		this.addAbilities(sneakAttack, faerieFire);
 	}
 
 	public double getExtraDamage() {

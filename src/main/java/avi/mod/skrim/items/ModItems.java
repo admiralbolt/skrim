@@ -167,8 +167,6 @@ public class ModItems {
 		SAMURAI = register(new CustomRecord("samurai", registerRecordEvent("samurai")));
 		TRUCK = register(new CustomRecord("truck", registerRecordEvent("truck")));
 
-		System.out.println(ARUARIAN_DANCE);
-
 		songs.put("aruarian_dance", ARUARIAN_DANCE);
 		songs.put("bubberducky", BUBBERDUCKY);
 		songs.put("cassandra", CASSANDRA);

@@ -9,6 +9,8 @@ import java.util.Map;
 import avi.mod.skrim.items.CustomAxe;
 import avi.mod.skrim.items.HandSaw;
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.skillpackets.WhirlingChopPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -31,10 +33,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
@@ -94,6 +98,13 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		"Hand saws instantly convert broken wood logs into 8 planks."
 	);
 
+	public static SkillAbility whirlingChop = new SkillAbility(
+		"Whirling Chop",
+		50,
+		"My roflchopter go soi soi soi soi soi",
+		"Right click with an axe to massacre trees in a 10 block radius."
+	);
+
 	public SkillWoodcutting() {
 		this(1, 0);
 	}
@@ -101,7 +112,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public SkillWoodcutting(int level, int currentXp) {
 		super("Woodcutting", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/woodcutting.png");
-		this.addAbilities(handSaw);
+		this.addAbilities(handSaw, whirlingChop);
 	}
 
 	public int getXp(String blockName) {
@@ -148,7 +159,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		}
 	}
 
-	public int hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, boolean withSaw) {
+	public int hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, EntityPlayer player, ItemStack axe, boolean withSaw) {
 		int addXp = 0;
 		IBlockState state = world.getBlockState(pos);
 		Block tree = state.getBlock();
@@ -161,6 +172,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		} else {
 			world.destroyBlock(pos, true);
 		}
+		axe.damageItem(1, player);
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				for (int k = -1; k <= 1; k++) {
@@ -169,7 +181,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 						IBlockState targetState = world.getBlockState(targetPos);
 						Block targetBlock = targetState.getBlock();
 						if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-							addXp += this.hewTree(world, woodcutting, targetPos, start, withSaw);
+							addXp += this.hewTree(world, woodcutting, targetPos, start, player, axe, withSaw);
 						}
 					}
 				}
@@ -197,7 +209,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 				int addXp = woodcutting.getXp(getWoodName(state));
 				if (Math.random() < woodcutting.getHewingChance() && item != null && (item instanceof ItemAxe || item instanceof CustomAxe)) {
 					BlockPos start = event.getPos();
-					addXp += woodcutting.hewTree(event.getWorld(), woodcutting, start, start, (item instanceof HandSaw));
+					addXp += woodcutting.hewTree(event.getWorld(), woodcutting, start, start, player, stack, (item instanceof HandSaw));
 				}
 				woodcutting.addXp((EntityPlayerMP) player, addXp);
 			}
@@ -236,6 +248,43 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 					if (block instanceof BlockOldLog || block instanceof BlockNewLog) {
 						event.getDrops().clear();
 						event.getDrops().add(new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state))));
+					}
+				}
+			}
+		}
+	}
+
+	public static void whirlingChop(PlayerInteractEvent.RightClickItem event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player != null && player.hasCapability(Skills.MELEE, EnumFacing.NORTH)) {
+			if (player.worldObj.isRemote) {
+				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
+				if (woodcutting.hasAbility(2)) {
+					ItemStack mainStack = player.getHeldItemMainhand();
+					Item mainItem = (mainStack == null) ? null : mainStack.getItem();
+					ItemStack offStack = player.getHeldItemOffhand();
+					Item offItem = (offStack == null) ? null : offStack.getItem();
+					if (mainItem != null && (mainItem instanceof ItemAxe || mainItem instanceof CustomAxe)) {
+						player.swingArm(EnumHand.MAIN_HAND);
+						if (player.worldObj.isRemote) {
+							// Send packet here
+							BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
+							for (int i = -10; i <= 10; i++) {
+								for (int j = 0; j <= 2; j++) {
+									for (int k = -10; k <= 10; k++) {
+										BlockPos targetPos = new BlockPos(playerPos.getX() + i, playerPos.getY() + j, playerPos.getZ() + k);
+										IBlockState targetState = player.worldObj.getBlockState(targetPos);
+										Block targetBlock = targetState.getBlock();
+										if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
+											System.out.println("sending packet for loc (" + targetPos.getX() + ", " + targetPos.getY() + ", " + targetPos.getZ() + ")");
+											SkrimPacketHandler.INSTANCE.sendToServer(
+												new WhirlingChopPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ())
+											);
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

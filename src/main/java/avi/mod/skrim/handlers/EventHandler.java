@@ -19,8 +19,6 @@ import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -75,6 +73,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.RightClickItem event) {
 		SkillMelee.handleDual(event);
+		SkillWoodcutting.whirlingChop(event);
 	}
 
 	@SubscribeEvent
@@ -131,7 +130,6 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
 		World world = event.getWorld();
-		Utils.logBlockState(event.getState());
 		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
 			if (!Utils.isSilkTouching(event)) {
 				SkillMining.addMiningXp(event);
@@ -208,7 +206,7 @@ public class EventHandler {
 	public void onUseHoe(UseHoeEvent event) {
 		SkillFarming.createFarmland(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onLoadLoot(LootTableLoadEvent event) {
 		if (AddTreasure.skrimPool == null) {

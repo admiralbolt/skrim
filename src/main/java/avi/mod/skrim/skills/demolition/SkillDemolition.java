@@ -46,6 +46,22 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 		"Dynamite has a larger blast radius and a 100% chance to drop blocks."
 	);
 
+	public static SkillAbility biobomb = new SkillAbility(
+		"Bio-Bomb",
+		50,
+		"A whole new meaning for c'mon BB.",
+		"Grants you the ability to craft Bio-Bomb with... Stuff...",
+		"Bio-bombs have twice the blast radius of tnt, and don't affect blocks."
+	);
+
+	public static SkillAbility napalm = new SkillAbility(
+		"Napalm",
+		75,
+		"Handle with care.",
+		"Grants you the ability to craft Napalm with... Stuff...",
+		"Napalm has triple the blast radius of tnt, starts fires, and creates lava spawns."
+	);
+
 	public SkillDemolition() {
 		this(1, 0);
 	}
@@ -53,7 +69,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public SkillDemolition(int level, int currentXp) {
 		super("Demolition", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/demolition.png");
-		this.addAbilities(dynamite);
+		this.addAbilities(dynamite, biobomb, napalm);
 	}
 
 	public double getResistance() {

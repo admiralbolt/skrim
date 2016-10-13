@@ -55,6 +55,9 @@ tile.enchanted_flower_red.pink_tulip.name=Enchanted Pink Tulip
 tile.enchanted_flower_red.oxeye_daisy.name=Enchanted Oxeye Daisy
 
 tile.dynamite.name=Dynamite
+tile.biobomb.name=Bio-Bomb
+tile.napalm.name=Napalm
+
 item.overalls.name=Overalls
 
 item.aruarian_dance.name=Aruarian Dance

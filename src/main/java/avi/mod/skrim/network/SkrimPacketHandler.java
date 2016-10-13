@@ -14,6 +14,8 @@ import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
 import avi.mod.skrim.network.skillpackets.MetalDetectorPacket.MetalDetectorPacketHandler;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket.OffHandAttackPacketHandler;
+import avi.mod.skrim.network.skillpackets.WhirlingChopPacket;
+import avi.mod.skrim.network.skillpackets.WhirlingChopPacket.WhirlingChopPacketHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,6 +37,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(ExplosionPacketHandler.class, ExplosionPacket.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(MetalDetectorPacketHandler.class, MetalDetectorPacket.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(WhirlingChopPacketHandler.class, WhirlingChopPacket.class, id++, Side.SERVER);
 	}
 
 }

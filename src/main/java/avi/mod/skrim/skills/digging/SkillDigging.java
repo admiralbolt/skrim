@@ -75,6 +75,20 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		"No longer take suffocation damage from being trapped in walls."
 	);
 
+	public static SkillAbility metalDetector = new SkillAbility(
+		"Metal Detector",
+		50,
+		"Beep....Beep....Beep....",
+		"Moving over dirt blocks causes random metal objects to appear!"
+	);
+
+	public static SkillAbility entomb = new SkillAbility(
+		"Entomb",
+		75,
+		"Fuck Priest.",
+		"Right clicking an entity with a shovel buries it in the earth."
+	);
+
 	public SkillDigging() {
 		this(1, 0);
 	}
@@ -82,7 +96,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public SkillDigging(int level, int currentXp) {
 		super("Digging", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/digging.png");
-		this.addAbilities(vitalicBreathing);
+		this.addAbilities(vitalicBreathing, metalDetector, entomb);
 	}
 
 	public int getXp(String blockName) {
