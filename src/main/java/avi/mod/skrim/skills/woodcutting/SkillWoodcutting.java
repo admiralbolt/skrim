@@ -124,7 +124,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	}
 
 	public double getHewingChance() {
-		return 0.01 * this.level;
+		return 0.005 * this.level;
 	}
 
 	@Override
