@@ -64,11 +64,11 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		xpMap = new HashMap<String, Integer>();
 		xpMap.put("oak", 100);
 		xpMap.put("spruce", 200);
-		xpMap.put("birch", 300);
+		xpMap.put("birch", 250);
 		// The last 3 occur only in 1 biome.
-		xpMap.put("jungle", 350);
-		xpMap.put("acacia", 350);
-		xpMap.put("dark_oak", 350);
+		xpMap.put("jungle", 300);
+		xpMap.put("acacia", 300);
+		xpMap.put("dark_oak", 300);
 	}
 
 	public static List<String> validWoodcuttingBlocks = new ArrayList<String>(Arrays.asList(
