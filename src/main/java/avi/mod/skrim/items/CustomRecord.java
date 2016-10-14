@@ -22,9 +22,13 @@ public class CustomRecord extends ItemRecord implements ItemModelProvider {
 		Skrim.proxy.registerItemRenderer(this, 0, this.getUnlocalizedName());
 	}
 
+	public ResourceLocation getRecordResource() {
+		return new ResourceLocation("skrim:" + this.name);
+	}
+	
 	@Override
-	public ResourceLocation getRecordResource(String name) {
-		return new ResourceLocation("skrim:" + name);
+	public String getRecordNameLocal() {
+		return this.name;
 	}
 
 
