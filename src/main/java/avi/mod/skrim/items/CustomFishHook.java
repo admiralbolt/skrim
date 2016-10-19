@@ -473,13 +473,11 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 
 	@Override
 	protected void bringInHookedEntity() {
-		double d0 = this.angler.posX - this.posX;
-		double d1 = this.angler.posY - this.posY;
-		double d2 = this.angler.posZ - this.posZ;
-		double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d1 * d1 + d2 * d2);
-		double d4 = 0.1D;
-		this.caughtEntity.motionX += d0 * 0.1D;
-		double addY = d1 * 0.1D + (double) MathHelper.sqrt_double(d3) * 0.08D;
+		double diffX = this.angler.posX - this.posX;
+		double diffY = this.angler.posY - this.posY;
+		double diffZ = this.angler.posZ - this.posZ;
+		this.caughtEntity.motionX += diffX * 0.04;
+		double addY = diffY * 0.04;
 		if (this.angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
 			SkillFishing fishing = (SkillFishing) this.angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
 			if (fishing.hasAbility(4)) {
@@ -487,7 +485,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 			}
 		}
 		this.caughtEntity.motionY += addY;
-		this.caughtEntity.motionZ += d2 * 0.1D;
+		this.caughtEntity.motionZ += diffZ * 0.04;
 	}
 
 	@Override
