@@ -58,6 +58,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		xpMap.put("snow", 50);
 		xpMap.put("grass_block", 60); // Bonus for grass!
 		xpMap.put("gravel", 125); // Fuck gravel
+		xpMap.put("clay", 150);
 		xpMap.put("soul_sand", 200); // Only in nether & not to common
 		xpMap.put("podzol", 250); // Only in taiga
 		xpMap.put("red_sand", 375); // Only in mesa
