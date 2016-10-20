@@ -1,5 +1,7 @@
 package avi.mod.skrim.items;
 
+import java.util.List;
+
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.skills.cooking.SkillCooking;
 import net.minecraft.creativetab.CreativeTabs;
@@ -50,7 +52,6 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 				int additionalHeal = (int)(foodHeal * extraFood);
 
 				int newFood = playerStats.getFoodLevel() + additionalHeal;
-				// Apply the old sat mod to the new healing, and the new sat mod to everything
 				float newSaturation = playerStats.getSaturationLevel() +
 						(satMod * additionalHeal + (int)(extraSaturation * (foodHeal + additionalHeal)));
 
@@ -82,6 +83,50 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 				storeCompound.setFloat("foodSaturationLevel", newSaturation);
 				storeCompound.setFloat("foodExhaustionLevel", 0); // Food exhaustion max 40 when fully exhausted
 				playerStats.readNBT(storeCompound);
+			}
+		}
+	}
+	
+	public static int getExtraFood(ItemFood food, ItemStack stack, int level) {
+		int baseHeal = food.getHealAmount(stack);
+		double extraFood = SkillCooking.extraFood(level);
+		return (int)(baseHeal * extraFood);
+	}
+	
+	public static float getExtraSaturation(ItemFood food, ItemStack stack, int level) {
+		int baseHeal = food.getHealAmount(stack);
+		int additionalHeal = getExtraFood(food, stack, level);
+		float satMod = food.getSaturationModifier(stack);
+		double extraSaturation = SkillCooking.extraSaturation(level);
+		// Apply the old sat mod to the new healing, and the new sat mod to everything
+		return satMod * additionalHeal + (int)(extraSaturation * (baseHeal + additionalHeal));
+	}
+	
+	public static int getTotalFood(ItemFood food, ItemStack stack, int level) {
+		return getExtraFood(food, stack, level) + food.getHealAmount(stack);
+	}
+	
+	public static float getTotalSaturation(ItemFood food, ItemStack stack, int level) {
+		return getExtraSaturation(food, stack, level) + food.getSaturationModifier(stack) * food.getHealAmount(stack);
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
+		if (stack.hasTagCompound()) {
+			NBTTagCompound compound = stack.getTagCompound();
+			if (compound.hasKey("level")) {
+				int level = compound.getInteger("level");
+				tooltip.add("Cooking Level: §a" + level + "§r");
+				tooltip.add("Food restored: §a" + getTotalFood((ItemFood) stack.getItem(), stack, level) + "§r, saturation restored: §a" + String.format("%.1f", getTotalSaturation((ItemFood) stack.getItem(), stack, level)) + "§r.");
+				if (level >= 25) {
+					tooltip.add("§4Overfull§r");
+					if (level >= 50) {
+						tooltip.add("§4Panacea§r");
+						if (level >= 75) {
+							tooltip.add("§4Super Food§r");
+						}
+					}
+				}
 			}
 		}
 	}

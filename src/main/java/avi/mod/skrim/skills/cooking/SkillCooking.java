@@ -67,26 +67,11 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
 	}
 
-	public static SkillAbility overfull = new SkillAbility(
-		"Overfull",
-		25,
-		"Just keep eating, just keep eating, just keep eating...",
-		"Your cooked food now ignores food and saturation limits."
-	);
+	public static SkillAbility overfull = new SkillAbility("Overfull", 25, "Just keep eating, just keep eating, just keep eating...", "Your cooked food now ignores food and saturation limits.");
 
-	public static SkillAbility panacea = new SkillAbility(
-		"Panacea",
-		50,
-		"Cures everything that's less than half dead.",
-		"Your cooked food now removes nausea, hunger, and poison."
-	);
+	public static SkillAbility panacea = new SkillAbility("Panacea", 50, "Cures everything that's less than half dead.", "Your cooked food now removes nausea, hunger, and poison.");
 
-	public static SkillAbility superFood = new SkillAbility(
-		"Super Food",
-		75,
-		"You won't believe how good these 11 foods are for you!",
-		"Your cooked food now grants a speed boost and a short period of regeneration."
-	);
+	public static SkillAbility superFood = new SkillAbility("Super Food", 75, "You won't believe how good these 11 foods are for you!", "Your cooked food now grants a speed boost and a short period of regeneration.");
 
 	public SkillCooking() {
 		this(1, 0);
@@ -107,16 +92,15 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	}
 
 	/**
-	 * These methods are static so they can be accessed from the CustomFood
-	 * class onFoodEaten() method.
+	 * These methods are static so they can be accessed from the CustomFood class onFoodEaten() method.
 	 */
 
 	public static double extraFood(int level) {
-		return 0.02 * level;
+		return 0.01 * level;
 	}
 
 	public static double extraSaturation(int level) {
-		return 0.01 * level;
+		return 0.005 * level;
 	}
 
 	public static boolean overFull(int level) {
@@ -136,37 +120,35 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		return tooltip;
 	}
 
-  public boolean validCookingTarget(ItemStack stack) {
+	public boolean validCookingTarget(ItemStack stack) {
 		Item item = stack.getItem();
-		return (item instanceof ItemFood
-			|| item instanceof ItemFishFood
-		) ? true : false;
-  }
+		return (item instanceof ItemFood || item instanceof ItemFishFood) ? true : false;
+	}
 
-  public String getFoodName(ItemStack stack) {
-  	Item item = stack.getItem();
-  	if (item instanceof ItemFishFood) {
-  		ItemFishFood fish = (ItemFishFood) item;
-  		ItemFishFood.FishType type = ItemFishFood.FishType.byItemStack(stack);
-  		if (type == ItemFishFood.FishType.SALMON) {
-  			return "cooked_salmon";
-  		} else if (type == ItemFishFood.FishType.COD) {
-  			return "cooked_fish";
-  		} else {
-  			return null;
-  		}
-  	} else if (item instanceof ItemFood) {
-  		return Utils.snakeCase(item.getUnlocalizedName()).substring(5);
-  	} else {
-  		return null;
-  	}
-  }
+	public String getFoodName(ItemStack stack) {
+		Item item = stack.getItem();
+		if (item instanceof ItemFishFood) {
+			ItemFishFood fish = (ItemFishFood) item;
+			ItemFishFood.FishType type = ItemFishFood.FishType.byItemStack(stack);
+			if (type == ItemFishFood.FishType.SALMON) {
+				return "cooked_salmon";
+			} else if (type == ItemFishFood.FishType.COD) {
+				return "cooked_fish";
+			} else {
+				return null;
+			}
+		} else if (item instanceof ItemFood) {
+			return Utils.snakeCase(item.getUnlocalizedName()).substring(5);
+		} else {
+			return null;
+		}
+	}
 
-  public static void injectFakeFood(PlayerEvent event, ItemStack stack, EntityPlayer player) {
-  	if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
-  		SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-  		String foodName = cooking.getFoodName(stack);
-  		if (cooking.validCookingTarget(stack)) {
+	public static void injectFakeFood(PlayerEvent event, ItemStack stack, EntityPlayer player) {
+		if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
+			SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+			String foodName = cooking.getFoodName(stack);
+			if (cooking.validCookingTarget(stack)) {
 				CustomFood replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
 				if (replaceFood != null) {
 					stack.setItem(replaceFood);
@@ -175,6 +157,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
 					compound.setInteger("level", cooking.level);
 					stack.setTagCompound(compound);
 					stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
+					List<String> foodText = new ArrayList<String>();
+					foodText.add("Cooking Level: " + cooking.level);
 					int stackSize = stack.stackSize;
 
 					if (stackSize == 0) {
@@ -192,20 +176,20 @@ public class SkillCooking extends Skill implements ISkillCooking {
 						cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
 					}
 				}
-  		}
+			}
 		}
-  }
+	}
 
-  public static void injectSmeltedFood(ItemSmeltedEvent event) {
+	public static void injectSmeltedFood(ItemSmeltedEvent event) {
 		injectFakeFood(event, event.smelting, event.player);
-  }
+	}
 
 	public static void injectCraftedFood(ItemCraftedEvent event) {
 		injectFakeFood(event, event.crafting, event.player);
 	}
 
 	/**
-	 * The hackiest of hacks.  Why does this always happen.
+	 * The hackiest of hacks. Why does this always happen.
 	 */
 	public static void saveItemNumber(PlayerContainerEvent.Open event) {
 		Container please = event.getContainer();
