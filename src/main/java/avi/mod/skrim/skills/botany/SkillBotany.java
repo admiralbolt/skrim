@@ -49,24 +49,24 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	static {
 		xpMap = new HashMap<String, Integer>();
 		// The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
-		xpMap.put("dandelion", 100);
-		xpMap.put("poppy", 100);
+		xpMap.put("dandelion", 150);
+		xpMap.put("poppy", 150);
 		// 3 Biomes
-		xpMap.put("houstonia", 200); // azure_bluet
-		xpMap.put("red_tulip", 200);
-		xpMap.put("orange_tulip", 200);
-		xpMap.put("white_tulip", 200);
-		xpMap.put("pink_tulip", 200);
-		xpMap.put("oxeye_daisy", 200);
+		xpMap.put("houstonia", 300); // azure_bluet
+		xpMap.put("red_tulip", 300);
+		xpMap.put("orange_tulip", 300);
+		xpMap.put("white_tulip", 300);
+		xpMap.put("pink_tulip", 300);
+		xpMap.put("oxeye_daisy", 300);
 		// Only swamp, can respawn
-		xpMap.put("blue_orchid", 400);
-		xpMap.put("allium", 400);
+		xpMap.put("blue_orchid", 600);
+		xpMap.put("allium", 600);
 		// Only forest & flower forest on generation
-		xpMap.put("syringa", 1000); // lilac
-		xpMap.put("rose_bush", 1000);
-		xpMap.put("paeonia", 1000); // peony
+		xpMap.put("syringa", 1500); // lilac
+		xpMap.put("rose_bush", 1500);
+		xpMap.put("paeonia", 1500); // peony
 		// Only sunflower plains on generation
-		xpMap.put("sunflower", 2000);
+		xpMap.put("sunflower", 3000);
 	}
 
 	public static SkillAbility sunFlower = new SkillAbility(
@@ -302,6 +302,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 						mainStack.stackSize--;
 						if (mainStack.stackSize == 0) {
 							player.inventory.deleteStack(mainStack);
+							botany.addXp((EntityPlayerMP) player, 100);
 						}
 						event.setCanceled(true);
 					}
@@ -315,10 +316,16 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		if (targetItem != null && targetItem instanceof GlowFlowerVariants) {
 			if (!Skills.canCraft(event.player, Skills.BOTANY, 25)) {
 				Skills.replaceWithComponents(event);
+			} else if (event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+				SkillBotany botany = (SkillBotany) event.player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
+				botany.addXp((EntityPlayerMP) event.player, 500);
 			}
 		} else if (targetItem != null && targetItem instanceof EnchantedFlowerVariants) {
 			if (!Skills.canCraft(event.player, Skills.BOTANY, 100)) {
 				Skills.replaceWithComponents(event);
+			} else if (event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+				SkillBotany botany = (SkillBotany) event.player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
+				botany.addXp((EntityPlayerMP) event.player, 10000);
 			}
 		}
 	}

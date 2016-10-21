@@ -77,7 +77,7 @@ public class SkillMining extends Skill implements ISkillMining {
 
 	public static List<String> validMiningBlocks = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs", "nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));
 
-	public static List<String> validFortuneOres = new ArrayList<String>(Arrays.asList("coal_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
+	public static List<String> validFortuneOres = new ArrayList<String>(Arrays.asList("coal_ore", "iron_ore", "gold_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
 
 	public static SkillAbility darkvision = new SkillAbility(
 		"Darkvision",

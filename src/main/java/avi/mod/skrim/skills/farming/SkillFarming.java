@@ -25,6 +25,7 @@ import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockMelon;
+import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPotato;
 import net.minecraft.block.BlockPumpkin;
@@ -64,10 +65,12 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		xpMap.put("crops", 100);
 		xpMap.put("beetroots", 125);
 		xpMap.put("cocoa", 150);
+		xpMap.put("netherwart", 200); // Fewer stages, faster/unaffected growth time
 		xpMap.put("potatoes", 300);
 		xpMap.put("carrots", 300);
 		xpMap.put("pumpkin", 400);
 		xpMap.put("melon", 400);
+		xpMap.put("nether_wart", 500);
 
 		cropBlocks.add(Blocks.WHEAT);
 		cropBlocks.add(Blocks.CARROTS);
@@ -141,6 +144,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				|| block instanceof BlockPotato
 				|| block instanceof BlockCrops
 				|| block instanceof BlockCocoa
+				|| block instanceof BlockNetherWart
 				);
 	}
 
@@ -163,6 +167,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		 * UPDATE: Okay seriously?  Cocoa beans have 3 stages, but instead of
 		 * using 0-1-2 like the established standard, they use 2/6/10?
 		 * WTF?
+		 *
+		 * UPDATE: Netherwart has FOUR growth stages.  The legend continues.
 		 */
 		return (block instanceof BlockMelon
 				|| ((block instanceof BlockCarrot || block instanceof BlockPotato)
@@ -170,6 +176,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				|| (block instanceof BlockCrops && block.getMetaFromState(state) == 7)
 				|| (block instanceof BlockBeetroot && block.getMetaFromState(state) == 3)
 				|| (block instanceof BlockCocoa && block.getMetaFromState(state) == 10)
+				|| (block instanceof BlockNetherWart && block.getMetaFromState(state) == 4)
 				) ? true : false;
 	}
 
@@ -254,6 +261,9 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		if (targetItem != null && targetItem == ModItems.overalls) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
 				Skills.replaceWithComponents(event);
+			} else if (event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+				farming.addXp((EntityPlayerMP) event.player, 500);
 			}
 		}
 	}

@@ -1,6 +1,23 @@
 Changelog
 ==========
 
+Version 1.1.4
+-------------
+### Quality of Life
+* Added cooking level & food benefits to custom food overlay.
+* Added netherwart to farming!
+* Added clay to digging!
+* Added iron & gold ore to valid fortune targets for mining! (Provided they aren't player placed of course)
+* Added xp for killing entities!
+* Decreased pull strength of custom fishing rod!  No more murdering, Garreth!
+* Added xp for crafting skill specific items!
+* Added xp for using skill specific abilities (like level 50 blacksmithing & level 75 botany)
+
+### Balance Changes
+* Reduced xp from ranged / melee damage dealt.
+* Increased botany xp by another 50%.
+* Increased cooking xp slightly.
+
 Version 1.1.3
 --------------
 ### New Features

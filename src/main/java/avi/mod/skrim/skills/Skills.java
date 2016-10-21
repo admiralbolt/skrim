@@ -37,6 +37,27 @@ import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntityCaveSpider;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityEndermite;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntityPolarBear;
+import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityWitch;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.SkeletonType;
+import net.minecraft.entity.monster.ZombieType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -243,5 +264,77 @@ public class Skills {
 
 		}
 	}
+	
+	public static Map<Class, Integer> killXp  = new HashMap<Class, Integer>();
+	public static Map<ZombieType, Integer> zombieVariants = new HashMap<ZombieType, Integer>();
+	public static Map<SkeletonType, Integer> skeletonVariants = new HashMap<SkeletonType, Integer>();
+	static {
+		/**
+		 * Handle variants
+		 */
+		zombieVariants.put(ZombieType.NORMAL, 500);
+		zombieVariants.put(ZombieType.HUSK, 800);
+		zombieVariants.put(ZombieType.VILLAGER_BUTCHER, 600);
+		zombieVariants.put(ZombieType.VILLAGER_FARMER, 600);
+		zombieVariants.put(ZombieType.VILLAGER_LIBRARIAN, 600);
+		zombieVariants.put(ZombieType.VILLAGER_PRIEST, 600);
+		zombieVariants.put(ZombieType.VILLAGER_SMITH, 600);
+		
+		skeletonVariants.put(SkeletonType.NORMAL, 600);
+		skeletonVariants.put(SkeletonType.STRAY, 1000);
+		skeletonVariants.put(SkeletonType.WITHER, 1500);
+		
+		killXp.put(EntityPlayer.class, 100);
+		
+		/**
+		 * Slimes are weird since they have so many babies
+		 */
+		killXp.put(EntitySlime.class, 75);
+		killXp.put(EntityMagmaCube.class, 90);
+		
+		killXp.put(EntityCreeper.class, 750);
+		
+		killXp.put(EntitySpider.class, 300);
+		killXp.put(EntityCaveSpider.class, 450);
+		
+		killXp.put(EntityEnderman.class, 1250);
+		killXp.put(EntityPolarBear.class, 750);
+		killXp.put(EntityPigZombie.class, 1000);
+		killXp.put(EntityBlaze.class, 850);
+		killXp.put(EntityEndermite.class, 250);
+		killXp.put(EntityGhast.class, 500);
+		killXp.put(EntityGuardian.class, 1000);
+		killXp.put(EntityShulker.class, 750);
+		killXp.put(EntitySilverfish.class, 300);
+		killXp.put(EntityWitch.class, 1250);
+		
+		killXp.put(EntityDragon.class, 30000);
+		killXp.put(EntityWither.class, 50000);
+	}
+	
+	/**
+	 * Bonus xp for killing shit
+	 * Variants make this pretty terrible to program well.
+	 * For now we're just going to do a giant if else statement :\
+	 */
+	public static int entityKillXp(Entity entity) {
+		if (entity instanceof EntityZombie) {
+			EntityZombie zombie = (EntityZombie) entity;
+			// I just love how readable func_189777_di is!
+			return zombieVariants.get(zombie.func_189777_di());
+		} else if (entity instanceof EntitySkeleton) {
+			EntitySkeleton skeleton = (EntitySkeleton) entity;
+			// Wow!  This ones slightly different than last time!
+			// It's really helpful that they are different AND readable!
+			return skeletonVariants.get(skeleton.func_189771_df());
+		} else {
+			if (killXp.containsKey(entity.getClass())) {
+				return killXp.get(entity.getClass());
+			}
+		}
+		
+		return 0;
+	}
+	
 
 }

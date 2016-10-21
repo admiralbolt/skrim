@@ -161,7 +161,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						}
 						addXp += 200;
 					}
-					addXp += (int) event.getAmount() * 30;
+					addXp += (int) event.getAmount() * 10;
 					melee.addXp((EntityPlayerMP) player, addXp);
 				}
 			}
@@ -196,6 +196,10 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					SkillMelee melee = (SkillMelee) player.getCapability(Skills.MELEE, EnumFacing.NORTH);
 					if (melee.hasAbility(1)) {
 						player.setHealth(player.getHealth() + 2);
+					}
+					int killXp = Skills.entityKillXp(event.getEntity());
+					if (killXp > 0) {
+						melee.addXp((EntityPlayerMP) player, killXp);
 					}
 				}
 			}

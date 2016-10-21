@@ -220,6 +220,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 							try {
 								field.set(outputItem, (int) (outputItem.getMaxDamage() * 1.25));
 								compound.setBoolean("enhanced_durability", true);
+								blacksmithing.addXp((EntityPlayerMP) player, 1000);
 							} catch (IllegalArgumentException e) {
 								e.printStackTrace();
 							} catch (IllegalAccessException e) {
@@ -241,6 +242,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		if (targetItem != null && obsidianItems.contains(targetItem)) {
 			if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
 				Skills.replaceWithComponents(event);
+			} else if (event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
+				SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+				blacksmithing.addXp((EntityPlayerMP) event.player, 5000);
 			}
 		}
 	}

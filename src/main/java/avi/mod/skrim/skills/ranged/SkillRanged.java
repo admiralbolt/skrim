@@ -28,6 +28,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class SkillRanged extends Skill implements ISkillRanged {
@@ -106,8 +107,25 @@ public class SkillRanged extends Skill implements ISkillRanged {
 							targetEntity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, glowDuration, 0, true, false));
 						}
 					}
-					addXp += event.getAmount() * 30;
+					addXp += event.getAmount() * 10;
 					ranged.addXp((EntityPlayerMP) player, addXp);
+				}
+			}
+		}
+	}
+	
+	public static void handleKill(LivingDeathEvent event) {
+		DamageSource source = event.getSource();
+		Entity entity = source.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player != null && player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
+				if (source.isProjectile()) {
+					SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);
+					int killXp = Skills.entityKillXp(event.getEntity());
+					if (killXp > 0) {
+						ranged.addXp((EntityPlayerMP) player, killXp);
+					}
 				}
 			}
 		}

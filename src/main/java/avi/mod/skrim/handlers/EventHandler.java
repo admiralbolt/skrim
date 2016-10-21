@@ -60,6 +60,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
 		SkillMelee.handleKill(event);
+		SkillRanged.handleKill(event);
 		SkillDemolition.onKillCrepper(event);
 		SkillFarming.sideChick(event);
 	}
@@ -111,13 +112,16 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onHarvest(BlockEvent.HarvestDropsEvent event) {
-		if (!event.isSilkTouching()) {
-			SkillMining.giveMoreOre(event);
+		World world = event.getWorld();
+		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
+			if (!event.isSilkTouching()) {
+				SkillMining.giveMoreOre(event);
+			}
+			SkillBotany.soManyFlowers(event);
+			SkillDigging.findTreasure(event);
+			SkillFarming.giveMoreCrops(event);
+			SkillWoodcutting.sawTree(event);
 		}
-		SkillBotany.soManyFlowers(event);
-		SkillDigging.findTreasure(event);
-		SkillFarming.giveMoreCrops(event);
-		SkillWoodcutting.sawTree(event);
 	}
 
 	@SubscribeEvent
@@ -139,6 +143,7 @@ public class EventHandler {
 			SkillFarming.addFarmingXp(event);
 			SkillWoodcutting.addWoodcuttingXp(event);
 		}
+		Utils.logBlockState(event.getState());
 		PlayerPlacedBlocks.removeBlock(world, event.getPos());
 	}
 
@@ -214,5 +219,6 @@ public class EventHandler {
 		}
 		AddTreasure.addTreasure(event);
 	}
+	
 
 }

@@ -45,25 +45,25 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	static {
 		foodMap = new HashMap<String, CustomFood>();
 		xpMap = new HashMap<String, Integer>();
-		addFood("bread", ModItems.overwriteBread, 50);
-		addFood("cookie", ModItems.overwriteCookie, 10);
+		addFood("bread", ModItems.overwriteBread, 100);
+		addFood("cookie", ModItems.overwriteCookie, 15);
 
-		addFood("potatobaked", ModItems.overwriteBakedPotato, 100);
+		addFood("potatobaked", ModItems.overwriteBakedPotato, 150);
 
-		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 150);
-		addFood("mushroomstew", ModItems.overwriteMushroomStew, 150);
+		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 200);
+		addFood("mushroomstew", ModItems.overwriteMushroomStew, 200);
 
-		addFood("muttoncooked", ModItems.overwriteMutton, 250);
-		addFood("beefcooked", ModItems.overwriteSteak, 250);
-		addFood("porkchopcooked", ModItems.overwritePorkchop, 250);
-		addFood("chickencooked", ModItems.overwriteChicken, 250);
+		addFood("muttoncooked", ModItems.overwriteMutton, 300);
+		addFood("beefcooked", ModItems.overwriteSteak, 300);
+		addFood("porkchopcooked", ModItems.overwritePorkchop, 300);
+		addFood("chickencooked", ModItems.overwriteChicken, 300);
 
-		addFood("cooked_fish", ModItems.overwriteFish, 300);
-		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 350);
-		addFood("cooked_salmon", ModItems.overwriteSalmon, 400);
+		addFood("cooked_fish", ModItems.overwriteFish, 350);
+		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 425);
+		addFood("cooked_salmon", ModItems.overwriteSalmon, 500);
 
-		addFood("rabbitcooked", ModItems.overwriteRabbit, 500);
-		addFood("rabbitstew", ModItems.overwriteRabbitStew, 600);
+		addFood("rabbitcooked", ModItems.overwriteRabbit, 1000);
+		addFood("rabbitstew", ModItems.overwriteRabbitStew, 1000);
 
 	}
 

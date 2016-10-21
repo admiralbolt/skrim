@@ -232,6 +232,9 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		if (targetItem != null && targetItem == ModItems.handSaw) {
 			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 25)) {
 				Skills.replaceWithComponents(event);
+			} else if (event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
+				woodcutting.addXp((EntityPlayerMP) event.player, 500);
 			}
 		}
 	}
