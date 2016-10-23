@@ -1,6 +1,5 @@
 package avi.mod.skrim.skills.cooking;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +12,17 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.inventory.Slot;
@@ -23,8 +31,10 @@ import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -35,6 +45,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public static SkillStorage<ISkillCooking> skillStorage = new SkillStorage<ISkillCooking>();
 	public static Map<String, Integer> xpMap;
 	public static Map<String, CustomFood> foodMap;
+	public static Map<Class, String> entityFoodMap;
+	public static double fireCookedMult = 0.25;
 	public int lastItemNumber;
 
 	private static void addFood(String name, CustomFood food, int xp) {
@@ -45,6 +57,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	static {
 		foodMap = new HashMap<String, CustomFood>();
 		xpMap = new HashMap<String, Integer>();
+		entityFoodMap = new HashMap<Class, String>();
 		addFood("bread", ModItems.overwriteBread, 100);
 		addFood("cookie", ModItems.overwriteCookie, 15);
 
@@ -54,15 +67,20 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		addFood("mushroomstew", ModItems.overwriteMushroomStew, 200);
 
 		addFood("muttoncooked", ModItems.overwriteMutton, 300);
+		entityFoodMap.put(EntitySheep.class, "muttoncooked");
 		addFood("beefcooked", ModItems.overwriteSteak, 300);
+		entityFoodMap.put(EntityCow.class, "beefcooked");
 		addFood("porkchopcooked", ModItems.overwritePorkchop, 300);
+		entityFoodMap.put(EntityPig.class, "porkchopcooked");
 		addFood("chickencooked", ModItems.overwriteChicken, 300);
+		entityFoodMap.put(EntityChicken.class, "chickencooked");
 
 		addFood("cooked_fish", ModItems.overwriteFish, 350);
 		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 425);
 		addFood("cooked_salmon", ModItems.overwriteSalmon, 500);
 
 		addFood("rabbitcooked", ModItems.overwriteRabbit, 1000);
+		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");
 		addFood("rabbitstew", ModItems.overwriteRabbitStew, 1000);
 
 	}
@@ -201,6 +219,45 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 					SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
 					cooking.lastItemNumber = yas.stackSize;
+				}
+			}
+		}
+	}
+
+	public static void fireCook(LivingDeathEvent event) {
+		Entity targetEntity = event.getEntity();
+		DamageSource source = event.getSource();
+		Entity entity = source.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
+				SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+				ItemStack mainStack = player.getHeldItemMainhand();
+				ItemStack offStack = player.getHeldItemOffhand();
+				boolean hasFire = false;
+				if (mainStack != null) {
+					Map<Enchantment, Integer> mainEnchants = EnchantmentHelper.getEnchantments(mainStack);
+					for (Enchantment ench : mainEnchants.keySet()) {
+						if (ench == Enchantments.FLAME || ench == Enchantments.FIRE_ASPECT) {
+							hasFire = true;
+						}
+					}
+				}
+				if (offStack != null) {
+					Map<Enchantment, Integer> offEnchants = EnchantmentHelper.getEnchantments(offStack);
+					for (Enchantment ench : offEnchants.keySet()) {
+						if (ench == Enchantments.FLAME) {
+							hasFire = true;
+						}
+					}
+				}
+				if (hasFire) {
+					if (entityFoodMap.containsKey(targetEntity.getClass())) {
+						int cookingXp = (int) (fireCookedMult * xpMap.get(entityFoodMap.get(targetEntity.getClass())));
+						if (cookingXp > 0) {
+							cooking.addXp((EntityPlayerMP) player, cookingXp);
+						}
+					}
 				}
 			}
 		}

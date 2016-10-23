@@ -63,6 +63,7 @@ public class EventHandler {
 		SkillRanged.handleKill(event);
 		SkillDemolition.onKillCrepper(event);
 		SkillFarming.sideChick(event);
+		SkillCooking.fireCook(event);
 	}
 
 	@SubscribeEvent

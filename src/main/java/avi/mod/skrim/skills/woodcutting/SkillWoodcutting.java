@@ -279,7 +279,6 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 										IBlockState targetState = player.worldObj.getBlockState(targetPos);
 										Block targetBlock = targetState.getBlock();
 										if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-											System.out.println("sending packet for loc (" + targetPos.getX() + ", " + targetPos.getY() + ", " + targetPos.getZ() + ")");
 											SkrimPacketHandler.INSTANCE.sendToServer(
 												new WhirlingChopPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ())
 											);

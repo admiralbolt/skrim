@@ -14,6 +14,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -197,7 +198,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					if (melee.hasAbility(1)) {
 						player.setHealth(player.getHealth() + 2);
 					}
-					int killXp = Skills.entityKillXp(event.getEntity());
+					int killXp = Skills.entityKillXp(entity);
 					if (killXp > 0) {
 						melee.addXp((EntityPlayerMP) player, killXp);
 					}

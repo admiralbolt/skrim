@@ -13,6 +13,7 @@ import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.tileentity.ModTileEntities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
