@@ -198,7 +198,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					if (melee.hasAbility(1)) {
 						player.setHealth(player.getHealth() + 2);
 					}
-					int killXp = Skills.entityKillXp(entity);
+					int killXp = Skills.entityKillXp(event.getEntity());
 					if (killXp > 0) {
 						melee.addXp((EntityPlayerMP) player, killXp);
 					}
