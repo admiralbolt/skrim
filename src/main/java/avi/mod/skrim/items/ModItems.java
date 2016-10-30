@@ -60,6 +60,13 @@ public class ModItems {
 
 	public static ToolMaterial ARTIFACT_DEFAULT = EnumHelper.addToolMaterial("artifact_default", 3, 4500, 6.0F, 4.0F, 0);
 	public static ToolMaterial OBSIDIAN_TOOL = EnumHelper.addToolMaterial("obsidian", 3, 7500, 9.0F, 4.0F, 20);
+	
+	public static ArtifactSword CANES_SWORD;
+	public static ArtifactArmor SPRINGHEEL_BOOTS;
+	
+	/**
+	 * Custom items created from skills
+	 */
 
 	public static CustomSword obsidianSword;
 	public static CustomSpade obsidianShovel;
@@ -71,12 +78,11 @@ public class ModItems {
 	public static CustomArmor obsidianPants;
 	public static CustomArmor obsidianChest;
 	public static CustomArmor obsidianHelmet;
-	public static CustomArmor overalls;
-
-	public static ArtifactArmor SPRINGHEEL_BOOTS;
-	public static ArtifactSword CANES_SWORD;
 
 	public static HandSaw handSaw;
+	public static CustomArmor overalls;
+	public static CustomBow GREAT_BOW;
+	
 
 	// La musica
 	public static CustomRecord ARUARIAN_DANCE;
@@ -129,6 +135,7 @@ public class ModItems {
 		// More stoof
 		handSaw = register(new HandSaw("hand_saw", ToolMaterial.IRON));
 		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
+		// GREAT_BOW = register(new GreatBow("great_bow"));
 
 		registerArtifacts();
 		registerSongs();

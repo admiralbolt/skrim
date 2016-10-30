@@ -3,6 +3,10 @@ Changelog
 
 Version 1.1.4
 -------------
+### New Features
+* Added the coord command to log coordinates in game!
+* Added the wtfdid command to find out, where the fuck did I die?
+
 ### Quality of Life
 * Added cooking level & food benefits to custom food overlay.
 * Added netherwart to farming!
@@ -13,6 +17,7 @@ Version 1.1.4
 * Added xp for crafting skill specific items!
 * Added xp for using skill specific abilities (like level 50 blacksmithing & level 75 botany)
 * Added cooking xp for killing things with fire!
+* Fixed the descriptions on the records.
 
 ### Balance Changes
 * Reduced xp from ranged / melee damage dealt.

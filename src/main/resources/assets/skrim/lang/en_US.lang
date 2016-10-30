@@ -59,42 +59,32 @@ tile.biobomb.name=Bio-Bomb
 tile.napalm.name=Napalm
 
 item.overalls.name=Overalls
+item.great_bow.name=Great Bow
 
 item.aruarian_dance.name=Aruarian Dance
-item.record.aruarian_dance.desc=Nujabes - Aruarian Dance
-
+item.aruarian_dance.desc=Nujabes
 item.bubberducky.name=Bubberducky 3
-item.record.bubberducky.desc=Dunkey - Bubberducky 3
-
+item.bubberducky.desc=Dunkey
 item.cassandra.name=Cassandra
-item.record.cassandra.desc=Dave Brubeck - Cassandra
-
+item.cassandra.desc=Dave Brubeck
 item.color.name=A Lack of Color
-item.record.color.desc=Death Cab for Cutie - A Lack of Color
-
+item.color.desc=Death Cab for Cutie
 item.dogsong.name=Dogsong
-item.record.dogsong.desc=Toby Fox - Dogsong
-
+item.dogsong.desc=Toby Fox
 item.gdawg.name=G-Dawg is Hawt
-item.record.gdawg.desc=Avi Knecht - G-Dawg is Hawt
-
+item.gdawg.desc=Avi Knecht
 item.heya.name=HEYYEYAAEYAAAEYAEYAA
-item.record.heya.desc=He-Man - HEYYEYAAEYAAAEYAEYAA
-
+item.heya.desc=He-Man
 item.money.name=Temmie Get Money for College
-item.record.money.desc=Toby Fox / Hail Mary Mallon - Temmie Get Money for College
-
+item.money.desc=Toby Fox / Hail Mary Mallon
 item.north.name=North
-item.record.north.desc=Phoenix - North
-
+item.north.desc=Phoenix
 item.number10.name=Number 10
-item.record.number10.desc=Moon Hooch - Number 10
-
+item.number10.desc=Moon Hooch
 item.samurai.name=1st. Samurai
-item.record.samurai.desc=Nujabes - 1st. Samurai
-
+item.samurai.desc=Nujabes
 item.truck.name=Truck
-item.record.truck.desc=The Octopus Project - Truck
+item.truck.desc=The Octopus Project
 
 
 item.boots_of_springheel_jak.name=Boots of Springheel Jak

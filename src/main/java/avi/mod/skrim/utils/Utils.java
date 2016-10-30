@@ -108,7 +108,12 @@ public class Utils {
 			block instanceof BlockPumpkin ||
 			block instanceof BlockMelon ||
 			block == Blocks.IRON_ORE ||
-			block == Blocks.GOLD_ORE
+			block == Blocks.GOLD_ORE ||
+			block == Blocks.DIAMOND_ORE ||
+			block == Blocks.LAPIS_ORE ||
+			block == Blocks.REDSTONE_ORE ||
+			block == Blocks.COAL_ORE ||
+			block == Blocks.EMERALD_ORE
 		);
 	}
 

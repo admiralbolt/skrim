@@ -15,6 +15,7 @@ import avi.mod.skrim.skills.ranged.SkillRanged;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.AddTreasure;
+import avi.mod.skrim.world.PlayerCoords;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -64,6 +65,7 @@ public class EventHandler {
 		SkillDemolition.onKillCrepper(event);
 		SkillFarming.sideChick(event);
 		SkillCooking.fireCook(event);
+		PlayerCoords.saveDeathLocation(event);
 	}
 
 	@SubscribeEvent

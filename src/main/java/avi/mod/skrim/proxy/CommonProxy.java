@@ -10,6 +10,7 @@ import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
+import avi.mod.skrim.items.CustomBow;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -67,6 +68,10 @@ public class CommonProxy {
 
 	public void registerBlockVariant(ItemBlock block, EnumFlowerType types[]) {
 
+	}
+	
+	public void registerBowVariants(CustomBow customBow) {
+		
 	}
 
 }

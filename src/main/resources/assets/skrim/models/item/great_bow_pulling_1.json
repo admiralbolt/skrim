@@ -1,0 +1,6 @@
+{
+    "parent": "skrim:item/great_bow",
+    "textures": {
+        "layer0": "skrim:weapons/great_bow_pulling_1"
+    }
+}

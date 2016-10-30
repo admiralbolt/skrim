@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.translation.I18n;
 
 public class CustomRecord extends ItemRecord implements ItemModelProvider {
 
@@ -28,7 +29,7 @@ public class CustomRecord extends ItemRecord implements ItemModelProvider {
 	
 	@Override
 	public String getRecordNameLocal() {
-		return this.name;
+		return I18n.translateToLocal(this.getUnlocalizedName() + ".desc");
 	}
 
 

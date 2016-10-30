@@ -111,7 +111,7 @@ for sound in sounds:
         json.dump(model_dict, wh, sort_keys=True, indent=2, separators=(",", ":"))
 
     en_us.append("item.%s.name=%s" % (sound, song_info[sound]["name"]))
-    en_us.append("item.record.%s.desc=%s - %s" % (sound, song_info[sound]["artist"], song_info[sound]["name"]))
+    en_us.append("item.%s.desc=%s" % (sound, song_info[sound]["artist"]))
     java_init.append("public static CustomRecord %s;" % (sound.upper(),))
     java.append("%s = register(new CustomRecord(\"%s\", registerRecordEvent(\"%s\")));" % (sound.upper(), sound, sound))
 

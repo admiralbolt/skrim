@@ -3,6 +3,7 @@ package avi.mod.skrim;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.proxy.CommonProxy;
 import avi.mod.skrim.client.TestTab;
+import avi.mod.skrim.commands.CommandRegistry;
 import avi.mod.skrim.commands.SetSkillCommand;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -21,7 +22,7 @@ public class Skrim {
 
 	public static final String modId = "skrim";
 	public static final String name = "Skrim";
-	public static final String version = "1.0.0";
+	public static final String version = "1.1.4";
 
 	public static final TestTab creativeTab = new TestTab();
 
@@ -48,7 +49,7 @@ public class Skrim {
 
 	@Mod.EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
-		event.registerServerCommand(new SetSkillCommand());
+		CommandRegistry.registerCommands(event);
 	}
 
 }

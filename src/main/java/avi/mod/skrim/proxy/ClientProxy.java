@@ -4,6 +4,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.handlers.GuiEventHandler;
+import avi.mod.skrim.items.CustomBow;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -44,6 +45,15 @@ public class ClientProxy extends CommonProxy {
 			ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(Skrim.modId + ":" + baseName + "_" + type.getName(), "inventory");
 			ModelLoader.setCustomModelResourceLocation(item, type.getMeta(), itemModelResourceLocation);
 			ModelBakery.registerItemVariants(item, itemModelResourceLocation);
+		}
+	}
+	
+	@Override
+	public void registerBowVariants(CustomBow customBow) {
+		String[] bowNames = {"standby", "pulling_0", "pulling_1", "pulling_2"};
+		for (String resourceName : bowNames) {
+			ModelResourceLocation resource = new ModelResourceLocation(Skrim.modId + ":" + customBow.getUnlocalizedName() + "_" + resourceName);
+			ModelBakery.registerItemVariants(customBow, resource);
 		}
 	}
 
