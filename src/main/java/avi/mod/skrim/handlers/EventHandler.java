@@ -146,7 +146,6 @@ public class EventHandler {
 			SkillFarming.addFarmingXp(event);
 			SkillWoodcutting.addWoodcuttingXp(event);
 		}
-		Utils.logBlockState(event.getState());
 		PlayerPlacedBlocks.removeBlock(world, event.getPos());
 	}
 
@@ -222,6 +221,6 @@ public class EventHandler {
 		}
 		AddTreasure.addTreasure(event);
 	}
-	
+
 
 }

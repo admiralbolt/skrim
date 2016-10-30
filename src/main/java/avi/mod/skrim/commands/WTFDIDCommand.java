@@ -62,11 +62,14 @@ public class WTFDIDCommand extends CommandBase implements ICommand {
 
 	@Override
 	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		return sender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName());
+		return true;
 	}
 
+	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
+	
 
 }
