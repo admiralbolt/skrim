@@ -7,6 +7,8 @@ Version 1.1.5
 
 ### Quality of Life
 * Causing a flowersplosion now gives you xp
+* You can now cause flowersplosions with tall flowers.
+* Fortune now correctly applies to tall flowers.
 
 
 Version 1.1.4
