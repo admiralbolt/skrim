@@ -25,6 +25,7 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -152,14 +153,26 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 			IBlockState state = event.getState();
 			String flowerName = getFlowerName(state);
+			int addXp = 0;
 			if (state.getBlock() instanceof BlockDoublePlant) {
+				Item droppedItem = state.getBlock().getItemDropped(state, Utils.rand, 0);
+				int meta = state.getBlock().damageDropped(state);
 				IBlockState targetState = event.getWorld().getBlockState(event.getPos().down());
 				if (targetState.getBlock() instanceof BlockDoublePlant) {
+					droppedItem = targetState.getBlock().getItemDropped(targetState, Utils.rand, 0);
+					meta = targetState.getBlock().damageDropped(targetState);
 					flowerName = getFlowerName(targetState);
+				}
+				if (xpMap.containsKey(flowerName) && Utils.rand.nextDouble() < botany.getFortuneChance()) {
+					ItemStack flowerStack = new ItemStack(droppedItem, botany.getFortuneAmount() - 1, meta);
+					EntityItem entityItem = new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), flowerStack);
+					event.getWorld().spawnEntityInWorld(entityItem);
+					Skills.playFortuneSound(player);
+					addXp += 200;
 				}
 			}
 
-			int addXp = botany.getXp(botany.getFlowerName(state));
+			addXp += botany.getXp(botany.getFlowerName(state));
 			if (addXp > 0) {
 				botany.addXp((EntityPlayerMP) player, botany.getXp(botany.getFlowerName(state)));
 			}
@@ -171,11 +184,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		EntityPlayer player = event.getHarvester();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
-			if (botany.validFlowerState(state)) {
+			if (botany.validFlowerState(state) && !(state.getBlock() instanceof BlockDoublePlant)) {
 				Block block = state.getBlock();
-				/**
-				 * DOUBLE Plants are coded weirdly, so currently fortune WON'T apply to them. EDIT: Won't apply to some of them...? Why you do dis.
-				 */
 				double random = Utils.rand.nextDouble();
 				if (random < botany.getFortuneChance()) {
 					List<ItemStack> drops = event.getDrops();
@@ -187,9 +197,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 						}
 					}
 					Skills.playFortuneSound(player);
-					if (PlayerPlacedBlocks.isNaturalBlock(event.getWorld(), event.getPos())) {
-						botany.addXp((EntityPlayerMP) player, 200); // and 200 xp!
-					}
+					botany.addXp((EntityPlayerMP) player, 200); // and 200 xp!
 				}
 			}
 		}
