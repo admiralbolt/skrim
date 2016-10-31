@@ -135,7 +135,7 @@ public class ModItems {
 		// More stoof
 		handSaw = register(new HandSaw("hand_saw", ToolMaterial.IRON));
 		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
-		// GREAT_BOW = register(new GreatBow("great_bow"));
+		GREAT_BOW = register(new GreatBow("great_bow"));
 
 		registerArtifacts();
 		registerSongs();
@@ -200,6 +200,7 @@ public class ModItems {
 		registerObsidian();
 		registerHandSaw();
 		registerOveralls();
+		registerGreatBow();
 	}
 
 	/**
@@ -227,6 +228,11 @@ public class ModItems {
 
 	public static void registerOveralls() {
 		GameRegistry.addRecipe(new ItemStack(overalls), "A A", "ALA", "LLL", 'A', new ItemStack(Items.DYE, 1, 4), 'L', new ItemStack(Items.LEATHER));
+	}
+	
+	public static void registerGreatBow() {
+		GameRegistry.addRecipe(new ItemStack(GREAT_BOW), "GWS", "W S", "GWS", 'G', new ItemStack(Items.GOLD_INGOT), 'W', new ItemStack(Items.STICK), 'S', new ItemStack(Items.STRING));
+		GameRegistry.addRecipe(new ItemStack(GREAT_BOW), "SWG", "S W", "SWG", 'G', new ItemStack(Items.GOLD_INGOT), 'W', new ItemStack(Items.STICK), 'S', new ItemStack(Items.STRING));
 	}
 
 	private static void addToolRecipes(ItemStack recipeItemStack, Item axe, Item hoe, Item pickaxe, Item spade) {

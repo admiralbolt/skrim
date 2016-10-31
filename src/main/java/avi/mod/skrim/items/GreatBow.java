@@ -10,10 +10,10 @@ public class GreatBow extends CustomBow {
 	public GreatBow(String name) {
 		super(name, 40.0F, 2.0F);
 	}
-
+	
 	public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
-		System.out.println("getModel called with stack: " + stack + " useRemaining: " + useRemaining);
 		ModelResourceLocation resource = new ModelResourceLocation(Skrim.modId + ":great_bow", "inventory");
+		System.out.println("player.getItemInUseCount: " + player.getItemInUseCount() + ", useRemaining: " + useRemaining);
 		if (stack.getItem() == this && player.getItemInUseCount() > 0) {
 			if (useRemaining >= 18) {
 				resource = new ModelResourceLocation(Skrim.modId + ":custom_bow_pull2", "inventory");

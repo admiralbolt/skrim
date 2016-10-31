@@ -204,10 +204,11 @@ public class EventHandler {
 		SkillBlacksmithing.verifyObsidian(event);
 		SkillBotany.verifyFlowers(event);
 		SkillCooking.injectCraftedFood(event);
-		SkillFishing.craftSkrimRod(event);
+		SkillFarming.verifyItems(event);
 		SkillDemolition.verifyExplosives(event);
 		SkillWoodcutting.verifyItems(event);
-		SkillFarming.verifyItems(event);
+		SkillRanged.verifyItems(event);
+		SkillFishing.craftSkrimRod(event);
 	}
 
 	@SubscribeEvent

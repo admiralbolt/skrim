@@ -3,6 +3,7 @@ package avi.mod.skrim.items;
 import javax.annotation.Nullable;
 
 import avi.mod.skrim.Skrim;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +45,14 @@ public class CustomBow extends ItemBow implements ItemModelProvider {
 					return 0.0F;
 				} else {
 					ItemStack itemstack = entityIn.getActiveItemStack();
-					return itemstack != null && itemstack.getItem() == Items.BOW ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F : 0.0F;
+					if (itemstack != null) {
+						Item item = itemstack.getItem();
+						if (item instanceof CustomBow) {
+							CustomBow bow = (CustomBow) item;
+							return (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / bow.maxChargeTime;
+						}
+					}
+					return 0.0F;
 				}
 			}
 		});

@@ -3,11 +3,14 @@ package avi.mod.skrim.skills.ranged;
 import java.util.ArrayList;
 import java.util.List;
 
+import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.cooking.SkillCooking;
+import avi.mod.skrim.skills.demolition.SkillDemolition;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,12 +28,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class SkillRanged extends Skill implements ISkillRanged {
 
@@ -53,6 +59,13 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		"Light that shit up.",
 		"Your arrows automatically light up the enemy."
 	);
+	
+	public static SkillAbility greatBow = new SkillAbility(
+		"Great Bow",
+		75,
+		"gr8 bow m8, I r8 8/8.",
+		"Gain the ability to craft a powerful great bow."
+	);
 
 	public SkillRanged() {
 		this(1, 0);
@@ -61,7 +74,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public SkillRanged(int level, int currentXp) {
 		super("Ranged", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/ranged.png");
-		this.addAbilities(sneakAttack, faerieFire);
+		this.addAbilities(sneakAttack, faerieFire, greatBow);
 	}
 
 	public double getExtraDamage() {
@@ -146,5 +159,19 @@ public class SkillRanged extends Skill implements ISkillRanged {
 				|| entity instanceof EntityOcelot
 			);
 	}
+	
+	public static void verifyItems(ItemCraftedEvent event) {
+		Item targetItem = event.crafting.getItem();
+		if (targetItem != null && targetItem == ModItems.GREAT_BOW) {
+			if (!Skills.canCraft(event.player, Skills.RANGED, 75)) {
+				Skills.replaceWithComponents(event);
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
+				SkillRanged ranged = (SkillRanged) event.player.getCapability(Skills.RANGED, EnumFacing.NORTH);
+				ranged.addXp((EntityPlayerMP) event.player, 1000);
+			}
+		}
+	}
+	
+	
 
 }
