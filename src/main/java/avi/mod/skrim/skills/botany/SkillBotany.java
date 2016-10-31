@@ -222,6 +222,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 			if (Utils.rand.nextDouble() < botany.getSplosionChance()) {
+				botany.addXp((EntityPlayerMP) player, 100);
 				IBlockState placedState = event.getPlacedBlock();
 				if (botany.validFlowerState(placedState)) {
 					BlockPos placedPos = event.getPos();

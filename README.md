@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 1.1.5
+-------------
+### New Features
+
+### Quality of Life
+* Causing a flowersplosion now gives you xp
+
+
 Version 1.1.4
 -------------
 ### New Features
