@@ -18,7 +18,9 @@ import avi.mod.skrim.world.AddTreasure;
 import avi.mod.skrim.world.PlayerCoords;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -96,6 +98,9 @@ public class EventHandler {
 		if (Utils.isRawXpBlock(block)) {
 			World world = event.getWorld();
 			PlayerPlacedBlocks.addBlock(world, event.getPos());
+			if (block instanceof BlockDoublePlant) {
+				PlayerPlacedBlocks.addBlock(world, event.getPos().add(0, 1, 0));
+			}
 		}
 	}
 
@@ -136,6 +141,7 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
+		// Utils.logBlockState(event.getState());
 		World world = event.getWorld();
 		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
 			if (!Utils.isSilkTouching(event)) {
@@ -147,6 +153,18 @@ public class EventHandler {
 			SkillWoodcutting.addWoodcuttingXp(event);
 		}
 		PlayerPlacedBlocks.removeBlock(world, event.getPos());
+		// Fuck you double plants
+		IBlockState state = event.getState();
+		Block block = state.getBlock();
+		if (block instanceof BlockDoublePlant) {
+			for (int i = -1; i <= 1; i += 2) {
+				BlockPos targetPos = event.getPos().add(0, i, 0);
+				IBlockState checkState = world.getBlockState(targetPos);
+				if (checkState.getBlock() instanceof BlockDoublePlant) {
+					PlayerPlacedBlocks.removeBlock(world, targetPos);
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent

@@ -28,7 +28,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -64,38 +63,16 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		// Only forest & flower forest on generation
 		xpMap.put("syringa", 1500); // lilac
 		xpMap.put("rose_bush", 1500);
+		xpMap.put("double_rose", 1500);
 		xpMap.put("paeonia", 1500); // peony
 		// Only sunflower plains on generation
 		xpMap.put("sunflower", 3000);
 	}
 
-	public static SkillAbility sunFlower = new SkillAbility(
-		"Sun Flower",
-		25,
-		"It was either this or mariglow, don't know which one is worse.",
-		"Enables you to craft glowing flowers with a flower & glowstone dust."
-	);
-
-	public static SkillAbility thornStyle = new SkillAbility(
-		"Thorn Style",
-		50,
-		"I'll let you try my thorn style.",
-		"While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage."
-	);
-
-	public static SkillAbility seduceVillager = new SkillAbility(
-		"Seduce Villager",
-		75,
-		"[Tongue waggling intensifies]",
-		"Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + "."
-	);
-
-	public static SkillAbility enchantedFlower = new SkillAbility(
-		"Enchanted Flower",
-		100,
-		"It shares a giant friendliness beam! :D",
-		"Enables you to craft enchanted flowers that function like speed beacons."
-	);
+	public static SkillAbility sunFlower = new SkillAbility("Sun Flower", 25, "It was either this or mariglow, don't know which one is worse.", "Enables you to craft glowing flowers with a flower & glowstone dust.");
+	public static SkillAbility thornStyle = new SkillAbility("Thorn Style", 50, "I'll let you try my thorn style.", "While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage.");
+	public static SkillAbility seduceVillager = new SkillAbility("Seduce Villager", 75, "[Tongue waggling intensifies]", "Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + ".");
+	public static SkillAbility enchantedFlower = new SkillAbility("Enchanted Flower", 100, "It shares a giant friendliness beam! :D", "Enables you to craft enchanted flowers that function like speed beacons.");
 
 	public SkillBotany() {
 		this(1, 0);
@@ -132,14 +109,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			Item item = stack.getItem();
 			Block block = Block.getBlockFromItem(stack.getItem());
 			String name = Utils.snakeCase(item.getItemStackDisplayName(stack));
-			if ((item != null
-					&& (
-						xpMap.containsKey(name)
-						|| name.equals("azure_bluet")
-						|| name.equals("lilac")
-						|| name.equals("peony")
-					)
-			) || (block != null && validFlowerBlock(block))) {
+			if ((item != null && (xpMap.containsKey(name) || name.equals("azure_bluet") || name.equals("lilac") || name.equals("peony"))) || (block != null && validFlowerBlock(block))) {
 				return true;
 			}
 		}
@@ -164,7 +134,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
 	public static boolean validFlowerState(IBlockState state) {
 		Block flower = state.getBlock();
-		return validFlowerBlock(flower);
+		String name = getFlowerName(state);
+		return validFlowerBlock(flower) || (name.equals("sunflower") || name.equals("paeonia") || name.equals("rose_bush") || name.equals("syringa"));
 	}
 
 	@Override
@@ -180,6 +151,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 			IBlockState state = event.getState();
+			String flowerName = getFlowerName(state);
+			if (state.getBlock() instanceof BlockDoublePlant) {
+				IBlockState targetState = event.getWorld().getBlockState(event.getPos().down());
+				if (targetState.getBlock() instanceof BlockDoublePlant) {
+					flowerName = getFlowerName(targetState);
+				}
+			}
+
 			int addXp = botany.getXp(botany.getFlowerName(state));
 			if (addXp > 0) {
 				botany.addXp((EntityPlayerMP) player, botany.getXp(botany.getFlowerName(state)));
@@ -195,22 +174,21 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			if (botany.validFlowerState(state)) {
 				Block block = state.getBlock();
 				/**
-				 * DOUBLE Plants are coded weirdly, so currently fortune WON'T apply to them.
-				 * EDIT: Won't apply to some of them...? Why you do dis.
+				 * DOUBLE Plants are coded weirdly, so currently fortune WON'T apply to them. EDIT: Won't apply to some of them...? Why you do dis.
 				 */
 				double random = Utils.rand.nextDouble();
 				if (random < botany.getFortuneChance()) {
 					List<ItemStack> drops = event.getDrops();
 					// Let's not loop infinitely, that seems like a good idea.
 					int dropSize = drops.size();
-          for (int j = 0; j < botany.getFortuneAmount() - 1; j++) {
-            for (int i = 0; i < dropSize; i++) {
-              drops.add(drops.get(i).copy());
-            }
-          }
-          Skills.playFortuneSound(player);
+					for (int j = 0; j < botany.getFortuneAmount() - 1; j++) {
+						for (int i = 0; i < dropSize; i++) {
+							drops.add(drops.get(i).copy());
+						}
+					}
+					Skills.playFortuneSound(player);
 					if (PlayerPlacedBlocks.isNaturalBlock(event.getWorld(), event.getPos())) {
-          	botany.addXp((EntityPlayerMP) player, 200); // and 200 xp!
+						botany.addXp((EntityPlayerMP) player, 200); // and 200 xp!
 					}
 				}
 			}
@@ -221,10 +199,15 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		EntityPlayer player = event.getPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
-			if (Utils.rand.nextDouble() < botany.getSplosionChance()) {
-				botany.addXp((EntityPlayerMP) player, 100);
-				IBlockState placedState = event.getPlacedBlock();
-				if (botany.validFlowerState(placedState)) {
+			IBlockState placedState = event.getPlacedBlock();
+			Block placedBlock = placedState.getBlock();
+			BlockDoublePlant doublePlant = null;
+			if (placedBlock instanceof BlockDoublePlant) {
+				doublePlant = (BlockDoublePlant) placedBlock;
+			}
+			if (botany.validFlowerState(placedState)) {
+				if (Utils.rand.nextDouble() < botany.getSplosionChance()) {
+					botany.addXp((EntityPlayerMP) player, 100);
 					BlockPos placedPos = event.getPos();
 					int radius = botany.getSplosionRadius();
 					for (int i = -radius; i <= radius; i++) {
@@ -240,8 +223,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 										if (dirtState != null) {
 											Block dirtBlock = dirtState.getBlock();
 											if (dirtBlock instanceof BlockDirt || dirtBlock instanceof BlockGrass || dirtBlock instanceof BlockFarmland) {
-												player.worldObj.setBlockState(airPos, placedState);
-												PlayerPlacedBlocks.addBlock(player.worldObj, airPos);
+												if (placedBlock instanceof BlockDoublePlant) {
+													doublePlant.placeAt(player.worldObj, airPos, placedState.getValue(BlockDoublePlant.VARIANT), 3);
+													PlayerPlacedBlocks.addBlock(player.worldObj, airPos);
+													PlayerPlacedBlocks.addBlock(player.worldObj, airPos.up());
+												} else {
+													player.worldObj.setBlockState(airPos, placedState);
+													PlayerPlacedBlocks.addBlock(player.worldObj, airPos);
+												}
 											}
 										}
 									}

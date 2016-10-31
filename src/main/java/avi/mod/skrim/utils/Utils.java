@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.BlockGravel;
 import net.minecraft.block.BlockMelon;
@@ -107,6 +108,7 @@ public class Utils {
 			block instanceof BlockSoulSand ||
 			block instanceof BlockPumpkin ||
 			block instanceof BlockMelon ||
+			block instanceof BlockDoublePlant ||
 			block == Blocks.IRON_ORE ||
 			block == Blocks.GOLD_ORE ||
 			block == Blocks.DIAMOND_ORE ||
