@@ -314,14 +314,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		if (targetItem != null && targetItem instanceof GlowFlowerVariants) {
 			if (!Skills.canCraft(event.player, Skills.BOTANY, 25)) {
 				Skills.replaceWithComponents(event);
-			} else if (event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 				SkillBotany botany = (SkillBotany) event.player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 				botany.addXp((EntityPlayerMP) event.player, 500);
 			}
 		} else if (targetItem != null && targetItem instanceof EnchantedFlowerVariants) {
 			if (!Skills.canCraft(event.player, Skills.BOTANY, 100)) {
 				Skills.replaceWithComponents(event);
-			} else if (event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 				SkillBotany botany = (SkillBotany) event.player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 				botany.addXp((EntityPlayerMP) event.player, 10000);
 			}

@@ -4,11 +4,16 @@ Changelog
 Version 1.1.5
 -------------
 ### New Features
+* Added the level 75 ranged ability!
 
 ### Quality of Life
 * Causing a flowersplosion now gives you xp
 * You can now cause flowersplosions with tall flowers.
 * Fortune now correctly applies to tall flowers.
+
+### Bug fixes
+* You can now craft custom items again without crashing things!
+* You no longer gain xp from breaking player placed tall flowers.
 
 
 Version 1.1.4

@@ -176,7 +176,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
 				Skills.destroyComponents(event);
 				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 5.0F, true);
-			} else if (event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
 				demolition.addXp((EntityPlayerMP) event.player, 500);
 			}
@@ -184,7 +184,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 50)) {
 				Skills.destroyComponents(event);
 				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 6.0F, true);
-			} else if (event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
 				demolition.addXp((EntityPlayerMP) event.player, 750);
 			}
@@ -192,7 +192,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 75)) {
 				Skills.destroyComponents(event);
 				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 12.0F, true);
-			} else if (event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
 				demolition.addXp((EntityPlayerMP) event.player, 1000);
 			}

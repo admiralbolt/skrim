@@ -261,7 +261,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		if (targetItem != null && targetItem == ModItems.overalls) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
 				Skills.replaceWithComponents(event);
-			} else if (event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 				farming.addXp((EntityPlayerMP) event.player, 500);
 			}
