@@ -1,8 +1,10 @@
-package avi.mod.skrim.items;
+package avi.mod.skrim.items.artifacts;
 
 import java.util.List;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.items.ItemModelProvider;
+import avi.mod.skrim.items.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
@@ -37,9 +39,7 @@ public class ArtifactArmor extends ItemArmor implements ItemModelProvider {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
-		tooltip.add("§4Massively increases jump height.§r");
-		tooltip.add("§4Prevents all fall damage.§r");
-		tooltip.add("§e\"Falco mode engaged.\"");
+		tooltip.add("Custom tooltip");
 	}
 
 	@Override

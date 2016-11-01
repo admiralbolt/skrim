@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.items.artifacts.ArtifactArmor;
+import avi.mod.skrim.items.artifacts.ArtifactSword;
+import avi.mod.skrim.items.artifacts.BlindingBoots;
+import avi.mod.skrim.items.artifacts.CanesSword;
+import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import net.minecraft.block.BlockBush;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -60,10 +65,11 @@ public class ModItems {
 
 	public static ToolMaterial ARTIFACT_DEFAULT = EnumHelper.addToolMaterial("artifact_default", 3, 4500, 6.0F, 4.0F, 0);
 	public static ToolMaterial OBSIDIAN_TOOL = EnumHelper.addToolMaterial("obsidian", 3, 7500, 9.0F, 4.0F, 20);
-	
+
 	public static ArtifactSword CANES_SWORD;
 	public static ArtifactArmor SPRINGHEEL_BOOTS;
-	
+	public static ArtifactArmor BLINDING_BOOTS;
+
 	/**
 	 * Custom items created from skills
 	 */
@@ -82,7 +88,6 @@ public class ModItems {
 	public static HandSaw handSaw;
 	public static CustomArmor overalls;
 	public static CustomBow GREAT_BOW;
-	
 
 	// La musica
 	public static CustomRecord ARUARIAN_DANCE;
@@ -119,7 +124,6 @@ public class ModItems {
 
 		// Overwrite that fishing rod!
 		fishingRod = register(new CustomFishingRod("fishing_rod"));
-		EntityRegistry.registerModEntity(CustomFishHook.class, "CustomFishHook", 0, Skrim.instance, 64, 5, true);
 
 		// Obsidian tools & armor
 		obsidianSword = register(new CustomSword("obsidian_sword", OBSIDIAN_TOOL));
@@ -150,11 +154,14 @@ public class ModItems {
 
 	public static void registerArtifacts() {
 		// Artifact Armors
-		SPRINGHEEL_BOOTS = register(new ArtifactArmor("boots_of_springheel_jak", ARTIFACT_DARK, 1, EntityEquipmentSlot.FEET));
+		SPRINGHEEL_BOOTS = register(new SpringheelBoots());
 		artifacts.add(SPRINGHEEL_BOOTS);
 
+		BLINDING_BOOTS = register(new BlindingBoots());
+		artifacts.add(BLINDING_BOOTS);
+
 		// Artifact Swords
-		CANES_SWORD = register(new ArtifactSword("raising_canes_fry_sword", ARTIFACT_DEFAULT));
+		CANES_SWORD = register(new CanesSword());
 		artifacts.add(CANES_SWORD);
 	}
 
@@ -229,7 +236,7 @@ public class ModItems {
 	public static void registerOveralls() {
 		GameRegistry.addRecipe(new ItemStack(overalls), "A A", "ALA", "LLL", 'A', new ItemStack(Items.DYE, 1, 4), 'L', new ItemStack(Items.LEATHER));
 	}
-	
+
 	public static void registerGreatBow() {
 		GameRegistry.addRecipe(new ItemStack(GREAT_BOW), "GWS", "W S", "GWS", 'G', new ItemStack(Items.GOLD_INGOT), 'W', new ItemStack(Items.STICK), 'S', new ItemStack(Items.STRING));
 		GameRegistry.addRecipe(new ItemStack(GREAT_BOW), "SWG", "S W", "SWG", 'G', new ItemStack(Items.GOLD_INGOT), 'W', new ItemStack(Items.STICK), 'S', new ItemStack(Items.STRING));

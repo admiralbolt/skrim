@@ -1,8 +1,10 @@
-package avi.mod.skrim.items;
+package avi.mod.skrim.items.artifacts;
 
 import java.util.List;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.items.ItemModelProvider;
+import avi.mod.skrim.items.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

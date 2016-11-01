@@ -1,5 +1,8 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.items.artifacts.BlindingBoots;
+import avi.mod.skrim.items.artifacts.CanesSword;
+import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.skills.botany.SkillBotany;
@@ -57,7 +60,7 @@ public class EventHandler {
 		SkillMining.reduceLava(event);
 		SkillBlacksmithing.ironHeart(event);
 		SkillBotany.thornStyle(event);
-		ArtifactHandler.CanesHandler.slayChicken(event);
+		CanesSword.CanesHandler.slayChicken(event);
 	}
 
 	@SubscribeEvent
@@ -116,6 +119,7 @@ public class EventHandler {
 		SkillDigging.metalDetector(event);
 		SkillFarming.farmersTan(event);
 		Skills.applyAttributes(event);
+		BlindingBoots.BlindingBootsHandler.onUpdate(event);
 	}
 
 	@SubscribeEvent
@@ -169,17 +173,17 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onLivingDrop(LivingDropsEvent event) {
-		ArtifactHandler.CanesHandler.fryChicken(event);
+		CanesSword.CanesHandler.fryChicken(event);
 	}
 
 	@SubscribeEvent
 	public void onJump(LivingEvent.LivingJumpEvent event) {
-		ArtifactHandler.SpringheelHandler.jumpHigh(event);
+		SpringheelBoots.SpringheelHandler.jumpHigh(event);
 	}
 
 	@SubscribeEvent
 	public void onFall(LivingFallEvent event) {
-		ArtifactHandler.SpringheelHandler.preventFallDamage(event);
+		SpringheelBoots.SpringheelHandler.preventFallDamage(event);
 	}
 
 

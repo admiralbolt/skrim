@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Sets;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.entities.CustomFishHook;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
