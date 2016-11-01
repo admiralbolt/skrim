@@ -8,6 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.entities.monster.BioCreeper;
+import avi.mod.skrim.entities.monster.NapalmCreeper;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -161,7 +163,15 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			if (targetEntity instanceof EntityCreeper) {
 				if (player != null && player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 					SkillDemolition demo = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-					demo.addXp((EntityPlayerMP) player, 100);
+					int addXp = 0;
+					if (targetEntity instanceof NapalmCreeper) {
+						addXp = 2500;
+					} else if (targetEntity instanceof BioCreeper) {
+						addXp = 1000;
+					} else {
+						addXp = 350;
+					}
+					demo.addXp((EntityPlayerMP) player, addXp);
 				}
 			}
 		}

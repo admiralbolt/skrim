@@ -10,12 +10,16 @@ import net.minecraft.world.World;
 
 public class BioBombExplosion extends CustomExplosion {
 
-	public static float size = 8.0F;
+	public static float DEFAULT_SIZE = 8.0F;
 	public static boolean flaming = false;
 	public static boolean smoking = true;
 	private World world;
 
 	public BioBombExplosion(World worldIn, Entity entityIn, double x, double y, double z) {
+		this(worldIn, entityIn, x, y, z, DEFAULT_SIZE);
+	}
+	
+	public BioBombExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size) {
 		super(worldIn, entityIn, x, y, z, size, flaming, smoking);
 		this.world = worldIn;
 	}

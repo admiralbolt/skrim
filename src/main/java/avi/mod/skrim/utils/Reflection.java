@@ -35,6 +35,36 @@ public class Reflection {
 		return null;
 	}
 	
+	public static Object getSuperPrivateField(Object instance, String fieldName) {
+		Field field;
+		try {
+			field = instance.getClass().getSuperclass().getDeclaredField(fieldName);
+			return getFieldValue(instance, field);
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Object getSuperSuperPrivateField(Object instance, String fieldName) {
+		Field field;
+		try {
+			field = instance.getClass().getSuperclass().getSuperclass().getDeclaredField(fieldName);
+			return getFieldValue(instance, field);
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static Object getFieldValue(Object instance, Field field) {
 		field.setAccessible(true);
 		try {

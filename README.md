@@ -6,6 +6,7 @@ Version 1.1.5
 ### New Features
 * Added the level 75 ranged ability!
 * Added the level 75 defense ability (I promise it works even though the ui is fuck).
+* Added the boots of blinding speed!
 
 ### Quality of Life
 * Causing a flowersplosion now gives you xp
@@ -17,6 +18,7 @@ Version 1.1.5
 * You no longer gain xp from breaking player placed tall flowers.
 * Nightvision given from mining no longer overwrites existing night vision.
 * Defense regeneration ability no longer overwrites existing regeneration.
+* Fixed the coord command.
 
 
 Version 1.1.4

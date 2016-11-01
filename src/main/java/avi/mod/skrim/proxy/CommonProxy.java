@@ -5,16 +5,15 @@ import java.io.File;
 import avi.mod.skrim.Config;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.blocks.VariantEnum;
 import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.capabilities.ModCapabilities;
+import avi.mod.skrim.entities.ModEntities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.items.CustomBow;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
-import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.tileentity.ModTileEntities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -39,6 +38,7 @@ public class CommonProxy {
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
 		ModTileEntities.register();
+		ModEntities.register();
 		MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
@@ -69,9 +69,9 @@ public class CommonProxy {
 	public void registerBlockVariant(ItemBlock block, EnumFlowerType types[]) {
 
 	}
-	
+
 	public void registerBowVariants(CustomBow customBow) {
-		
+
 	}
 
 }
