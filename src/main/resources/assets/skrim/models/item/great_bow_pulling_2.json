@@ -1,5 +1,12 @@
 {
     "parent": "skrim:item/great_bow",
+    "variants": {
+      "normal": [{
+        "textures": {
+          "layer0": "skrim:weapons/great_bow_pulling_2"
+        }
+      }]
+    },
     "textures": {
         "layer0": "skrim:weapons/great_bow_pulling_2"
     }

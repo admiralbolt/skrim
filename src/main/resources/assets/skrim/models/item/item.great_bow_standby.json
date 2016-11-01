@@ -3,11 +3,11 @@
     "variants": {
       "normal": [{
         "textures": {
-          "layer0": "skrim:weapons/great_bow_pulling_1"
+          "layer0": "skrim:weapons/great_bow_standby"
         }
       }]
     },
     "textures": {
-        "layer0": "skrim:weapons/great_bow_pulling_1"
+        "layer0": "skrim:weapons/great_bow_standby"
     }
 }
