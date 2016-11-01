@@ -69,7 +69,7 @@ public class CoordCommand extends CommandBase implements ICommand {
 					}
 				} else if (args.length >= 2) {
 					if (args[0].equals("add")) {
-						sendMessage = PlayerCoords.addCoord(player, args[1]);
+						sendMessage = PlayerCoords.addCoord(player, server, args[1]);
 					} else if (args[0].equals("get")) {
 						sendMessage = PlayerCoords.getCoord(player.getEntityWorld(), server, args[1]);
 					} else if (args[0].equals("remove")) {

@@ -31,6 +31,7 @@ public class PlayerCoords extends WorldSavedData {
 
 	public Map<String, Entry<UUID, BlockPos>> coords = new HashMap<String, Entry<UUID, BlockPos>>();
   public Map<UUID, Entry<BlockPos, String>> lastDeath = new HashMap<UUID, Entry<BlockPos, String>>();
+  public Map<UUID, String> usernames = new HashMap<UUID, String>();
   public Set<BlockPos> locs = new HashSet<BlockPos>();
 	public int dimension;
 
@@ -74,6 +75,18 @@ public class PlayerCoords extends WorldSavedData {
 				this.lastDeath.put(UUID.fromString(subTag.getString("uuid")), new SimpleEntry(pos, deathCause));
 			}
 		}
+		NBTBase nameTags = compound.getTag("usernames");
+		if (nameTags instanceof NBTTagList) {
+			NBTTagList nameList = (NBTTagList) nameTags;
+			int listSize = nameList.tagCount();
+			for (int i = 0; i < listSize; i++) {
+				NBTTagCompound subTag = nameList.getCompoundTagAt(i);
+				UUID uuid = UUID.fromString(subTag.getString("uuid"));
+				String username = subTag.getString("username");
+				this.usernames.put(uuid, username);
+			}
+		}
+		
 	}
 
 	@Override
@@ -104,18 +117,25 @@ public class PlayerCoords extends WorldSavedData {
 			deathCoord.setString("cause", deathCause);
 			deathCoords.appendTag(deathCoord);
 		}
+		NBTTagList nameTags = new NBTTagList();
+		for (UUID uuid: this.usernames.keySet()) {
+			NBTTagCompound name = new NBTTagCompound();
+			name.setString("uuid", uuid.toString());
+			name.setString("username", this.usernames.get(uuid));
+			nameTags.appendTag(name);
+		}
 		compound.setInteger("dimension", this.dimension);
 		compound.setTag("savedCoords", savedCoords);
 		compound.setTag("deathCoords", deathCoords);
+		compound.setTag("usernames", nameTags);
 		return compound;
 	}
 
 	public String formatLocation(MinecraftServer server, String locName) {
 		Entry<UUID, BlockPos> entry = this.coords.get(locName);
 		UUID uuid = entry.getKey();
+		String username = this.usernames.get(uuid);
 		BlockPos pos = entry.getValue();
-		EntityPlayer loggingPlayer = (EntityPlayer) server.getEntityFromUuid(uuid);
-		String username = loggingPlayer.getGameProfile().getName();
 		return locName + ": (" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + ") -- logged by " + username + ".";
 	}
 
@@ -167,14 +187,18 @@ public class PlayerCoords extends WorldSavedData {
 	 * Methods to interact with the saved data.
 	 */
 
-	public static String addCoord(EntityPlayer player, String locName) {
+	public static String addCoord(EntityPlayer player, MinecraftServer server, String locName) {
 		String msg = "";
 		PlayerCoords playerCoords = getData(player.getEntityWorld());
 		BlockPos addPos = player.getPosition();
 		if (!playerCoords.coords.containsKey(locName)) {
 			if (!playerCoords.locs.contains(addPos)) {
-				Entry<UUID, BlockPos> entry = new SimpleEntry<UUID, BlockPos>(player.getPersistentID(), addPos);
+				UUID uuid = player.getPersistentID();
+				Entry<UUID, BlockPos> entry = new SimpleEntry<UUID, BlockPos>(uuid, addPos);
+				EntityPlayer loggingPlayer = (EntityPlayer) server.getEntityFromUuid(uuid);
+				String username = loggingPlayer.getGameProfile().getName();
 				playerCoords.coords.put(locName, entry);
+				playerCoords.usernames.put(uuid, username);
 				playerCoords.markDirty();
 				msg = "Successfully added coordinates under name: " + locName;
 			} else {
@@ -190,16 +214,7 @@ public class PlayerCoords extends WorldSavedData {
 		String msg = "";
 		PlayerCoords playerCoords = getData(world);
 		if (playerCoords.coords.containsKey(locName)) {
-			Entry<UUID, BlockPos> entry = playerCoords.coords.get(locName);
-			UUID uuid = entry.getKey();
-			Entity loggingEntity = server.getEntityFromUuid(uuid);
-			if (loggingEntity instanceof EntityPlayer) {
-				EntityPlayer loggingPlayer = (EntityPlayer) loggingEntity;
-				String username = loggingPlayer.getGameProfile().getName();
-				msg = playerCoords.formatLocation(server, locName);
-			} else {
-				msg ="Invalid logging entity.";
-			}
+			msg = playerCoords.formatLocation(server, locName);
 		} else {
 			msg = "No coordinates saved under name '" + locName + "'.";
 		}
