@@ -1,6 +1,8 @@
 package avi.mod.skrim.utils;
 
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -31,7 +33,12 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
 public class Utils {
@@ -40,6 +47,20 @@ public class Utils {
 	public static Random rand = new Random();
 	public static DecimalFormat oneDigit = new DecimalFormat("0.0");
 	public static DecimalFormat twoDigit = new DecimalFormat("0.00");
+	public static HashSet<Potion> negativeEffects = new HashSet<Potion>();
+	static {
+		negativeEffects.add(MobEffects.BLINDNESS);
+		negativeEffects.add(MobEffects.GLOWING);
+		negativeEffects.add(MobEffects.HUNGER);
+		negativeEffects.add(MobEffects.LEVITATION);
+		negativeEffects.add(MobEffects.MINING_FATIGUE);
+		negativeEffects.add(MobEffects.NAUSEA);
+		negativeEffects.add(MobEffects.POISON);
+		negativeEffects.add(MobEffects.SLOWNESS);
+		negativeEffects.add(MobEffects.UNLUCK);
+		negativeEffects.add(MobEffects.WEAKNESS);
+		negativeEffects.add(MobEffects.WITHER);
+	}
 
 	public static boolean isPointInRegion(int left, int top, int right, int bottom, int pointX, int pointY) {
 		return (pointX > left && pointX < right && pointY > top && pointY < bottom);
@@ -56,6 +77,11 @@ public class Utils {
 	public static void logBlockState(IBlockState state) {
 		Block block = state.getBlock();
 		System.out.println("harvestTool: " + block.getHarvestTool(state) + ", name: " + getBlockName(block) + ", class: " + block.getClass());
+	}
+	
+	public static void logHurtEvent(LivingHurtEvent event) {
+		DamageSource source = event.getSource();
+		System.out.println("source.damageType: " + source.damageType + ", damageAmount: " + event.getAmount() + ", isExplosion: " + source.isExplosion() + ", isFire: " + source.isFireDamage() + ", isMagic: " + source.isMagicDamage() + ", isProjectile: " + source.isProjectile());
 	}
 
 	public static String getFortuneString(int fortuneAmount) {
@@ -125,5 +151,9 @@ public class Utils {
 		int silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, mainStack);
 		return silkTouch > 0;
 	}
-
+	
+	public static boolean isNegativeEffect(PotionEffect effect) {
+		Potion potion = (Potion) Reflection.getPrivateField(effect, "potion");
+		return (potion != null && negativeEffects.contains(potion));
+	}
 }

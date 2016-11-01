@@ -112,7 +112,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		SkillMining.climbWall(event);
-		SkillDefense.riteOfPassage(event);
+		SkillDefense.update(event);
 		SkillDigging.metalDetector(event);
 		SkillFarming.farmersTan(event);
 		Skills.applyAttributes(event);

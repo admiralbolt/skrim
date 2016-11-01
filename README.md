@@ -5,6 +5,7 @@ Version 1.1.5
 -------------
 ### New Features
 * Added the level 75 ranged ability!
+* Added the level 75 defense ability (I promise it works even though the ui is fuck).
 
 ### Quality of Life
 * Causing a flowersplosion now gives you xp
@@ -14,6 +15,8 @@ Version 1.1.5
 ### Bug fixes
 * You can now craft custom items again without crashing things!
 * You no longer gain xp from breaking player placed tall flowers.
+* Nightvision given from mining no longer overwrites existing night vision.
+* Defense regeneration ability no longer overwrites existing regeneration.
 
 
 Version 1.1.4

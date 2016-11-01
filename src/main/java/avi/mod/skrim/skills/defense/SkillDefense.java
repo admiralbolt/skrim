@@ -2,6 +2,7 @@ package avi.mod.skrim.skills.defense;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
@@ -65,10 +66,17 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		"Gain an additional §a4" + SkillAbility.descColor + " max health."
 	);
 
+	public static SkillAbility golemsAspect = new SkillAbility(
+		"Aspect of the Golem",
+		75,
+		"That tickles.",
+		"Negative status effects last for half as long."
+	);
+
 	public SkillDefense(int level, int currentXp) {
 		super("Defense", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/defense.png");
-		this.addAbilities(riteOfPassage, overshields);
+		this.addAbilities(riteOfPassage, overshields, golemsAspect);
 	}
 
 	public double getDamageReduction() {
@@ -111,12 +119,11 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			Long l = player.worldObj.getTotalWorldTime();
 			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DEFENSE, EnumFacing.NORTH)) {
-				if (source.damageType == "mob" || source.damageType == "player" || source.isProjectile()) {
+				SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
+				if (source.damageType == "mob" || source.damageType == "player" || source.damageType.equals("arrow")) {
 					EntityLivingBase baseEntity = event.getEntityLiving();
 					source.getEntity().getEntityId();
-					SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
 					int addXp = defense.getDamageXp(event.getAmount());
 					if (canBlockDamageSource(player, source)) {
 						if (source.isProjectile()) {
@@ -134,7 +141,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		}
 	}
 
-	public static void riteOfPassage(LivingUpdateEvent event) {
+	public static void update(LivingUpdateEvent event) {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
@@ -143,10 +150,24 @@ public class SkillDefense extends Skill implements ISkillDefense {
 					SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
 					if (defense.hasAbility(1)) {
 						if (defense.canRegen && player.getHealth() <= (float) (defense.healthPercent * player.getMaxHealth())) {
-							player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, regenLength));
+							PotionEffect activeEffect = player.getActivePotionEffect(MobEffects.REGENERATION);
+							if (activeEffect != null) {
+								activeEffect.combine(new PotionEffect(MobEffects.REGENERATION, regenLength));
+							} else {
+								player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, regenLength));
+							}
 							defense.canRegen = false;
 						} else if (!defense.canRegen && player.getHealth() == player.getMaxHealth()) {
 							defense.canRegen = true;
+						}
+					}
+					if (defense.hasAbility(3)) {
+						Collection<PotionEffect> effects = player.getActivePotionEffects();
+						for (PotionEffect effect : effects) {
+							if (Utils.isNegativeEffect(effect)) {
+								Reflection.hackValueTo(effect, "duration", effect.getDuration() - 1);
+								effect.combine(effect);
+							}
 						}
 					}
 				}
