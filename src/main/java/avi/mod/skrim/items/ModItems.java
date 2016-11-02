@@ -11,6 +11,7 @@ import avi.mod.skrim.items.artifacts.ArtifactItem;
 import avi.mod.skrim.items.artifacts.ArtifactSword;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
+import avi.mod.skrim.items.artifacts.GruesomeMask;
 import avi.mod.skrim.items.artifacts.SheepFinder3000;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import net.minecraft.block.BlockBush;
@@ -56,7 +57,6 @@ public class ModItems {
 	/**
 	 * Default ArmorMaterials Durability: leather -> 5 chain/iron -> 15 gold -> 7 diamond -> 33 Reductions: leather -> {1, 3, 2, 1} Total 7 chain -> {2, 5, 4, 1} Total 12 iron -> {2, 6, 5, 2} Total 15 gold -> {2, 5, 3, 1} Total 11 diamond -> {3, 8, 6, 3} Total 20 Enchantability: leather -> 15 chain -> 12 iron -> 9 gold -> 25 diamond -> 10 Toughness
 	 */
-	public static ArmorMaterial ARTIFACT_DARK = EnumHelper.addArmorMaterial("artifact_dark", "skrim:artifact_dark", 50, new int[] { 3, 8, 6, 3 }, 30, null, 0.0F);
 	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 10, 8, 4 }, 20, null, 3.0F);
 	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
 
@@ -68,8 +68,11 @@ public class ModItems {
 	public static ToolMaterial OBSIDIAN_TOOL = EnumHelper.addToolMaterial("obsidian", 3, 7500, 9.0F, 4.0F, 20);
 
 	public static ArtifactSword CANES_SWORD;
+	
 	public static ArtifactArmor SPRINGHEEL_BOOTS;
 	public static ArtifactArmor BLINDING_BOOTS;
+	public static ArtifactArmor GRUESOME_MASK;
+	
 	public static ArtifactItem SHEEP_FINDER;
 
 	/**
@@ -161,6 +164,9 @@ public class ModItems {
 
 		BLINDING_BOOTS = register(new BlindingBoots());
 		artifacts.add(BLINDING_BOOTS);
+		
+		GRUESOME_MASK = register(new GruesomeMask());
+		artifacts.add(GRUESOME_MASK);
 
 		// Artifact Swords
 		CANES_SWORD = register(new CanesSword());

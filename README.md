@@ -10,8 +10,9 @@ Version 1.1.5
 ### New Features
 * Added the level 75 ranged ability!
 * Added the level 75 defense ability (I promise it works even though the ui is fuck).
-* Added the boots of blinding speed!
+* Added the Boots of Blinding Speed!
 * Added the Sheep Finder 3000!
+* Added the Gruesome Mask!
 
 ### Quality of Life
 * Causing a flowersplosion now gives you xp
