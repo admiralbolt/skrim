@@ -92,3 +92,6 @@ item.boots_of_blinding_speed.name=Boots of Blinding Speed
 item.raising_canes_fry_sword.name=Raising Cane's® Sword of Frying
 
 item.tux.name=Tux
+
+entity.skrim.napalm_creeper.name=Napalm Creeper
+entity.skrim.bio_creeper.name=Bio Creeper
