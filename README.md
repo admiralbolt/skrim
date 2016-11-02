@@ -3,15 +3,23 @@ Changelog
 
 Version 1.1.5
 -------------
+### I'm so sorry
+* Added bio creepers
+* Added napalm creepers
+
 ### New Features
 * Added the level 75 ranged ability!
 * Added the level 75 defense ability (I promise it works even though the ui is fuck).
 * Added the boots of blinding speed!
+* Added the Sheep Finder 3000!
 
 ### Quality of Life
 * Causing a flowersplosion now gives you xp
 * You can now cause flowersplosions with tall flowers.
 * Fortune now correctly applies to tall flowers.
+
+### Balance Changes
+* Demolition now gives more xp for setting off tnt, and more xp for killing creepers, depending on type.
 
 ### Bug fixes
 * You can now craft custom items again without crashing things!
@@ -19,6 +27,7 @@ Version 1.1.5
 * Nightvision given from mining no longer overwrites existing night vision.
 * Defense regeneration ability no longer overwrites existing regeneration.
 * Fixed the coord command.
+
 
 
 Version 1.1.4
