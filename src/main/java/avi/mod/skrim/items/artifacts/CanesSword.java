@@ -3,10 +3,14 @@ package avi.mod.skrim.items.artifacts;
 import java.util.List;
 
 import avi.mod.skrim.items.ModItems;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -68,6 +72,43 @@ public class CanesSword extends ArtifactSword {
 		      }
 		    }
 			}
+		}
+	}
+	
+	@Override
+	public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
+		ItemStack caneStack = new ItemStack(ModItems.CANES_SWORD);
+		caneStack.addEnchantment(Enchantments.FIRE_ASPECT, 2);
+		subItems.add(caneStack);
+	}
+
+	@Override
+	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+		if (attacker instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) attacker;
+			Item sword = stack.getItem();
+			if (sword == ModItems.CANES_SWORD) {
+				if (canSweep(player, target)) {
+					doFireSweep(player, target);
+				}
+			}
+		}
+		return true;
+	}
+
+	public static boolean canSweep(EntityPlayer player, EntityLivingBase targetEntity) {
+		boolean flag1 = player.isSprinting();
+	  boolean flag2 = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && targetEntity instanceof EntityLivingBase;
+	  double d0 = (double)(player.distanceWalkedModified - player.prevDistanceWalkedModified);
+	  return (!flag2 && !flag1 && player.onGround && d0 < (double) player.getAIMoveSpeed());
+	}
+
+
+	public static void doFireSweep(EntityPlayer player, EntityLivingBase targetEntity) {
+		for (EntityLivingBase entitylivingbase : player.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
+			if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase) && player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {
+	      entitylivingbase.setFire(4);
+	    }
 		}
 	}
 

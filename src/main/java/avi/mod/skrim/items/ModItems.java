@@ -7,9 +7,11 @@ import java.util.Map;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.artifacts.ArtifactArmor;
+import avi.mod.skrim.items.artifacts.ArtifactItem;
 import avi.mod.skrim.items.artifacts.ArtifactSword;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
+import avi.mod.skrim.items.artifacts.SheepFinder3000;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import net.minecraft.block.BlockBush;
 import net.minecraft.init.Blocks;
@@ -24,7 +26,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
@@ -69,6 +70,7 @@ public class ModItems {
 	public static ArtifactSword CANES_SWORD;
 	public static ArtifactArmor SPRINGHEEL_BOOTS;
 	public static ArtifactArmor BLINDING_BOOTS;
+	public static ArtifactItem SHEEP_FINDER;
 
 	/**
 	 * Custom items created from skills
@@ -163,6 +165,10 @@ public class ModItems {
 		// Artifact Swords
 		CANES_SWORD = register(new CanesSword());
 		artifacts.add(CANES_SWORD);
+		
+		// Artifact Items
+		SHEEP_FINDER = register(new SheepFinder3000());
+		artifacts.add(SHEEP_FINDER);
 	}
 
 	public static Map<String, CustomRecord> songs = new HashMap<String, CustomRecord>();
