@@ -92,9 +92,16 @@ item.boots_of_blinding_speed.name=Boots of Blinding Speed
 item.gruesome_mask.name=Gruesome Mask
 
 item.raising_canes_fry_sword.name=Raising Cane's® Sword of Frying
+
 item.sheep_finder_3000.name=Sheep Finder 3000
 
 item.tux.name=Tux
 
 entity.skrim.napalm_creeper.name=Napalm Creeper
 entity.skrim.bio_creeper.name=Bio Creeper
+
+achievement.found_skills=Finding Skills
+achievement.found_skills.desc=Click the skills button on the inventory screen
+
+achievement.archaeology=Archaeology
+achievement.archaeology.desc=Find an artifact in a generated chest
