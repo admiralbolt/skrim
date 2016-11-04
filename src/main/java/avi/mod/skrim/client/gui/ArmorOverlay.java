@@ -32,7 +32,12 @@ public class ArmorOverlay extends Gui {
     int l2 = k1;
     int i3 = entityplayer.getTotalArmorValue();
     int j3 = -1;
-    double maxAttributeArmor = (double) Reflection.getAttributeValue(armor, "maximumValue");
+    Reflection.printFields(armor);
+    /**
+     * field_111136_b
+     */
+    double maxAttributeArmor = (double) Reflection.getAttributeValue(armor, "field_111120_a", "maximumValue");
+    System.out.println("maxAttributeArmor: " + maxAttributeArmor);
     int maxArmor = (int) Math.ceil(Math.max(maxAttributeArmor, 20.0) / 2);
     
 		for (int k3 = 0; k3 < maxArmor; ++k3) {

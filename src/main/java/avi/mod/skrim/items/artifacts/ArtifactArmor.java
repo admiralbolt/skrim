@@ -18,37 +18,36 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ArtifactArmor extends ItemArmor implements ItemModelProvider {
-	
+
 	protected String name;
-	
+
 	public ArtifactArmor(String name, EntityEquipmentSlot armorType) {
 		this(name, getAndCreateMaterial(name), armorType);
 	}
-	
+
 	public ArtifactArmor(String name, ArmorMaterial material, EntityEquipmentSlot armorType) {
 		super(material, 1, armorType);
-		System.out.println("renderIndex: " + renderIndex + ", slotIndex: " + armorType.getSlotIndex() + ", armorType.getIndex(): " + armorType.getIndex());
 		this.name = name;
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 	}
-	
+
 	// Default armor stats
 	public static ArmorMaterial getAndCreateMaterial(String name) {
 		return EnumHelper.addArmorMaterial(name, "skrim:" + name, 50, new int[] {3, 8, 6, 3}, 30, null, 0.0F);
 	}
-	
+
 	@Override
 	public boolean hasEffect(ItemStack stack) {
 		return true;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public EnumRarity getRarity(ItemStack stack) {
 		return ModItems.ARTIFACT_RARITY;
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
 		tooltip.add("Custom tooltip");

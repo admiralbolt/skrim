@@ -264,7 +264,7 @@ public class Skills {
 
 		}
 	}
-	
+
 	public static Map<Class, Integer> killXp  = new HashMap<Class, Integer>();
 	public static Map<ZombieType, Integer> zombieVariants = new HashMap<ZombieType, Integer>();
 	public static Map<SkeletonType, Integer> skeletonVariants = new HashMap<SkeletonType, Integer>();
@@ -272,46 +272,46 @@ public class Skills {
 		/**
 		 * Handle variants
 		 */
-		zombieVariants.put(ZombieType.NORMAL, 500);
-		zombieVariants.put(ZombieType.HUSK, 800);
-		zombieVariants.put(ZombieType.VILLAGER_BUTCHER, 600);
-		zombieVariants.put(ZombieType.VILLAGER_FARMER, 600);
-		zombieVariants.put(ZombieType.VILLAGER_LIBRARIAN, 600);
-		zombieVariants.put(ZombieType.VILLAGER_PRIEST, 600);
-		zombieVariants.put(ZombieType.VILLAGER_SMITH, 600);
-		
-		skeletonVariants.put(SkeletonType.NORMAL, 600);
-		skeletonVariants.put(SkeletonType.STRAY, 900);
-		skeletonVariants.put(SkeletonType.WITHER, 1300);
-		
+		zombieVariants.put(ZombieType.NORMAL, 750);
+		zombieVariants.put(ZombieType.HUSK, 1000);
+		zombieVariants.put(ZombieType.VILLAGER_BUTCHER, 850);
+		zombieVariants.put(ZombieType.VILLAGER_FARMER, 850);
+		zombieVariants.put(ZombieType.VILLAGER_LIBRARIAN, 850);
+		zombieVariants.put(ZombieType.VILLAGER_PRIEST, 850);
+		zombieVariants.put(ZombieType.VILLAGER_SMITH, 850);
+
+		skeletonVariants.put(SkeletonType.NORMAL, 850);
+		skeletonVariants.put(SkeletonType.STRAY, 1000);
+		skeletonVariants.put(SkeletonType.WITHER, 1500);
+
 		killXp.put(EntityPlayer.class, 100);
-		
+
 		/**
 		 * Slimes are weird since they have so many babies
 		 */
-		killXp.put(EntitySlime.class, 75);
-		killXp.put(EntityMagmaCube.class, 90);
-		
-		killXp.put(EntityCreeper.class, 750);
-		
-		killXp.put(EntitySpider.class, 300);
-		killXp.put(EntityCaveSpider.class, 450);
-		
-		killXp.put(EntityEnderman.class, 1200);
-		killXp.put(EntityPolarBear.class, 750);
-		killXp.put(EntityPigZombie.class, 1000);
-		killXp.put(EntityBlaze.class, 850);
-		killXp.put(EntityEndermite.class, 250);
-		killXp.put(EntityGhast.class, 500);
+		killXp.put(EntitySlime.class, 100);
+		killXp.put(EntityMagmaCube.class, 125);
+
+		killXp.put(EntityCreeper.class, 1000);
+
+		killXp.put(EntitySpider.class, 400);
+		killXp.put(EntityCaveSpider.class, 550);
+
+		killXp.put(EntityEnderman.class, 1600);
+		killXp.put(EntityPolarBear.class, 1000);
+		killXp.put(EntityPigZombie.class, 1150);
+		killXp.put(EntityBlaze.class, 1000);
+		killXp.put(EntityEndermite.class, 300);
+		killXp.put(EntityGhast.class, 600);
 		killXp.put(EntityGuardian.class, 1500);
-		killXp.put(EntityShulker.class, 750);
-		killXp.put(EntitySilverfish.class, 300);
-		killXp.put(EntityWitch.class, 1250);
-		
-		killXp.put(EntityDragon.class, 30000);
-		killXp.put(EntityWither.class, 50000);
+		killXp.put(EntityShulker.class, 850);
+		killXp.put(EntitySilverfish.class, 400);
+		killXp.put(EntityWitch.class, 1400);
+
+		killXp.put(EntityDragon.class, 60000);
+		killXp.put(EntityWither.class, 100000);
 	}
-	
+
 	/**
 	 * Bonus xp for killing shit
 	 * Variants make this pretty terrible to program well.
@@ -332,9 +332,9 @@ public class Skills {
 				return killXp.get(entity.getClass());
 			}
 		}
-		
+
 		return 0;
 	}
-	
+
 
 }

@@ -58,26 +58,26 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		foodMap = new HashMap<String, CustomFood>();
 		xpMap = new HashMap<String, Integer>();
 		entityFoodMap = new HashMap<Class, String>();
-		addFood("bread", ModItems.overwriteBread, 100);
-		addFood("cookie", ModItems.overwriteCookie, 15);
+		addFood("bread", ModItems.overwriteBread, 200);
+		addFood("cookie", ModItems.overwriteCookie, 25);
 
-		addFood("potatobaked", ModItems.overwriteBakedPotato, 150);
+		addFood("potatobaked", ModItems.overwriteBakedPotato, 300);
 
-		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 200);
-		addFood("mushroomstew", ModItems.overwriteMushroomStew, 200);
+		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 400);
+		addFood("mushroomstew", ModItems.overwriteMushroomStew, 400);
 
-		addFood("muttoncooked", ModItems.overwriteMutton, 300);
+		addFood("muttoncooked", ModItems.overwriteMutton, 600);
 		entityFoodMap.put(EntitySheep.class, "muttoncooked");
-		addFood("beefcooked", ModItems.overwriteSteak, 300);
+		addFood("beefcooked", ModItems.overwriteSteak, 600);
 		entityFoodMap.put(EntityCow.class, "beefcooked");
-		addFood("porkchopcooked", ModItems.overwritePorkchop, 300);
+		addFood("porkchopcooked", ModItems.overwritePorkchop, 600);
 		entityFoodMap.put(EntityPig.class, "porkchopcooked");
-		addFood("chickencooked", ModItems.overwriteChicken, 300);
+		addFood("chickencooked", ModItems.overwriteChicken, 600);
 		entityFoodMap.put(EntityChicken.class, "chickencooked");
 
-		addFood("cooked_fish", ModItems.overwriteFish, 350);
-		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 425);
-		addFood("cooked_salmon", ModItems.overwriteSalmon, 500);
+		addFood("cooked_fish", ModItems.overwriteFish, 700);
+		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 750);
+		addFood("cooked_salmon", ModItems.overwriteSalmon, 800);
 
 		addFood("rabbitcooked", ModItems.overwriteRabbit, 1000);
 		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");

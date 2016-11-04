@@ -21,6 +21,7 @@ Version 1.1.5
 
 ### Balance Changes
 * Demolition now gives more xp for setting off tnt, and more xp for killing creepers, depending on type.
+* Buffed experience for botany, cooking, and farming.
 
 ### Bug fixes
 * You can now craft custom items again without crashing things!
@@ -28,6 +29,7 @@ Version 1.1.5
 * Nightvision given from mining no longer overwrites existing night vision.
 * Defense regeneration ability no longer overwrites existing regeneration.
 * Fixed the coord command.
+* Fixed the botany level 75 ability!
 
 
 

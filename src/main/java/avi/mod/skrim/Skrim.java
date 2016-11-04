@@ -5,6 +5,7 @@ import avi.mod.skrim.proxy.CommonProxy;
 import avi.mod.skrim.client.TestTab;
 import avi.mod.skrim.commands.CommandRegistry;
 import avi.mod.skrim.commands.SetSkillCommand;
+import net.minecraft.stats.Achievement;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -22,7 +23,7 @@ public class Skrim {
 
 	public static final String modId = "skrim";
 	public static final String name = "Skrim";
-	public static final String version = "1.1.4";
+	public static final String version = "1.1.5";
 
 	public static final TestTab creativeTab = new TestTab();
 

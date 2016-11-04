@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
+import avi.mod.skrim.client.gui.ArmorOverlay;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -18,6 +19,7 @@ import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -101,7 +103,10 @@ public class SkillDefense extends Skill implements ISkillDefense {
 			this.level++;
 			SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
 			IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
-			Reflection.hackAttributeTo(armor, "maximumValue", 20.0 + this.getExtraArmor());
+			System.out.println("START");
+			Reflection.printFields(armor);
+			System.out.println("BOUNDARY");
+			Reflection.hackAttributeTo(armor, 20.0 + this.getExtraArmor(), "maximumValue", "field_111120_a");
 		}
 		SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
 	}
@@ -165,7 +170,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 						Collection<PotionEffect> effects = player.getActivePotionEffects();
 						for (PotionEffect effect : effects) {
 							if (Utils.isNegativeEffect(effect)) {
-								Reflection.hackValueTo(effect, "duration", effect.getDuration() - 1);
+								Reflection.hackValueTo(effect, effect.getDuration() - 1, "duration", "field_76460_b");
 								effect.combine(effect);
 							}
 						}
@@ -187,8 +192,9 @@ public class SkillDefense extends Skill implements ISkillDefense {
 
 	public static void renderArmor(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() == ElementType.ARMOR) {
-			// event.setCanceled(true);
-			// new ArmorOverlay(Minecraft.getMinecraft());
+			event.setCanceled(true);
+			System.out.println("Creating new armor overlay...");
+			new ArmorOverlay(Minecraft.getMinecraft());
 		}
 	}
 

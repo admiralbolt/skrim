@@ -1,6 +1,7 @@
 package avi.mod.skrim.network;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.network.AchievementPacket.AchievementPacketHandler;
 import avi.mod.skrim.network.ExplosionPacket.ExplosionPacketHandler;
 import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
@@ -38,6 +39,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(MetalDetectorPacketHandler.class, MetalDetectorPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(WhirlingChopPacketHandler.class, WhirlingChopPacket.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(AchievementPacketHandler.class, AchievementPacket.class, id++, Side.SERVER);
 	}
 
 }

@@ -14,6 +14,7 @@ import avi.mod.skrim.items.CustomBow;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.stats.SkrimAchievements;
 import avi.mod.skrim.tileentity.ModTileEntities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -47,6 +48,7 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		SkrimPacketHandler.registerPackets();
+		SkrimAchievements.register();
 		NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
 	}
 

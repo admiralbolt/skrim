@@ -49,25 +49,25 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	static {
 		xpMap = new HashMap<String, Integer>();
 		// The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
-		xpMap.put("dandelion", 150);
-		xpMap.put("poppy", 150);
+		xpMap.put("dandelion", 300);
+		xpMap.put("poppy", 300);
 		// 3 Biomes
-		xpMap.put("houstonia", 300); // azure_bluet
-		xpMap.put("red_tulip", 300);
-		xpMap.put("orange_tulip", 300);
-		xpMap.put("white_tulip", 300);
-		xpMap.put("pink_tulip", 300);
-		xpMap.put("oxeye_daisy", 300);
+		xpMap.put("houstonia", 600); // azure_bluet
+		xpMap.put("red_tulip", 600);
+		xpMap.put("orange_tulip", 600);
+		xpMap.put("white_tulip", 600);
+		xpMap.put("pink_tulip", 600);
+		xpMap.put("oxeye_daisy", 600);
 		// Only swamp, can respawn
-		xpMap.put("blue_orchid", 600);
-		xpMap.put("allium", 600);
+		xpMap.put("blue_orchid", 1200);
+		xpMap.put("allium", 1200);
 		// Only forest & flower forest on generation
-		xpMap.put("syringa", 1500); // lilac
-		xpMap.put("rose_bush", 1500);
-		xpMap.put("double_rose", 1500);
-		xpMap.put("paeonia", 1500); // peony
+		xpMap.put("syringa", 3000); // lilac
+		xpMap.put("rose_bush", 3000);
+		xpMap.put("double_rose", 3000);
+		xpMap.put("paeonia", 3000); // peony
 		// Only sunflower plains on generation
-		xpMap.put("sunflower", 3000);
+		xpMap.put("sunflower", 5000);
 	}
 
 	public static SkillAbility sunFlower = new SkillAbility("Sun Flower", 25, "It was either this or mariglow, don't know which one is worse.", "Enables you to craft glowing flowers with a flower & glowstone dust.");
@@ -283,7 +283,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 					ItemStack mainStack = player.getHeldItemMainhand();
 					if (botany.validFlowerStack(mainStack)) {
 						villager.setIsWillingToMate(true);
-						MerchantRecipeList buyingList = (MerchantRecipeList) Reflection.getPrivateField(villager, "buyingList");
+						MerchantRecipeList buyingList = (MerchantRecipeList) Reflection.getPrivateField(villager, "buyingList", "field_70963_i");
 						for (MerchantRecipe recipe : buyingList) {
 							ItemStack first = recipe.getItemToBuy();
 							if (first.stackSize > 4) {

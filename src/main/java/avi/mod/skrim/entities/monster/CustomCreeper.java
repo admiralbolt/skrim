@@ -7,14 +7,14 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class CustomCreeper extends EntityCreeper {
-	
+
 	private ResourceLocation customResource;
 
 	public CustomCreeper(World worldIn, String resourcePath) {
 		super(worldIn);
 		this.customResource = new ResourceLocation("skrim:" + resourcePath);
 	}
-	
+
 	public ResourceLocation getResourceLocation() {
 		return this.customResource;
 	}
@@ -27,8 +27,8 @@ public class CustomCreeper extends EntityCreeper {
 	@Override
 	public void onUpdate() {
 		if (this.isEntityAlive()) {
-			Integer timeSinceIgnited = (Integer) Reflection.getSuperSuperPrivateField(this, "timeSinceIgnited");
-			Integer fuseTime = (Integer) Reflection.getSuperSuperPrivateField(this, "fuseTime");
+			Integer timeSinceIgnited = (Integer) Reflection.getSuperSuperPrivateField(this, "timeSinceIgnited", "field_70833_d");
+			Integer fuseTime = (Integer) Reflection.getSuperSuperPrivateField(this, "fuseTime", "field_82225_f");
 			int i = this.getCreeperState();
 			if ((timeSinceIgnited + i) >= fuseTime) {
 				this.explode();
@@ -47,7 +47,7 @@ public class CustomCreeper extends EntityCreeper {
 			this.setDead();
 		}
 	}
-	
+
 	// Override this
 	public Explosion getExplosion() {
 		return null;
