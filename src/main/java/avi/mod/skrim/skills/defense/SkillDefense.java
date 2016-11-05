@@ -190,7 +190,6 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public static void renderArmor(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() == ElementType.ARMOR) {
 			event.setCanceled(true);
-			System.out.println("Creating new armor overlay...");
 			new ArmorOverlay(Minecraft.getMinecraft());
 		}
 	}

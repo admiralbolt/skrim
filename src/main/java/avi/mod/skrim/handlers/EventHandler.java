@@ -143,6 +143,19 @@ public class EventHandler {
 			SkillFarming.giveMoreCrops(event);
 			SkillWoodcutting.sawTree(event);
 		}
+		PlayerPlacedBlocks.removeBlock(world, event.getPos());
+		// Fuck you double plants
+		IBlockState state = event.getState();
+		Block block = state.getBlock();
+		if (block instanceof BlockDoublePlant) {
+			for (int i = -1; i <= 1; i += 2) {
+				BlockPos targetPos = event.getPos().add(0, i, 0);
+				IBlockState checkState = world.getBlockState(targetPos);
+				if (checkState.getBlock() instanceof BlockDoublePlant) {
+					PlayerPlacedBlocks.removeBlock(world, targetPos);
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -164,19 +177,6 @@ public class EventHandler {
 			SkillDigging.addDiggingXp(event);
 			SkillFarming.addFarmingXp(event);
 			SkillWoodcutting.addWoodcuttingXp(event);
-		}
-		PlayerPlacedBlocks.removeBlock(world, event.getPos());
-		// Fuck you double plants
-		IBlockState state = event.getState();
-		Block block = state.getBlock();
-		if (block instanceof BlockDoublePlant) {
-			for (int i = -1; i <= 1; i += 2) {
-				BlockPos targetPos = event.getPos().add(0, i, 0);
-				IBlockState checkState = world.getBlockState(targetPos);
-				if (checkState.getBlock() instanceof BlockDoublePlant) {
-					PlayerPlacedBlocks.removeBlock(world, targetPos);
-				}
-			}
 		}
 	}
 
