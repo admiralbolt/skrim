@@ -25,21 +25,20 @@ public class ArmorOverlay extends Gui {
     float f = (float) iattributeinstance.getAttributeValue();
     int k1 = MathHelper.ceiling_float_int(entityplayer.getAbsorptionAmount());
     int l1 = MathHelper.ceiling_float_int((f + (float)k1) / 2.0F / 10.0F);
-    
+
     int i2 = Math.max(10 - (l1 - 2), 3);
     int j2 = j1 - (l1 - 1) * i2 - 10;
     int k2 = j1 - 10;
     int l2 = k1;
     int i3 = entityplayer.getTotalArmorValue();
     int j3 = -1;
-    Reflection.printFields(armor);
     /**
      * field_111136_b
      */
     double maxAttributeArmor = (double) Reflection.getAttributeValue(armor, "field_111120_a", "maximumValue");
     System.out.println("maxAttributeArmor: " + maxAttributeArmor);
     int maxArmor = (int) Math.ceil(Math.max(maxAttributeArmor, 20.0) / 2);
-    
+
 		for (int k3 = 0; k3 < maxArmor; ++k3) {
 			if (i3 > 0) {
 				int l3 = l + k3 * 8;
