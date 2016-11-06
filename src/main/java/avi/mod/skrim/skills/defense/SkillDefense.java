@@ -103,7 +103,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 			this.level++;
 			SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
 			IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
-			Reflection.hackAttributeTo(armor, 20.0 + this.getExtraArmor(), "maximumValue", "field_111120_a");
+			// Reflection.hackAttributeTo(armor, 20.0 + this.getExtraArmor(), "maximumValue", "field_111120_a");
 		}
 		SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
 	}
