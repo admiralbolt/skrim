@@ -120,7 +120,9 @@ public class SkillMelee extends Skill implements ISkillMelee {
 			if (player != null && player.hasCapability(Skills.MELEE, EnumFacing.NORTH)) {
 				if (source.damageType == "player") {
 					SkillMelee melee = (SkillMelee) player.getCapability(Skills.MELEE, EnumFacing.NORTH);
+					System.out.println("melee pre: " + event.getAmount());
 					event.setAmount(event.getAmount() + (float) (melee.getExtraDamage() * event.getAmount()));
+					System.out.println("melee post: " + event.getAmount());
 					int addXp = 0;
 					if (Math.random() < melee.getCritChance()) {
 						EntityLivingBase targetEntity = event.getEntityLiving();
