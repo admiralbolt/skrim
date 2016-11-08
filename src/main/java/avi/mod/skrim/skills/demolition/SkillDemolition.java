@@ -179,9 +179,9 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
 	public static void verifyExplosives(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		Item dynamite = new ItemStack(ModBlocks.dynamite).getItem();
-		Item biobomb = new ItemStack(ModBlocks.biobomb).getItem();
-		Item napalm = new ItemStack(ModBlocks.napalm).getItem();
+		Item dynamite = new ItemStack(ModBlocks.DYNAMITE).getItem();
+		Item biobomb = new ItemStack(ModBlocks.BIOBOMB).getItem();
+		Item napalm = new ItemStack(ModBlocks.NAPALM).getItem();
 		if (targetItem != null && targetItem == dynamite) {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
 				Skills.destroyComponents(event);

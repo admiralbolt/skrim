@@ -195,11 +195,11 @@ public class CustomTNTPrimed extends Entity {
 	public static Block getBlock(CustomTNTPrimed entity) {
 		String explosionType = entity.getExplosionType();
 		if (explosionType.equals("dynamite")) {
-			return ModBlocks.dynamite;
+			return ModBlocks.DYNAMITE;
 		} else if (explosionType.equals("biobomb")) {
-			return ModBlocks.biobomb;
+			return ModBlocks.BIOBOMB;
 		} else if (explosionType.equals("napalm")) {
-			return ModBlocks.napalm;
+			return ModBlocks.NAPALM;
 		}
 		return null;
 	}

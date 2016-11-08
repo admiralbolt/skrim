@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.items.artifacts.ArtifactArmor;
 import avi.mod.skrim.items.artifacts.ArtifactItem;
 import avi.mod.skrim.items.artifacts.ArtifactSword;
@@ -49,6 +50,9 @@ public class ModItems {
 	public static CustomFood overwriteRabbitStew;
 	public static CustomFood overwriteSteak;
 	public static CustomFood canesChicken;
+	
+	public static SkrimCake SKRIM_CAKE;
+	public static AngelCake ANGEL_CAKE;
 
 	public static CustomFishingRod fishingRod;
 
@@ -126,6 +130,9 @@ public class ModItems {
 		overwriteSteak = register(new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
 		overwriteRabbit = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
 		canesChicken = register(new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab));
+		
+		SKRIM_CAKE = register(new SkrimCake());
+		ANGEL_CAKE = register(new AngelCake());
 
 		// Overwrite that fishing rod!
 		fishingRod = register(new CustomFishingRod("fishing_rod"));

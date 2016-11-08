@@ -41,9 +41,12 @@ public final class ModBlocks {
   public static EnchantedFlower enchantedFlowerYellow;
   public static EnchantedFlowerVariants enchantedFlowerYellowVariants;
 
-  public static Dynamite dynamite;
-  public static BioBomb biobomb;
-  public static Napalm napalm;
+  public static Dynamite DYNAMITE;
+  public static BioBomb BIOBOMB;
+  public static Napalm NAPALM;
+  
+  public static SkrimCakeBlock SKRIM_CAKE;
+  public static AngelCakeBlock ANGEL_CAKE;
 
   public static void createBlocks() {
     orePenguin = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
@@ -68,11 +71,14 @@ public final class ModBlocks {
     enchantedFlowerYellow = register(enchantedYellow, enchantedFlowerYellowVariants);
     addEnchantedFlowerRecipes(enchantedYellow, enchantedFlowerYellowVariants);
 
-    dynamite = register(new Dynamite("dynamite"));
-    biobomb = register(new BioBomb("biobomb"));
-    napalm = register(new Napalm("napalm"));
+    DYNAMITE = register(new Dynamite("dynamite"));
+    BIOBOMB = register(new BioBomb("biobomb"));
+    NAPALM = register(new Napalm("napalm"));
 		EntityRegistry.registerModEntity(CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20, 5, true);
 		addExplosivesRecipes();
+		
+		SKRIM_CAKE = register(new SkrimCakeBlock());
+		ANGEL_CAKE = register(new AngelCakeBlock());
   }
 
 
@@ -112,10 +118,10 @@ public final class ModBlocks {
   private static void addExplosivesRecipes() {
   	Item[] pics = {Items.WOODEN_PICKAXE, Items.STONE_PICKAXE};
   	for (Item pic : pics) {
-  		GameRegistry.addShapelessRecipe(new ItemStack(dynamite), Blocks.TNT, pic);
+  		GameRegistry.addShapelessRecipe(new ItemStack(DYNAMITE), Blocks.TNT, pic);
   	}
 
-  	GameRegistry.addRecipe(new ItemStack(napalm), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
+  	GameRegistry.addRecipe(new ItemStack(NAPALM), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
 
   }
 

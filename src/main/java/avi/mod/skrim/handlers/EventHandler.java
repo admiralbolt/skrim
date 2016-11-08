@@ -123,6 +123,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		SkillMining.climbWall(event);
+		SkillCooking.angelUpdate(event);
 		SkillDefense.update(event);
 		SkillDigging.metalDetector(event);
 		SkillFarming.farmersTan(event);
@@ -197,6 +198,7 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onFall(LivingFallEvent event) {
+		SkillCooking.angelFall(event);
 
 		// Artifact handlers
 		SpringheelBoots.SpringheelHandler.preventFallDamage(event);

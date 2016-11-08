@@ -38,22 +38,19 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 			NBTTagCompound compound = stack.getTagCompound();
 			if (compound.hasKey("level")) {
 				ItemFood food = (ItemFood) stack.getItem();
-				float satMod = food.getSaturationModifier(stack);
-				int foodHeal = food.getHealAmount(stack);
 				int level = compound.getInteger("level");
 
 				boolean overFull = level >= 25;
 				boolean panacea = level >= 50;
 				boolean superFood = level >= 75;
-
-				double extraFood = SkillCooking.extraFood(level);
-				double extraSaturation = SkillCooking.extraSaturation(level);
+				
+				int additionalHeal = getTotalFood(food, stack, level);
+				float additionalSaturation = getTotalSaturation(food, stack, level);
+				
 				FoodStats playerStats = player.getFoodStats();
-				int additionalHeal = (int)(foodHeal * extraFood);
 
 				int newFood = playerStats.getFoodLevel() + additionalHeal;
-				float newSaturation = playerStats.getSaturationLevel() +
-						(satMod * additionalHeal + (int)(extraSaturation * (foodHeal + additionalHeal)));
+				float newSaturation = playerStats.getSaturationLevel() + additionalSaturation;
 
 				newFood = (newFood > 20 && !overFull) ? 20 : newFood;
 				newSaturation = (newSaturation > newFood && !overFull) ? newFood : newSaturation;
