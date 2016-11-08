@@ -33,8 +33,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -49,31 +47,45 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public boolean shouldUpdateAttribute = true;
 	private static double healthPercent = 0.3;
 	private static int regenLength = 15 * 20;
-	private static int CAPTAIN_DURATION = 80;
-	private static int CAPTAIN_RANGE = 6;
 	private Set<Integer> blocked = new HashSet<Integer>();
 
 	public SkillDefense() {
 		this(1, 0);
 	}
 
-	public static SkillAbility riteOfPassage = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
+	public static SkillAbility riteOfPassage = new SkillAbility(
+		"Rite of Passage",
+		25,
+		"It's a reference to a magic card, so you probably missed it.",
+		"Falling below 30% health activates a period of regeneration.",
+		"You must fully heal before regeneration will activate again."
+	);
 
-	public static SkillAbility captain = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r radius.");
+	public static SkillAbility overshields = new SkillAbility(
+		"Overshields",
+		50,
+		"Can be found underneath the tower on Guardian.",
+		"Gain an additional §a4" + SkillAbility.descColor + " max health."
+	);
 
-	public static SkillAbility golemsAspect = new SkillAbility("Aspect of the Golem", 75, "That tickles.", "Negative status effects last for half as long.");
+	public static SkillAbility golemsAspect = new SkillAbility(
+		"Aspect of the Golem",
+		75,
+		"That tickles.",
+		"Negative status effects last for half as long."
+	);
 
 	public SkillDefense(int level, int currentXp) {
 		super("Defense", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/defense.png");
-		this.addAbilities(riteOfPassage, captain, golemsAspect);
+		this.addAbilities(riteOfPassage, overshields, golemsAspect);
 	}
 
 	public double getDamageReduction() {
 		return this.level * 0.005;
 	}
-	
-	public int getExtraHealth() {
+
+	public int getExtraArmor() {
 		return (int) (this.level / 5);
 	}
 
@@ -89,8 +101,9 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public void levelUp(EntityPlayerMP player) {
 		if (this.canLevelUp()) {
 			this.level++;
-			this.shouldUpdateAttribute = true;
 			SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
+			IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+			// Reflection.hackAttributeTo(armor, 20.0 + this.getExtraArmor(), "maximumValue", "field_111120_a");
 		}
 		SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
 	}
@@ -99,7 +112,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("Take §a" + Utils.formatPercent(this.getDamageReduction()) + "%§r less damage from mob and players.");
-		tooltip.add("Gain an additional §a" + this.getExtraHealth() + "§r max health.");
+		tooltip.add("Gain an additional §a" + this.getExtraArmor() + "§r max armor.");
 		return tooltip;
 	}
 
@@ -149,35 +162,13 @@ public class SkillDefense extends Skill implements ISkillDefense {
 						} else if (!defense.canRegen && player.getHealth() == player.getMaxHealth()) {
 							defense.canRegen = true;
 						}
-						
-						if (defense.hasAbility(2)) {
-							if (player.worldObj.getWorldTime() % 60L == 0L) {
-								BlockPos pos = player.getPosition();
-								int x = pos.getX();
-								int y = pos.getY();
-								int z = pos.getZ();
-								AxisAlignedBB bound = new AxisAlignedBB(x - CAPTAIN_RANGE, y - CAPTAIN_RANGE, z - CAPTAIN_RANGE, x + CAPTAIN_RANGE, y + CAPTAIN_RANGE, z + CAPTAIN_RANGE);
-								
-								List<EntityPlayer> players = player.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bound);
-								for (EntityPlayer playa : players) {
-									PotionEffect activeResistance = player.getActivePotionEffect(MobEffects.RESISTANCE);
-									PotionEffect addResistance = new PotionEffect(MobEffects.RESISTANCE, CAPTAIN_DURATION, 0, false, true);
-									if (activeResistance != null) {
-										activeResistance.combine(addResistance);
-									} else {
-										playa.addPotionEffect(addResistance);
-									}
-								}
-							}
-						}
-						
-						if (defense.hasAbility(3)) {
-							Collection<PotionEffect> effects = player.getActivePotionEffects();
-							for (PotionEffect effect : effects) {
-								if (Utils.isNegativeEffect(effect)) {
-									Reflection.hackValueTo(effect, effect.getDuration() - 1, "duration", "field_76460_b");
-									effect.combine(effect);
-								}
+					}
+					if (defense.hasAbility(3)) {
+						Collection<PotionEffect> effects = player.getActivePotionEffects();
+						for (PotionEffect effect : effects) {
+							if (Utils.isNegativeEffect(effect)) {
+								Reflection.hackValueTo(effect, effect.getDuration() - 1, "duration", "field_76460_b");
+								effect.combine(effect);
 							}
 						}
 					}
@@ -187,9 +178,11 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	}
 
 	public Entry<IAttribute, AttributeModifier> getAttributeModifier() {
-		if (this.shouldUpdateAttribute) {
-			this.shouldUpdateAttribute = false;
-			return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(SharedMonsterAttributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", (double) this.getExtraHealth(), 0));
+		if (this.hasAbility(2)) {
+			if (this.shouldUpdateAttribute) {
+				this.shouldUpdateAttribute = false;
+				return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(SharedMonsterAttributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", 4.0D, 0));
+			}
 		}
 		return null;
 	}

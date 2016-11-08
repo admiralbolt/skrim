@@ -1,11 +1,6 @@
 Changelog
 ==========
 
-Version 1.1.6
--------------
-### Balance Changes
-* Adjusted defense level 50 skill and defense scaling ability.
-
 Version 1.1.5
 -------------
 ### I'm so sorry

@@ -56,7 +56,6 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event) {
-		System.out.println("lviingHurtStart: " + event.getAmount());
 		SkillMelee.applyMelee(event);
 		SkillRanged.applyRanged(event);
 		SkillDefense.applyDefense(event);
@@ -65,7 +64,7 @@ public class EventHandler {
 		SkillMining.reduceLava(event);
 		SkillBlacksmithing.ironHeart(event);
 		SkillBotany.thornStyle(event);
-				
+		
 		// Artifact handlers
 		CanesSword.CanesHandler.slayChicken(event);
 		GruesomeMask.GruesomeHandler.doubleAllDamage(event);

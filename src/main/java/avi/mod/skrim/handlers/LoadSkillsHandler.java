@@ -30,6 +30,10 @@ public class LoadSkillsHandler {
 				if (player.hasCapability(cap, EnumFacing.NORTH)) {
 					Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
 					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
+					if (cap == Skills.DEFENSE) {
+						IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+						// Reflection.hackAttributeTo(armor, 20.0 + ((SkillDefense) skill).getExtraArmor(), "maximumValue","field_111120_a" );
+					}
 				}
 			}
 		}
@@ -45,6 +49,10 @@ public class LoadSkillsHandler {
 				if (player.hasCapability(cap, EnumFacing.NORTH)) {
 					Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
 					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
+					if (cap == Skills.DEFENSE) {
+						IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+						// Reflection.hackAttributeTo(armor, 20.0 + ((SkillDefense) skill).getExtraArmor(), "field_111120_a", "maximumValue");
+					}
 				}
 			}
 		}
@@ -61,8 +69,12 @@ public class LoadSkillsHandler {
 				ISkill newSkill = newPlayer.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
 				newSkill.setLevel(oldSkill.getLevel());
 				newSkill.setXp(oldSkill.getXp());
+				if (newSkill == Skills.DEFENSE) {
+					IAttributeInstance armor = newPlayer.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+					// Reflection.hackAttributeTo(armor, 20.0 + ((SkillDefense) newSkill).getExtraArmor(), "field_111120_a", "maximumValue");
+				}
 				Skill skill = (Skill) newSkill;
-				SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) newPlayer);
+				//SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) newPlayer);
 			}
 		}
 	}
