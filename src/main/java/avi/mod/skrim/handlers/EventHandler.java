@@ -56,29 +56,34 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event) {
-		System.out.println("lviingHurtStart: " + event.getAmount());
-		SkillMelee.applyMelee(event);
-		SkillRanged.applyRanged(event);
-		SkillDefense.applyDefense(event);
-		SkillDemolition.reduceExplosion(event);
-		SkillDigging.vitalicBreathing(event);
-		SkillMining.reduceLava(event);
-		SkillBlacksmithing.ironHeart(event);
-		SkillBotany.thornStyle(event);
-				
-		// Artifact handlers
-		CanesSword.CanesHandler.slayChicken(event);
-		GruesomeMask.GruesomeHandler.doubleAllDamage(event);
+		if (event.getSource().getEntity() instanceof EntityPlayer) {
+			SkillMelee.applyMelee(event);
+			SkillRanged.applyRanged(event);
+
+			CanesSword.CanesHandler.slayChicken(event);
+			GruesomeMask.GruesomeHandler.doubleAllDamage(event);
+		} else if (event.getEntity() instanceof EntityPlayer) {
+			SkillDefense.applyDefense(event);
+			SkillDemolition.reduceExplosion(event);
+			SkillDigging.vitalicBreathing(event);
+			SkillMining.reduceLava(event);
+			SkillBlacksmithing.ironHeart(event);
+			SkillBotany.thornStyle(event);
+			GruesomeMask.GruesomeHandler.doubleAllDamage(event);
+		}
 	}
 
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
-		SkillMelee.handleKill(event);
-		SkillRanged.handleKill(event);
-		SkillDemolition.onKillCrepper(event);
-		SkillFarming.sideChick(event);
-		SkillCooking.fireCook(event);
-		PlayerCoords.saveDeathLocation(event);
+		if (event.getSource().getEntity() instanceof EntityPlayer) {
+			SkillMelee.handleKill(event);
+			SkillRanged.handleKill(event);
+			SkillDemolition.onKillCrepper(event);
+			SkillFarming.sideChick(event);
+			SkillCooking.fireCook(event);
+		} else if (event.getEntity() instanceof EntityPlayer) {
+			PlayerCoords.saveDeathLocation(event);
+		}
 	}
 
 	@SubscribeEvent
@@ -122,24 +127,24 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
-		SkillMining.climbWall(event);
-		SkillCooking.angelUpdate(event);
-		SkillDefense.update(event);
-		SkillDigging.metalDetector(event);
-		SkillFarming.farmersTan(event);
-		Skills.applyAttributes(event);
-		
-		// Artifact handlers
-		BlindingBoots.BlindingBootsHandler.goFast(event);
+		if (event.getEntity() instanceof EntityPlayer) {
+			SkillMining.climbWall(event);
+			SkillCooking.angelUpdate(event);
+			SkillDefense.update(event);
+			SkillDigging.metalDetector(event);
+			SkillFarming.farmersTan(event);
+			Skills.applyAttributes(event);
+
+			// Artifact handlers
+			BlindingBoots.BlindingBootsHandler.goFast(event);
+		}
 	}
 
 	@SubscribeEvent
 	public void onHarvest(BlockEvent.HarvestDropsEvent event) {
 		World world = event.getWorld();
 		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
-			if (!event.isSilkTouching()) {
-				SkillMining.giveMoreOre(event);
-			}
+			SkillMining.giveMoreOre(event);
 			SkillBotany.soManyFlowers(event);
 			SkillDigging.findTreasure(event);
 			SkillFarming.giveMoreCrops(event);
@@ -191,17 +196,21 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onJump(LivingEvent.LivingJumpEvent event) {
+		if (event.getEntity() instanceof EntityPlayer) {
 
-		// Artifact handlers
-		SpringheelBoots.SpringheelHandler.jumpHigh(event);
+			// Artifact handlers
+			SpringheelBoots.SpringheelHandler.jumpHigh(event);
+		}
 	}
 
 	@SubscribeEvent
 	public void onFall(LivingFallEvent event) {
-		SkillCooking.angelFall(event);
+		if (event.getEntity() instanceof EntityPlayer) {
+			SkillCooking.angelFall(event);
 
-		// Artifact handlers
-		SpringheelBoots.SpringheelHandler.preventFallDamage(event);
+			// Artifact handlers
+			SpringheelBoots.SpringheelHandler.preventFallDamage(event);
+		}
 	}
 
 
