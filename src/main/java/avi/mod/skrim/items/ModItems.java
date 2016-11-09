@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.ArtifactArmor;
 import avi.mod.skrim.items.artifacts.ArtifactItem;
 import avi.mod.skrim.items.artifacts.ArtifactSword;
@@ -16,6 +16,7 @@ import avi.mod.skrim.items.artifacts.GruesomeMask;
 import avi.mod.skrim.items.artifacts.SheepFinder3000;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -50,7 +51,7 @@ public class ModItems {
 	public static CustomFood overwriteRabbitStew;
 	public static CustomFood overwriteSteak;
 	public static CustomFood canesChicken;
-	
+
 	public static SkrimCake SKRIM_CAKE;
 	public static AngelCake ANGEL_CAKE;
 
@@ -59,9 +60,16 @@ public class ModItems {
 	public static EnumRarity ARTIFACT_RARITY = EnumHelper.addRarity("artifact", TextFormatting.GOLD, "Artifact");
 
 	/**
-	 * Default ArmorMaterials Durability: leather -> 5 chain/iron -> 15 gold -> 7 diamond -> 33 Reductions: leather -> {1, 3, 2, 1} Total 7 chain -> {2, 5, 4, 1} Total 12 iron -> {2, 6, 5, 2} Total 15 gold -> {2, 5, 3, 1} Total 11 diamond -> {3, 8, 6, 3} Total 20 Enchantability: leather -> 15 chain -> 12 iron -> 9 gold -> 25 diamond -> 10 Toughness
+	 * Default ArmorMaterials
+	 * 
+	 * Durability: leather -> 5 chain/iron -> 15 gold -> 7 diamond -> 33
+	 * 
+	 * Reductions: leather -> {1, 3, 2, 1} Total 7 / chain -> {2, 5, 4, 1} Total 12 iron -> {2, 6, 5, 2} Total 15 gold -> {2, 5, 3, 1} Total 11 diamond -> {3, 8, 6, 3} Total 20
+	 * 
+	 * Enchantability: leather -> 15 chain -> 12 iron -> 9 gold -> 25 diamond -> 10
 	 */
-	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 10, 8, 4 }, 20, null, 3.0F);
+	public static ArmorMaterial LEAF_ARMOR = EnumHelper.addArmorMaterial("leaf_armor", "skrim:leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
+	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 9, 7, 4 }, 20, null, 2.0F);
 	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
 
 	/**
@@ -72,11 +80,11 @@ public class ModItems {
 	public static ToolMaterial OBSIDIAN_TOOL = EnumHelper.addToolMaterial("obsidian", 3, 7500, 9.0F, 4.0F, 20);
 
 	public static ArtifactSword CANES_SWORD;
-	
+
 	public static ArtifactArmor SPRINGHEEL_BOOTS;
 	public static ArtifactArmor BLINDING_BOOTS;
 	public static ArtifactArmor GRUESOME_MASK;
-	
+
 	public static ArtifactItem SHEEP_FINDER;
 
 	/**
@@ -93,7 +101,42 @@ public class ModItems {
 	public static CustomArmor obsidianPants;
 	public static CustomArmor obsidianChest;
 	public static CustomArmor obsidianHelmet;
+	
+	public static LeafArmor OAK_LEAF_BOOTS;
+	public static LeafArmor OAK_LEAF_PANTS;
+	public static LeafArmor OAK_LEAF_ARMOR;
+	public static LeafArmor OAK_LEAF_HELMET;
 
+
+	public static LeafArmor SPRUCE_LEAF_BOOTS;
+	public static LeafArmor SPRUCE_LEAF_PANTS;
+	public static LeafArmor SPRUCE_LEAF_ARMOR;
+	public static LeafArmor SPRUCE_LEAF_HELMET;
+
+
+	public static LeafArmor BIRCH_LEAF_BOOTS;
+	public static LeafArmor BIRCH_LEAF_PANTS;
+	public static LeafArmor BIRCH_LEAF_ARMOR;
+	public static LeafArmor BIRCH_LEAF_HELMET;
+
+
+	public static LeafArmor JUNGLE_LEAF_BOOTS;
+	public static LeafArmor JUNGLE_LEAF_PANTS;
+	public static LeafArmor JUNGLE_LEAF_ARMOR;
+	public static LeafArmor JUNGLE_LEAF_HELMET;
+
+
+	public static LeafArmor ACACIA_LEAF_BOOTS;
+	public static LeafArmor ACACIA_LEAF_PANTS;
+	public static LeafArmor ACACIA_LEAF_ARMOR;
+	public static LeafArmor ACACIA_LEAF_HELMET;
+
+
+	public static LeafArmor DARK_OAK_LEAF_BOOTS;
+	public static LeafArmor DARK_OAK_LEAF_PANTS;
+	public static LeafArmor DARK_OAK_LEAF_ARMOR;
+	public static LeafArmor DARK_OAK_LEAF_HELMET;
+	
 	public static HandSaw handSaw;
 	public static CustomArmor overalls;
 	public static CustomBow GREAT_BOW;
@@ -130,7 +173,7 @@ public class ModItems {
 		overwriteSteak = register(new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
 		overwriteRabbit = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
 		canesChicken = register(new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab));
-		
+
 		SKRIM_CAKE = register(new SkrimCake());
 		ANGEL_CAKE = register(new AngelCake());
 
@@ -171,14 +214,14 @@ public class ModItems {
 
 		BLINDING_BOOTS = register(new BlindingBoots());
 		artifacts.add(BLINDING_BOOTS);
-		
+
 		GRUESOME_MASK = register(new GruesomeMask());
 		artifacts.add(GRUESOME_MASK);
 
 		// Artifact Swords
 		CANES_SWORD = register(new CanesSword());
 		artifacts.add(CANES_SWORD);
-		
+
 		// Artifact Items
 		SHEEP_FINDER = register(new SheepFinder3000());
 		artifacts.add(SHEEP_FINDER);
@@ -224,6 +267,7 @@ public class ModItems {
 	public static void registerCraftingRecipes() {
 		registerRabbitStew();
 		registerObsidian();
+		registerLeafArmor();
 		registerHandSaw();
 		registerOveralls();
 		registerGreatBow();
@@ -291,6 +335,15 @@ public class ModItems {
 		if (boots != null) {
 			GameRegistry.addRecipe(new ItemStack(boots), "   ", "A A", "A A", 'A', recipeItemStack);
 		}
+	}
+	
+	private static void registerLeafArmor() {
+		addArmorRecipes(new ItemStack(Blocks.LEAVES, 1, BlockPlanks.EnumType.OAK.getMetadata()), OAK_LEAF_HELMET, OAK_LEAF_ARMOR, OAK_LEAF_PANTS, OAK_LEAF_BOOTS);
+		addArmorRecipes(new ItemStack(Blocks.LEAVES, 1, BlockPlanks.EnumType.SPRUCE.getMetadata()), SPRUCE_LEAF_HELMET, SPRUCE_LEAF_ARMOR, SPRUCE_LEAF_PANTS, SPRUCE_LEAF_BOOTS);
+		addArmorRecipes(new ItemStack(Blocks.LEAVES, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), BIRCH_LEAF_HELMET, BIRCH_LEAF_ARMOR, BIRCH_LEAF_PANTS, BIRCH_LEAF_BOOTS);
+		addArmorRecipes(new ItemStack(Blocks.LEAVES, 1, BlockPlanks.EnumType.JUNGLE.getMetadata()), JUNGLE_LEAF_HELMET, JUNGLE_LEAF_ARMOR, JUNGLE_LEAF_PANTS, JUNGLE_LEAF_BOOTS);
+		addArmorRecipes(new ItemStack(Blocks.LEAVES2, 1, 0), ACACIA_LEAF_HELMET, ACACIA_LEAF_ARMOR, ACACIA_LEAF_PANTS, ACACIA_LEAF_BOOTS);
+		addArmorRecipes(new ItemStack(Blocks.LEAVES2, 1, 1), DARK_OAK_LEAF_HELMET, DARK_OAK_LEAF_ARMOR, DARK_OAK_LEAF_PANTS, DARK_OAK_LEAF_BOOTS);
 	}
 
 	private static void addWeaponRecipes(ItemStack recipeItemStack, Item sword) {
