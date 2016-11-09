@@ -3,11 +3,10 @@ package avi.mod.skrim.items.artifacts;
 import java.util.List;
 
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -38,13 +37,13 @@ public class GruesomeMask extends ArtifactArmor {
 			// leave each one explicit.
 			if (receiving instanceof EntityPlayer) {
 				EntityPlayer playerReceiving = (EntityPlayer) receiving;
-				if (ArtifactUtils.isWearingArmor(playerReceiving, ModItems.GRUESOME_MASK)) {
+				if (Utils.isWearingArmor(playerReceiving, ModItems.GRUESOME_MASK)) {
 					event.setAmount(event.getAmount() * 2);
 				}
 			}
 			if (dealing instanceof EntityPlayer) {
 				EntityPlayer playerDealing = (EntityPlayer) dealing;
-				if (ArtifactUtils.isWearingArmor(playerDealing, ModItems.GRUESOME_MASK)) {
+				if (Utils.isWearingArmor(playerDealing, ModItems.GRUESOME_MASK)) {
 					event.setAmount(event.getAmount() * 2);
 				}
 			}

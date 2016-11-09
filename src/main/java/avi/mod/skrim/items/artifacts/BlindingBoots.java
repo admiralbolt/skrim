@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -53,22 +54,15 @@ public class BlindingBoots extends ArtifactArmor {
 			Entity entity = event.getEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if (player.worldObj.getTotalWorldTime() % 60L == 0L) {
-					InventoryPlayer inventory = player.inventory;
-					if (inventory != null) {
-						ItemStack stack = inventory.armorInventory[0];
-						if (stack != null) {
-							Item boots = stack.getItem();
-							if (boots == ModItems.BLINDING_BOOTS) {
-								for (Potion potion : effects) {
-									PotionEffect activeEffect = player.getActivePotionEffect(potion);
-									PotionEffect newEffect = new PotionEffect(potion, 100, effectStrength.get(potion), true, false);
-									if (activeEffect != null) {
-										activeEffect.combine(newEffect);
-									} else {
-										player.addPotionEffect(newEffect);
-									}
-								}
+				if (player.worldObj.getTotalWorldTime() % 60L == 0L && !player.worldObj.isRemote) {
+					if (Utils.isWearingArmor(player, ModItems.BLINDING_BOOTS)) {
+						for (Potion potion : effects) {
+							PotionEffect activeEffect = player.getActivePotionEffect(potion);
+							PotionEffect newEffect = new PotionEffect(potion, 100, effectStrength.get(potion), true, false);
+							if (activeEffect != null) {
+								activeEffect.combine(newEffect);
+							} else {
+								player.addPotionEffect(newEffect);
 							}
 						}
 					}

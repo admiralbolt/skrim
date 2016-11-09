@@ -19,18 +19,18 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class CanesSword extends ArtifactSword {
-	
+
 	public CanesSword() {
 		super("raising_canes_fry_sword", ModItems.ARTIFACT_DEFAULT);
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
 		tooltip.add("§4Sweep attack ignites enemies.");
 		tooltip.add("§4Deals 20x damage to chickens & fries them.§r");
 		tooltip.add("§e\"Chicken chicken chicken, which combo you pickin'?\"");
 	}
-	
+
 	/**
 	 * Handlers for the raisin cane's sword of frying
 	 */
@@ -74,7 +74,7 @@ public class CanesSword extends ArtifactSword {
 			}
 		}
 	}
-	
+
 	@Override
 	public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
 		ItemStack caneStack = new ItemStack(ModItems.CANES_SWORD);
