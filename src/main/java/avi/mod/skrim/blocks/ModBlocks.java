@@ -122,7 +122,8 @@ public final class ModBlocks {
   	}
 
   	GameRegistry.addRecipe(new ItemStack(NAPALM), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
-
+  	GameRegistry.addRecipe(new ItemStack(BIOBOMB), "AAA", "ABA", "AAA", 'A', Items.ROTTEN_FLESH, 'B', Blocks.TNT);
+  	
   }
 
 }
