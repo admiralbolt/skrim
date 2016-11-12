@@ -10,6 +10,7 @@ import java.util.TimerTask;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.entities.monster.BioCreeper;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
+import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -22,6 +23,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -40,7 +42,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public static SkillStorage<ISkillDemolition> skillStorage = new SkillStorage<ISkillDemolition>();
 	public static Map<BlockPos, EntityPlayer> validGoBoom = new HashMap<BlockPos, EntityPlayer>();
 
-	public static SkillAbility dynamite = new SkillAbility(
+	public static SkillAbility DYNAMITE = new SkillAbility(
 		"Dynamite",
 		25,
 		"Boom goes the dynamite.",
@@ -48,7 +50,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 		"Dynamite has a larger blast radius and a 100% chance to drop blocks."
 	);
 
-	public static SkillAbility biobomb = new SkillAbility(
+	public static SkillAbility BIOBOMB = new SkillAbility(
 		"Bio-Bomb",
 		50,
 		"A whole new meaning for c'mon BB.",
@@ -56,13 +58,21 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 		"Bio-bombs have twice the blast radius of tnt, and don't affect blocks."
 	);
 
-	public static SkillAbility napalm = new SkillAbility(
+	public static SkillAbility NAPALM = new SkillAbility(
 		"Napalm",
 		75,
 		"Handle with care.",
 		"Grants you the ability to craft Napalm with... Stuff...",
 		"Napalm has triple the blast radius of tnt, starts fires, and creates lava spawns."
 	);
+	
+	public static SkillAbility BADONKADONK = new SkillAbility(
+		"Badonkadonk",
+		100,
+		"Mushy Snugglebites & Felicia Sexopants.",
+		"Grants you the ability to craft a rocket launcher."
+	);
+		
 
 	public SkillDemolition() {
 		this(1, 0);
@@ -71,7 +81,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public SkillDemolition(int level, int currentXp) {
 		super("Demolition", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/demolition.png");
-		this.addAbilities(dynamite, biobomb, napalm);
+		this.addAbilities(DYNAMITE, BIOBOMB, NAPALM, BADONKADONK);
 	}
 
 	public double getResistance() {
@@ -206,7 +216,28 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
 				demolition.addXp((EntityPlayerMP) event.player, 1000);
 			}
+		} else if (targetItem != null && targetItem == ModItems.ROCKET_LAUNCHER) {
+			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 100)) {
+				Skills.replaceWithComponents(event);
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
+				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
+				demolition.addXp((EntityPlayerMP) event.player, 10000);
+			}
 		}
+	}
+	
+	public static boolean isExplosive(ItemStack stack) {
+		if (stack != null) {
+			Item targetItem = stack.getItem();
+			if (targetItem != null) {
+				Item tnt = new ItemStack(Blocks.TNT).getItem();
+				Item dynamite = new ItemStack(ModBlocks.DYNAMITE).getItem();
+				Item biobomb = new ItemStack(ModBlocks.BIOBOMB).getItem();
+				Item napalm = new ItemStack(ModBlocks.NAPALM).getItem();
+				return (targetItem == tnt || targetItem == dynamite || targetItem == biobomb || targetItem == napalm);
+			}
+		}
+		return false;
 	}
 
 }

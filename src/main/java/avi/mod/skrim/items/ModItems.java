@@ -141,6 +141,7 @@ public class ModItems {
 	public static HandSaw handSaw;
 	public static CustomArmor overalls;
 	public static CustomBow GREAT_BOW;
+	public static RocketLauncher ROCKET_LAUNCHER;
 
 	// La musica
 	public static CustomRecord ARUARIAN_DANCE;
@@ -195,6 +196,7 @@ public class ModItems {
 		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
 		GREAT_BOW = register(new GreatBow("great_bow"));
 		ANGEL_CAKE = register(new AngelCake());
+		ROCKET_LAUNCHER = register(new RocketLauncher());
 		
 		OAK_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_boots", 1, EntityEquipmentSlot.FEET));
 		OAK_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
@@ -294,9 +296,14 @@ public class ModItems {
 		registerAngelCake();
 		registerObsidian();
 		registerLeafArmor();
+		registerRocketLauncher();
 		registerHandSaw();
 		registerOveralls();
 		registerGreatBow();
+	}
+	
+	public static void registerRocketLauncher() {
+		GameRegistry.addRecipe(new ItemStack(ROCKET_LAUNCHER), " aa", "aaa", " bb", 'a', new ItemStack(Items.IRON_INGOT), 'b', new ItemStack(Items.STICK));
 	}
 	
 	public static void registerAngelCake() {

@@ -332,8 +332,10 @@ public class SkillCooking extends Skill implements ISkillCooking {
 					} else {
 						cooking.hasAngel = false;
 						cooking.currentTicks = 0;
-						player.capabilities.allowFlying = false;
-						player.capabilities.isFlying = false;
+						if (!player.capabilities.isCreativeMode) {
+							player.capabilities.allowFlying = false;
+							player.capabilities.isFlying = false;
+						}
 					}
 				}
 			}

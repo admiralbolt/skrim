@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -190,6 +192,22 @@ public class CustomTNTPrimed extends Entity {
 			return new NapalmExplosion(worldIn, entityIn, x, y, z);
 		}
 		return null;
+	}
+	
+	public static String getExplosionType(ItemStack stack) {
+		Item targetItem = stack.getItem();
+		Item dynamite = new ItemStack(ModBlocks.DYNAMITE).getItem();
+		Item biobomb = new ItemStack(ModBlocks.BIOBOMB).getItem();
+		Item napalm = new ItemStack(ModBlocks.NAPALM).getItem();
+		if (targetItem == dynamite) {
+			return "dynamite";
+		} else if (targetItem == biobomb) {
+			return "biobomb";
+		} else if (targetItem == napalm) {
+			return "napalm";
+		} else {
+			return "normal_tnt";
+		}
 	}
 
 	public static Block getBlock(CustomTNTPrimed entity) {
