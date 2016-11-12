@@ -98,11 +98,10 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
 	}
 
-	public static SkillAbility overfull = new SkillAbility("Overfull", 25, "Just keep eating, just keep eating, just keep eating...", "Your cooked food now ignores food and saturation limits.");
-
-	public static SkillAbility panacea = new SkillAbility("Panacea", 50, "Cures everything that's less than half dead.", "Your cooked food now removes nausea, hunger, and poison.");
-
-	public static SkillAbility superFood = new SkillAbility("Super Food", 75, "You won't believe how good these 11 foods are for you!", "Your cooked food now grants a speed boost and a short period of regeneration.");
+	public static SkillAbility OVERFULL = new SkillAbility("Overfull", 25, "Just keep eating, just keep eating, just keep eating...", "Your cooked food now ignores food and saturation limits.");
+	public static SkillAbility PANACEA = new SkillAbility("Panacea", 50, "Cures everything that's less than half dead.", "Your cooked food now removes nausea, hunger, and poison.");
+	public static SkillAbility SUPER_FOOD = new SkillAbility("Super Food", 75, "You won't believe how good these 11 foods are for you!", "Your cooked food now grants a speed boost and a short period of regeneration.");
+	public static SkillAbility ANGEL_CAKE = new SkillAbility("Angel Cake", 100, "I believe I can fly.", "Gain the ability to craft angel cake, which grants 30 seconds of flight.");
 
 	public SkillCooking() {
 		this(1, 0);
@@ -111,7 +110,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public SkillCooking(int level, int currentXp) {
 		super("Cooking", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/cooking.png");
-		this.addAbilities(overfull, panacea, superFood);
+		this.addAbilities(OVERFULL, PANACEA, SUPER_FOOD, ANGEL_CAKE);
 	}
 
 	public CustomFood getOverwriteFood(String name) {
@@ -134,10 +133,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		return 0.005 * level;
 	}
 
-	public static boolean overFull(int level) {
-		return (level >= 25);
-	}
-
 	@Override
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
@@ -145,9 +140,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
 		tooltip.add("Shift clicking crafted items provides §aregular and modded§r food.");
 		tooltip.add("§eWe swear this is a feature and not a bug...§r");
-		if (overFull(this.level)) {
-			tooltip.add("Your cooking §aignores food and saturation caps§r.");
-		}
 		return tooltip;
 	}
 
