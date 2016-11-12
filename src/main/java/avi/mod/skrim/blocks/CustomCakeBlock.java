@@ -38,7 +38,6 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 		this.name = name;
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
-		this.setCreativeTab(Skrim.creativeTab);
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 	}
 
 	public void eatCustomCake(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		if (player.canEat(false)) {
+		if (player.canEat(false) || state.getBlock() == ModBlocks.ANGEL_CAKE) {
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof CakeTileEntity) {
 				CakeTileEntity cakeEntity = (CakeTileEntity) te;

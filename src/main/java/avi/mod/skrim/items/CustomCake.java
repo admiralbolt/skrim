@@ -30,7 +30,6 @@ import net.minecraft.world.World;
 public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 
 	private String name;
-	private Block block;
 
 	public CustomCake(Block block, String name) {
 		super(block);
@@ -38,19 +37,24 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 		this.setCreativeTab(Skrim.creativeTab);
-		this.block = block;
 	}
 
 	@Override
 	public void registerItemModel(Item itemBlock) {
 		Skrim.proxy.registerItemRenderer(itemBlock, 0, this.name);
 	}
-	
+
+	// Override this
+	public Block getBlock() {
+		return null;
+	}
+
 
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		IBlockState iblockstate = worldIn.getBlockState(pos);
 		Block block = iblockstate.getBlock();
+		Block placeBlock = this.getBlock();
 
 		if (block == Blocks.SNOW_LAYER && ((Integer) iblockstate.getValue(BlockSnow.LAYERS)).intValue() < 1) {
 			facing = EnumFacing.UP;
@@ -58,19 +62,19 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 			pos = pos.offset(facing);
 		}
 
-		if (playerIn.canPlayerEdit(pos, facing, stack) && stack.stackSize != 0 && worldIn.canBlockBePlaced(this.block, pos, false, facing, (Entity) null, stack)) {
-			IBlockState iblockstate1 = this.block.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, 0, playerIn);
+		if (playerIn.canPlayerEdit(pos, facing, stack) && stack.stackSize != 0 && worldIn.canBlockBePlaced(placeBlock, pos, false, facing, playerIn, stack)) {
+			IBlockState iblockstate1 = placeBlock.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, 0, playerIn);
 
 			if (!worldIn.setBlockState(pos, iblockstate1, 11)) {
 				return EnumActionResult.FAIL;
 			} else {
 				iblockstate1 = worldIn.getBlockState(pos);
 
-				if (iblockstate1.getBlock() == this.block) {
+				if (iblockstate1.getBlock() == placeBlock) {
 					ItemBlock.setTileEntityNBT(worldIn, playerIn, pos, stack);
 					iblockstate1.getBlock().onBlockPlacedBy(worldIn, pos, iblockstate1, playerIn, stack);
 				}
-				
+
 				TileEntity te = worldIn.getTileEntity(pos);
 				if (te != null && te instanceof CakeTileEntity) {
 					CakeTileEntity cakeEntity = (CakeTileEntity) te;
@@ -91,7 +95,7 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 			return EnumActionResult.FAIL;
 		}
 	}
-	
+
 	public int getBaseFood() {
 		return 2;
 	}
@@ -114,25 +118,25 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 		// Apply the old sat mod to the new healing, and the new sat mod to everything
 		return satMod * additionalHeal + (int) (extraSaturation * (baseHeal + additionalHeal));
 	}
-	
+
 	public static int getTotalFood(CustomCake cake, int level) {
 		return getExtraFood(cake, level) + cake.getBaseFood();
 	}
-	
+
 	public static float getTotalSaturation(CustomCake cake, int level) {
 		return getExtraSaturation(cake, level) + cake.getBaseSaturation() * cake.getBaseFood();
 	}
-	
+
 	public static int getTotalFood(CustomCakeBlock block, int level) {
 		CustomCake cake = getItemFromBlock(block);
 		return getTotalFood(cake, level);
 	}
-	
+
 	public static float getTotalSaturation(CustomCakeBlock block, int level) {
 		CustomCake cake = getItemFromBlock(block);
 		return getTotalSaturation(cake, level);
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
 		if (stack.hasTagCompound()) {
@@ -154,7 +158,7 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 			}
 		}
 	}
-	
+
 	public static CustomCake getItemFromBlock(CustomCakeBlock block) {
 		if (block == ModBlocks.SKRIM_CAKE) {
 			return ModItems.SKRIM_CAKE;
