@@ -44,7 +44,7 @@ public final class ModBlocks {
   public static Dynamite DYNAMITE;
   public static BioBomb BIOBOMB;
   public static Napalm NAPALM;
-  
+
   public static SkrimCakeBlock SKRIM_CAKE;
   public static AngelCakeBlock ANGEL_CAKE;
 
@@ -76,7 +76,7 @@ public final class ModBlocks {
     NAPALM = register(new Napalm("napalm"));
 		EntityRegistry.registerModEntity(CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20, 5, true);
 		addExplosivesRecipes();
-		
+
 		SKRIM_CAKE = register(new SkrimCakeBlock());
 		ANGEL_CAKE = register(new AngelCakeBlock());
   }
@@ -123,7 +123,7 @@ public final class ModBlocks {
 
   	GameRegistry.addRecipe(new ItemStack(NAPALM), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
   	GameRegistry.addRecipe(new ItemStack(BIOBOMB), "AAA", "ABA", "AAA", 'A', Items.ROTTEN_FLESH, 'B', Blocks.TNT);
-  	
+
   }
 
 }

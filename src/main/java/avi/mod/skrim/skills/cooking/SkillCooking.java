@@ -12,6 +12,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -181,61 +182,63 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
 			String foodName = cooking.getFoodName(stack);
 			if (cooking.validCookingTarget(stack)) {
-				CustomFood replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
-				if (replaceFood != null) {
-					stack.setItem(replaceFood);
+				if (stack.getItem() == Items.CAKE || stack.getItem() == ModItems.ANGEL_CAKE) {
+					CustomCake replaceCake = getOverwriteCake(stack.getItem());
+					System.out.println("injecting cake, overwrite: " + replaceCake);
+					if (replaceCake != null) {
+						stack.setItem(replaceCake);
 
-					NBTTagCompound compound = new NBTTagCompound();
-					compound.setInteger("level", cooking.level);
-					stack.setTagCompound(compound);
-					stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
-					List<String> foodText = new ArrayList<String>();
-					foodText.add("Cooking Level: " + cooking.level);
-					int stackSize = stack.stackSize;
+						NBTTagCompound compound = new NBTTagCompound();
+						compound.setInteger("level", cooking.level);
+						stack.setTagCompound(compound);
+						stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
+						List<String> foodText = new ArrayList<String>();
+						foodText.add("Cooking Level: " + cooking.level);
+						int stackSize = stack.stackSize;
 
-					if (stackSize == 0) {
-						int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
-						ItemStack newStack = new ItemStack(replaceFood, newStackSize);
-						NBTTagCompound newCompound = new NBTTagCompound();
-						newCompound.setInteger("level", cooking.level);
-						newStack.setTagCompound(newCompound);
-						newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
-						player.inventory.addItemStackToInventory(newStack);
-						stackSize = newStackSize;
+						if (stackSize == 0) {
+							int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
+							ItemStack newStack = new ItemStack(replaceCake, newStackSize);
+							NBTTagCompound newCompound = new NBTTagCompound();
+							newCompound.setInteger("level", cooking.level);
+							newStack.setTagCompound(newCompound);
+							newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
+							player.inventory.addItemStackToInventory(newStack);
+							stackSize = newStackSize;
+						}
+
+						if (player instanceof EntityPlayerMP) {
+							cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
+						}
 					}
+				} else {
+					CustomFood replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
+					if (replaceFood != null) {
+						stack.setItem(replaceFood);
 
-					if (player instanceof EntityPlayerMP) {
-						cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
+						NBTTagCompound compound = new NBTTagCompound();
+						compound.setInteger("level", cooking.level);
+						stack.setTagCompound(compound);
+						stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
+						List<String> foodText = new ArrayList<String>();
+						foodText.add("Cooking Level: " + cooking.level);
+						int stackSize = stack.stackSize;
+
+						if (stackSize == 0) {
+							int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
+							ItemStack newStack = new ItemStack(replaceFood, newStackSize);
+							NBTTagCompound newCompound = new NBTTagCompound();
+							newCompound.setInteger("level", cooking.level);
+							newStack.setTagCompound(newCompound);
+							newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
+							player.inventory.addItemStackToInventory(newStack);
+							stackSize = newStackSize;
+						}
+
+						if (player instanceof EntityPlayerMP) {
+							cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
+						}
 					}
-				}
-			} else if (stack.getItem() == Items.CAKE || stack.getItem() == ModItems.ANGEL_CAKE) {
-				CustomCake replaceCake = getOverwriteCake(stack.getItem());
-				if (replaceCake != null) {
-					stack.setItem(replaceCake);
-
-					NBTTagCompound compound = new NBTTagCompound();
-					compound.setInteger("level", cooking.level);
-					stack.setTagCompound(compound);
-					stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
-					List<String> foodText = new ArrayList<String>();
-					foodText.add("Cooking Level: " + cooking.level);
-					int stackSize = stack.stackSize;
-
-					if (stackSize == 0) {
-						int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
-						ItemStack newStack = new ItemStack(replaceCake, newStackSize);
-						NBTTagCompound newCompound = new NBTTagCompound();
-						newCompound.setInteger("level", cooking.level);
-						newStack.setTagCompound(newCompound);
-						newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
-						player.inventory.addItemStackToInventory(newStack);
-						stackSize = newStackSize;
-					}
-
-					if (player instanceof EntityPlayerMP) {
-						cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
-					}
-
 				}
 			}
 		}
@@ -256,7 +259,16 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	}
 
 	public static void injectCraftedFood(ItemCraftedEvent event) {
-		injectFakeFood(event, event.crafting, event.player);
+		Item targetItem = event.crafting.getItem();
+		if (targetItem != null && targetItem == ModItems.ANGEL_CAKE) {
+			if (!Skills.canCraft(event.player, Skills.COOKING, 100)) {
+				Skills.replaceWithComponents(event);
+			} else {
+				injectFakeFood(event, event.crafting, event.player);
+			}
+		} else {
+			injectFakeFood(event, event.crafting, event.player);
+		}
 	}
 
 	/**
@@ -328,6 +340,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
 					} else {
 						cooking.hasAngel = false;
 						cooking.currentTicks = 0;
+						player.capabilities.allowFlying = false;
+						player.capabilities.isFlying = false;
 					}
 				}
 			}
