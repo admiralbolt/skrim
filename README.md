@@ -3,8 +3,13 @@ Changelog
 
 Version 1.1.6
 -------------
+### New Features
+* Added the level 100 cooking ability!
+* Added the level 75 ranged ability!
+
 ### Balance Changes
 * Adjusted defense level 50 skill and defense scaling ability.
+* Slightly reduced the xp gained from iron & gold
 
 Version 1.1.5
 -------------

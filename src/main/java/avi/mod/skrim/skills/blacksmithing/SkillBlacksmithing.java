@@ -42,8 +42,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		xpMap.put("tile.glass", 50);
 		xpMap.put("item.brick", 150);
 		xpMap.put("tile.clayhardened", 600); // made up of 4 clays
-		xpMap.put("item.ingotiron", 1200);
-		xpMap.put("item.ingotgold", 3000); // Woooooo gold!
+		xpMap.put("item.ingotiron", 900);
+		xpMap.put("item.ingotgold", 2500); // Woooooo gold!
 	}
 
 	public int lastItemNumber;
