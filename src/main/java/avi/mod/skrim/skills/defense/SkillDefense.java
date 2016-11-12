@@ -161,7 +161,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 								List<EntityPlayer> players = player.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bound);
 								for (EntityPlayer playa : players) {
 									PotionEffect activeResistance = player.getActivePotionEffect(MobEffects.RESISTANCE);
-									PotionEffect addResistance = new PotionEffect(MobEffects.RESISTANCE, CAPTAIN_DURATION, 0, false, true);
+									PotionEffect addResistance = new PotionEffect(MobEffects.RESISTANCE, CAPTAIN_DURATION, 0, false, false);
 									if (activeResistance != null) {
 										activeResistance.combine(addResistance);
 									} else {

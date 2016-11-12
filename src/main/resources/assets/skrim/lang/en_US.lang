@@ -12,6 +12,9 @@ item.overwrite_pumpkin_pie.name=Pumpkin Pie
 item.overwrite_rabbit_stew.name=Rabbit Stew
 item.overwrite_steak.name=Steak
 item.overwrite_rabbit.name=Cooked Rabbit
+item.skrim_cake.name=Skrim Cake
+item.angel_cake.name=Angel Cake
+
 item.canes_chicken.name=Raising Cane's® Chicken Strip
 
 item.fishing_rod.name=Skrim Fishing Rod
@@ -86,6 +89,30 @@ item.samurai.desc=Nujabes
 item.truck.name=Truck
 item.truck.desc=The Octopus Project
 
+item.oak_leaf_boots.name=Oak Boots
+item.oak_leaf_pants.name=Oak Leggings
+item.oak_leaf_armor.name=Oak Chestplate
+item.oak_leaf_helmet.name=Oak Helmet
+item.spruce_leaf_boots.name=Spruce Boots
+item.spruce_leaf_pants.name=Spruce Leggings
+item.spruce_leaf_armor.name=Spruce Chestplate
+item.spruce_leaf_helmet.name=Spruce Helmet
+item.birch_leaf_boots.name=Birch Boots
+item.birch_leaf_pants.name=Birch Leggings
+item.birch_leaf_armor.name=Birch Chestplate
+item.birch_leaf_helmet.name=Birch Helmet
+item.jungle_leaf_boots.name=Jungle Boots
+item.jungle_leaf_pants.name=Jungle Leggings
+item.jungle_leaf_armor.name=Jungle Chestplate
+item.jungle_leaf_helmet.name=Jungle Helmet
+item.acacia_leaf_boots.name=Acacia Boots
+item.acacia_leaf_pants.name=Acacia Leggings
+item.acacia_leaf_armor.name=Acacia Chestplate
+item.acacia_leaf_helmet.name=Acacia Helmet
+item.dark_oak_leaf_boots.name=Dark_Oak Boots
+item.dark_oak_leaf_pants.name=Dark_Oak Leggings
+item.dark_oak_leaf_armor.name=Dark_Oak Chestplate
+item.dark_oak_leaf_helmet.name=Dark_Oak Helmet
 
 item.boots_of_springheel_jak.name=Boots of Springheel Jak
 item.boots_of_blinding_speed.name=Boots of Blinding Speed

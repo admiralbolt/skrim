@@ -4,6 +4,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.network.AchievementPacket.AchievementPacketHandler;
 import avi.mod.skrim.network.ExplosionPacket.ExplosionPacketHandler;
 import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
+import avi.mod.skrim.network.InvisibilityPacket.InvisibilityPacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
 import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
 import avi.mod.skrim.network.SpawnHeartPacket.SpawnHeartPacketHandler;
@@ -40,6 +41,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(MetalDetectorPacketHandler.class, MetalDetectorPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(WhirlingChopPacketHandler.class, WhirlingChopPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(AchievementPacketHandler.class, AchievementPacket.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(InvisibilityPacketHandler.class, InvisibilityPacket.class, id++, Side.SERVER);
 	}
 
 }

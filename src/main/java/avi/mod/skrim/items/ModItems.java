@@ -68,7 +68,8 @@ public class ModItems {
 	 * 
 	 * Enchantability: leather -> 15 chain -> 12 iron -> 9 gold -> 25 diamond -> 10
 	 */
-	public static ArmorMaterial LEAF_ARMOR = EnumHelper.addArmorMaterial("leaf_armor", "skrim:leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
+	
+	
 	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 9, 7, 4 }, 20, null, 2.0F);
 	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
 
@@ -173,9 +174,7 @@ public class ModItems {
 		overwriteSteak = register(new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
 		overwriteRabbit = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
 		canesChicken = register(new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab));
-
 		SKRIM_CAKE = register(new SkrimCake());
-		ANGEL_CAKE = register(new AngelCake());
 
 		// Overwrite that fishing rod!
 		fishingRod = register(new CustomFishingRod("fishing_rod"));
@@ -191,10 +190,36 @@ public class ModItems {
 		obsidianChest = register(new CustomArmor("obsidian_chest", OBSIDIAN_ARMOR, 3, EntityEquipmentSlot.CHEST));
 		obsidianHelmet = register(new CustomArmor("obsidian_helmet", OBSIDIAN_ARMOR, 4, EntityEquipmentSlot.HEAD));
 
-		// More stoof
+		// Skill Stuff
 		handSaw = register(new HandSaw("hand_saw", ToolMaterial.IRON));
 		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
 		GREAT_BOW = register(new GreatBow("great_bow"));
+		ANGEL_CAKE = register(new AngelCake());
+		
+		OAK_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_boots", 1, EntityEquipmentSlot.FEET));
+		OAK_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
+		OAK_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
+		OAK_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
+		SPRUCE_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.SPRUCE, "leaf_boots", 1, EntityEquipmentSlot.FEET));
+		SPRUCE_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.SPRUCE, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
+		SPRUCE_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.SPRUCE, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
+		SPRUCE_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.SPRUCE, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
+		BIRCH_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.BIRCH, "leaf_boots", 1, EntityEquipmentSlot.FEET));
+		BIRCH_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.BIRCH, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
+		BIRCH_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.BIRCH, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
+		BIRCH_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.BIRCH, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
+		JUNGLE_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.JUNGLE, "leaf_boots", 1, EntityEquipmentSlot.FEET));
+		JUNGLE_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.JUNGLE, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
+		JUNGLE_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.JUNGLE, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
+		JUNGLE_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.JUNGLE, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
+		ACACIA_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.ACACIA, "leaf_boots", 1, EntityEquipmentSlot.FEET));
+		ACACIA_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.ACACIA, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
+		ACACIA_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.ACACIA, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
+		ACACIA_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.ACACIA, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
+		DARK_OAK_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_boots", 1, EntityEquipmentSlot.FEET));
+		DARK_OAK_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
+		DARK_OAK_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
+		DARK_OAK_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
 
 		registerArtifacts();
 		registerSongs();
@@ -266,11 +291,16 @@ public class ModItems {
 
 	public static void registerCraftingRecipes() {
 		registerRabbitStew();
+		registerAngelCake();
 		registerObsidian();
 		registerLeafArmor();
 		registerHandSaw();
 		registerOveralls();
 		registerGreatBow();
+	}
+	
+	public static void registerAngelCake() {
+		GameRegistry.addRecipe(new ItemStack(ANGEL_CAKE), "aba", "cdc", "eee", 'a', new ItemStack(Items.FEATHER), 'b', new ItemStack(Items.MILK_BUCKET), 'c', new ItemStack(Items.SUGAR), 'd', new ItemStack(Items.EGG), 'e', new ItemStack(Items.WHEAT));
 	}
 
 	/**

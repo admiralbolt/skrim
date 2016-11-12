@@ -1,5 +1,6 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
@@ -102,6 +103,7 @@ public class EventHandler {
 	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		SkillMining.drill(event);
 		SkillFarming.applyOveralls(event);
+		LeafArmor.LeafArmorHandler.plantTree(event);
 	}
 
 	@SubscribeEvent
@@ -134,6 +136,8 @@ public class EventHandler {
 			SkillDigging.metalDetector(event);
 			SkillFarming.farmersTan(event);
 			Skills.applyAttributes(event);
+			
+			LeafArmor.LeafArmorHandler.invisibility(event);
 
 			// Artifact handlers
 			BlindingBoots.BlindingBootsHandler.goFast(event);

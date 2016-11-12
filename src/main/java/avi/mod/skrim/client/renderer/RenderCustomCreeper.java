@@ -13,7 +13,6 @@ public class RenderCustomCreeper extends RenderCreeper {
 
 	public RenderCustomCreeper(RenderManager renderManagerIn) {
 		super(renderManagerIn);
-		System.out.println("constructing renderer");
 	}
 
 	@Override

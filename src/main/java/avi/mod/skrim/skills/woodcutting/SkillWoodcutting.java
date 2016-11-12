@@ -9,12 +9,14 @@ import java.util.Map;
 import avi.mod.skrim.items.CustomAxe;
 import avi.mod.skrim.items.HandSaw;
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.WhirlingChopPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
@@ -235,6 +237,13 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				woodcutting.addXp((EntityPlayerMP) event.player, 500);
+			}
+		} else if (targetItem != null && targetItem instanceof LeafArmor) {
+			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 75)) {
+				Skills.replaceWithComponents(event);
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
+				woodcutting.addXp((EntityPlayerMP) event.player, 1000);
 			}
 		}
 	}
