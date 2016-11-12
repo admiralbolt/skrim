@@ -69,7 +69,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public static SkillAbility BADONKADONK = new SkillAbility(
 		"Badonkadonk",
 		100,
-		"Mushy Snugglebites & Felicia Sexopants.",
+		"Gut full of dynamite and booty like POW.",
 		"Grants you the ability to craft a rocket launcher."
 	);
 		
