@@ -38,15 +38,15 @@ public class LeafArmor extends CustomArmor {
 	public static Map<UUID, Integer> TICKS_SINCE_MOVE = new HashMap<UUID, Integer>();
 	private static final IBlockState JUNGLE_LOG = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
   private static final IBlockState JUNGLE_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-	
+
   public static ArmorMaterial OAK_LEAF_MATERIAL = EnumHelper.addArmorMaterial("oak_leaf_armor", "skrim:oak_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
 	public static ArmorMaterial SPRUCE_LEAF_MATERIAL = EnumHelper.addArmorMaterial("spruce_leaf_armor", "skrim:spruce_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
 	public static ArmorMaterial BIRCH_LEAF_MATERIAL = EnumHelper.addArmorMaterial("birch_leaf_armor", "skrim:birch_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
 	public static ArmorMaterial JUNGLE_LEAF_MATERIAL = EnumHelper.addArmorMaterial("jungle_leaf_armor", "skrim:jungle_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
 	public static ArmorMaterial ACACIA_LEAF_MATERIAL = EnumHelper.addArmorMaterial("acacia_leaf_armor", "skrim:acacia_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
 	public static ArmorMaterial DARK_OAK_LEAF_MATERIAL = EnumHelper.addArmorMaterial("dark_oak_leaf_armor", "skrim:dark_oak_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
-	
-  
+
+
 	public LeafArmor(BlockPlanks.EnumType plankType, String name, int renderIndex, EntityEquipmentSlot armorType) {
 		super(plankType.getName() + "_" + name, getMaterial(plankType), renderIndex, armorType);
 		this.plankType = plankType;
@@ -55,7 +55,7 @@ public class LeafArmor extends CustomArmor {
 	public BlockPlanks.EnumType getPlankType() {
 		return this.plankType;
 	}
-	
+
 	public static ArmorMaterial getMaterial(BlockPlanks.EnumType plankType) {
 		if (plankType == BlockPlanks.EnumType.OAK) {
 			return OAK_LEAF_MATERIAL;
@@ -73,7 +73,7 @@ public class LeafArmor extends CustomArmor {
 			return null;
 		}
 	}
-	
+
 	public static WorldGenAbstractTree getGenerator(BlockPlanks.EnumType plankType) {
 		if (plankType == BlockPlanks.EnumType.OAK) {
 			return new WorldGenTrees(true);
@@ -91,7 +91,7 @@ public class LeafArmor extends CustomArmor {
 			return null;
 		}
 	}
-	
+
 	public static BlockPlanks.EnumType getPlankTypeFullSet(EntityPlayer player) {
 		InventoryPlayer inventory = player.inventory;
 		if (inventory != null) {
@@ -180,7 +180,6 @@ public class LeafArmor extends CustomArmor {
 						BlockPlanks.EnumType plankType = getPlankTypeFullSet(player);
 						WorldGenAbstractTree generator = getGenerator(plankType);
 						boolean createdTree = generator.generate(player.worldObj, Utils.rand, event.getPos());
-						System.out.println("createdTree: " + createdTree);
 						if (createdTree) {
 							InventoryPlayer inventory = player.inventory;
 							if (inventory != null) {

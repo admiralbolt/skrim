@@ -103,6 +103,7 @@ public class EventHandler {
 	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		SkillMining.drill(event);
 		SkillFarming.applyOveralls(event);
+		SkillDigging.castles(event);
 		LeafArmor.LeafArmorHandler.plantTree(event);
 	}
 

@@ -15,9 +15,9 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 public class Rocket extends EntityArrow implements IEntityAdditionalSpawnData {
-	
+
 	private String explosionType;
-	
+
 	public Rocket(World worldIn) {
 		super(worldIn);
 	}
@@ -32,13 +32,12 @@ public class Rocket extends EntityArrow implements IEntityAdditionalSpawnData {
 	protected ItemStack getArrowStack() {
 		return null;
 	}
-	
+
 	@Override
   protected void onHit(RayTraceResult raytraceResultIn) {
     Entity entity = raytraceResultIn.entityHit;
     BlockPos pos = (entity == null) ? raytraceResultIn.getBlockPos() : entity.getPosition();
     if (pos != null) {
-    	System.out.println(this.explosionType);
     	if (this.explosionType != null) {
 	    	if (this.explosionType.equals("normal_tnt")) {
 	    		this.worldObj.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 4.0F, false);
@@ -51,7 +50,7 @@ public class Rocket extends EntityArrow implements IEntityAdditionalSpawnData {
     	this.worldObj.removeEntity(this);
     }
 	}
-	
+
 	public ResourceLocation getResourceLocation() {
 		return new ResourceLocation("skrim:textures/entities/rocket.png");
 	}

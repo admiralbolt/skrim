@@ -59,7 +59,6 @@ public class RocketLauncher extends ItemBow implements ItemModelProvider {
 
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
-		System.out.println("firing...");
 		if (entityLiving instanceof EntityPlayer) {
 			EntityPlayer entityplayer = (EntityPlayer) entityLiving;
 			ItemStack itemstack = this.findAmmo(entityplayer);
@@ -72,14 +71,10 @@ public class RocketLauncher extends ItemBow implements ItemModelProvider {
 				float f = getArrowVelocityOverride(i);
 				if ((double) f >= 0.1D) {
 					if (!worldIn.isRemote) {
-						System.out.println("spawning rocket");
-						System.out.println("itemstack: " + itemstack);
 						Item item = itemstack.getItem();
 						Rocket rocket = new Rocket(worldIn, entityplayer, itemstack);
-						System.out.println("rocket: " + rocket);
 						rocket.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 						stack.damageItem(1, entityplayer);
-						System.out.println("pre spawn entity");
 						worldIn.spawnEntityInWorld(rocket);
 					}
 
@@ -116,7 +111,6 @@ public class RocketLauncher extends ItemBow implements ItemModelProvider {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		if (this.findAmmo(playerIn) != null) {
-			System.out.println("success!");
       playerIn.setActiveHand(hand);
       return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
 		} else {

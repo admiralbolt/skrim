@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.jna.Structure;
+
 import avi.mod.skrim.items.CustomSpade;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
@@ -23,28 +25,33 @@ import net.minecraft.block.BlockMycelium;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.structure.MapGenScatteredFeature;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureStart;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class SkillDigging extends Skill implements ISkillDigging {
 
@@ -65,30 +72,40 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		xpMap.put("mycelium", 550); // Only in.. mushroom biomes?
 	}
 
+	private static int REQUIRED_SAND = 640;
+
 	public double metalMeter = 0;
 	public static double meterFilled = 100;
 	public Vec3d lastPos = null;
 
-	public static SkillAbility vitalicBreathing = new SkillAbility(
+	public static SkillAbility VITALIC_BREATHING = new SkillAbility(
 		"Vitalic Breathing",
 		25,
-		"Breathe, breathe in the ...dirt?",
+		"Breathe, breathe in the... dirt?",
 		"No longer take suffocation damage from being trapped in walls."
 	);
 
-	public static SkillAbility metalDetector = new SkillAbility(
+	public static SkillAbility METAL_DETECTOR = new SkillAbility(
 		"Metal Detector",
 		50,
 		"Beep....Beep....Beep....",
 		"Moving over dirt blocks causes random metal objects to appear!"
 	);
 
-	public static SkillAbility entomb = new SkillAbility(
+	public static SkillAbility ENTOMB = new SkillAbility(
 		"Entomb",
 		75,
 		"Fuck Priest.",
 		"Right clicking an entity with a shovel buries it in the earth."
 	);
+
+	public static SkillAbility CASTLE = new SkillAbility(
+		"Castles Made of Sand",
+		100,
+		"Slips into the sea.  Eventually.",
+		"Right cliking with a shovel creates a desert temple."
+	);
+
 
 	public SkillDigging() {
 		this(1, 0);
@@ -97,7 +114,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public SkillDigging(int level, int currentXp) {
 		super("Digging", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/digging.png");
-		this.addAbilities(vitalicBreathing, metalDetector, entomb);
+		this.addAbilities(VITALIC_BREATHING, METAL_DETECTOR, ENTOMB, CASTLE);
 	}
 
 	public int getXp(String blockName) {
@@ -243,6 +260,69 @@ public class SkillDigging extends Skill implements ISkillDigging {
 					if (mainItem instanceof ItemSpade || mainItem instanceof CustomSpade) {
 						targetEntity.setPosition(targetEntity.posX, targetEntity.posY - 5, targetEntity.posZ);
 						mainStack.damageItem(10, player);
+					}
+				}
+			}
+		}
+	}
+
+	public static void castles(PlayerInteractEvent.RightClickBlock event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player != null && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+			SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+			if (digging.hasAbility(4)) {
+				if (!player.worldObj.isRemote) {
+					BlockPos pos = event.getPos();
+					IBlockState state = player.worldObj.getBlockState(pos);
+					Biome biome = player.worldObj.getBiomeForCoordsBody(pos);
+					if (biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS) {
+						if (state.getBlock() == Blocks.SAND) {
+							ItemStack heldStack = player.getHeldItemMainhand();
+							if (heldStack != null) {
+								if (heldStack.getItem() == Items.DIAMOND_SHOVEL) {
+									int totalSand = 0;
+									for (ItemStack stack : player.inventory.mainInventory) {
+										if (stack != null) {
+											if (stack.getItem() == Item.getItemFromBlock(Blocks.SAND)) {
+												totalSand += stack.stackSize;
+											}
+										}
+									}
+									if (totalSand > REQUIRED_SAND) {
+										// All temples are generated by MapGenScatteredFeature
+										MapGenScatteredFeature templeGen = new MapGenScatteredFeature();
+										ChunkPos chunkPos = new ChunkPos(event.getPos());
+										StructureStart start = new MapGenScatteredFeature.Start(player.worldObj, Utils.rand, pos.getX() >> 4, pos.getZ() >> 4);
+										int x = (chunkPos.chunkXPos << 4) + 8;
+										int y = event.getPos().getY();
+						        int z = (chunkPos.chunkZPos << 4) + 8;
+						        StructureBoundingBox bound = new StructureBoundingBox(x - 8, y - 15, z - 8, x + 8, y + 12, z + 8);
+						        new StructureBoundingBox();
+										start.generateStructure(player.worldObj, Utils.rand, bound);
+										start.notifyPostProcessAt(chunkPos);
+										if (!player.capabilities.isCreativeMode) {
+											int paidSand = 0;
+											for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+												ItemStack stack = player.inventory.getStackInSlot(i);
+												if (stack != null) {
+													if (stack.getItem() == Item.getItemFromBlock(Blocks.SAND)) {
+														int remove = Math.min(stack.stackSize, (REQUIRED_SAND - paidSand));
+														if (remove == stack.stackSize) {
+															player.inventory.removeStackFromSlot(i);
+														} else {
+															player.inventory.decrStackSize(i, remove);
+														}
+														paidSand += remove;
+													}
+												}
+											}
+											ItemStack diamondShovel = player.getHeldItemMainhand();
+											diamondShovel.damageItem(diamondShovel.getMaxDamage(), player);
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

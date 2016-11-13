@@ -176,7 +176,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			if (cooking.validCookingTarget(stack)) {
 				if (stack.getItem() == Items.CAKE || stack.getItem() == ModItems.ANGEL_CAKE) {
 					CustomCake replaceCake = getOverwriteCake(stack.getItem());
-					System.out.println("injecting cake, overwrite: " + replaceCake);
 					if (replaceCake != null) {
 						stack.setItem(replaceCake);
 
