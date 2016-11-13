@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class SheepFinder3000 extends ArtifactItem {
 	
 	private static final int RANGE = 200;
-	private static final int GLOW_DURATION = 1000;
+	private static final int GLOW_DURATION = 300 * 20;
 
 	public SheepFinder3000() {
 		super("sheep_finder_3000");

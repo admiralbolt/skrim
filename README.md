@@ -9,6 +9,7 @@ Version 1.1.6
 * Added the level 75 ranged ability!
 * Added the level 100 demolition ability!
 * Added the level 100 digging ability!
+* Added the level 100 defense ability!
 
 ### Balance Changes
 * Adjusted defense level 50 skill and defense scaling ability.

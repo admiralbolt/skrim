@@ -25,10 +25,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -44,35 +46,41 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 public class SkillDefense extends Skill implements ISkillDefense {
 
 	public static SkillStorage<ISkillDefense> skillStorage = new SkillStorage<ISkillDefense>();
-	public int ticks = 0;
-	public boolean canRegen = true;
-	public boolean shouldUpdateAttribute = true;
+
 	private static double healthPercent = 0.3;
 	private static int regenLength = 15 * 20;
 	private static int CAPTAIN_DURATION = 80;
 	private static int CAPTAIN_RANGE = 6;
+	private static int STALWART_ACTIVATION_TICKS = 60;
+
+	public int ticks = 0;
+	public int stalwartTicks = 0;
+	public boolean canRegen = true;
+	public boolean shouldUpdateAttribute = true;
 	private Set<Integer> blocked = new HashSet<Integer>();
 
 	public SkillDefense() {
 		this(1, 0);
 	}
 
-	public static SkillAbility riteOfPassage = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
+	public static SkillAbility RITE_OF_PASSAGE = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
 
-	public static SkillAbility captain = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r radius.");
+	public static SkillAbility CAPTAIN = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r radius.");
 
-	public static SkillAbility golemsAspect = new SkillAbility("Aspect of the Golem", 75, "That tickles.", "Negative status effects last for half as long.");
+	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("Aspect of the Golem", 75, "The new spell resistance.", "Negative status effects last for half as long.");
 
+	public static SkillAbility STALWART_STANCE = new SkillAbility("Stalwart Stance", 100, "That tickles.", "Crouching and blocking with a shield for at least 3 seconds grants invulnerability.");
+	
 	public SkillDefense(int level, int currentXp) {
 		super("Defense", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/defense.png");
-		this.addAbilities(riteOfPassage, captain, golemsAspect);
+		this.addAbilities(RITE_OF_PASSAGE, CAPTAIN, GOLEMS_ASPECT, STALWART_STANCE);
 	}
 
 	public double getDamageReduction() {
 		return this.level * 0.005;
 	}
-	
+
 	public int getExtraHealth() {
 		return (int) (this.level / 5);
 	}
@@ -149,7 +157,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 						} else if (!defense.canRegen && player.getHealth() == player.getMaxHealth()) {
 							defense.canRegen = true;
 						}
-						
+
 						if (defense.hasAbility(2)) {
 							if (player.worldObj.getWorldTime() % 60L == 0L) {
 								BlockPos pos = player.getPosition();
@@ -157,7 +165,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 								int y = pos.getY();
 								int z = pos.getZ();
 								AxisAlignedBB bound = new AxisAlignedBB(x - CAPTAIN_RANGE, y - CAPTAIN_RANGE, z - CAPTAIN_RANGE, x + CAPTAIN_RANGE, y + CAPTAIN_RANGE, z + CAPTAIN_RANGE);
-								
+
 								List<EntityPlayer> players = player.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bound);
 								for (EntityPlayer playa : players) {
 									PotionEffect activeResistance = player.getActivePotionEffect(MobEffects.RESISTANCE);
@@ -170,7 +178,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 								}
 							}
 						}
-						
+
 						if (defense.hasAbility(3)) {
 							Collection<PotionEffect> effects = player.getActivePotionEffects();
 							for (PotionEffect effect : effects) {
@@ -179,11 +187,37 @@ public class SkillDefense extends Skill implements ISkillDefense {
 									effect.combine(effect);
 								}
 							}
+
+							if (defense.hasAbility(4)) {
+								if (player.worldObj.getTotalWorldTime() % 20L == 0L) {
+									if (!player.worldObj.isRemote) {
+										boolean stance = (player.isSneaking() && isBlocking(player));
+										defense.stalwartTicks = (stance) ? defense.stalwartTicks + 20 : 0;
+										player.setEntityInvulnerable(defense.stalwartTicks >= STALWART_ACTIVATION_TICKS);
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 		}
+	}
+
+	public static boolean isBlocking(EntityPlayer player) {
+		if (player != null) {
+			ItemStack stack = player.getActiveItemStack();
+			System.out.println("stack");
+			if (stack != null) {
+				Item item = stack.getItem();
+				if (item != null) {
+					if (item == Items.SHIELD) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	public Entry<IAttribute, AttributeModifier> getAttributeModifier() {
