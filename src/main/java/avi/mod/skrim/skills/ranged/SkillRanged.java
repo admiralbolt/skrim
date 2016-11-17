@@ -3,14 +3,13 @@ package avi.mod.skrim.skills.ranged;
 import java.util.ArrayList;
 import java.util.List;
 
-import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.skills.cooking.SkillCooking;
-import avi.mod.skrim.skills.demolition.SkillDemolition;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,7 +28,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -39,6 +37,8 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class SkillRanged extends Skill implements ISkillRanged {
+	
+	private static int MAX_STACKS = 999;
 
 	public static SkillStorage<ISkillRanged> skillStorage = new SkillStorage<ISkillRanged>();
 
@@ -66,6 +66,18 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		"gr8 bow m8, I r8 8/8.",
 		"Gain the ability to craft a powerful great bow."
 	);
+	
+	public static SkillAbility CRITICAL_ASCENSION = new SkillAbility(
+		"Critical Ascension",
+		100,
+		"Boom, Headshot.",
+		"Getting a head shot grants a stack of accuracy.",
+		"Missing a head shot removes 2 stacks of accuracy.",
+		"Dying removes all stacks of accuracy.",
+		"Each stack of accuracy grants §a+0.5%" + SkillAbility.descColor + " ranged damage AND headshot damage."
+	);
+	
+	private int accuracyStacks = 0;
 
 	public SkillRanged() {
 		this(1, 0);
@@ -78,11 +90,33 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	}
 
 	public double getExtraDamage() {
-		return this.level * 0.0075;
+		return (this.level + this.accuracyStacks) * 0.0075;
 	}
 
 	public double getHeadshotDamage() {
-		return this.level * 0.0075;
+		return (this.level + this.accuracyStacks) * 0.0075;
+	}
+	
+	public int getStacks() {
+		return this.accuracyStacks;
+	}
+	
+	public void setStacks(int stacks) {
+		this.accuracyStacks = stacks;
+		this.verifyStacks();
+	}
+	
+	public void addStacks(int add) {
+		this.accuracyStacks += add;
+		this.verifyStacks();
+	}
+	
+	private void verifyStacks() {
+		if (this.accuracyStacks < 0) {
+			this.accuracyStacks = 0;
+		} else if (this.accuracyStacks > MAX_STACKS) {
+			this.accuracyStacks = MAX_STACKS;
+		}
 	}
 
 	@Override
@@ -110,6 +144,11 @@ public class SkillRanged extends Skill implements ISkillRanged {
 						player.worldObj.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
 						addXp = 50;
+						if (ranged.hasAbility(4)) {
+							ranged.addStacks(1);
+						}
+					} else if (ranged.hasAbility(4)) {
+						ranged.addStacks(-2);
 					}
 					if (ranged.hasAbility(1)) {
 						if (player.isSneaking() && targetEntity.getAITarget() != player) {
@@ -119,6 +158,9 @@ public class SkillRanged extends Skill implements ISkillRanged {
 						}
 						if (ranged.hasAbility(2)) {
 							targetEntity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, glowDuration, 0, true, false));
+						}
+						if (ranged.hasAbility(4)) {
+							SkrimPacketHandler.INSTANCE.sendTo(new CriticalAscensionPacket(ranged.getStacks()), (EntityPlayerMP) player);
 						}
 					}
 					addXp += event.getAmount() * 10;
