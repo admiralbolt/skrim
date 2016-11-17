@@ -145,7 +145,9 @@ public class SkillRanged extends Skill implements ISkillRanged {
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
 						addXp = 50;
 						if (ranged.hasAbility(4)) {
-							ranged.addStacks(1);
+							if (Skills.entityKillXp(event.getEntity()) > 0) {
+								ranged.addStacks(1);
+							}
 						}
 					} else if (ranged.hasAbility(4)) {
 						ranged.addStacks(-2);
