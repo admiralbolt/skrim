@@ -64,11 +64,8 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	}
 
 	public static SkillAbility RITE_OF_PASSAGE = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
-
 	public static SkillAbility CAPTAIN = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r radius.");
-
 	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("Aspect of the Golem", 75, "The new spell resistance.", "Negative status effects last for half as long.");
-
 	public static SkillAbility STALWART_STANCE = new SkillAbility("Stalwart Stance", 100, "That tickles.", "Crouching and blocking with a shield for at least 3 seconds grants invulnerability.");
 	
 	public SkillDefense(int level, int currentXp) {
@@ -226,13 +223,6 @@ public class SkillDefense extends Skill implements ISkillDefense {
 			return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(SharedMonsterAttributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", (double) this.getExtraHealth(), 0));
 		}
 		return null;
-	}
-
-	public static void renderArmor(RenderGameOverlayEvent.Pre event) {
-		if (event.getType() == ElementType.ARMOR) {
-			event.setCanceled(true);
-			new ArmorOverlay(Minecraft.getMinecraft());
-		}
 	}
 
 	private static boolean canBlockDamageSource(EntityPlayer player, DamageSource damageSourceIn) {
