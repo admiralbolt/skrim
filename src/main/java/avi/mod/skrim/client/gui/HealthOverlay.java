@@ -80,7 +80,7 @@ public class HealthOverlay extends Gui {
 			for (int absPos = 0; absPos < (absorptionAmount / 2.0F); absPos++) {
 				int xCoord = l + absPos * 8;
 				// draw the border
-	      this.drawTexturedModalRect(xCoord, healthHeight, 16 + borderMod * 9, 9 * hardCoreOffset, 9, 9);
+	      this.drawTexturedModalRect(xCoord, absHeight, 16 + borderMod * 9, 9 * hardCoreOffset, 9, 9);
 				if (absPos * 2 + 1 < absorptionAmount) {
 					this.drawTexturedModalRect(xCoord, absHeight, absIconFullX, 9 * hardCoreOffset, 9, 9);
 				} else if (absPos * 2 + 1 == absorptionAmount) {
