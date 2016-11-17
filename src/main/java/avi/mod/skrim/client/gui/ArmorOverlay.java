@@ -32,10 +32,7 @@ public class ArmorOverlay extends Gui {
     int l1 = MathHelper.ceiling_float_int((f + (float)k1) / 2.0F / 10.0F);
 
     int i2 = Math.max(10 - (l1 - 2), 3);
-    int yCoord = j1 - (l1 - 1) * i2 - 10;
-    if (absorptionAmount == 0) {
-    	yCoord += 9;
-    }
+    int yCoord = j1 - (l1 - 1) * i2 - 10 + 9;
     int k2 = j1 - 10;
     int l2 = k1;
     int armor = entityplayer.getTotalArmorValue();
