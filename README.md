@@ -16,11 +16,15 @@ Version 1.1.6
 * Adjusted defense level 50 skill and defense scaling ability.
 * Slightly reduced the xp gained from iron & gold
 * Demolition second ability now increase blast radius of placed explosions.
+* Nerfed persistence, and swapped it with master craftsperson.
 
 ### Quality of Life
 * Changed the armor overlay to look slick when you have >20 armor.
 * Changed the health overlay to look slick when you have >20 health.
 * Your chances of finding an artifact are now slightly greater than the chance you get struck by lightning IRL before finding an artifact.
+
+### Bug Fixes
+* You can actually headshot passive mob now!
 
 Version 1.1.5
 -------------
