@@ -13,6 +13,7 @@ import avi.mod.skrim.items.artifacts.ArtifactSword;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
+import avi.mod.skrim.items.artifacts.IcarianScroll;
 import avi.mod.skrim.items.artifacts.SheepFinder3000;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import net.minecraft.block.BlockBush;
@@ -87,6 +88,7 @@ public class ModItems {
 	public static ArtifactArmor GRUESOME_MASK;
 
 	public static ArtifactItem SHEEP_FINDER;
+	public static ArtifactItem ICARIAN_SCROLL;
 
 	/**
 	 * Custom items created from skills
@@ -252,6 +254,9 @@ public class ModItems {
 		// Artifact Items
 		SHEEP_FINDER = register(new SheepFinder3000());
 		artifacts.add(SHEEP_FINDER);
+		
+		ICARIAN_SCROLL = register(new IcarianScroll());
+		artifacts.add(ICARIAN_SCROLL);
 	}
 
 	public static Map<String, CustomRecord> songs = new HashMap<String, CustomRecord>();
