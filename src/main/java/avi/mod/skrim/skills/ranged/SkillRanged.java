@@ -30,7 +30,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class SkillRanged extends Skill implements ISkillRanged {
-	
+
 	private static int MAX_STACKS = 999;
 
 	public static SkillStorage<ISkillRanged> skillStorage = new SkillStorage<ISkillRanged>();
@@ -39,27 +39,27 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public static float headshotBufferHigh = 2.2F;
 	public static int glowDuration = 120;
 
-	public static SkillAbility sneakAttack = new SkillAbility(
+	public static SkillAbility SNEAK_ATTACK = new SkillAbility(
 		"Sneak Attack",
 		25,
 		"Surprise Motherfucker.",
 		"Deal 25% extra damage to enemies while crouching & undetected."
 	);
 
-	public static SkillAbility faerieFire = new SkillAbility(
+	public static SkillAbility FAERIE_FIRE = new SkillAbility(
 		"Faerie Fire",
 		50,
 		"Light that shit up.",
 		"Your arrows automatically light up the enemy."
 	);
-	
-	public static SkillAbility greatBow = new SkillAbility(
+
+	public static SkillAbility GREAT_BOW = new SkillAbility(
 		"Great Bow",
 		75,
 		"gr8 bow m8, I r8 8/8.",
 		"Gain the ability to craft a powerful great bow."
 	);
-	
+
 	public static SkillAbility CRITICAL_ASCENSION = new SkillAbility(
 		"Critical Ascension",
 		100,
@@ -69,7 +69,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		"Dying removes all stacks of accuracy.",
 		"Each stack of accuracy grants §a+0.5%" + SkillAbility.descColor + " ranged damage AND headshot damage."
 	);
-	
+
 	private int accuracyStacks = 0;
 
 	public SkillRanged() {
@@ -79,7 +79,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public SkillRanged(int level, int currentXp) {
 		super("Ranged", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/ranged.png");
-		this.addAbilities(sneakAttack, faerieFire, greatBow);
+		this.addAbilities(SNEAK_ATTACK, FAERIE_FIRE, GREAT_BOW, CRITICAL_ASCENSION);
 	}
 
 	public double getExtraDamage() {
@@ -89,21 +89,21 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public double getHeadshotDamage() {
 		return this.level * 0.0075 + this.accuracyStacks * 0.005;
 	}
-	
+
 	public int getStacks() {
 		return this.accuracyStacks;
 	}
-	
+
 	public void setStacks(int stacks) {
 		this.accuracyStacks = stacks;
 		this.verifyStacks();
 	}
-	
+
 	public void addStacks(int add) {
 		this.accuracyStacks += add;
 		this.verifyStacks();
 	}
-	
+
 	private void verifyStacks() {
 		if (this.accuracyStacks < 0) {
 			this.accuracyStacks = 0;
@@ -164,7 +164,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 			}
 		}
 	}
-	
+
 	public static void handleKill(LivingDeathEvent event) {
 		DamageSource source = event.getSource();
 		Entity entity = source.getEntity();
@@ -185,7 +185,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public static boolean canHeadshot(Entity entity) {
 		return !(entity instanceof EntitySlime || entity instanceof EntityMagmaCube || entity instanceof EntitySilverfish);
 	}
-	
+
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
 		if (targetItem != null && targetItem == ModItems.GREAT_BOW) {
@@ -197,7 +197,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 			}
 		}
 	}
-	
-	
+
+
 
 }
