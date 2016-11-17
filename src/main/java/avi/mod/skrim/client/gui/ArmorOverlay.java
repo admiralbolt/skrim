@@ -22,6 +22,7 @@ public class ArmorOverlay extends Gui {
 		TextureManager manager = this.mc.getTextureManager();
 		EntityPlayer entityplayer = (EntityPlayer) this.mc.getRenderViewEntity();
     IAttributeInstance iattributeinstance = entityplayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+		int absorptionAmount = MathHelper.ceiling_float_int(entityplayer.getAbsorptionAmount());
 		ScaledResolution scaledRes = new ScaledResolution(this.mc);
 		int l = scaledRes.getScaledWidth() / 2 - 91;
     int i1 = scaledRes.getScaledWidth() / 2 + 91;
@@ -32,6 +33,9 @@ public class ArmorOverlay extends Gui {
 
     int i2 = Math.max(10 - (l1 - 2), 3);
     int yCoord = j1 - (l1 - 1) * i2 - 10;
+    if (absorptionAmount == 0) {
+    	yCoord += 9;
+    }
     int k2 = j1 - 10;
     int l2 = k1;
     int armor = entityplayer.getTotalArmorValue();
