@@ -13,16 +13,9 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityWitch;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
@@ -90,11 +83,11 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	}
 
 	public double getExtraDamage() {
-		return (this.level + this.accuracyStacks) * 0.0075;
+		return this.level * 0.0075 + this.accuracyStacks * 0.005;
 	}
 
 	public double getHeadshotDamage() {
-		return (this.level + this.accuracyStacks) * 0.0075;
+		return this.level * 0.0075 + this.accuracyStacks * 0.005;
 	}
 	
 	public int getStacks() {
@@ -149,7 +142,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 								ranged.addStacks(1);
 							}
 						}
-					} else if (ranged.hasAbility(4)) {
+					} else if (canHeadshot(targetEntity) && Skills.entityKillXp(event.getEntity()) > 0 && ranged.hasAbility(4)) {
 						ranged.addStacks(-2);
 					}
 					if (ranged.hasAbility(1)) {
@@ -190,18 +183,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	}
 
 	public static boolean canHeadshot(Entity entity) {
-		return (entity instanceof EntityPlayer
-				|| entity instanceof EntityVillager
-				|| entity instanceof EntityZombie
-				|| entity instanceof EntitySkeleton
-				|| entity instanceof EntityCreeper
-				|| entity instanceof EntityDragon
-				|| entity instanceof EntitySpider
-				|| entity instanceof EntityBlaze
-				|| entity instanceof EntityWitch
-				|| entity instanceof EntityWolf
-				|| entity instanceof EntityOcelot
-			);
+		return !(entity instanceof EntitySlime || entity instanceof EntityMagmaCube || entity instanceof EntitySilverfish);
 	}
 	
 	public static void verifyItems(ItemCraftedEvent event) {
