@@ -253,12 +253,6 @@ public class EventHandler {
 		SkillCooking.saveItemNumber(event);
 	}
 
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onRenderOverlay(RenderGameOverlayEvent.Pre event) {
-		SkillDefense.renderArmor(event);
-	}
-
 	@SubscribeEvent
 	public void onItemPickup(EntityItemPickupEvent event) {
 		SkillFishing.pickupSkrimRod(event);
