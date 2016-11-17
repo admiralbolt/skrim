@@ -133,5 +133,17 @@ entity.skrim.bio_creeper.name=Bio Creeper
 achievement.found_skills=Finding Skills
 achievement.found_skills.desc=Click the skills button on the inventory screen
 
+achievement.ding_apprentice=Ding! Apprentice
+achievement.ding_apprentice.desc=Get any skill to level 25
+
+achievement.ding_journeyman=Ding! Journeyman
+achievement.ding_journeyman.desc=Get any skill to level 50
+
+achievement.ding_expert=Ding! Expert
+achievement.ding_expert.desc=Get any skill to level 75
+
+achievement.ding_master=Ding! Master
+achievement.ding_master.desc=Get any skill to level 100
+
 achievement.archaeology=Archaeology
 achievement.archaeology.desc=Find an artifact in a generated chest

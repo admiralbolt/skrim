@@ -8,6 +8,7 @@ import java.util.Map;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.stats.SkrimAchievements;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
@@ -94,8 +95,24 @@ public class Skill implements ISkill {
     if (this.canLevelUp()) {
       this.level++;
       SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
+      this.ding(player);
     }
     SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
+  }
+  
+  public void ding(EntityPlayerMP player) {
+  	if (this.level >= 25) {
+    	player.addStat(SkrimAchievements.DING_APPRENTICE, 1);
+    	if (this.level >= 50) {
+    		player.addStat(SkrimAchievements.DING_JOURNEYMAN, 1);
+    		if (this.level >= 75) {
+    			player.addStat(SkrimAchievements.DING_EXPERT, 1);
+    			if (this.level >= 100) {
+    				player.addStat(SkrimAchievements.DING_MASTER, 1);
+    			}
+    		}
+    	}
+    }
   }
 
   public List<String> getToolTip() {

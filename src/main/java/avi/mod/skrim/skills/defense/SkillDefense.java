@@ -96,6 +96,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 			this.level++;
 			this.shouldUpdateAttribute = true;
 			SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
+			this.ding(player);
 		}
 		SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
 	}

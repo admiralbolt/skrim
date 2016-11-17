@@ -26,14 +26,54 @@ public class SkrimAchievements {
 		FOUND_SKILLS
 	);
 	
+	public static Achievement DING_APPRENTICE = new Achievement(
+			"achievement.ding_apprentice",
+			"ding_apprentice",
+			-2,
+			0,
+			ModItems.tux,
+			FOUND_SKILLS
+		);
+	
+	public static Achievement DING_JOURNEYMAN = new Achievement(
+			"achievement.ding_journeyman",
+			"ding_journeyman",
+			-4,
+			0,
+			ModItems.tux,
+			DING_APPRENTICE
+		);
+	
+	public static Achievement DING_EXPERT = new Achievement(
+			"achievement.ding_expert",
+			"ding_expert",
+			-6,
+			0,
+			ModItems.tux,
+			DING_JOURNEYMAN
+		);
+	
+	public static Achievement DING_MASTER = new Achievement(
+			"achievement.ding_master",
+			"ding_master",
+			-8,
+			0,
+			ModItems.tux,
+			DING_EXPERT
+		);
+	
 	
 	public static void register() {
 		FOUND_SKILLS.registerStat();
+		DING_APPRENTICE.registerStat();
+		DING_JOURNEYMAN.registerStat();
+		DING_EXPERT.registerStat();
+		DING_MASTER.registerStat();
 		ARCHAEOLOGY.registerStat();
 		SKRIM_ACHIEVEMENTS = new AchievementPage(
 			"Skrim Achievements",
 			new Achievement[] {
-				FOUND_SKILLS, ARCHAEOLOGY	
+				FOUND_SKILLS, ARCHAEOLOGY	, DING_APPRENTICE, DING_JOURNEYMAN, DING_EXPERT, DING_MASTER
 			}
 		);
 		AchievementPage.registerAchievementPage(SKRIM_ACHIEVEMENTS);
