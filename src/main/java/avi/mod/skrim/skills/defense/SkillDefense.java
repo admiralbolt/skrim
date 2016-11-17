@@ -67,7 +67,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public static SkillAbility CAPTAIN = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r radius.");
 	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("Aspect of the Golem", 75, "The new spell resistance.", "Negative status effects last for half as long.");
 	public static SkillAbility STALWART_STANCE = new SkillAbility("Stalwart Stance", 100, "That tickles.", "Crouching and blocking with a shield for at least 3 seconds grants invulnerability.");
-	
+
 	public SkillDefense(int level, int currentXp) {
 		super("Defense", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/defense.png");
@@ -204,7 +204,6 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public static boolean isBlocking(EntityPlayer player) {
 		if (player != null) {
 			ItemStack stack = player.getActiveItemStack();
-			System.out.println("stack");
 			if (stack != null) {
 				Item item = stack.getItem();
 				if (item != null) {

@@ -66,7 +66,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public double getResistance() {
 		return this.level * 0.01;
 	}
-	
+
 	public double getExtraPower() {
 		return this.level * 0.01;
 	}
@@ -78,9 +78,8 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 		tooltip.add("Your explosions are §a" + Utils.formatPercent(this.getExtraPower()) + "%§r larger.");
 		return tooltip;
 	}
-	
+
 	public static void beforeGoBoom(final ExplosionEvent.Start event) {
-		System.out.println("beforeGoBoom, placed by: " + event.getExplosion().getExplosivePlacedBy());
 		Explosion boom = event.getExplosion();
 		Entity source = boom.getExplosivePlacedBy();
 		final BlockPos location = new BlockPos(boom.getPosition());
@@ -95,7 +94,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 					Reflection.hackValueTo(boom, (float) (4.0 * (1 + demolition.getExtraPower())), "explosionSize", "field_77280_f");
 				}
 			}
-		}	
+		}
 	}
 
 	public static void onGoBoom(final ExplosionEvent.Detonate event) {

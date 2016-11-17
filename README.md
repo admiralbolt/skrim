@@ -6,14 +6,16 @@ Version 1.1.6
 ### New Features
 * Added the level 100 cooking ability!
 * Cooking FINALLY works with cake!
-* Added the level 75 ranged ability!
+* Added the level 75 woodcutting ability!
 * Added the level 100 demolition ability!
 * Added the level 100 digging ability!
 * Added the level 100 defense ability!
+* Added the level 100 ranged ability!
 
 ### Balance Changes
 * Adjusted defense level 50 skill and defense scaling ability.
 * Slightly reduced the xp gained from iron & gold
+* Demolition second ability now increase blast radius of placed explosions.
 
 ### Quality of Life
 * Changed the armor overlay to look slick when you have >20 armor.
