@@ -122,6 +122,11 @@ public class EventHandler {
 			}
 		}
 	}
+	
+	@SubscribeEvent
+	public void onStartExplosion(ExplosionEvent.Start event) {
+		SkillDemolition.beforeGoBoom(event);
+	}
 
 	@SubscribeEvent
 	public void onExplosion(ExplosionEvent.Detonate event) {
