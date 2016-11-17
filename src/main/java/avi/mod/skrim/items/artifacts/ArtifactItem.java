@@ -72,5 +72,10 @@ public class ArtifactItem extends Item implements ItemModelProvider {
 	public EnumAction getItemUseAction(ItemStack stack) {
 		return EnumAction.NONE;
 	}
+	
+	@Override
+	public int getItemEnchantability() {
+		return 0;
+	}
 
 }

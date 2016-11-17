@@ -62,5 +62,10 @@ public class ArtifactSword extends ItemSword implements ItemModelProvider {
 	public void registerItemModel(Item item) {
 		Skrim.proxy.registerItemRenderer(this, 0, this.name);
 	}
+	
+	@Override
+	public int getItemEnchantability() {
+		return 0;
+	}
 
 }
