@@ -100,11 +100,13 @@ public class Reflection {
 		}
 	}
 	
-	public static void hackSuperValueTo(Object instance, String fieldName, Object value) {
+	public static void hackSuperValueTo(Object instance, Object value, String... fieldNames) {
 		Field field;
 		try {
-			field = instance.getClass().getSuperclass().getDeclaredField(fieldName);
-			setFieldValue(instance, field, value);
+			for (String fieldName : fieldNames) {
+				field = instance.getClass().getSuperclass().getDeclaredField(fieldName);
+				setFieldValue(instance, field, value);
+			}
 		} catch (NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
