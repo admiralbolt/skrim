@@ -28,6 +28,7 @@ public class SkrimAchievements {
 	
 	
 	public static void register() {
+		FOUND_SKILLS.registerStat();
 		ARCHAEOLOGY.registerStat();
 		SKRIM_ACHIEVEMENTS = new AchievementPage(
 			"Skrim Achievements",
