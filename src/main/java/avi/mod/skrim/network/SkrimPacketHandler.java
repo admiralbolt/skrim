@@ -10,6 +10,8 @@ import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
 import avi.mod.skrim.network.SpawnHeartPacket.SpawnHeartPacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket.ApplyBonemealPacketHandler;
+import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket;
+import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket.CriticalAscensionPacketHandler;
 import avi.mod.skrim.network.skillpackets.DrillPacket;
 import avi.mod.skrim.network.skillpackets.DrillPacket.DrillPacketHandler;
 import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
@@ -42,6 +44,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(WhirlingChopPacketHandler.class, WhirlingChopPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(AchievementPacketHandler.class, AchievementPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(InvisibilityPacketHandler.class, InvisibilityPacket.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(CriticalAscensionPacketHandler.class, CriticalAscensionPacket.class, id++, Side.CLIENT);
 	}
 
 }
