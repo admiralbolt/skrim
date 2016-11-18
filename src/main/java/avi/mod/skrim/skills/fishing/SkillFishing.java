@@ -41,28 +41,28 @@ public class SkillFishing extends Skill implements ISkillFishing {
 
 	public static SkillStorage<ISkillFishing> skillStorage = new SkillStorage<ISkillFishing>();
 
-	public static SkillAbility batman = new SkillAbility(
+	public static SkillAbility BATMAN = new SkillAbility(
 		"Batman",
 		25,
 		"na na na na na na na na",
 		"Your fishing rod can now be used as a grappling hook."
 	);
 
-	public static SkillAbility tripleHook = new SkillAbility(
+	public static SkillAbility TRIPLE_HOOK = new SkillAbility(
 		"Triple Hook",
 		50,
 		"Triple the hooks, triple the pleasure.",
 		"You now catch §a3x" + SkillAbility.descColor + " as many items."
 	);
 
-	public static SkillAbility bountifulCatch = new SkillAbility(
+	public static SkillAbility BOUNTIFUL_CATCH = new SkillAbility(
 		"Bountiful Catch",
 		75,
 		"On that E-X-P grind.",
 		"Catching a fish provides an additional§a 9-24" + SkillAbility.descColor + " xp."
 	);
 
-	public static SkillAbility fling = new SkillAbility(
+	public static SkillAbility FLING = new SkillAbility(
 		"Fling",
 		100,
 		"Sometimes I don't know my own strength.",
@@ -76,7 +76,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
 	public SkillFishing(int level, int currentXp) {
 		super("Fishing", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/fishing.png");
-		this.addAbilities(batman, tripleHook, bountifulCatch, fling);
+		this.addAbilities(BATMAN, TRIPLE_HOOK, BOUNTIFUL_CATCH, FLING);
 	}
 
 	public double getTreasureChance() {

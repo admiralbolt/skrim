@@ -92,7 +92,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			"sign"
 	));
 
-	public static SkillAbility handSaw = new SkillAbility(
+	public static SkillAbility HAND_SAW = new SkillAbility(
 		"Hand Saw",
 		25,
 		"Wee Saw!",
@@ -100,11 +100,18 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		"Hand saws instantly convert broken wood logs into 8 planks."
 	);
 
-	public static SkillAbility whirlingChop = new SkillAbility(
+	public static SkillAbility WHIRLING_CHOP = new SkillAbility(
 		"Whirling Chop",
 		50,
-		"My roflchopter go soi soi soi soi soi",
+		"My roflchopter go soi soi soi soi soi.",
 		"Right click with an axe to massacre trees in a 10 block radius."
+	);
+
+	public static SkillAbility LEAF_ARMOR = new SkillAbility(
+		"Leaf Armor",
+		75,
+		"Tree!",
+		"Grants you the ability to craft armor out of leaves."
 	);
 
 	public SkillWoodcutting() {
@@ -114,7 +121,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public SkillWoodcutting(int level, int currentXp) {
 		super("Woodcutting", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/woodcutting.png");
-		this.addAbilities(handSaw, whirlingChop);
+		this.addAbilities(HAND_SAW, WHIRLING_CHOP, LEAF_ARMOR);
 	}
 
 	public int getXp(String blockName) {

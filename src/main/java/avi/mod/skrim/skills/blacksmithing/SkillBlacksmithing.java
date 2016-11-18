@@ -61,7 +61,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		obsidianItems.add(ModItems.obsidianSword);
 	}
 
-	public static SkillAbility masterCraftsPerson = new SkillAbility(
+	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility(
 		"Master Craftsperson",
 		25,
 		"Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
@@ -69,21 +69,21 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		"Repairing an item with an undamaged equivalent provides a one time §a+25%" + SkillAbility.descColor + " durability bonus."
 	);
 
-	public static SkillAbility persistence = new SkillAbility(
+	public static SkillAbility PERSISTENCE = new SkillAbility(
 			"Persistence",
 			50,
 			"3 days later...",
 			"Remove prior work cost when repairing items."
 		);
 
-	public static SkillAbility ironHeart = new SkillAbility(
+	public static SkillAbility IRON_HEART = new SkillAbility(
 		"Iron Heart",
 		75,
 		"Can still pump blood.",
 		"Passively gain §a50%" + SkillAbility.descColor + " fire resistance."
 	);
 
-	public static SkillAbility obsidianSmith = new SkillAbility(
+	public static SkillAbility OBSIDIAN_SMITH = new SkillAbility(
 		"Obsidian Smith",
 		100,
 		"How can obsidian be real if our eyes aren't real?",
@@ -97,7 +97,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	public SkillBlacksmithing(int level, int currentXp) {
 		super("Blacksmithing", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/blacksmithing.png");
-		this.addAbilities(masterCraftsPerson, persistence, ironHeart, obsidianSmith);
+		this.addAbilities(MASTER_CRAFTS_PERSON, PERSISTENCE, IRON_HEART, OBSIDIAN_SMITH);
 	}
 
 	public int getXp(String blockName) {
@@ -195,7 +195,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 			blacksmithing.addXp((EntityPlayerMP) player, (int) (baseRepair * (1 + blacksmithing.extraRepair())));
 			int finalRepair = output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair());
 			/**
-			 * Persistence!
+			 * PERSISTENCE!
 			 */
 			if (blacksmithing.hasAbility(1)) {
 				event.setBreakChance(0);

@@ -58,21 +58,21 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	public static SkillStorage<ISkillMelee> skillStorage = new SkillStorage<ISkillMelee>();
 	public int ticksSinceLastLeft = 0;
 
-	public static SkillAbility vampirism = new SkillAbility(
+	public static SkillAbility VAMPIRISM = new SkillAbility(
 		"Vampirism",
 		25,
 		"What I need is your blood. What I don't need is your permission.",
 		"Killing an enemy restores §a1" + SkillAbility.descColor + " heart."
 	);
 
-	public static SkillAbility spinSlash = new SkillAbility(
+	public static SkillAbility SPIN_SLASH = new SkillAbility(
 		"Spin Slash",
 		50,
 		"Spin to win.",
 		"Critting an enemy deals massive AOE damage."
 	);
 
-	public static SkillAbility dualWielding = new SkillAbility(
+	public static SkillAbility DUAL_WIELDING = new SkillAbility(
 		"Dual Wielding",
 		75,
 		"Two swords are better than one.",
@@ -80,7 +80,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 		"Each hand uses a separate exhaustion meter for damage & swipe attacks."
 	);
 
-	public static SkillAbility grandSmite = new SkillAbility(
+	public static SkillAbility GRAND_SMITE = new SkillAbility(
 		"Grand Smite",
 		100,
 		"DESTRUUUUCTIOOONNN",
@@ -93,7 +93,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
 	public SkillMelee(int level, int currentXp) {
 		super("Melee", level, currentXp);
-		this.addAbilities(vampirism, spinSlash, dualWielding, grandSmite);
+		this.addAbilities(VAMPIRISM, SPIN_SLASH, DUAL_WIELDING, GRAND_SMITE);
 	}
 
 	public double getExtraDamage() {

@@ -81,7 +81,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public static long tanCheck = 40L;
 	public int ticks = 0;
 
-	public static SkillAbility overalls = new SkillAbility(
+	public static SkillAbility OVERALLS = new SkillAbility(
 		"Overalls",
 		25,
 		"Overall, this ability seems pretty good! AHAHAHA Get it?  (Please help me I need sleep.)",
@@ -89,14 +89,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		"While worn, right clicking with a hoe acts like applying bonemeal."
 	);
 
-	public static SkillAbility sideChick = new SkillAbility(
+	public static SkillAbility SIDE_CHICK = new SkillAbility(
 		"Side Chick",
 		50,
 		"This IS my other hoe.",
 		"Killing an entity while holding a hoe automatically plants a random plant."
 	);
 
-	public static SkillAbility farmersTan = new SkillAbility(
+	public static SkillAbility FARMERS_TAN = new SkillAbility(
 		"Farmer's Tan",
 		75,
 		"You're a plant Vash.",
@@ -110,7 +110,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public SkillFarming(int level, int currentXp) {
 		super("Farming", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/farming.png");
-		this.addAbilities(overalls, sideChick, farmersTan);
+		this.addAbilities(OVERALLS, SIDE_CHICK, FARMERS_TAN);
 	}
 
 	public int getXp(String blockName) {

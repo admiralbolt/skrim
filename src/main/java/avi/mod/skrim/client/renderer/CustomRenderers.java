@@ -1,6 +1,7 @@
 package avi.mod.skrim.client.renderer;
 
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
+import avi.mod.skrim.entities.CustomFishHook;
 import avi.mod.skrim.entities.monster.BioCreeper;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
 import avi.mod.skrim.entities.projectile.Rocket;

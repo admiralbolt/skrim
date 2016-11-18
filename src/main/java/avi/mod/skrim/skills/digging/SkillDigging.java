@@ -73,9 +73,9 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	}
 
 	private static int REQUIRED_SAND = 640;
+	private static double METER_FILLED = 100;
 
 	public double metalMeter = 0;
-	public static double meterFilled = 100;
 	public Vec3d lastPos = null;
 
 	public static SkillAbility VITALIC_BREATHING = new SkillAbility(
@@ -237,7 +237,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 						IBlockState onState = player.worldObj.getBlockState(playerLocation.add(0, -1, 0));
 						if (validTreasureTarget(onState)) {
 							digging.metalMeter += Math.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
-							if (digging.metalMeter >= SkillDigging.meterFilled) {
+							if (digging.metalMeter >= SkillDigging.METER_FILLED) {
 								digging.metalMeter = 0;
 								SkrimPacketHandler.INSTANCE.sendToServer(new MetalDetectorPacket(player.posX, player.posY, player.posZ));
 							}
