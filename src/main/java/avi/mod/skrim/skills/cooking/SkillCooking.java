@@ -68,30 +68,30 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		foodMap = new HashMap<String, CustomFood>();
 		xpMap = new HashMap<String, Integer>();
 		entityFoodMap = new HashMap<Class, String>();
-		addFood("bread", ModItems.overwriteBread, 200);
-		addFood("cookie", ModItems.overwriteCookie, 25);
+		addFood("bread", ModItems.OVERWRITE_BREAD, 200);
+		addFood("cookie", ModItems.OVERWRITE_COOKIE, 25);
 
-		addFood("potatobaked", ModItems.overwriteBakedPotato, 300);
+		addFood("potatobaked", ModItems.OVERWRITE_BAKED_POTATO, 300);
 
-		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 400);
-		addFood("mushroomstew", ModItems.overwriteMushroomStew, 400);
+		addFood("beetroot_soup", ModItems.OVERWRITE_BEETROOT_SOUP, 400);
+		addFood("mushroomstew", ModItems.OVERWRITE_MUSHROOM_STEW, 400);
 
-		addFood("muttoncooked", ModItems.overwriteMutton, 600);
+		addFood("muttoncooked", ModItems.OVERWRITE_MUTTON, 600);
 		entityFoodMap.put(EntitySheep.class, "muttoncooked");
-		addFood("beefcooked", ModItems.overwriteSteak, 600);
+		addFood("beefcooked", ModItems.OVERWRITE_STEAK, 600);
 		entityFoodMap.put(EntityCow.class, "beefcooked");
-		addFood("porkchopcooked", ModItems.overwritePorkchop, 600);
+		addFood("porkchopcooked", ModItems.OVERWRITE_PORKCHOP, 600);
 		entityFoodMap.put(EntityPig.class, "porkchopcooked");
-		addFood("chickencooked", ModItems.overwriteChicken, 600);
+		addFood("chickencooked", ModItems.OVERWRITE_CHICKEN, 600);
 		entityFoodMap.put(EntityChicken.class, "chickencooked");
 
-		addFood("cooked_fish", ModItems.overwriteFish, 700);
-		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 750);
-		addFood("cooked_salmon", ModItems.overwriteSalmon, 800);
+		addFood("cooked_fish", ModItems.OVERWRITE_FISH, 700);
+		addFood("pumpkinpie", ModItems.OVERWRITE_PUMPKIN_STEW, 750);
+		addFood("cooked_salmon", ModItems.OVERWRITE_SALMON, 800);
 
-		addFood("rabbitcooked", ModItems.overwriteRabbit, 1000);
+		addFood("rabbitcooked", ModItems.OVERWRITE_RABBIT, 1000);
 		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");
-		addFood("rabbitstew", ModItems.overwriteRabbitStew, 1000);
+		addFood("rabbitstew", ModItems.OVERWRITE_RABBIT_STEW, 1000);
 
 		xpMap.put("cake", 1500);
 		xpMap.put("angel_cake", 2000);

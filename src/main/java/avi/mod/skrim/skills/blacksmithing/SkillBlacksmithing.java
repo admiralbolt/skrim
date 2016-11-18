@@ -50,15 +50,15 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	public int lastItemNumber;
 	public static List<Item> obsidianItems = new ArrayList<Item>();
 	static {
-		obsidianItems.add(ModItems.obsidianAxe);
-		obsidianItems.add(ModItems.obsidianBoots);
-		obsidianItems.add(ModItems.obsidianChest);
-		obsidianItems.add(ModItems.obsidianHelmet);
-		obsidianItems.add(ModItems.obsidianHoe);
-		obsidianItems.add(ModItems.obsidianPants);
-		obsidianItems.add(ModItems.obsidianPickaxe);
-		obsidianItems.add(ModItems.obsidianShovel);
-		obsidianItems.add(ModItems.obsidianSword);
+		obsidianItems.add(ModItems.OBSIDIAN_AXE);
+		obsidianItems.add(ModItems.OBSIDIAN_BOOTS);
+		obsidianItems.add(ModItems.OBSIDIAN_CHEST);
+		obsidianItems.add(ModItems.OBSIDIAN_HELMET);
+		obsidianItems.add(ModItems.OBSIDIAN_HOE);
+		obsidianItems.add(ModItems.OBSIDIAN_PANTS);
+		obsidianItems.add(ModItems.OBSIDIAN_PICKAXE);
+		obsidianItems.add(ModItems.OBSIDIAN_SHOVEL);
+		obsidianItems.add(ModItems.OBSIDIAN_SWORD);
 	}
 
 	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility(

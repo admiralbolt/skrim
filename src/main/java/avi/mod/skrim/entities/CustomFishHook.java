@@ -209,7 +209,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 			if (this.angler != null) {
 				ItemStack itemstack = this.angler.getHeldItemMainhand();
 
-				if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() != ModItems.fishingRod || this.getDistanceSqToEntity(this.angler) > 1024.0D) {
+				if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() != ModItems.FISHING_ROD || this.getDistanceSqToEntity(this.angler) > 1024.0D) {
 					this.setDead();
 					this.angler.fishEntity = null;
 					return;

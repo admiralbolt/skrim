@@ -28,18 +28,18 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class ModBlocks {
 
-  public static Block orePenguin;
-  public static Block cloneOldLog;
+  public static Block ORE_PENGUIN;
+  public static Block CLONE_OLD_LOG;
 
-  public static GlowFlower glowFlowerRed;
-  public static GlowFlowerVariants glowFlowerRedVariants;
-  public static GlowFlower glowFlowerYellow;
-  public static GlowFlowerVariants glowFlowerYellowVariants;
+  public static GlowFlower GLOW_FLOWER_RED;
+  public static GlowFlowerVariants GLOW_FLOWER_RED_VARIANTS;
+  public static GlowFlower GLOW_FLOWER_YELLOW;
+  public static GlowFlowerVariants GLOW_FLOWER_YELLOW_VARIANTS;
 
-  public static EnchantedFlower enchantedFlowerRed;
-  public static EnchantedFlowerVariants enchantedFlowerRedVariants;
-  public static EnchantedFlower enchantedFlowerYellow;
-  public static EnchantedFlowerVariants enchantedFlowerYellowVariants;
+  public static EnchantedFlower ENCHANTED_FLOWER_RED;
+  public static EnchantedFlowerVariants ENCHANTED_FLOWER_RED_VARIANTS;
+  public static EnchantedFlower ENCHANTED_FLOWER_YELLOW;
+  public static EnchantedFlowerVariants ENCHANTED_FLOWER_YELLOW_VARIANTS;
 
   public static Dynamite DYNAMITE;
   public static BioBomb BIOBOMB;
@@ -49,27 +49,27 @@ public final class ModBlocks {
   public static AngelCakeBlock ANGEL_CAKE;
 
   public static void createBlocks() {
-    orePenguin = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
+    ORE_PENGUIN = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
 
     GlowFlowerRed red = new GlowFlowerRed("glow_flower_red");
-    glowFlowerRedVariants = new GlowFlowerVariants(red);
-    glowFlowerRed = register(red, glowFlowerRedVariants);
-    addGlowFlowerRecipes(red, glowFlowerRedVariants);
+    GLOW_FLOWER_RED_VARIANTS = new GlowFlowerVariants(red);
+    GLOW_FLOWER_RED = register(red, GLOW_FLOWER_RED_VARIANTS);
+    addGlowFlowerRecipes(red, GLOW_FLOWER_RED_VARIANTS);
 
     GlowFlowerYellow yellow = new GlowFlowerYellow("glow_flower_yellow");
-    glowFlowerYellowVariants = new GlowFlowerVariants(yellow);
-    glowFlowerYellow = register(yellow, glowFlowerYellowVariants);
-    addGlowFlowerRecipes(yellow, glowFlowerYellowVariants);
+    GLOW_FLOWER_YELLOW_VARIANTS = new GlowFlowerVariants(yellow);
+    GLOW_FLOWER_YELLOW = register(yellow, GLOW_FLOWER_YELLOW_VARIANTS);
+    addGlowFlowerRecipes(yellow, GLOW_FLOWER_YELLOW_VARIANTS);
 
     EnchantedFlowerRed enchantedRed = new EnchantedFlowerRed("enchanted_flower_red");
-    enchantedFlowerRedVariants = new EnchantedFlowerVariants(enchantedRed);
-    enchantedFlowerRed = register(enchantedRed, enchantedFlowerRedVariants);
-    addEnchantedFlowerRecipes(enchantedRed, enchantedFlowerRedVariants);
+    ENCHANTED_FLOWER_RED_VARIANTS = new EnchantedFlowerVariants(enchantedRed);
+    ENCHANTED_FLOWER_RED = register(enchantedRed, ENCHANTED_FLOWER_RED_VARIANTS);
+    addEnchantedFlowerRecipes(enchantedRed, ENCHANTED_FLOWER_RED_VARIANTS);
 
     EnchantedFlowerYellow enchantedYellow = new EnchantedFlowerYellow("enchanted_flower_yellow");
-    enchantedFlowerYellowVariants = new EnchantedFlowerVariants(enchantedYellow);
-    enchantedFlowerYellow = register(enchantedYellow, enchantedFlowerYellowVariants);
-    addEnchantedFlowerRecipes(enchantedYellow, enchantedFlowerYellowVariants);
+    ENCHANTED_FLOWER_YELLOW_VARIANTS = new EnchantedFlowerVariants(enchantedYellow);
+    ENCHANTED_FLOWER_YELLOW = register(enchantedYellow, ENCHANTED_FLOWER_YELLOW_VARIANTS);
+    addEnchantedFlowerRecipes(enchantedYellow, ENCHANTED_FLOWER_YELLOW_VARIANTS);
 
     DYNAMITE = register(new Dynamite("dynamite"));
     BIOBOMB = register(new BioBomb("biobomb"));

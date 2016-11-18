@@ -104,7 +104,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
 			ItemStack stack = eitem.getEntityItem();
 			Item item = stack.getItem();
 			if (item == Items.FISHING_ROD) {
-				stack.setItem(ModItems.fishingRod);
+				stack.setItem(ModItems.FISHING_ROD);
 			}
 		}
 	}
@@ -114,7 +114,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
 		if (player != null && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
 			Item item = event.crafting.getItem();
 			if (item == Items.FISHING_ROD) {
-				event.crafting.setItem(ModItems.fishingRod);
+				event.crafting.setItem(ModItems.FISHING_ROD);
 			}
 		}
 	}

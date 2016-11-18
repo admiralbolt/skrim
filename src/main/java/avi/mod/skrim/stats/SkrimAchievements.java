@@ -31,7 +31,7 @@ public class SkrimAchievements {
 			"ding_apprentice",
 			-2,
 			0,
-			ModItems.tux,
+			ModItems.TUX,
 			FOUND_SKILLS
 		);
 	
@@ -40,7 +40,7 @@ public class SkrimAchievements {
 			"ding_journeyman",
 			-4,
 			0,
-			ModItems.tux,
+			ModItems.TUX,
 			DING_APPRENTICE
 		);
 	
@@ -49,7 +49,7 @@ public class SkrimAchievements {
 			"ding_expert",
 			-6,
 			0,
-			ModItems.tux,
+			ModItems.TUX,
 			DING_JOURNEYMAN
 		);
 	
@@ -58,7 +58,7 @@ public class SkrimAchievements {
 			"ding_master",
 			-8,
 			0,
-			ModItems.tux,
+			ModItems.TUX,
 			DING_EXPERT
 		);
 	

@@ -66,7 +66,7 @@ public class CanesSword extends ArtifactSword {
 		      	for (int i = 0; i < drops.size(); i++) {
 		      		EntityItem item = drops.get(i);
 		      		if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
-		      			drops.set(i, new EntityItem(player.worldObj, item.posX, item.posY, item.posZ, new ItemStack(ModItems.canesChicken)));
+		      			drops.set(i, new EntityItem(player.worldObj, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
 		      		}
 		      	}
 		      }

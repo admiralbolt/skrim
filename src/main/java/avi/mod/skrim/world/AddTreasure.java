@@ -87,7 +87,7 @@ public class AddTreasure {
 			currentWeight += recordWeight;
 		}
 
-		for (Item artifact : ModItems.artifacts) {
+		for (Item artifact : ModItems.ARTIFACTS) {
 			lootEntries.add(
 					new LootEntryItem(
 						artifact,

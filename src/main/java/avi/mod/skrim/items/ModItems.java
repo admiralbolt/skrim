@@ -34,29 +34,29 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 
-	public static ItemBase tux;
+	public static ItemBase TUX;
 
-	public static CustomFood overwritePorkchop;
-	public static CustomFood overwriteChicken;
-	public static CustomFood overwriteMutton;
-	public static CustomFood overwriteRabbit;
-	public static CustomFood overwriteBakedPotato;
-	public static CustomFood overwriteFish;
-	public static CustomFood overwriteSalmon;
-	public static CustomFood overwriteCake;
-	public static CustomFood overwriteBeetrootSoup;
-	public static CustomFood overwriteMushroomStew;
-	public static CustomFood overwriteCookie;
-	public static CustomFood overwriteBread;
-	public static CustomFood overwritePumpkinPie;
-	public static CustomFood overwriteRabbitStew;
-	public static CustomFood overwriteSteak;
-	public static CustomFood canesChicken;
+	public static CustomFood OVERWRITE_PORKCHOP;
+	public static CustomFood OVERWRITE_CHICKEN;
+	public static CustomFood OVERWRITE_MUTTON;
+	public static CustomFood OVERWRITE_RABBIT;
+	public static CustomFood OVERWRITE_BAKED_POTATO;
+	public static CustomFood OVERWRITE_FISH;
+	public static CustomFood OVERWRITE_SALMON;
+	public static CustomFood OVERWRITE_CAKE;
+	public static CustomFood OVERWRITE_BEETROOT_SOUP;
+	public static CustomFood OVERWRITE_MUSHROOM_STEW;
+	public static CustomFood OVERWRITE_COOKIE;
+	public static CustomFood OVERWRITE_BREAD;
+	public static CustomFood OVERWRITE_PUMPKIN_STEW;
+	public static CustomFood OVERWRITE_RABBIT_STEW;
+	public static CustomFood OVERWRITE_STEAK;
+	public static CustomFood CANES_CHICKEN;
 
 	public static SkrimCake SKRIM_CAKE;
 	public static AngelCake ANGEL_CAKE;
 
-	public static CustomFishingRod fishingRod;
+	public static CustomFishingRod FISHING_ROD;
 
 	public static EnumRarity ARTIFACT_RARITY = EnumHelper.addRarity("artifact", TextFormatting.GOLD, "Artifact");
 
@@ -72,7 +72,7 @@ public class ModItems {
 	
 	
 	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 9, 7, 4 }, 20, null, 2.0F);
-	public static ArmorMaterial OVERALLS = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
+	public static ArmorMaterial OVERALLS_ARMOR = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
 
 	/**
 	 * Default ToolMaterials HarvestLevel: wood: 0 stone: 1 iron: 2 diamond: 3 Durability: wood: 59 stone: 131 iron: 250 gold: 32 diamond: 1561 Mining Speed: wood: 2.0F stone: 4.0F iron: 6.0F gold: 12.0F diamond: 8.0F Damage vs. Entity wood: 0.0F stone: 1.0F iron: 2.0F gold: 0.0F diamond: 3.0F Enchantability: wood: 15 stone: 5 iron: 14 gold: 22 diamond: 10
@@ -94,16 +94,16 @@ public class ModItems {
 	 * Custom items created from skills
 	 */
 
-	public static CustomSword obsidianSword;
-	public static CustomSpade obsidianShovel;
-	public static CustomPickaxe obsidianPickaxe;
-	public static CustomHoe obsidianHoe;
-	public static CustomAxe obsidianAxe;
+	public static CustomSword OBSIDIAN_SWORD;
+	public static CustomSpade OBSIDIAN_SHOVEL;
+	public static CustomPickaxe OBSIDIAN_PICKAXE;
+	public static CustomHoe OBSIDIAN_HOE;
+	public static CustomAxe OBSIDIAN_AXE;
 
-	public static CustomArmor obsidianBoots;
-	public static CustomArmor obsidianPants;
-	public static CustomArmor obsidianChest;
-	public static CustomArmor obsidianHelmet;
+	public static CustomArmor OBSIDIAN_BOOTS;
+	public static CustomArmor OBSIDIAN_PANTS;
+	public static CustomArmor OBSIDIAN_CHEST;
+	public static CustomArmor OBSIDIAN_HELMET;
 	
 	public static LeafArmor OAK_LEAF_BOOTS;
 	public static LeafArmor OAK_LEAF_PANTS;
@@ -140,8 +140,8 @@ public class ModItems {
 	public static LeafArmor DARK_OAK_LEAF_ARMOR;
 	public static LeafArmor DARK_OAK_LEAF_HELMET;
 	
-	public static HandSaw handSaw;
-	public static CustomArmor overalls;
+	public static HandSaw HAND_SAW;
+	public static CustomArmor OVERALLS;
 	public static CustomBow GREAT_BOW;
 	public static RocketLauncher ROCKET_LAUNCHER;
 
@@ -160,42 +160,42 @@ public class ModItems {
 	public static CustomRecord TRUCK;
 
 	public static void createItems() {
-		tux = register(new ItemBase("tux").setCreativeTab(Skrim.creativeTab));
+		TUX = register(new ItemBase("tux").setCreativeTab(Skrim.creativeTab));
 		// Food!
-		overwritePorkchop = register(new CustomFood("overwrite_porkchop", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
-		overwriteBakedPotato = register(new CustomFood("overwrite_baked_potato", 5, 1.2F, false).setCreativeTab(Skrim.creativeTab));
-		overwriteBeetrootSoup = register(new CustomFood("overwrite_beetroot_soup", 6, 1.2F, false).setCreativeTab(Skrim.creativeTab));
-		overwriteBread = register(new CustomFood("overwrite_bread", 5, 1.2F, false).setCreativeTab(Skrim.creativeTab));
-		overwriteChicken = register(new CustomFood("overwrite_chicken", 6, 1.2F, true).setCreativeTab(Skrim.creativeTab));
-		overwriteFish = register(new CustomFood("overwrite_fish", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
-		overwriteMutton = register(new CustomFood("overwrite_mutton", 6, 1.6F, true).setCreativeTab(Skrim.creativeTab));
-		overwriteSalmon = register(new CustomFood("overwrite_salmon", 6, 1.6F, true).setCreativeTab(Skrim.creativeTab));
-		overwriteCookie = register(new CustomFood("overwrite_cookie", 2, 0.2F, false).setCreativeTab(Skrim.creativeTab));
-		overwriteMushroomStew = register(new CustomFood("overwrite_mushroom_stew", 6, 1.2F, false).setCreativeTab(Skrim.creativeTab));
-		overwritePumpkinPie = register(new CustomFood("overwrite_pumpkin_pie", 8, 0.6F, false).setCreativeTab(Skrim.creativeTab));
-		overwriteRabbitStew = register(new CustomFood("overwrite_rabbit_stew", 10, 1.2F, false).setCreativeTab(Skrim.creativeTab));
-		overwriteSteak = register(new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
-		overwriteRabbit = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
-		canesChicken = register(new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_PORKCHOP = register(new CustomFood("overwrite_porkchop", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_BAKED_POTATO = register(new CustomFood("overwrite_baked_potato", 5, 1.2F, false).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_BEETROOT_SOUP = register(new CustomFood("overwrite_beetroot_soup", 6, 1.2F, false).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_BREAD = register(new CustomFood("overwrite_bread", 5, 1.2F, false).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_CHICKEN = register(new CustomFood("overwrite_chicken", 6, 1.2F, true).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_FISH = register(new CustomFood("overwrite_fish", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_MUTTON = register(new CustomFood("overwrite_mutton", 6, 1.6F, true).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_SALMON = register(new CustomFood("overwrite_salmon", 6, 1.6F, true).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_COOKIE = register(new CustomFood("overwrite_cookie", 2, 0.2F, false).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_MUSHROOM_STEW = register(new CustomFood("overwrite_mushroom_stew", 6, 1.2F, false).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_PUMPKIN_STEW = register(new CustomFood("overwrite_pumpkin_pie", 8, 0.6F, false).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_RABBIT_STEW = register(new CustomFood("overwrite_rabbit_stew", 10, 1.2F, false).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_STEAK = register(new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab));
+		OVERWRITE_RABBIT = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
+		CANES_CHICKEN = register(new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab));
 		SKRIM_CAKE = register(new SkrimCake());
 
 		// Overwrite that fishing rod!
-		fishingRod = register(new CustomFishingRod("fishing_rod"));
+		FISHING_ROD = register(new CustomFishingRod("fishing_rod"));
 
 		// Obsidian tools & armor
-		obsidianSword = register(new CustomSword("obsidian_sword", OBSIDIAN_TOOL));
-		obsidianHoe = register(new CustomHoe("obsidian_hoe", OBSIDIAN_TOOL));
-		obsidianShovel = register(new CustomSpade("obsidian_spade", OBSIDIAN_TOOL));
-		obsidianAxe = register(new CustomAxe("obsidian_axe", OBSIDIAN_TOOL));
-		obsidianPickaxe = register(new CustomPickaxe("obsidian_pickaxe", OBSIDIAN_TOOL));
-		obsidianBoots = register(new CustomArmor("obsidian_boots", OBSIDIAN_ARMOR, 1, EntityEquipmentSlot.FEET));
-		obsidianPants = register(new CustomArmor("obsidian_pants", OBSIDIAN_ARMOR, 2, EntityEquipmentSlot.LEGS));
-		obsidianChest = register(new CustomArmor("obsidian_chest", OBSIDIAN_ARMOR, 3, EntityEquipmentSlot.CHEST));
-		obsidianHelmet = register(new CustomArmor("obsidian_helmet", OBSIDIAN_ARMOR, 4, EntityEquipmentSlot.HEAD));
+		OBSIDIAN_SWORD = register(new CustomSword("obsidian_sword", OBSIDIAN_TOOL));
+		OBSIDIAN_HOE = register(new CustomHoe("obsidian_hoe", OBSIDIAN_TOOL));
+		OBSIDIAN_SHOVEL = register(new CustomSpade("obsidian_spade", OBSIDIAN_TOOL));
+		OBSIDIAN_AXE = register(new CustomAxe("obsidian_axe", OBSIDIAN_TOOL));
+		OBSIDIAN_PICKAXE = register(new CustomPickaxe("obsidian_pickaxe", OBSIDIAN_TOOL));
+		OBSIDIAN_BOOTS = register(new CustomArmor("obsidian_boots", OBSIDIAN_ARMOR, 1, EntityEquipmentSlot.FEET));
+		OBSIDIAN_PANTS = register(new CustomArmor("obsidian_pants", OBSIDIAN_ARMOR, 2, EntityEquipmentSlot.LEGS));
+		OBSIDIAN_CHEST = register(new CustomArmor("obsidian_chest", OBSIDIAN_ARMOR, 3, EntityEquipmentSlot.CHEST));
+		OBSIDIAN_HELMET = register(new CustomArmor("obsidian_helmet", OBSIDIAN_ARMOR, 4, EntityEquipmentSlot.HEAD));
 
 		// Skill Stuff
-		handSaw = register(new HandSaw("hand_saw", ToolMaterial.IRON));
-		overalls = register(new CustomArmor("overalls", OVERALLS, 3, EntityEquipmentSlot.CHEST));
+		HAND_SAW = register(new HandSaw("hand_saw", ToolMaterial.IRON));
+		OVERALLS = register(new CustomArmor("overalls", OVERALLS_ARMOR, 3, EntityEquipmentSlot.CHEST));
 		GREAT_BOW = register(new GreatBow("great_bow"));
 		ANGEL_CAKE = register(new AngelCake());
 		ROCKET_LAUNCHER = register(new RocketLauncher());
@@ -234,32 +234,32 @@ public class ModItems {
 		registerCraftingRecipes();
 	}
 
-	public static List<Item> artifacts = new ArrayList<Item>();
+	public static List<Item> ARTIFACTS = new ArrayList<Item>();
 
 	public static void registerArtifacts() {
 		// Artifact Armors
 		SPRINGHEEL_BOOTS = register(new SpringheelBoots());
-		artifacts.add(SPRINGHEEL_BOOTS);
+		ARTIFACTS.add(SPRINGHEEL_BOOTS);
 
 		BLINDING_BOOTS = register(new BlindingBoots());
-		artifacts.add(BLINDING_BOOTS);
+		ARTIFACTS.add(BLINDING_BOOTS);
 
 		GRUESOME_MASK = register(new GruesomeMask());
-		artifacts.add(GRUESOME_MASK);
+		ARTIFACTS.add(GRUESOME_MASK);
 
 		// Artifact Swords
 		CANES_SWORD = register(new CanesSword());
-		artifacts.add(CANES_SWORD);
+		ARTIFACTS.add(CANES_SWORD);
 
 		// Artifact Items
 		SHEEP_FINDER = register(new SheepFinder3000());
-		artifacts.add(SHEEP_FINDER);
+		ARTIFACTS.add(SHEEP_FINDER);
 		
 		ICARIAN_SCROLL = register(new IcarianScroll());
-		artifacts.add(ICARIAN_SCROLL);
+		ARTIFACTS.add(ICARIAN_SCROLL);
 	}
 
-	public static Map<String, CustomRecord> songs = new HashMap<String, CustomRecord>();
+	public static Map<String, CustomRecord> SONGS = new HashMap<String, CustomRecord>();
 
 	public static void registerSongs() {
 		ARUARIAN_DANCE = register(new CustomRecord("aruarian_dance", registerRecordEvent("aruarian_dance")));
@@ -275,18 +275,18 @@ public class ModItems {
 		SAMURAI = register(new CustomRecord("samurai", registerRecordEvent("samurai")));
 		TRUCK = register(new CustomRecord("truck", registerRecordEvent("truck")));
 
-		songs.put("aruarian_dance", ARUARIAN_DANCE);
-		songs.put("bubberducky", BUBBERDUCKY);
-		songs.put("cassandra", CASSANDRA);
-		songs.put("color", COLOR);
-		songs.put("dogsong", DOGSONG);
-		songs.put("gdawg", GDAWG);
-		songs.put("heya", HEYA);
-		songs.put("money", MONEY);
-		songs.put("north", NORTH);
-		songs.put("number10", NUMBER10);
-		songs.put("samurai", SAMURAI);
-		songs.put("truck", TRUCK);
+		SONGS.put("aruarian_dance", ARUARIAN_DANCE);
+		SONGS.put("bubberducky", BUBBERDUCKY);
+		SONGS.put("cassandra", CASSANDRA);
+		SONGS.put("color", COLOR);
+		SONGS.put("dogsong", DOGSONG);
+		SONGS.put("gdawg", GDAWG);
+		SONGS.put("heya", HEYA);
+		SONGS.put("money", MONEY);
+		SONGS.put("north", NORTH);
+		SONGS.put("number10", NUMBER10);
+		SONGS.put("samurai", SAMURAI);
+		SONGS.put("truck", TRUCK);
 	}
 
 	public static SoundEvent registerRecordEvent(String recordName) {
@@ -319,9 +319,9 @@ public class ModItems {
 	 * We have to be explicit with our recipes. Which means since we're injecting our own food.... Sigh.
 	 */
 	public static void registerRabbitStew() {
-		Item[] rabbits = { (Item) overwriteRabbit, Items.COOKED_RABBIT };
+		Item[] rabbits = { (Item) OVERWRITE_RABBIT, Items.COOKED_RABBIT };
 		BlockBush[] mushrooms = { Blocks.RED_MUSHROOM, Blocks.BROWN_MUSHROOM };
-		Item[] potatoes = { overwriteBakedPotato, Items.BAKED_POTATO };
+		Item[] potatoes = { OVERWRITE_BAKED_POTATO, Items.BAKED_POTATO };
 		for (Item rabbit : rabbits) {
 			for (Item potato : potatoes) {
 				if (rabbit != Items.COOKED_RABBIT || potato != Items.BAKED_POTATO) {
@@ -334,12 +334,12 @@ public class ModItems {
 	}
 
 	public static void registerHandSaw() {
-		GameRegistry.addRecipe(new ItemStack(handSaw), " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
-		GameRegistry.addRecipe(new ItemStack(handSaw), "   ", " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
+		GameRegistry.addRecipe(new ItemStack(HAND_SAW), " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
+		GameRegistry.addRecipe(new ItemStack(HAND_SAW), "   ", " IW", "IIW", 'I', new ItemStack(Items.IRON_INGOT), 'W', new ItemStack(Items.STICK));
 	}
 
 	public static void registerOveralls() {
-		GameRegistry.addRecipe(new ItemStack(overalls), "A A", "ALA", "LLL", 'A', new ItemStack(Items.DYE, 1, 4), 'L', new ItemStack(Items.LEATHER));
+		GameRegistry.addRecipe(new ItemStack(OVERALLS), "A A", "ALA", "LLL", 'A', new ItemStack(Items.DYE, 1, 4), 'L', new ItemStack(Items.LEATHER));
 	}
 
 	public static void registerGreatBow() {
@@ -395,9 +395,9 @@ public class ModItems {
 	}
 
 	public static void registerObsidian() {
-		addArmorRecipes(new ItemStack(Blocks.OBSIDIAN), obsidianHelmet, obsidianChest, obsidianPants, obsidianBoots);
-		addToolRecipes(new ItemStack(Blocks.OBSIDIAN), obsidianAxe, obsidianHoe, obsidianPickaxe, obsidianShovel);
-		addWeaponRecipes(new ItemStack(Blocks.OBSIDIAN), obsidianSword);
+		addArmorRecipes(new ItemStack(Blocks.OBSIDIAN), OBSIDIAN_HELMET, OBSIDIAN_CHEST, OBSIDIAN_PANTS, OBSIDIAN_BOOTS);
+		addToolRecipes(new ItemStack(Blocks.OBSIDIAN), OBSIDIAN_AXE, OBSIDIAN_HOE, OBSIDIAN_PICKAXE, OBSIDIAN_SHOVEL);
+		addWeaponRecipes(new ItemStack(Blocks.OBSIDIAN), OBSIDIAN_SWORD);
 	}
 
 	private static <T extends Item> T register(T item) {

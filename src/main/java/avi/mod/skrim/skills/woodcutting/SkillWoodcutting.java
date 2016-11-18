@@ -238,7 +238,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		if (targetItem != null && targetItem == ModItems.handSaw) {
+		if (targetItem != null && targetItem == ModItems.HAND_SAW) {
 			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 25)) {
 				Skills.replaceWithComponents(event);
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {

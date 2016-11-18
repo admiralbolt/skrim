@@ -133,7 +133,7 @@ public class FlowerBase extends BlockBush implements ItemModelProvider {
 		YELLOW, RED;
 
 		public FlowerBase getBlock() {
-			return this == YELLOW ? ModBlocks.glowFlowerYellow : ModBlocks.glowFlowerRed;
+			return this == YELLOW ? ModBlocks.GLOW_FLOWER_YELLOW : ModBlocks.GLOW_FLOWER_RED;
 		}
 	}
 
