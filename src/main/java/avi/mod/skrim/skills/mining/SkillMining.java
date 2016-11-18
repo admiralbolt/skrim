@@ -55,52 +55,54 @@ import net.minecraftforge.event.world.BlockEvent;
 public class SkillMining extends Skill implements ISkillMining {
 
 	public static SkillStorage<ISkillMining> skillStorage = new SkillStorage<ISkillMining>();
-	public static List<EntityPlayer> shouldRemove = new ArrayList<EntityPlayer>();
-	public static Map<String, Integer> xpMap;
+	public static Map<String, Integer> XP_MAP;
+
+	public static int NIGHT_VISION_DURATION = 300;
+
 	static {
-		xpMap = new HashMap<String, Integer>();
-		xpMap.put("stone", 50);
-		xpMap.put("netherrack", 60); // Extra bonus for being in the nether
-		xpMap.put("granite", 75);
-		xpMap.put("andesite", 75);
-		xpMap.put("diorite", 75);
-		xpMap.put("coal_ore", 125);
-		xpMap.put("iron_ore", 250);
-		xpMap.put("quartz_ore", 300); // Extra bonus for being in the nether ~same rarity as iron
-		xpMap.put("redstone_ore", 500);
-		xpMap.put("obsidian", 600); // Common but takes a while to mine
-		xpMap.put("gold_ore", 1000);
-		xpMap.put("lapis_lazuli_ore", 1500); // Lapis_lazuil not just lapis, also barely rarer than diamond
-		xpMap.put("diamond_ore", 2000);
-		xpMap.put("emerald_ore", 3500); // Nice xp bonus for an otherwise useless ore
+		XP_MAP = new HashMap<String, Integer>();
+		XP_MAP.put("stone", 50);
+		XP_MAP.put("netherrack", 60); // Extra bonus for being in the nether
+		XP_MAP.put("granite", 75);
+		XP_MAP.put("andesite", 75);
+		XP_MAP.put("diorite", 75);
+		XP_MAP.put("coal_ore", 125);
+		XP_MAP.put("iron_ore", 250);
+		XP_MAP.put("quartz_ore", 300); // Extra bonus for being in the nether ~same rarity as iron
+		XP_MAP.put("redstone_ore", 500);
+		XP_MAP.put("obsidian", 600); // Common but takes a while to mine
+		XP_MAP.put("gold_ore", 1000);
+		XP_MAP.put("lapis_lazuli_ore", 1500); // Lapis_lazuil not just lapis, also barely rarer than diamond
+		XP_MAP.put("diamond_ore", 2000);
+		XP_MAP.put("emerald_ore", 3500); // Nice xp bonus for an otherwise useless ore
 	}
 
-	public static List<String> validMiningBlocks = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs", "nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));
+	public static List<String> VALID_MINING_BLOCKS = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs", "nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));
 
-	public static List<String> validFortuneOres = new ArrayList<String>(Arrays.asList("coal_ore", "iron_ore", "gold_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
+	public static List<String> VALID_FORTUNE_ORES = new ArrayList<String>(Arrays.asList("coal_ore", "iron_ore", "gold_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
 
-	public static SkillAbility darkvision = new SkillAbility(
+	public static SkillAbility DARKVISION = new SkillAbility(
 		"Darkvision",
 		25,
 		"I was born in the darkness.",
 		"While close to the bottom of the world you have a constant night vision effect."
 	);
 
-	public static SkillAbility lavaSwimmer = new SkillAbility(
+	public static SkillAbility LAVA_SWIMMER = new SkillAbility(
 		"Lava Swimmer",
 		50,
 		"Reducing the number of 'oh shit' moments.",
 		"While close to the bottom of the world you take §a50%" + SkillAbility.descColor + " damage from lava, and don't get set on fire by it."
 	);
 
-	public static SkillAbility spelunker = new SkillAbility(
+	public static SkillAbility SPELUNKER = new SkillAbility(
 		"Spelunker",
 		75,
 		"Spelunkey?  More like Spedunkey.  AHAHAHAHA.",
 		"Allows you to climb walls while holding jump."
 	);
 
-	public static SkillAbility drill = new SkillAbility(
+	public static SkillAbility DRILL = new SkillAbility(
 		"Drill",
 		100,
 		"Without the risk of earthquakes!",
@@ -114,11 +116,11 @@ public class SkillMining extends Skill implements ISkillMining {
 	public SkillMining(int level, int currentXp) {
 		super("Mining", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/mining.png");
-		this.addAbilities(darkvision, lavaSwimmer, spelunker, drill);
+		this.addAbilities(DARKVISION, LAVA_SWIMMER, SPELUNKER, DRILL);
 	}
 
 	public int getXp(String blockName) {
-		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
+		return (XP_MAP.containsKey(blockName)) ? XP_MAP.get(blockName) : 0;
 	}
 
 	public double getSpeedBonus() {
@@ -145,14 +147,14 @@ public class SkillMining extends Skill implements ISkillMining {
 	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
-		return ((harvestTool != null && harvestTool.toLowerCase().equals("pickaxe")) || validMiningBlocks.contains(Utils.getBlockName(block)) || block instanceof BlockOre || block instanceof BlockRedstoneOre || block instanceof BlockStone || block instanceof BlockStoneSlab || block instanceof BlockStoneSlabNew || block instanceof BlockObsidian || block instanceof BlockStoneBrick || block instanceof BlockNetherBrick || block instanceof BlockNetherrack || block instanceof BlockSandStone
+		return ((harvestTool != null && harvestTool.toLowerCase().equals("pickaxe")) || VALID_MINING_BLOCKS.contains(Utils.getBlockName(block)) || block instanceof BlockOre || block instanceof BlockRedstoneOre || block instanceof BlockStone || block instanceof BlockStoneSlab || block instanceof BlockStoneSlabNew || block instanceof BlockObsidian || block instanceof BlockStoneBrick || block instanceof BlockNetherBrick || block instanceof BlockNetherrack || block instanceof BlockSandStone
 				|| block instanceof BlockRedSandstone) ? true : false;
 	}
 
 	public boolean validFortuneTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String blockName = Utils.snakeCase(block.getLocalizedName());
-		return ((block instanceof BlockOre || block instanceof BlockRedstoneOre) && validFortuneOres.contains(blockName));
+		return ((block instanceof BlockOre || block instanceof BlockRedstoneOre) && VALID_FORTUNE_ORES.contains(blockName));
 	}
 
 	public static void addMiningXp(BlockEvent.BreakEvent event) {
@@ -245,11 +247,11 @@ public class SkillMining extends Skill implements ISkillMining {
 						if (player.worldObj.getTotalWorldTime() % 80L == 0L) {
 							PotionEffect activeEffect = player.getActivePotionEffect(MobEffects.NIGHT_VISION);
 							if (activeEffect != null) {
-								activeEffect.combine(new PotionEffect(MobEffects.NIGHT_VISION, 200, 0, true, false));
+								activeEffect.combine(new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
 							} else {
-								player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 200, 0, true, false));
+								player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
 							}
-							
+
 						}
 					}
 				}

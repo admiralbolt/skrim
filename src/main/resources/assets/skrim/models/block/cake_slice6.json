@@ -1,0 +1,22 @@
+{
+    "textures": {
+        "particle": "skrim:blocks/cake_side",
+        "bottom": "skrim:blocks/cake_bottom",
+        "top": "skrim:blocks/cake_top",
+        "side": "skrim:blocks/cake_side",
+        "inside": "skrim:blocks/cake_inner"
+    },
+    "elements": [
+        {   "from": [ 13, 0, 1 ],
+            "to": [ 15, 8, 15 ],
+            "faces": {
+                "down":  { "texture": "#bottom", "cullface": "down" },
+                "up":    { "texture": "#top" },
+                "north": { "texture": "#side" },
+                "south": { "texture": "#side" },
+                "west":  { "texture": "#inside" },
+                "east":  { "texture": "#side" }
+            }
+        }
+    ]
+}

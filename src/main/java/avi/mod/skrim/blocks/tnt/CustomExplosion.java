@@ -42,7 +42,7 @@ public class CustomExplosion extends Explosion {
 	private final double explosionY;
 	private final double explosionZ;
 	private final Entity exploder;
-	private final float explosionSize;
+	private float explosionSize;
 	public final List<BlockPos> affectedBlockPositions;
 	private final Map<EntityPlayer, Vec3d> playerKnockbackMap;
 	private final Vec3d position;
@@ -276,6 +276,14 @@ public class CustomExplosion extends Explosion {
 
 	public BlockPos getPos() {
 		return new BlockPos(this.explosionX, this.explosionY, this.explosionZ);
+	}
+	
+	public float getExplosionSize() {
+		return this.explosionSize;
+	}
+	
+	public void setExplosionSize(float newSize) {
+		this.explosionSize = newSize;
 	}
 
 }

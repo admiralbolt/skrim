@@ -23,7 +23,7 @@ public class Skrim {
 
 	public static final String modId = "skrim";
 	public static final String name = "Skrim";
-	public static final String version = "1.1.5";
+	public static final String version = "1.1.6";
 
 	public static final TestTab creativeTab = new TestTab();
 

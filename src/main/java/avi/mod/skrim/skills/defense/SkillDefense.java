@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
-import avi.mod.skrim.client.gui.ArmorOverlay;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -19,73 +18,65 @@ import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class SkillDefense extends Skill implements ISkillDefense {
 
 	public static SkillStorage<ISkillDefense> skillStorage = new SkillStorage<ISkillDefense>();
-	public int ticks = 0;
-	public boolean canRegen = true;
-	public boolean shouldUpdateAttribute = true;
+
 	private static double healthPercent = 0.3;
 	private static int regenLength = 15 * 20;
+
+	private static int CAPTAIN_DURATION = 80;
+	private static int CAPTAIN_RANGE = 6;
+	private static int STALWART_ACTIVATION_TICKS = 60;
+
+	public int ticks = 0;
+	public int stalwartTicks = 0;
+	public boolean canRegen = true;
+	public boolean shouldUpdateAttribute = true;
+
 	private Set<Integer> blocked = new HashSet<Integer>();
 
 	public SkillDefense() {
 		this(1, 0);
 	}
 
-	public static SkillAbility riteOfPassage = new SkillAbility(
-		"Rite of Passage",
-		25,
-		"It's a reference to a magic card, so you probably missed it.",
-		"Falling below 30% health activates a period of regeneration.",
-		"You must fully heal before regeneration will activate again."
-	);
-
-	public static SkillAbility overshields = new SkillAbility(
-		"Overshields",
-		50,
-		"Can be found underneath the tower on Guardian.",
-		"Gain an additional §a4" + SkillAbility.descColor + " max health."
-	);
-
-	public static SkillAbility golemsAspect = new SkillAbility(
-		"Aspect of the Golem",
-		75,
-		"That tickles.",
-		"Negative status effects last for half as long."
-	);
+	public static SkillAbility RITE_OF_PASSAGE = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
+	public static SkillAbility CAPTAIN = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r radius.");
+	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("Aspect of the Golem", 75, "The new spell resistance.", "Negative status effects last for half as long.");
+	public static SkillAbility STALWART_STANCE = new SkillAbility("Stalwart Stance", 100, "That tickles.", "Crouching and blocking with a shield for at least 3 seconds grants invulnerability.");
 
 	public SkillDefense(int level, int currentXp) {
 		super("Defense", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/defense.png");
-		this.addAbilities(riteOfPassage, overshields, golemsAspect);
+		this.addAbilities(RITE_OF_PASSAGE, CAPTAIN, GOLEMS_ASPECT, STALWART_STANCE);
 	}
 
 	public double getDamageReduction() {
 		return this.level * 0.005;
 	}
 
-	public int getExtraArmor() {
+	public int getExtraHealth() {
 		return (int) (this.level / 5);
 	}
 
@@ -102,8 +93,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		if (this.canLevelUp()) {
 			this.level++;
 			SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
-			IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
-			// Reflection.hackAttributeTo(armor, 20.0 + this.getExtraArmor(), "maximumValue", "field_111120_a");
+			this.ding(player);
 		}
 		SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
 	}
@@ -112,7 +102,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("Take §a" + Utils.formatPercent(this.getDamageReduction()) + "%§r less damage from mob and players.");
-		tooltip.add("Gain an additional §a" + this.getExtraArmor() + "§r max armor.");
+		tooltip.add("Gain an additional §a" + this.getExtraHealth() + "§r max health.");
 		return tooltip;
 	}
 
@@ -162,19 +152,66 @@ public class SkillDefense extends Skill implements ISkillDefense {
 						} else if (!defense.canRegen && player.getHealth() == player.getMaxHealth()) {
 							defense.canRegen = true;
 						}
-					}
-					if (defense.hasAbility(3)) {
-						Collection<PotionEffect> effects = player.getActivePotionEffects();
-						for (PotionEffect effect : effects) {
-							if (Utils.isNegativeEffect(effect)) {
-								Reflection.hackValueTo(effect, effect.getDuration() - 1, "duration", "field_76460_b");
-								effect.combine(effect);
+
+						if (defense.hasAbility(2)) {
+							if (player.worldObj.getWorldTime() % 60L == 0L) {
+								BlockPos pos = player.getPosition();
+								int x = pos.getX();
+								int y = pos.getY();
+								int z = pos.getZ();
+								AxisAlignedBB bound = new AxisAlignedBB(x - CAPTAIN_RANGE, y - CAPTAIN_RANGE, z - CAPTAIN_RANGE, x + CAPTAIN_RANGE, y + CAPTAIN_RANGE, z + CAPTAIN_RANGE);
+
+								List<EntityPlayer> players = player.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bound);
+								for (EntityPlayer playa : players) {
+									PotionEffect activeResistance = player.getActivePotionEffect(MobEffects.RESISTANCE);
+									PotionEffect addResistance = new PotionEffect(MobEffects.RESISTANCE, CAPTAIN_DURATION, 0, false, false);
+									if (activeResistance != null) {
+										activeResistance.combine(addResistance);
+									} else {
+										playa.addPotionEffect(addResistance);
+									}
+								}
+							}
+						}
+
+						if (defense.hasAbility(3)) {
+							Collection<PotionEffect> effects = player.getActivePotionEffects();
+							for (PotionEffect effect : effects) {
+								if (Utils.isNegativeEffect(effect)) {
+									Reflection.hackValueTo(effect, effect.getDuration() - 1, "duration", "field_76460_b");
+									effect.combine(effect);
+								}
+							}
+
+							if (defense.hasAbility(4)) {
+								if (player.worldObj.getTotalWorldTime() % 20L == 0L) {
+									if (!player.worldObj.isRemote) {
+										boolean stance = (player.isSneaking() && isBlocking(player));
+										defense.stalwartTicks = (stance) ? defense.stalwartTicks + 20 : 0;
+										player.setEntityInvulnerable(defense.stalwartTicks >= STALWART_ACTIVATION_TICKS);
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+	}
+
+	public static boolean isBlocking(EntityPlayer player) {
+		if (player != null) {
+			ItemStack stack = player.getActiveItemStack();
+			if (stack != null) {
+				Item item = stack.getItem();
+				if (item != null) {
+					if (item == Items.SHIELD) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	public Entry<IAttribute, AttributeModifier> getAttributeModifier() {
@@ -185,13 +222,6 @@ public class SkillDefense extends Skill implements ISkillDefense {
 			}
 		}
 		return null;
-	}
-
-	public static void renderArmor(RenderGameOverlayEvent.Pre event) {
-		if (event.getType() == ElementType.ARMOR) {
-			event.setCanceled(true);
-			new ArmorOverlay(Minecraft.getMinecraft());
-		}
 	}
 
 	private static boolean canBlockDamageSource(EntityPlayer player, DamageSource damageSourceIn) {

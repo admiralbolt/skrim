@@ -70,10 +70,10 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		xpMap.put("sunflower", 5000);
 	}
 
-	public static SkillAbility sunFlower = new SkillAbility("Sun Flower", 25, "It was either this or mariglow, don't know which one is worse.", "Enables you to craft glowing flowers with a flower & glowstone dust.");
-	public static SkillAbility thornStyle = new SkillAbility("Thorn Style", 50, "I'll let you try my thorn style.", "While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage.");
-	public static SkillAbility seduceVillager = new SkillAbility("Seduce Villager", 75, "[Tongue waggling intensifies]", "Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + ".");
-	public static SkillAbility enchantedFlower = new SkillAbility("Enchanted Flower", 100, "It shares a giant friendliness beam! :D", "Enables you to craft enchanted flowers that function like speed beacons.");
+	public static SkillAbility SUN_FLOWER = new SkillAbility("Sun Flower", 25, "It was either this or mariglow, don't know which one is worse.", "Enables you to craft glowing flowers with a flower & glowstone dust.");
+	public static SkillAbility THORN_STYLE = new SkillAbility("Thorn Style", 50, "I'll let you try my thorn style.", "While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage.");
+	public static SkillAbility SEDUCE_VILLAGER = new SkillAbility("Seduce Villager", 75, "[Tongue waggling intensifies]", "Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + ".");
+	public static SkillAbility ENCHANTED_FLOWER = new SkillAbility("Enchanted Flower", 100, "It shares a giant friendliness beam! :D", "Enables you to craft enchanted flowers that function like speed beacons.");
 
 	public SkillBotany() {
 		this(1, 0);
@@ -82,7 +82,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	public SkillBotany(int level, int currentXp) {
 		super("Botany", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/botany.png");
-		this.addAbilities(sunFlower, thornStyle, seduceVillager, enchantedFlower);
+		this.addAbilities(SUN_FLOWER, THORN_STYLE, SEDUCE_VILLAGER, ENCHANTED_FLOWER);
 	}
 
 	public int getXp(String blockName) {

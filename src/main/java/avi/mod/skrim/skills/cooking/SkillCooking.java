@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.items.CustomCake;
 import avi.mod.skrim.items.CustomFood;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
+import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -23,6 +26,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.inventory.Slot;
@@ -35,6 +39,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -47,6 +53,11 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public static Map<String, CustomFood> foodMap;
 	public static Map<Class, String> entityFoodMap;
 	public static double fireCookedMult = 0.25;
+	public static int ANGEL_DURATION = 600;
+	public static long CHECK_TICKS = 60;
+
+	public boolean hasAngel = false;
+	public int currentTicks = 0;
 	public int lastItemNumber;
 
 	private static void addFood(String name, CustomFood food, int xp) {
@@ -58,38 +69,40 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		foodMap = new HashMap<String, CustomFood>();
 		xpMap = new HashMap<String, Integer>();
 		entityFoodMap = new HashMap<Class, String>();
-		addFood("bread", ModItems.overwriteBread, 200);
-		addFood("cookie", ModItems.overwriteCookie, 25);
+		addFood("bread", ModItems.OVERWRITE_BREAD, 200);
+		addFood("cookie", ModItems.OVERWRITE_COOKIE, 25);
 
-		addFood("potatobaked", ModItems.overwriteBakedPotato, 300);
+		addFood("potatobaked", ModItems.OVERWRITE_BAKED_POTATO, 300);
 
-		addFood("beetroot_soup", ModItems.overwriteBeetrootSoup, 400);
-		addFood("mushroomstew", ModItems.overwriteMushroomStew, 400);
+		addFood("beetroot_soup", ModItems.OVERWRITE_BEETROOT_SOUP, 400);
+		addFood("mushroomstew", ModItems.OVERWRITE_MUSHROOM_STEW, 400);
 
-		addFood("muttoncooked", ModItems.overwriteMutton, 600);
+		addFood("muttoncooked", ModItems.OVERWRITE_MUTTON, 600);
 		entityFoodMap.put(EntitySheep.class, "muttoncooked");
-		addFood("beefcooked", ModItems.overwriteSteak, 600);
+		addFood("beefcooked", ModItems.OVERWRITE_STEAK, 600);
 		entityFoodMap.put(EntityCow.class, "beefcooked");
-		addFood("porkchopcooked", ModItems.overwritePorkchop, 600);
+		addFood("porkchopcooked", ModItems.OVERWRITE_PORKCHOP, 600);
 		entityFoodMap.put(EntityPig.class, "porkchopcooked");
-		addFood("chickencooked", ModItems.overwriteChicken, 600);
+		addFood("chickencooked", ModItems.OVERWRITE_CHICKEN, 600);
 		entityFoodMap.put(EntityChicken.class, "chickencooked");
 
-		addFood("cooked_fish", ModItems.overwriteFish, 700);
-		addFood("pumpkinpie", ModItems.overwritePumpkinPie, 750);
-		addFood("cooked_salmon", ModItems.overwriteSalmon, 800);
+		addFood("cooked_fish", ModItems.OVERWRITE_FISH, 700);
+		addFood("pumpkinpie", ModItems.OVERWRITE_PUMPKIN_STEW, 750);
+		addFood("cooked_salmon", ModItems.OVERWRITE_SALMON, 800);
 
-		addFood("rabbitcooked", ModItems.overwriteRabbit, 1000);
+		addFood("rabbitcooked", ModItems.OVERWRITE_RABBIT, 1000);
 		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");
-		addFood("rabbitstew", ModItems.overwriteRabbitStew, 1000);
+		addFood("rabbitstew", ModItems.OVERWRITE_RABBIT_STEW, 1000);
+
+		xpMap.put("cake", 1500);
+		xpMap.put("angel_cake", 2000);
 
 	}
 
-	public static SkillAbility overfull = new SkillAbility("Overfull", 25, "Just keep eating, just keep eating, just keep eating...", "Your cooked food now ignores food and saturation limits.");
-
-	public static SkillAbility panacea = new SkillAbility("Panacea", 50, "Cures everything that's less than half dead.", "Your cooked food now removes nausea, hunger, and poison.");
-
-	public static SkillAbility superFood = new SkillAbility("Super Food", 75, "You won't believe how good these 11 foods are for you!", "Your cooked food now grants a speed boost and a short period of regeneration.");
+	public static SkillAbility OVERFULL = new SkillAbility("Overfull", 25, "Just keep eating, just keep eating, just keep eating...", "Your cooked food now ignores food and saturation limits.");
+	public static SkillAbility PANACEA = new SkillAbility("Panacea", 50, "Cures everything that's less than half dead.", "Your cooked food now removes nausea, hunger, and poison.");
+	public static SkillAbility SUPER_FOOD = new SkillAbility("Super Food", 75, "You won't believe how good these 11 foods are for you!", "Your cooked food now grants a speed boost and a short period of regeneration.");
+	public static SkillAbility ANGEL_CAKE = new SkillAbility("Angel Cake", 100, "I believe I can fly.", "Gain the ability to craft angel cake, which grants 30 seconds of flight.");
 
 	public SkillCooking() {
 		this(1, 0);
@@ -98,7 +111,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public SkillCooking(int level, int currentXp) {
 		super("Cooking", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/cooking.png");
-		this.addAbilities(overfull, panacea, superFood);
+		this.addAbilities(OVERFULL, PANACEA, SUPER_FOOD, ANGEL_CAKE);
 	}
 
 	public CustomFood getOverwriteFood(String name) {
@@ -121,10 +134,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		return 0.005 * level;
 	}
 
-	public static boolean overFull(int level) {
-		return (level >= 25);
-	}
-
 	@Override
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
@@ -132,15 +141,12 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
 		tooltip.add("Shift clicking crafted items provides §aregular and modded§r food.");
 		tooltip.add("§eWe swear this is a feature and not a bug...§r");
-		if (overFull(this.level)) {
-			tooltip.add("Your cooking §aignores food and saturation caps§r.");
-		}
 		return tooltip;
 	}
 
 	public boolean validCookingTarget(ItemStack stack) {
 		Item item = stack.getItem();
-		return (item instanceof ItemFood || item instanceof ItemFishFood) ? true : false;
+		return (item instanceof ItemFood || item instanceof ItemFishFood || item == Items.CAKE) ? true : false;
 	}
 
 	public String getFoodName(ItemStack stack) {
@@ -157,6 +163,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			}
 		} else if (item instanceof ItemFood) {
 			return Utils.snakeCase(item.getUnlocalizedName()).substring(5);
+		} else if (item == Items.CAKE) {
+			return Utils.snakeCase(item.getUnlocalizedName());
 		} else {
 			return null;
 		}
@@ -167,34 +175,75 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
 			String foodName = cooking.getFoodName(stack);
 			if (cooking.validCookingTarget(stack)) {
-				CustomFood replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
-				if (replaceFood != null) {
-					stack.setItem(replaceFood);
+				if (stack.getItem() == Items.CAKE || stack.getItem() == ModItems.ANGEL_CAKE) {
+					CustomCake replaceCake = getOverwriteCake(stack.getItem());
+					if (replaceCake != null) {
+						stack.setItem(replaceCake);
 
-					NBTTagCompound compound = new NBTTagCompound();
-					compound.setInteger("level", cooking.level);
-					stack.setTagCompound(compound);
-					stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
-					List<String> foodText = new ArrayList<String>();
-					foodText.add("Cooking Level: " + cooking.level);
-					int stackSize = stack.stackSize;
+						NBTTagCompound compound = new NBTTagCompound();
+						compound.setInteger("level", cooking.level);
+						stack.setTagCompound(compound);
+						stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
+						List<String> foodText = new ArrayList<String>();
+						foodText.add("Cooking Level: " + cooking.level);
+						int stackSize = stack.stackSize;
 
-					if (stackSize == 0) {
-						int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
-						ItemStack newStack = new ItemStack(replaceFood, newStackSize);
-						NBTTagCompound newCompound = new NBTTagCompound();
-						newCompound.setInteger("level", cooking.level);
-						newStack.setTagCompound(newCompound);
-						newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
-						player.inventory.addItemStackToInventory(newStack);
-						stackSize = newStackSize;
+						if (stackSize == 0) {
+							int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
+							ItemStack newStack = new ItemStack(replaceCake, newStackSize);
+							NBTTagCompound newCompound = new NBTTagCompound();
+							newCompound.setInteger("level", cooking.level);
+							newStack.setTagCompound(newCompound);
+							newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
+							player.inventory.addItemStackToInventory(newStack);
+							stackSize = newStackSize;
+						}
+
+						if (player instanceof EntityPlayerMP) {
+							cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
+						}
 					}
+				} else {
+					CustomFood replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
+					if (replaceFood != null) {
+						stack.setItemDamage(0);
+						stack.setItem(replaceFood);
+						
+						NBTTagCompound compound = new NBTTagCompound();
+						compound.setInteger("level", cooking.level);
+						stack.setTagCompound(compound);
+						stack.setStackDisplayName(player.getName() + "'s " + stack.getDisplayName());
+						List<String> foodText = new ArrayList<String>();
+						foodText.add("Cooking Level: " + cooking.level);
+						int stackSize = stack.stackSize;
 
-					if (player instanceof EntityPlayerMP) {
-						cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
+						if (stackSize == 0) {
+							int newStackSize = (event instanceof ItemSmeltedEvent) ? cooking.lastItemNumber : 1;
+							ItemStack newStack = new ItemStack(replaceFood, newStackSize);
+							NBTTagCompound newCompound = new NBTTagCompound();
+							newCompound.setInteger("level", cooking.level);
+							newStack.setTagCompound(newCompound);
+							newStack.setStackDisplayName(player.getName() + "'s " + newStack.getDisplayName());
+							player.inventory.addItemStackToInventory(newStack);
+							stackSize = newStackSize;
+						}
+
+						if (player instanceof EntityPlayerMP) {
+							cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
+						}
 					}
 				}
 			}
+		}
+	}
+
+	public static CustomCake getOverwriteCake(Item item) {
+		if (item == ModItems.ANGEL_CAKE) {
+			return ModItems.ANGEL_CAKE;
+		} else if (item == Items.CAKE) {
+			return ModItems.SKRIM_CAKE;
+		} else {
+			return null;
 		}
 	}
 
@@ -203,7 +252,16 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	}
 
 	public static void injectCraftedFood(ItemCraftedEvent event) {
-		injectFakeFood(event, event.crafting, event.player);
+		Item targetItem = event.crafting.getItem();
+		if (targetItem != null && targetItem == ModItems.ANGEL_CAKE) {
+			if (!Skills.canCraft(event.player, Skills.COOKING, 100)) {
+				Skills.replaceWithComponents(event);
+			} else {
+				injectFakeFood(event, event.crafting, event.player);
+			}
+		} else {
+			injectFakeFood(event, event.crafting, event.player);
+		}
 	}
 
 	/**
@@ -261,6 +319,48 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				}
 			}
 		}
+	}
+
+	public static void angelUpdate(LivingUpdateEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player.worldObj.getTotalWorldTime() % CHECK_TICKS == 0L) {
+				if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
+					SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+					if (cooking.hasAngel && cooking.currentTicks > 0) {
+						cooking.currentTicks -= (int) CHECK_TICKS;
+					} else {
+						cooking.hasAngel = false;
+						cooking.currentTicks = 0;
+						if (!player.capabilities.isCreativeMode) {
+							player.capabilities.allowFlying = false;
+							player.capabilities.isFlying = false;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void angelFall(LivingFallEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
+				SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+				if (cooking.hasAngel) {
+					event.setDistance(0);
+					event.setCanceled(true);
+				}
+			}
+		}
+	}
+
+	public void initAngel(EntityPlayer player) {
+		this.hasAngel = true;
+		player.capabilities.allowFlying = true;
+		this.currentTicks = ANGEL_DURATION;
 	}
 
 }

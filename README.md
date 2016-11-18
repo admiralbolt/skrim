@@ -1,6 +1,33 @@
 Changelog
 ==========
 
+Version 1.1.6
+-------------
+### New Features
+* Added the level 100 cooking ability!
+* Cooking FINALLY works with cake!
+* Added the level 75 woodcutting ability!
+* Added the level 100 demolition ability!
+* Added the level 100 digging ability!
+* Added the level 100 defense ability!
+* Added the level 100 ranged ability!
+
+### Balance Changes
+* Adjusted defense level 50 skill and defense scaling ability.
+* Slightly reduced the xp gained from iron & gold
+* Demolition second ability now increase blast radius of placed explosions.
+* Nerfed persistence, and swapped it with master craftsperson.
+
+### Quality of Life
+* Changed the armor overlay to look slick when you have >20 armor.
+* Changed the health overlay to look slick when you have >20 health.
+* Your chances of finding an artifact are now slightly greater than the chance you get struck by lightning IRL before finding an artifact.
+* Added new achievements & fixed achievement registration.
+
+### Bug Fixes
+* You can actually headshot passive mob now!
+* Cooked salmon actually works!
+
 Version 1.1.5
 -------------
 ### I'm so sorry

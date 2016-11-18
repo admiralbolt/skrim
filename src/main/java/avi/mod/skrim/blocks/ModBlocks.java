@@ -28,51 +28,57 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class ModBlocks {
 
-  public static Block orePenguin;
-  public static Block cloneOldLog;
+  public static Block ORE_PENGUIN;
+  public static Block CLONE_OLD_LOG;
 
-  public static GlowFlower glowFlowerRed;
-  public static GlowFlowerVariants glowFlowerRedVariants;
-  public static GlowFlower glowFlowerYellow;
-  public static GlowFlowerVariants glowFlowerYellowVariants;
+  public static GlowFlower GLOW_FLOWER_RED;
+  public static GlowFlowerVariants GLOW_FLOWER_RED_VARIANTS;
+  public static GlowFlower GLOW_FLOWER_YELLOW;
+  public static GlowFlowerVariants GLOW_FLOWER_YELLOW_VARIANTS;
 
-  public static EnchantedFlower enchantedFlowerRed;
-  public static EnchantedFlowerVariants enchantedFlowerRedVariants;
-  public static EnchantedFlower enchantedFlowerYellow;
-  public static EnchantedFlowerVariants enchantedFlowerYellowVariants;
+  public static EnchantedFlower ENCHANTED_FLOWER_RED;
+  public static EnchantedFlowerVariants ENCHANTED_FLOWER_RED_VARIANTS;
+  public static EnchantedFlower ENCHANTED_FLOWER_YELLOW;
+  public static EnchantedFlowerVariants ENCHANTED_FLOWER_YELLOW_VARIANTS;
 
-  public static Dynamite dynamite;
-  public static BioBomb biobomb;
-  public static Napalm napalm;
+  public static Dynamite DYNAMITE;
+  public static BioBomb BIOBOMB;
+  public static Napalm NAPALM;
+
+  public static SkrimCakeBlock SKRIM_CAKE;
+  public static AngelCakeBlock ANGEL_CAKE;
 
   public static void createBlocks() {
-    orePenguin = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
+    ORE_PENGUIN = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
 
     GlowFlowerRed red = new GlowFlowerRed("glow_flower_red");
-    glowFlowerRedVariants = new GlowFlowerVariants(red);
-    glowFlowerRed = register(red, glowFlowerRedVariants);
-    addGlowFlowerRecipes(red, glowFlowerRedVariants);
+    GLOW_FLOWER_RED_VARIANTS = new GlowFlowerVariants(red);
+    GLOW_FLOWER_RED = register(red, GLOW_FLOWER_RED_VARIANTS);
+    addGlowFlowerRecipes(red, GLOW_FLOWER_RED_VARIANTS);
 
     GlowFlowerYellow yellow = new GlowFlowerYellow("glow_flower_yellow");
-    glowFlowerYellowVariants = new GlowFlowerVariants(yellow);
-    glowFlowerYellow = register(yellow, glowFlowerYellowVariants);
-    addGlowFlowerRecipes(yellow, glowFlowerYellowVariants);
+    GLOW_FLOWER_YELLOW_VARIANTS = new GlowFlowerVariants(yellow);
+    GLOW_FLOWER_YELLOW = register(yellow, GLOW_FLOWER_YELLOW_VARIANTS);
+    addGlowFlowerRecipes(yellow, GLOW_FLOWER_YELLOW_VARIANTS);
 
     EnchantedFlowerRed enchantedRed = new EnchantedFlowerRed("enchanted_flower_red");
-    enchantedFlowerRedVariants = new EnchantedFlowerVariants(enchantedRed);
-    enchantedFlowerRed = register(enchantedRed, enchantedFlowerRedVariants);
-    addEnchantedFlowerRecipes(enchantedRed, enchantedFlowerRedVariants);
+    ENCHANTED_FLOWER_RED_VARIANTS = new EnchantedFlowerVariants(enchantedRed);
+    ENCHANTED_FLOWER_RED = register(enchantedRed, ENCHANTED_FLOWER_RED_VARIANTS);
+    addEnchantedFlowerRecipes(enchantedRed, ENCHANTED_FLOWER_RED_VARIANTS);
 
     EnchantedFlowerYellow enchantedYellow = new EnchantedFlowerYellow("enchanted_flower_yellow");
-    enchantedFlowerYellowVariants = new EnchantedFlowerVariants(enchantedYellow);
-    enchantedFlowerYellow = register(enchantedYellow, enchantedFlowerYellowVariants);
-    addEnchantedFlowerRecipes(enchantedYellow, enchantedFlowerYellowVariants);
+    ENCHANTED_FLOWER_YELLOW_VARIANTS = new EnchantedFlowerVariants(enchantedYellow);
+    ENCHANTED_FLOWER_YELLOW = register(enchantedYellow, ENCHANTED_FLOWER_YELLOW_VARIANTS);
+    addEnchantedFlowerRecipes(enchantedYellow, ENCHANTED_FLOWER_YELLOW_VARIANTS);
 
-    dynamite = register(new Dynamite("dynamite"));
-    biobomb = register(new BioBomb("biobomb"));
-    napalm = register(new Napalm("napalm"));
+    DYNAMITE = register(new Dynamite("dynamite"));
+    BIOBOMB = register(new BioBomb("biobomb"));
+    NAPALM = register(new Napalm("napalm"));
 		EntityRegistry.registerModEntity(CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20, 5, true);
 		addExplosivesRecipes();
+
+		SKRIM_CAKE = register(new SkrimCakeBlock());
+		ANGEL_CAKE = register(new AngelCakeBlock());
   }
 
 
@@ -112,10 +118,11 @@ public final class ModBlocks {
   private static void addExplosivesRecipes() {
   	Item[] pics = {Items.WOODEN_PICKAXE, Items.STONE_PICKAXE};
   	for (Item pic : pics) {
-  		GameRegistry.addShapelessRecipe(new ItemStack(dynamite), Blocks.TNT, pic);
+  		GameRegistry.addShapelessRecipe(new ItemStack(DYNAMITE), Blocks.TNT, pic);
   	}
 
-  	GameRegistry.addRecipe(new ItemStack(napalm), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
+  	GameRegistry.addRecipe(new ItemStack(NAPALM), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
+  	GameRegistry.addRecipe(new ItemStack(BIOBOMB), "AAA", "ABA", "AAA", 'A', Items.ROTTEN_FLESH, 'B', Blocks.TNT);
 
   }
 

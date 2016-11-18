@@ -69,7 +69,7 @@ public class RandomTreasure {
 		treasure.add(0.005, Items.RECORD_STRAD);
 		treasure.add(0.005, Items.RECORD_WAIT);
 		treasure.add(0.005, Items.RECORD_WARD);
-		for (CustomRecord record : ModItems.songs.values()) {
+		for (CustomRecord record : ModItems.SONGS.values()) {
 			treasure.add(0.001, record);
 		}
 		treasure.add(0.00,  Items.SPECTRAL_ARROW);

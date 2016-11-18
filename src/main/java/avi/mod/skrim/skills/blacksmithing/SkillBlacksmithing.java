@@ -11,6 +11,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,47 +43,47 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		xpMap.put("tile.glass", 50);
 		xpMap.put("item.brick", 150);
 		xpMap.put("tile.clayhardened", 600); // made up of 4 clays
-		xpMap.put("item.ingotiron", 1200);
-		xpMap.put("item.ingotgold", 3000); // Woooooo gold!
+		xpMap.put("item.ingotiron", 900);
+		xpMap.put("item.ingotgold", 2500); // Woooooo gold!
 	}
 
 	public int lastItemNumber;
 	public static List<Item> obsidianItems = new ArrayList<Item>();
 	static {
-		obsidianItems.add(ModItems.obsidianAxe);
-		obsidianItems.add(ModItems.obsidianBoots);
-		obsidianItems.add(ModItems.obsidianChest);
-		obsidianItems.add(ModItems.obsidianHelmet);
-		obsidianItems.add(ModItems.obsidianHoe);
-		obsidianItems.add(ModItems.obsidianPants);
-		obsidianItems.add(ModItems.obsidianPickaxe);
-		obsidianItems.add(ModItems.obsidianShovel);
-		obsidianItems.add(ModItems.obsidianSword);
+		obsidianItems.add(ModItems.OBSIDIAN_AXE);
+		obsidianItems.add(ModItems.OBSIDIAN_BOOTS);
+		obsidianItems.add(ModItems.OBSIDIAN_CHEST);
+		obsidianItems.add(ModItems.OBSIDIAN_HELMET);
+		obsidianItems.add(ModItems.OBSIDIAN_HOE);
+		obsidianItems.add(ModItems.OBSIDIAN_PANTS);
+		obsidianItems.add(ModItems.OBSIDIAN_PICKAXE);
+		obsidianItems.add(ModItems.OBSIDIAN_SHOVEL);
+		obsidianItems.add(ModItems.OBSIDIAN_SWORD);
 	}
 
-	public static SkillAbility persistence = new SkillAbility(
-		"Persistence",
-		25,
-		"3 days later...",
-		"Remove prior work cost when repairing items."
-	);
-
-	public static SkillAbility masterCraftsPerson = new SkillAbility(
+	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility(
 		"Master Craftsperson",
-		50,
+		25,
 		"Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
 		"No longer risk breaking the anvil when repairing items.",
 		"Repairing an item with an undamaged equivalent provides a one time §a+25%" + SkillAbility.descColor + " durability bonus."
 	);
 
-	public static SkillAbility ironHeart = new SkillAbility(
+	public static SkillAbility PERSISTENCE = new SkillAbility(
+			"Persistence",
+			50,
+			"3 days later...",
+			"Remove prior work cost when repairing items."
+		);
+
+	public static SkillAbility IRON_HEART = new SkillAbility(
 		"Iron Heart",
 		75,
 		"Can still pump blood.",
 		"Passively gain §a50%" + SkillAbility.descColor + " fire resistance."
 	);
 
-	public static SkillAbility obsidianSmith = new SkillAbility(
+	public static SkillAbility OBSIDIAN_SMITH = new SkillAbility(
 		"Obsidian Smith",
 		100,
 		"How can obsidian be real if our eyes aren't real?",
@@ -96,7 +97,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	public SkillBlacksmithing(int level, int currentXp) {
 		super("Blacksmithing", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/blacksmithing.png");
-		this.addAbilities(persistence, masterCraftsPerson, ironHeart, obsidianSmith);
+		this.addAbilities(MASTER_CRAFTS_PERSON, PERSISTENCE, IRON_HEART, OBSIDIAN_SMITH);
 	}
 
 	public int getXp(String blockName) {
@@ -194,42 +195,25 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 			blacksmithing.addXp((EntityPlayerMP) player, (int) (baseRepair * (1 + blacksmithing.extraRepair())));
 			int finalRepair = output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair());
 			/**
-			 * Persistence!
+			 * PERSISTENCE!
 			 */
 			if (blacksmithing.hasAbility(1)) {
-				output.setRepairCost(0);
+				event.setBreakChance(0);
 				if (blacksmithing.hasAbility(2)) {
-					event.setBreakChance(0);
+					output.setRepairCost(1 + (output.getRepairCost() - 1) / 2);
 					// Ensure +25% durability hasn't already been applied
 					NBTTagCompound compound = output.getTagCompound();
 					if (!compound.hasKey("enhanced_durability")) {
 						compound.setBoolean("enhanced_durability", false);
 					}
-					if (middle.getItemDamage() == 0 && !compound.getBoolean("enhanced_durability")) {
+					if (middle.getItemDamage() == 0 && middle.getItem() == output.getItem() && !compound.getBoolean("enhanced_durability")) {
 						/**
 						 * Yo dawg I heard you capped the max damage for items,
 						 * but you see, I want to make the cap go higher.
 						 * So uh, I'm gonna break your shit.
 						 */
 						Item outputItem = (Item) output.getItem();
-						Field field;
-						try {
-							field = outputItem.getClass().getSuperclass().getDeclaredField("maxDamage");
-							field.setAccessible(true);
-							try {
-								field.set(outputItem, (int) (outputItem.getMaxDamage() * 1.25));
-								compound.setBoolean("enhanced_durability", true);
-								blacksmithing.addXp((EntityPlayerMP) player, 1000);
-							} catch (IllegalArgumentException e) {
-								e.printStackTrace();
-							} catch (IllegalAccessException e) {
-								e.printStackTrace();
-							}
-						} catch (NoSuchFieldException e) {
-							e.printStackTrace();
-						} catch (SecurityException e) {
-							e.printStackTrace();
-						}
+						Reflection.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage() * 1.25), "maxDamage", "field_77699_b");
 					}
 				}
 			}

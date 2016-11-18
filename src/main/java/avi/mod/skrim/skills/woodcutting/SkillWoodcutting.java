@@ -9,12 +9,14 @@ import java.util.Map;
 import avi.mod.skrim.items.CustomAxe;
 import avi.mod.skrim.items.HandSaw;
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.WhirlingChopPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
@@ -90,7 +92,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			"sign"
 	));
 
-	public static SkillAbility handSaw = new SkillAbility(
+	public static SkillAbility HAND_SAW = new SkillAbility(
 		"Hand Saw",
 		25,
 		"Wee Saw!",
@@ -98,11 +100,18 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		"Hand saws instantly convert broken wood logs into 8 planks."
 	);
 
-	public static SkillAbility whirlingChop = new SkillAbility(
+	public static SkillAbility WHIRLING_CHOP = new SkillAbility(
 		"Whirling Chop",
 		50,
-		"My roflchopter go soi soi soi soi soi",
+		"My roflchopter go soi soi soi soi soi.",
 		"Right click with an axe to massacre trees in a 10 block radius."
+	);
+
+	public static SkillAbility LEAF_ARMOR = new SkillAbility(
+		"Leaf Armor",
+		75,
+		"Tree!",
+		"Grants you the ability to craft armor out of leaves."
 	);
 
 	public SkillWoodcutting() {
@@ -112,7 +121,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public SkillWoodcutting(int level, int currentXp) {
 		super("Woodcutting", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/woodcutting.png");
-		this.addAbilities(handSaw, whirlingChop);
+		this.addAbilities(HAND_SAW, WHIRLING_CHOP, LEAF_ARMOR);
 	}
 
 	public int getXp(String blockName) {
@@ -229,12 +238,19 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		if (targetItem != null && targetItem == ModItems.handSaw) {
+		if (targetItem != null && targetItem == ModItems.HAND_SAW) {
 			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 25)) {
 				Skills.replaceWithComponents(event);
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				woodcutting.addXp((EntityPlayerMP) event.player, 500);
+			}
+		} else if (targetItem != null && targetItem instanceof LeafArmor) {
+			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 75)) {
+				Skills.replaceWithComponents(event);
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
+				woodcutting.addXp((EntityPlayerMP) event.player, 1000);
 			}
 		}
 	}

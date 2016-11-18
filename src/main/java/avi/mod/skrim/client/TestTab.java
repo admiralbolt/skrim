@@ -13,7 +13,7 @@ public class TestTab extends CreativeTabs {
 
   @Override
   public Item getTabIconItem() {
-    return ModItems.tux;
+    return ModItems.TUX;
   }
 
   @Override

@@ -34,7 +34,7 @@ public class AddTreasure {
 
 	public static int recordWeight = 30;
 	public static int recordQuality = 3;
-	public static int artifactWeight = 1;
+	public static int artifactWeight = 5;
 	public static int artifactQuality = 10;
 
 	public static List<ResourceLocation> chests = new ArrayList<ResourceLocation>();
@@ -53,7 +53,7 @@ public class AddTreasure {
 		chests.add(LootTableList.CHESTS_STRONGHOLD_LIBRARY);
 		chests.add(LootTableList.CHESTS_VILLAGE_BLACKSMITH);
 
-		for (Entry<String, CustomRecord> entry : ModItems.songs.entrySet()) {
+		for (Entry<String, CustomRecord> entry : ModItems.SONGS.entrySet()) {
 			skrimLoot.put(entry.getValue(), 30);
 		}
 	}
@@ -66,18 +66,18 @@ public class AddTreasure {
 	}
 
 	/**
-	 * 
+	 *
 	 * LootEntry(Item, baseWeight, quality, functions, conditions, name)
 	 */
-	
+
 	public static void generateSkrimPool() {
 		LootCondition[] lootCondition = new LootCondition[0];
 		LootFunction[] lootFunction = new LootFunction[0];
-		for (Entry<String, CustomRecord> entry : ModItems.songs.entrySet()) {
+		for (Entry<String, CustomRecord> entry : ModItems.SONGS.entrySet()) {
 			lootEntries.add(
 				new LootEntryItem(
-					entry.getValue(), 
-					recordWeight, 
+					entry.getValue(),
+					recordWeight,
 					recordQuality,
 					lootFunction,
 					lootCondition,
@@ -86,12 +86,12 @@ public class AddTreasure {
 			);
 			currentWeight += recordWeight;
 		}
-		
-		for (Item artifact : ModItems.artifacts) {
+
+		for (Item artifact : ModItems.ARTIFACTS) {
 			lootEntries.add(
 					new LootEntryItem(
 						artifact,
-						artifactWeight, 
+						artifactWeight,
 						artifactQuality,
 						lootFunction,
 						lootCondition,
@@ -100,7 +100,7 @@ public class AddTreasure {
 				);
 				currentWeight += artifactWeight;
 		}
-		
+
 		if (currentWeight < maxWeight) {
 			lootEntries.add(
 				new LootEntryItem(
@@ -113,7 +113,7 @@ public class AddTreasure {
 				)
 			);
 		}
-		
+
 		LootEntry[] arrayEntries = new LootEntry[lootEntries.size()];
 		LootCondition[] arrayConditions = new LootCondition[lootConditions.size()];
 		lootEntries.toArray(arrayEntries);

@@ -1,6 +1,5 @@
 package avi.mod.skrim.utils;
 
-import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,9 +30,12 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -153,7 +155,22 @@ public class Utils {
 	}
 	
 	public static boolean isNegativeEffect(PotionEffect effect) {
-		Potion potion = (Potion) Reflection.getPrivateField(effect, "potion");
+		Potion potion = (Potion) Reflection.getPrivateField(effect, "potion", "field_188420_b");
 		return (potion != null && negativeEffects.contains(potion));
 	}
+	
+	public static boolean isWearingArmor(EntityPlayer player, ItemArmor armor) {
+		InventoryPlayer inventory = player.inventory;
+		if (inventory != null) {
+			ItemStack stack = inventory.armorInventory[armor.armorType.getIndex()];
+			if (stack != null) {
+				Item targetItem = stack.getItem();
+				if (targetItem == armor) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 }

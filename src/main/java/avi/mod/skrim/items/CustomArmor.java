@@ -22,6 +22,7 @@ public class CustomArmor extends ItemArmor implements ItemModelProvider {
 		this.name = name;
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
+		this.setCreativeTab(Skrim.creativeTab);
 	}
 
 	@Override
