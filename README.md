@@ -26,6 +26,7 @@ Version 1.1.6
 
 ### Bug Fixes
 * You can actually headshot passive mob now!
+* Cooked salmon actually works!
 
 Version 1.1.5
 -------------

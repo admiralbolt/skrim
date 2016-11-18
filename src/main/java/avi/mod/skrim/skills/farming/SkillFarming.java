@@ -257,7 +257,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		if (targetItem != null && targetItem == ModItems.overalls) {
+		if (targetItem != null && targetItem == ModItems.OVERALLS) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
 				Skills.replaceWithComponents(event);
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
@@ -282,7 +282,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 							ItemStack stack = inventory.armorInventory[2];
 							if (stack != null) {
 								Item chest = stack.getItem();
-								if (chest == ModItems.overalls) {
+								if (chest == ModItems.OVERALLS) {
 									ItemStack mainStack = player.getHeldItemMainhand();
 									Item mainItem = mainStack.getItem();
 									if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe) {

@@ -53,7 +53,7 @@ public class AddTreasure {
 		chests.add(LootTableList.CHESTS_STRONGHOLD_LIBRARY);
 		chests.add(LootTableList.CHESTS_VILLAGE_BLACKSMITH);
 
-		for (Entry<String, CustomRecord> entry : ModItems.songs.entrySet()) {
+		for (Entry<String, CustomRecord> entry : ModItems.SONGS.entrySet()) {
 			skrimLoot.put(entry.getValue(), 30);
 		}
 	}
@@ -73,7 +73,7 @@ public class AddTreasure {
 	public static void generateSkrimPool() {
 		LootCondition[] lootCondition = new LootCondition[0];
 		LootFunction[] lootFunction = new LootFunction[0];
-		for (Entry<String, CustomRecord> entry : ModItems.songs.entrySet()) {
+		for (Entry<String, CustomRecord> entry : ModItems.SONGS.entrySet()) {
 			lootEntries.add(
 				new LootEntryItem(
 					entry.getValue(),

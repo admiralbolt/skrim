@@ -13,6 +13,7 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
+import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -205,8 +206,9 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				} else {
 					CustomFood replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
 					if (replaceFood != null) {
+						stack.setItemDamage(0);
 						stack.setItem(replaceFood);
-
+						
 						NBTTagCompound compound = new NBTTagCompound();
 						compound.setInteger("level", cooking.level);
 						stack.setTagCompound(compound);
