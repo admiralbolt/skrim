@@ -288,7 +288,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 				for (int j = 0; j < list.size(); ++j) {
 					Entity entity1 = (Entity) list.get(j);
 
-					if (this.func_189739_a(entity1) && (entity1 != this.angler || this.ticksInAir >= 5)) {
+					if (this.canBeHooked(entity1) && (entity1 != this.angler || this.ticksInAir >= 5)) {
 						AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().expandXyz(0.30000001192092896D);
 						RayTraceResult raytraceresult1 = axisalignedbb1.calculateIntercept(vec3d1, vec3d);
 

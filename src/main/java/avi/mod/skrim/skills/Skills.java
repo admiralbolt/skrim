@@ -321,12 +321,12 @@ public class Skills {
 		if (entity instanceof EntityZombie) {
 			EntityZombie zombie = (EntityZombie) entity;
 			// I just love how readable func_189777_di is!
-			return zombieVariants.get(zombie.func_189777_di());
+			zombieVariants.get(zombie.getZombieType());
 		} else if (entity instanceof EntitySkeleton) {
 			EntitySkeleton skeleton = (EntitySkeleton) entity;
 			// Wow!  This ones slightly different than last time!
 			// It's really helpful that they are different AND readable!
-			return skeletonVariants.get(skeleton.func_189771_df());
+			return skeletonVariants.get(skeleton.getSkeletonType());
 		} else {
 			if (killXp.containsKey(entity.getClass())) {
 				return killXp.get(entity.getClass());

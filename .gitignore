@@ -1,4 +1,5 @@
 # eclipse
+eclipse/.recommenders
 bin
 *.launch
 .settings
