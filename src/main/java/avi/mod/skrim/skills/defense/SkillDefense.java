@@ -93,6 +93,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		if (this.canLevelUp()) {
 			this.level++;
 			SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
+			this.shouldUpdateAttribute = true;
 			this.ding(player);
 		}
 		SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
@@ -215,11 +216,9 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	}
 
 	public Entry<IAttribute, AttributeModifier> getAttributeModifier() {
-		if (this.hasAbility(2)) {
-			if (this.shouldUpdateAttribute) {
-				this.shouldUpdateAttribute = false;
-				return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(SharedMonsterAttributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", 4.0D, 0));
-			}
+		if (this.shouldUpdateAttribute) {
+			this.shouldUpdateAttribute = false;
+			return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(SharedMonsterAttributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", (double) this.getExtraHealth(), 0));
 		}
 		return null;
 	}
