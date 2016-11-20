@@ -1,0 +1,504 @@
+{
+  "variants": [
+    {
+      "age=0": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=1": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=2": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=3": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=4": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=5": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=6": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=7": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=8": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=9": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=10": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=11": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=12": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=13": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=14": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=15": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=16": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=17": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=18": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=19": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=20": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=21": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=22": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=23": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=24": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=25": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=26": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=27": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=28": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=29": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=30": {
+        "model": "minecraft:carrots_stage0"
+      }
+    }, 
+    {
+      "age=31": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=32": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=33": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=34": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=35": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=36": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=37": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=38": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=39": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=40": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=41": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=42": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=43": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=44": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=45": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=46": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=47": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=48": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=49": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=50": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=51": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=52": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=53": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=54": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=55": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=56": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=57": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=58": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=59": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=60": {
+        "model": "minecraft:carrots_stage1"
+      }
+    }, 
+    {
+      "age=61": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=62": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=63": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=64": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=65": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=66": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=67": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=68": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=69": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=70": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=71": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=72": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=73": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=74": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=75": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=76": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=77": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=78": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=79": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=80": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=81": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=82": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=83": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=84": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=85": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=86": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=87": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=88": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=89": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=90": {
+        "model": "minecraft:carrots_stage2"
+      }
+    }, 
+    {
+      "age=91": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=92": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=93": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=94": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=95": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=96": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=97": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=98": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }, 
+    {
+      "age=99": {
+        "model": "minecraft:carrots_stage3"
+      }
+    }
+  ]
+}

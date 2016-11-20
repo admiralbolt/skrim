@@ -61,6 +61,9 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 		}
 
 		worldIn.setBlockState(pos, this.withAge(i), 2);
+		if (i == j) {
+			this.finishedGrowing(worldIn, rand, pos, state);
+		}
 	}
 
 	protected int getBonemealAgeIncrease(World worldIn) {
@@ -70,17 +73,17 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 	public void finishedGrowing(World worldIn, Random rand, BlockPos pos, IBlockState state) {
 
 	}
-	
+
 	public int getAge(IBlockState state) {
 		return state.getValue(AGE).intValue();
 	}
-	
+
 	public int getMaxAge() {
 		return this.maxAge;
 	}
-	
+
 	public IBlockState withAge(int age) {
-    return this.getDefaultState().withProperty(AGE, Integer.valueOf(age));
+		return this.getDefaultState().withProperty(AGE, Integer.valueOf(age));
 	}
 
 	@Override
@@ -110,6 +113,70 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 			}
 		}
 		return ret;
+	}
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		super.updateTick(worldIn, pos, state, rand);
+
+		if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
+			int i = this.getAge(state);
+
+			if (i < this.getMaxAge()) {
+				float f = this.getGrowthChance(worldIn, pos);
+
+				if (rand.nextInt((int) (25.0F / f) + 1) == 0) {
+					worldIn.setBlockState(pos, this.withAge(i + 1), 2);
+				}
+			} else {
+				this.finishedGrowing(worldIn, rand, pos, state);
+			}
+		}
+	}
+
+	public float getGrowthChance(World worldIn, BlockPos pos) {
+		float f = 1.0F;
+		BlockPos blockpos = pos.down();
+
+		for (int i = -1; i <= 1; ++i) {
+			for (int j = -1; j <= 1; ++j) {
+				float f1 = 0.0F;
+				IBlockState iblockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
+
+				if (iblockstate.getBlock().canSustainPlant(iblockstate, worldIn, blockpos.add(i, 0, j), net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable) this)) {
+					f1 = 1.0F;
+
+					if (iblockstate.getBlock().isFertile(worldIn, blockpos.add(i, 0, j))) {
+						f1 = 3.0F;
+					}
+				}
+
+				if (i != 0 || j != 0) {
+					f1 /= 4.0F;
+				}
+
+				f += f1;
+			}
+		}
+
+		BlockPos blockpos1 = pos.north();
+		BlockPos blockpos2 = pos.south();
+		BlockPos blockpos3 = pos.west();
+		BlockPos blockpos4 = pos.east();
+		boolean flag = this == worldIn.getBlockState(blockpos3).getBlock() || this == worldIn.getBlockState(blockpos4).getBlock();
+		boolean flag1 = this == worldIn.getBlockState(blockpos1).getBlock() || this == worldIn.getBlockState(blockpos2).getBlock();
+
+		if (flag && flag1) {
+			f /= 2.0F;
+		} else {
+			boolean flag2 = this == worldIn.getBlockState(blockpos3.north()).getBlock() || this == worldIn.getBlockState(blockpos4.north()).getBlock() || this == worldIn.getBlockState(blockpos4.south()).getBlock() || this == worldIn.getBlockState(blockpos3.south()).getBlock();
+
+			if (flag2) {
+				f /= 2.0F;
+			}
+		}
+
+		return f;
 	}
 
 }

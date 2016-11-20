@@ -11,6 +11,7 @@ import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlowerRed;
 import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
 import avi.mod.skrim.blocks.flowers.GlowFlowerYellow;
+import avi.mod.skrim.blocks.plants.MagicBean;
 import avi.mod.skrim.blocks.tnt.BioBomb;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.blocks.tnt.Dynamite;
@@ -47,6 +48,8 @@ public final class ModBlocks {
 
   public static SkrimCakeBlock SKRIM_CAKE;
   public static AngelCakeBlock ANGEL_CAKE;
+  
+  public static MagicBean MAGIC_BEAN;
 
   public static void createBlocks() {
     ORE_PENGUIN = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
@@ -79,6 +82,8 @@ public final class ModBlocks {
 
 		SKRIM_CAKE = register(new SkrimCakeBlock());
 		ANGEL_CAKE = register(new AngelCakeBlock());
+		
+		MAGIC_BEAN = register(new MagicBean());
   }
 
 
