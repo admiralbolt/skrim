@@ -5,11 +5,13 @@ import java.util.Random;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ItemModelProvider;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,27 +19,31 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.EnumPlantType;
 
-public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowable {
-
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 7);
+public abstract class CustomPlant extends BlockBush implements ItemModelProvider, IGrowable {
 
 	private String name;
 	private int maxAge;
-	private PropertyInteger age;
 
 	public CustomPlant(String name, int maxAge) {
 		this.name = name;
 		this.maxAge = maxAge;
-		age = PropertyInteger.create("age", 0, maxAge);
 
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 		setCreativeTab(Skrim.creativeTab);
+		
+		this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), Integer.valueOf(0)));
+        this.setTickRandomly(true);
 	}
+
+	protected abstract PropertyInteger getAgeProperty();
 
 	@Override
 	public void registerItemModel(Item item) {
+		// ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Skrim.modId + ":" + name));
 		Skrim.instance.proxy.registerItemRenderer(item, 0, name);
 	}
 
@@ -60,6 +66,7 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 			i = j;
 		}
 
+		System.out.println("Setting age to: " + i + ", max: " + j);
 		worldIn.setBlockState(pos, this.withAge(i), 2);
 		if (i == j) {
 			this.finishedGrowing(worldIn, rand, pos, state);
@@ -71,11 +78,11 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 	}
 
 	public void finishedGrowing(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-
+		System.out.println("calling finished Growing()... pos: " + pos + ", state: " + state);
 	}
 
 	public int getAge(IBlockState state) {
-		return state.getValue(AGE).intValue();
+		return state.getValue(this.getAgeProperty()).intValue();
 	}
 
 	public int getMaxAge() {
@@ -83,13 +90,14 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 	}
 
 	public IBlockState withAge(int age) {
-		return this.getDefaultState().withProperty(AGE, Integer.valueOf(age));
+		return this.getDefaultState().withProperty(this.getAgeProperty(), Integer.valueOf(age));
 	}
 
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		IBlockState soil = worldIn.getBlockState(pos.down());
-		return super.canPlaceBlockAt(worldIn, pos) && soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+		return super.canPlaceBlockAt(worldIn, pos)
+				&& soil.getBlock().canSustainPlant(soil, worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
 	}
 
 	@Override
@@ -143,7 +151,8 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 				float f1 = 0.0F;
 				IBlockState iblockstate = worldIn.getBlockState(blockpos.add(i, 0, j));
 
-				if (iblockstate.getBlock().canSustainPlant(iblockstate, worldIn, blockpos.add(i, 0, j), net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable) this)) {
+				if (iblockstate.getBlock().canSustainPlant(iblockstate, worldIn, blockpos.add(i, 0, j),
+						net.minecraft.util.EnumFacing.UP, (net.minecraftforge.common.IPlantable) this)) {
 					f1 = 1.0F;
 
 					if (iblockstate.getBlock().isFertile(worldIn, blockpos.add(i, 0, j))) {
@@ -163,13 +172,18 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 		BlockPos blockpos2 = pos.south();
 		BlockPos blockpos3 = pos.west();
 		BlockPos blockpos4 = pos.east();
-		boolean flag = this == worldIn.getBlockState(blockpos3).getBlock() || this == worldIn.getBlockState(blockpos4).getBlock();
-		boolean flag1 = this == worldIn.getBlockState(blockpos1).getBlock() || this == worldIn.getBlockState(blockpos2).getBlock();
+		boolean flag = this == worldIn.getBlockState(blockpos3).getBlock()
+				|| this == worldIn.getBlockState(blockpos4).getBlock();
+		boolean flag1 = this == worldIn.getBlockState(blockpos1).getBlock()
+				|| this == worldIn.getBlockState(blockpos2).getBlock();
 
 		if (flag && flag1) {
 			f /= 2.0F;
 		} else {
-			boolean flag2 = this == worldIn.getBlockState(blockpos3.north()).getBlock() || this == worldIn.getBlockState(blockpos4.north()).getBlock() || this == worldIn.getBlockState(blockpos4.south()).getBlock() || this == worldIn.getBlockState(blockpos3.south()).getBlock();
+			boolean flag2 = this == worldIn.getBlockState(blockpos3.north()).getBlock()
+					|| this == worldIn.getBlockState(blockpos4.north()).getBlock()
+					|| this == worldIn.getBlockState(blockpos4.south()).getBlock()
+					|| this == worldIn.getBlockState(blockpos3.south()).getBlock();
 
 			if (flag2) {
 				f /= 2.0F;
@@ -177,6 +191,29 @@ public class CustomPlant extends BlockBush implements ItemModelProvider, IGrowab
 		}
 
 		return f;
+	}
+
+	/**
+	 * Convert the given metadata into a BlockState for this Block
+	 */
+	public IBlockState getStateFromMeta(int meta) {
+		return this.withAge(meta);
+	}
+
+	/**
+	 * Convert the BlockState into the correct metadata value
+	 */
+	public int getMetaFromState(IBlockState state) {
+		return this.getAge(state);
+	}
+
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] { this.getAgeProperty() });
+	}
+
+	@Override
+	public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+		return EnumPlantType.Plains;
 	}
 
 }
