@@ -3,9 +3,24 @@ eclipse/.recommenders
 bin
 *.launch
 .settings
-.metadata
 .classpath
 .project
+.recommenders
+.mylyn
+*.lock
+*.log
+*.ini
+
+org.eclipse.*
+!org.eclipse.core.resources
+
+.history
+.root
+.safetable
+*.snap
+
+
+!.location
 
 # idea
 out
