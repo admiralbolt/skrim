@@ -6,21 +6,7 @@ bin
 .classpath
 .project
 .recommenders
-.mylyn
-*.lock
-*.log
-*.ini
-
-org.eclipse.*
-!org.eclipse.core.resources
-
-.history
-.root
-.safetable
-*.snap
-
-
-!.location
+.metadata
 
 # idea
 out
