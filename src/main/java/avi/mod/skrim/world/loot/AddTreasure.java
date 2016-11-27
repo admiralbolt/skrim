@@ -1,4 +1,4 @@
-package avi.mod.skrim.world;
+package avi.mod.skrim.world.loot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +24,8 @@ import net.minecraftforge.event.LootTableLoadEvent;
 
 public class AddTreasure {
 
-	public static RandomValueRange minRolls = new RandomValueRange(1.0F);
-	public static RandomValueRange bonusRolls = new RandomValueRange(0.0F, 2.0F);
+	public static RandomValueRange rolls = new RandomValueRange(1.0F, 3.0F);
+	public static RandomValueRange bonusRolls = new RandomValueRange(1.0F, 2.0F);
 	public static int maxWeight = 2500;
 	public static int currentWeight = 0;
 	public static List<LootEntry> lootEntries = new ArrayList<LootEntry>();
@@ -38,7 +38,6 @@ public class AddTreasure {
 	public static int artifactQuality = 10;
 
 	public static List<ResourceLocation> chests = new ArrayList<ResourceLocation>();
-	public static Map<Item, Integer> skrimLoot = new HashMap<Item, Integer>();
 	static {
 		chests.add(LootTableList.CHESTS_ABANDONED_MINESHAFT);
 		chests.add(LootTableList.CHESTS_DESERT_PYRAMID);
@@ -52,10 +51,7 @@ public class AddTreasure {
 		chests.add(LootTableList.CHESTS_STRONGHOLD_CROSSING);
 		chests.add(LootTableList.CHESTS_STRONGHOLD_LIBRARY);
 		chests.add(LootTableList.CHESTS_VILLAGE_BLACKSMITH);
-
-		for (Entry<String, CustomRecord> entry : ModItems.SONGS.entrySet()) {
-			skrimLoot.put(entry.getValue(), 30);
-		}
+		chests.add(CustomLootTables.CHESTS_BEANSTALK);
 	}
 
 	public static void addTreasure(LootTableLoadEvent event) {
@@ -121,7 +117,7 @@ public class AddTreasure {
 		skrimPool = new LootPool(
 			arrayEntries,
 			arrayConditions,
-			minRolls,
+			rolls,
 			bonusRolls,
 			"skrimLoot"
 		);

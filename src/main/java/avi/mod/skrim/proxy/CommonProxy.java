@@ -16,6 +16,7 @@ import avi.mod.skrim.network.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.stats.SkrimAchievements;
 import avi.mod.skrim.tileentity.ModTileEntities;
+import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -37,6 +38,7 @@ public class CommonProxy {
 		File directory = event.getModConfigurationDirectory();
 		config = new Configuration(new File(directory.getPath(), "modtut.cfg"));
 		Config.readConfig();
+		CustomLootTables.registerLootTables();
 		ModItems.createItems();
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
