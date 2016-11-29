@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.items.CustomHoe;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -257,12 +258,21 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
+		Item magicBean = new ItemStack(ModBlocks.MAGIC_BEAN).getItem();
+		
 		if (targetItem != null && targetItem == ModItems.OVERALLS) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
 				Skills.replaceWithComponents(event);
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 				farming.addXp((EntityPlayerMP) event.player, 500);
+			}
+		} else if (targetItem != null && targetItem == magicBean) {
+			if (!Skills.canCraft(event.player, Skills.FARMING, 100)) {
+				Skills.replaceWithComponents(event);
+			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+				farming.addXp((EntityPlayerMP) event.player, 5000);
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockVine;
@@ -27,7 +28,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 	private int maxLeafLength;
 
 	public WorldGenBeanstalk() {
-		this(20, 30, 3, 6, 5, 8);
+		this(20, 30, 5, 7, 5, 8);
 	}
 
 	public WorldGenBeanstalk(int minHeight, int maxHeight, int minLeafDelta, int maxLeafDelta, int minLeafLength, int maxLeafLength) {
@@ -128,7 +129,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 			}
 
 			// We can generate! Do the thing!
-			IBlockState beanState = Blocks.WOOL.getStateFromMeta(13);
+			IBlockState beanState = ModBlocks.BEANSTALK_BLOCK.getDefaultState();
 			IBlockState vineState = Blocks.VINE.getDefaultState();
 
 			// Generate the stalk

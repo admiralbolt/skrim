@@ -11,6 +11,7 @@ import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlowerRed;
 import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
 import avi.mod.skrim.blocks.flowers.GlowFlowerYellow;
+import avi.mod.skrim.blocks.plants.BeanstalkBlock;
 import avi.mod.skrim.blocks.plants.MagicBean;
 import avi.mod.skrim.blocks.tnt.BioBomb;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
@@ -18,17 +19,12 @@ import avi.mod.skrim.blocks.tnt.Dynamite;
 import avi.mod.skrim.blocks.tnt.Napalm;
 import avi.mod.skrim.items.ItemModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -55,6 +51,7 @@ public final class ModBlocks {
 	public static AngelCakeBlock ANGEL_CAKE;
 
 	public static MagicBean MAGIC_BEAN;
+	public static BeanstalkBlock BEANSTALK_BLOCK;
 
 	public static void createBlocks() {
 		ORE_PENGUIN = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
@@ -89,6 +86,8 @@ public final class ModBlocks {
 		ANGEL_CAKE = register(new AngelCakeBlock());
 
 		MAGIC_BEAN = register(new MagicBean());
+		addBeanRecipe();
+		BEANSTALK_BLOCK = register(new BeanstalkBlock());
 	}
 
 	private static <T extends Block> T register(T block, ItemBlock itemBlock) {
@@ -135,7 +134,10 @@ public final class ModBlocks {
 		GameRegistry.addRecipe(new ItemStack(NAPALM), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B',
 				Items.LAVA_BUCKET, 'C', Blocks.TNT);
 		GameRegistry.addRecipe(new ItemStack(BIOBOMB), "AAA", "ABA", "AAA", 'A', Items.ROTTEN_FLESH, 'B', Blocks.TNT);
-
+	}
+	
+	private static void addBeanRecipe() {
+		GameRegistry.addShapelessRecipe(new ItemStack(MAGIC_BEAN), Items.CARROT, new ItemStack(Items.DYE, 1, 3), Items.NETHER_WART, Items.POTATO, Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS, Items.DIAMOND_HOE);
 	}
 
 }

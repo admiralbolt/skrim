@@ -1,6 +1,17 @@
 Changelog
 ==========
 
+Version 1.1.7
+--------------
+### New Features
+* Added the level 100 farming ability.
+
+### Balance Changes
+* Nerfed artifact probability slightly as a result of the bug fix.
+
+### Bug Fixes
+* Now correctly getting 2-3 rolls on the artifact pool instead of just 1.
+
 Version 1.1.6
 -------------
 ### New Features

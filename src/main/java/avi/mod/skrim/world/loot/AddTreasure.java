@@ -34,7 +34,7 @@ public class AddTreasure {
 
 	public static int recordWeight = 30;
 	public static int recordQuality = 3;
-	public static int artifactWeight = 5;
+	public static int artifactWeight = 4;
 	public static int artifactQuality = 10;
 
 	public static List<ResourceLocation> chests = new ArrayList<ResourceLocation>();

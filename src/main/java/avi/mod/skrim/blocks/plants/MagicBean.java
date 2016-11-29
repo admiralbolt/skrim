@@ -24,7 +24,6 @@ public class MagicBean extends CustomPlant {
 
 	@Override
 	public void finishedGrowing(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-		System.out.println("Bean Finished Growing!  GENERATE THE MOTHERFUCKER... pos: " + pos + ", state: " + state);
 		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
 		WorldGenBeanstalk generator = new WorldGenBeanstalk();
 		generator.generate(worldIn, rand, pos);
