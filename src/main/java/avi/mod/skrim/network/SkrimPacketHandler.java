@@ -7,7 +7,7 @@ import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.InvisibilityPacket.InvisibilityPacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
 import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
-import avi.mod.skrim.network.SpawnHeartPacket.SpawnHeartPacketHandler;
+import avi.mod.skrim.network.SpawnParticlePacket.SpawnParticlePacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket.ApplyBonemealPacketHandler;
 import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket;
@@ -35,7 +35,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(SkillPacketHandler.class, SkillPacket.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(LevelUpPacketHandler.class, LevelUpPacket.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(FallDistancePacketHandler.class, FallDistancePacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(SpawnHeartPacketHandler.class, SpawnHeartPacket.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(SpawnParticlePacketHandler.class, SpawnParticlePacket.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(OffHandAttackPacketHandler.class, OffHandAttackPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(DrillPacketHandler.class, DrillPacket.class, id++, Side.SERVER);
 		INSTANCE.registerMessage(ExplosionPacketHandler.class, ExplosionPacket.class, id++, Side.CLIENT);

@@ -1,4 +1,4 @@
-package avi.mod.skrim.blocks;
+package avi.mod.skrim.blocks.plants;
 
 import java.util.List;
 import java.util.Random;

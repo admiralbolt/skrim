@@ -30,14 +30,14 @@ public class PlayerCoords extends WorldSavedData {
 	private static final int coordsPerPage = 5;
 
 	public Map<String, Entry<UUID, BlockPos>> coords = new HashMap<String, Entry<UUID, BlockPos>>();
-  public Map<UUID, Entry<BlockPos, String>> lastDeath = new HashMap<UUID, Entry<BlockPos, String>>();
-  public Map<UUID, String> usernames = new HashMap<UUID, String>();
-  public Set<BlockPos> locs = new HashSet<BlockPos>();
+	public Map<UUID, Entry<BlockPos, String>> lastDeath = new HashMap<UUID, Entry<BlockPos, String>>();
+	public Map<UUID, String> usernames = new HashMap<UUID, String>();
+	public Set<BlockPos> locs = new HashSet<BlockPos>();
 	public int dimension;
 
 	public PlayerCoords() {
-  	super(DATA_NAME);
-  }
+		super(DATA_NAME);
+	}
 
 	public PlayerCoords(String name) {
 		super(name);
@@ -86,7 +86,6 @@ public class PlayerCoords extends WorldSavedData {
 				this.usernames.put(uuid, username);
 			}
 		}
-		
 	}
 
 	@Override
@@ -118,7 +117,7 @@ public class PlayerCoords extends WorldSavedData {
 			deathCoords.appendTag(deathCoord);
 		}
 		NBTTagList nameTags = new NBTTagList();
-		for (UUID uuid: this.usernames.keySet()) {
+		for (UUID uuid : this.usernames.keySet()) {
 			NBTTagCompound name = new NBTTagCompound();
 			name.setString("uuid", uuid.toString());
 			name.setString("username", this.usernames.get(uuid));

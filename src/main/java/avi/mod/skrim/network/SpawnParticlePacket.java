@@ -15,19 +15,21 @@ import avi.mod.skrim.skills.ISkill;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
 
-public class SpawnHeartPacket implements IMessage {
+public class SpawnParticlePacket implements IMessage {
 
-	public SpawnHeartPacket() {
+	public SpawnParticlePacket() {
 
 	}
 
+	private String particle;
 	private double x;
 	private double y;
 	private double z;
 	private float height;
 	private float width;
 
-	public SpawnHeartPacket(double x, double y, double z, float height, float width) {
+	public SpawnParticlePacket(String particle, double x, double y, double z, float height, float width) {
+		this.particle = particle;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -38,6 +40,7 @@ public class SpawnHeartPacket implements IMessage {
 	@Override
 	public void toBytes(ByteBuf buf) {
 		// Pay attention to order! Must be read in the same order!
+		ByteBufUtils.writeUTF8String(buf, particle);
 		buf.writeDouble(x);
 		buf.writeDouble(y);
 		buf.writeDouble(z);
@@ -47,6 +50,7 @@ public class SpawnHeartPacket implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
+		this.particle = ByteBufUtils.readUTF8String(buf);
 		this.x = buf.readDouble();
 		this.y = buf.readDouble();
 		this.z = buf.readDouble();
@@ -54,10 +58,10 @@ public class SpawnHeartPacket implements IMessage {
 		this.width = buf.readFloat();
 	}
 
-	public static class SpawnHeartPacketHandler implements IMessageHandler<SpawnHeartPacket, IMessage> {
+	public static class SpawnParticlePacketHandler implements IMessageHandler<SpawnParticlePacket, IMessage> {
 
 		@Override
-		public IMessage onMessage(final SpawnHeartPacket message, MessageContext ctx) {
+		public IMessage onMessage(final SpawnParticlePacket message, MessageContext ctx) {
 			if (ctx.side.isClient()) {
 				final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 				IThreadListener mainThread = Minecraft.getMinecraft();
@@ -68,7 +72,7 @@ public class SpawnHeartPacket implements IMessage {
 							double d0 = Utils.rand.nextGaussian() * 0.03D;
 							double d1 = Utils.rand.nextGaussian() * 0.03D;
 							double d2 = Utils.rand.nextGaussian() * 0.03D;
-							player.worldObj.spawnParticle(EnumParticleTypes.HEART, message.x + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, message.y + (double) (Utils.rand.nextFloat() * message.height), message.z + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, d0, d1, d2);
+							player.worldObj.spawnParticle(EnumParticleTypes.valueOf(message.particle), message.x + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, message.y + (double) (Utils.rand.nextFloat() * message.height), message.z + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, d0, d1, d2);
 						}
 					}
 				});

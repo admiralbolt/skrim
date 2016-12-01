@@ -140,6 +140,8 @@ public class ModItems {
 	public static LeafArmor DARK_OAK_LEAF_ARMOR;
 	public static LeafArmor DARK_OAK_LEAF_HELMET;
 	
+	public static WeirwoodTotem WEIRWOOD_TOTEM;
+	
 	public static HandSaw HAND_SAW;
 	public static CustomArmor OVERALLS;
 	public static CustomBow GREAT_BOW;
@@ -224,6 +226,8 @@ public class ModItems {
 		DARK_OAK_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
 		DARK_OAK_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
 		DARK_OAK_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
+		
+		WEIRWOOD_TOTEM = register(new WeirwoodTotem());
 
 		registerArtifacts();
 		registerSongs();

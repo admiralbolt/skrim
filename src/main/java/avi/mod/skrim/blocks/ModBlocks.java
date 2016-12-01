@@ -13,6 +13,7 @@ import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
 import avi.mod.skrim.blocks.flowers.GlowFlowerYellow;
 import avi.mod.skrim.blocks.plants.BeanstalkBlock;
 import avi.mod.skrim.blocks.plants.MagicBean;
+import avi.mod.skrim.blocks.plants.WeirwoodSapling;
 import avi.mod.skrim.blocks.tnt.BioBomb;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.blocks.tnt.Dynamite;
@@ -52,6 +53,10 @@ public final class ModBlocks {
 
 	public static MagicBean MAGIC_BEAN;
 	public static BeanstalkBlock BEANSTALK_BLOCK;
+	
+	public static WeirwoodSapling WEIRWOOD_SAPLING;
+	public static WeirwoodWood WEIRWOOD_WOOD;
+	public static WeirwoodLeaf WEIRWOOD_LEAF;
 
 	public static void createBlocks() {
 		ORE_PENGUIN = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
@@ -88,6 +93,10 @@ public final class ModBlocks {
 		MAGIC_BEAN = register(new MagicBean());
 		addBeanRecipe();
 		BEANSTALK_BLOCK = register(new BeanstalkBlock());
+		
+		WEIRWOOD_SAPLING = register(new WeirwoodSapling());
+		WEIRWOOD_WOOD = register(new WeirwoodWood());
+		WEIRWOOD_LEAF = register(new WeirwoodLeaf());
 	}
 
 	private static <T extends Block> T register(T block, ItemBlock itemBlock) {

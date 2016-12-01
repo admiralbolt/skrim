@@ -8,6 +8,7 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 
+import avi.mod.skrim.blocks.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
@@ -143,7 +144,8 @@ public class Utils {
 			block == Blocks.LAPIS_ORE ||
 			block == Blocks.REDSTONE_ORE ||
 			block == Blocks.COAL_ORE ||
-			block == Blocks.EMERALD_ORE
+			block == Blocks.EMERALD_ORE ||
+			block == ModBlocks.WEIRWOOD_WOOD
 		);
 	}
 

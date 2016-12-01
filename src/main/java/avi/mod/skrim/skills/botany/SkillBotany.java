@@ -9,7 +9,7 @@ import avi.mod.skrim.blocks.flowers.EnchantedFlowerVariants;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
 import avi.mod.skrim.network.SkrimPacketHandler;
-import avi.mod.skrim.network.SpawnHeartPacket;
+import avi.mod.skrim.network.SpawnParticlePacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -296,7 +296,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 								}
 							}
 						}
-						SkrimPacketHandler.INSTANCE.sendTo(new SpawnHeartPacket(villager.posX, villager.posY, villager.posZ, villager.height, villager.width), (EntityPlayerMP) player);
+						SkrimPacketHandler.INSTANCE.sendTo(new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height, villager.width), (EntityPlayerMP) player);
 						mainStack.stackSize--;
 						if (mainStack.stackSize == 0) {
 							player.inventory.deleteStack(mainStack);
