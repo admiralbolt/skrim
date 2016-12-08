@@ -45,13 +45,14 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public static SkillStorage<ISkillDemolition> skillStorage = new SkillStorage<ISkillDemolition>();
 	public static Map<BlockPos, EntityPlayer> validGoBoom = new HashMap<BlockPos, EntityPlayer>();
 
-	public static SkillAbility DYNAMITE = new SkillAbility("Dynamite", 25, "Boom goes the dynamite.", "Grants you the ability to craft dynamite with tnt & a pickaxe.", "Dynamite has a larger blast radius and a 100% chance to drop blocks.");
-
-	public static SkillAbility BIOBOMB = new SkillAbility("Bio-Bomb", 50, "A whole new meaning for c'mon BB.", "Grants you the ability to craft Bio-Bomb with... Stuff...", "Bio-bombs have twice the blast radius of tnt, and don't affect blocks.");
-
-	public static SkillAbility NAPALM = new SkillAbility("Napalm", 75, "Handle with care.", "Grants you the ability to craft Napalm with... Stuff...", "Napalm has triple the blast radius of tnt, starts fires, and creates lava spawns.");
-
-	public static SkillAbility BADONKADONK = new SkillAbility("Badonkadonk", 100, "Gut full of dynamite and booty like POW.", "Grants you the ability to craft a rocket launcher.");
+	public static SkillAbility DYNAMITE = new SkillAbility("Dynamite", 25, "Boom goes the dynamite.",
+			"Grants you the ability to craft dynamite with tnt & a pickaxe.", "Dynamite has a larger blast radius and a 100% chance to drop blocks.");
+	public static SkillAbility BIOBOMB = new SkillAbility("Bio-Bomb", 50, "A whole new meaning for c'mon BB.",
+			"Grants you the ability to craft Bio-Bomb with... Stuff...", "Bio-bombs have twice the blast radius of tnt, and don't affect blocks.");
+	public static SkillAbility NAPALM = new SkillAbility("Napalm", 75, "Handle with care.", "Grants you the ability to craft Napalm with... Stuff...",
+			"Napalm has triple the blast radius of tnt, starts fires, and creates lava spawns.");
+	public static SkillAbility BADONKADONK = new SkillAbility("Badonkadonk", 100, "Gut full of dynamite and booty like POW.",
+			"Grants you the ability to craft a rocket launcher.");
 
 	public SkillDemolition() {
 		this(1, 0);
@@ -166,7 +167,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 		Item napalm = new ItemStack(ModBlocks.NAPALM).getItem();
 		if (targetItem != null && targetItem == dynamite) {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
-				Skills.destroyComponents(event);
+				Skills.replaceWithComponents(event);
 				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 5.0F, true);
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
@@ -174,7 +175,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			}
 		} else if (targetItem != null && targetItem == biobomb) {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 50)) {
-				Skills.destroyComponents(event);
+				Skills.replaceWithComponents(event);
 				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 6.0F, true);
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
@@ -182,7 +183,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			}
 		} else if (targetItem != null && targetItem == napalm) {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 75)) {
-				Skills.destroyComponents(event);
+				Skills.replaceWithComponents(event);
 				event.player.worldObj.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 12.0F, true);
 			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);

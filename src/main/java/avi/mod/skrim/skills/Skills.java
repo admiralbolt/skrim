@@ -79,62 +79,63 @@ public class Skills {
 	public static Capability<ISkillCooking> COOKING = CookingProvider.COOKING;
 	public static Capability<ISkillDefense> DEFENSE = DefenseProvider.DEFENSE;
 	public static Capability<ISkillDemolition> DEMOLITION = DemolitionProvider.DEMOLITION;
-  public static Capability<ISkillDigging> DIGGING = DiggingProvider.DIGGING;
-  public static Capability<ISkillFarming> FARMING = FarmingProvider.FARMING;
-  public static Capability<ISkillFishing> FISHING = FishingProvider.FISHING;
-  public static Capability<ISkillMelee> MELEE = MeleeProvider.MELEE;
-  public static Capability<ISkillMining> MINING = MiningProvider.MINING;
-  public static Capability<ISkillRanged> RANGED = RangedProvider.RANGED;
-  public static Capability<ISkillWoodcutting> WOODCUTTING = WoodcuttingProvider.WOODCUTTING;
+	public static Capability<ISkillDigging> DIGGING = DiggingProvider.DIGGING;
+	public static Capability<ISkillFarming> FARMING = FarmingProvider.FARMING;
+	public static Capability<ISkillFishing> FISHING = FishingProvider.FISHING;
+	public static Capability<ISkillMelee> MELEE = MeleeProvider.MELEE;
+	public static Capability<ISkillMining> MINING = MiningProvider.MINING;
+	public static Capability<ISkillRanged> RANGED = RangedProvider.RANGED;
+	public static Capability<ISkillWoodcutting> WOODCUTTING = WoodcuttingProvider.WOODCUTTING;
 
-  public static Map<String, Capability<? extends ISkill>> skillMap = new HashMap<String, Capability<? extends ISkill>>();
-  public static List<Capability<? extends ISkill>> ALL_SKILLS = new ArrayList<Capability<? extends ISkill>>();
+	public static Map<String, Capability<? extends ISkill>> skillMap = new HashMap<String, Capability<? extends ISkill>>();
+	public static List<Capability<? extends ISkill>> ALL_SKILLS = new ArrayList<Capability<? extends ISkill>>();
 
 	public static void register() {
-    MiningProvider.register();
-    WoodcuttingProvider.register();
-    DiggingProvider.register();
-    FarmingProvider.register();
-    BotanyProvider.register();
-    CookingProvider.register();
-    BlacksmithingProvider.register();
-    FishingProvider.register();
-    DemolitionProvider.register();
-    MeleeProvider.register();
-    RangedProvider.register();
-    DefenseProvider.register();
+		MiningProvider.register();
+		WoodcuttingProvider.register();
+		DiggingProvider.register();
+		FarmingProvider.register();
+		BotanyProvider.register();
+		CookingProvider.register();
+		BlacksmithingProvider.register();
+		FishingProvider.register();
+		DemolitionProvider.register();
+		MeleeProvider.register();
+		RangedProvider.register();
+		DefenseProvider.register();
 
-    /**
-     * This functionality should really be handled in the providers themselves.
-     */
+		/**
+		 * This functionality should really be handled in the providers
+		 * themselves.
+		 */
 
-    BLACKSMITHING = BlacksmithingProvider.BLACKSMITHING;
-  	BOTANY = BotanyProvider.BOTANY;
-  	COOKING = CookingProvider.COOKING;
-  	DEFENSE = DefenseProvider.DEFENSE;
-  	DEMOLITION = DemolitionProvider.DEMOLITION;
-    DIGGING = DiggingProvider.DIGGING;
-    FARMING = FarmingProvider.FARMING;
-    FISHING = FishingProvider.FISHING;
-    MELEE = MeleeProvider.MELEE;
-    MINING = MiningProvider.MINING;
-    RANGED = RangedProvider.RANGED;
-    WOODCUTTING = WoodcuttingProvider.WOODCUTTING;
+		BLACKSMITHING = BlacksmithingProvider.BLACKSMITHING;
+		BOTANY = BotanyProvider.BOTANY;
+		COOKING = CookingProvider.COOKING;
+		DEFENSE = DefenseProvider.DEFENSE;
+		DEMOLITION = DemolitionProvider.DEMOLITION;
+		DIGGING = DiggingProvider.DIGGING;
+		FARMING = FarmingProvider.FARMING;
+		FISHING = FishingProvider.FISHING;
+		MELEE = MeleeProvider.MELEE;
+		MINING = MiningProvider.MINING;
+		RANGED = RangedProvider.RANGED;
+		WOODCUTTING = WoodcuttingProvider.WOODCUTTING;
 
-    ALL_SKILLS.add(BLACKSMITHING);
-    ALL_SKILLS.add(BOTANY);
-    ALL_SKILLS.add(COOKING);
-    ALL_SKILLS.add(DEFENSE);
-    ALL_SKILLS.add(DEMOLITION);
-    ALL_SKILLS.add(DIGGING);
-    ALL_SKILLS.add(FARMING);
-    ALL_SKILLS.add(FISHING);
-    ALL_SKILLS.add(MELEE);
-    ALL_SKILLS.add(MINING);
-    ALL_SKILLS.add(RANGED);
-    ALL_SKILLS.add(WOODCUTTING);
+		ALL_SKILLS.add(BLACKSMITHING);
+		ALL_SKILLS.add(BOTANY);
+		ALL_SKILLS.add(COOKING);
+		ALL_SKILLS.add(DEFENSE);
+		ALL_SKILLS.add(DEMOLITION);
+		ALL_SKILLS.add(DIGGING);
+		ALL_SKILLS.add(FARMING);
+		ALL_SKILLS.add(FISHING);
+		ALL_SKILLS.add(MELEE);
+		ALL_SKILLS.add(MINING);
+		ALL_SKILLS.add(RANGED);
+		ALL_SKILLS.add(WOODCUTTING);
 
-    skillMap.put("blacksmithing", BLACKSMITHING);
+		skillMap.put("blacksmithing", BLACKSMITHING);
 		skillMap.put("botany", BOTANY);
 		skillMap.put("cooking", COOKING);
 		skillMap.put("defense", DEFENSE);
@@ -146,7 +147,7 @@ public class Skills {
 		skillMap.put("mining", MINING);
 		skillMap.put("ranged", RANGED);
 		skillMap.put("woodcutting", WOODCUTTING);
-  }
+	}
 
 	public static boolean canCraft(EntityPlayer player, Capability<? extends ISkill> cap, int level) {
 		if (player != null && player.hasCapability(cap, EnumFacing.NORTH)) {
@@ -170,7 +171,7 @@ public class Skills {
 		if (event.player.inventory != null) {
 			final Item targetItem = event.crafting.getItem();
 			event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
-			
+
 			ItemStack slot;
 			Item slotItem;
 			ItemStack addStack;
@@ -186,14 +187,12 @@ public class Skills {
 			final EntityPlayer player = event.player;
 			removeTargetItem(player, targetItem);
 
-			new Timer().schedule(
-				new TimerTask() {
-					@Override
-					public void run() {
-						removeTargetItem(player, targetItem);
-					}
-				}, 1000
-			);
+			new Timer().schedule(new TimerTask() {
+				@Override
+				public void run() {
+					removeTargetItem(player, targetItem);
+				}
+			}, 1000);
 
 		}
 	}
@@ -219,7 +218,7 @@ public class Skills {
 				Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
 				totalLevels += skill.level;
 			}
- 		}
+		}
 		return totalLevels;
 	}
 
@@ -250,16 +249,16 @@ public class Skills {
 		}
 	}
 
-	public static Map<Class, Integer> killXp  = new HashMap<Class, Integer>();
+	public static Map<Class, Integer> killXp = new HashMap<Class, Integer>();
 	static {
 		/**
 		 * Handle variants
 		 */
-		
+
 		killXp.put(EntityZombie.class, 750);
 		killXp.put(EntityZombieVillager.class, 850);
 		killXp.put(EntityHusk.class, 1000);
-		
+
 		killXp.put(EntitySkeleton.class, 850);
 		killXp.put(EntityStray.class, 1000);
 		killXp.put(EntityWitherSkeleton.class, 1500);
@@ -293,9 +292,8 @@ public class Skills {
 	}
 
 	/**
-	 * Bonus xp for killing shit
-	 * Variants make this pretty terrible to program well.
-	 * For now we're just going to do a giant if else statement :\
+	 * Bonus xp for killing shit Variants make this pretty terrible to program
+	 * well. For now we're just going to do a giant if else statement :\
 	 */
 	public static int entityKillXp(Entity entity) {
 		if (killXp.containsKey(entity.getClass())) {
@@ -304,6 +302,5 @@ public class Skills {
 
 		return 0;
 	}
-
 
 }

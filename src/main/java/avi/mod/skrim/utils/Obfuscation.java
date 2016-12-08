@@ -20,6 +20,7 @@ public class Obfuscation {
 
 	public static ObfuscatedField STACK_ITEM = new ObfuscatedField("item", "field_151002_e");
 	public static ObfuscatedField STACK_SIZE = new ObfuscatedField("stackSize", "field_77994_a");
+	public static ObfuscatedField POTION_DURATION = new ObfuscatedField("duration", "field_76460_b");
 
 	public static int getStackSize(ItemStack stack) {
 		return stack.func_190916_E();

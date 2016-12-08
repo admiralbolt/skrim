@@ -16,6 +16,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -62,7 +63,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	}
 
 	public static SkillAbility RITE_OF_PASSAGE = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
-	public static SkillAbility CAPTAIN = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r radius.");
+	public static SkillAbility CAPTAIN = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r" + SkillAbility.descColor + " radius.");
 	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("Aspect of the Golem", 75, "The new spell resistance.", "Negative status effects last for half as long.");
 	public static SkillAbility STALWART_STANCE = new SkillAbility("Stalwart Stance", 100, "That tickles.", "Crouching and blocking with a shield for at least 3 seconds grants invulnerability.");
 
@@ -179,7 +180,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 							Collection<PotionEffect> effects = player.getActivePotionEffects();
 							for (PotionEffect effect : effects) {
 								if (Utils.isNegativeEffect(effect)) {
-									Reflection.hackValueTo(effect, effect.getDuration() - 1, "duration", "field_76460_b");
+									Reflection.hackValueTo(effect, effect.getDuration() - 1, Obfuscation.POTION_DURATION.getFieldNames());
 									effect.combine(effect);
 								}
 							}
