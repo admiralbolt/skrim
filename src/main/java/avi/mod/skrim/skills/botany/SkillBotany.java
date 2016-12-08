@@ -125,11 +125,12 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
 	public static String getFlowerName(IBlockState state) {
 		Block block = state.getBlock();
+		System.out.println("block: " + block);
 		if (block instanceof BlockFlower) {
 			BlockFlower flower = (BlockFlower) block;
 			return state.getValue(flower.getTypeProperty()).toString();
 		} else if (block instanceof BlockDoublePlant) {
-			return state.getValue(BlockDoublePlant.VARIANT).toString();
+			return BlockDoublePlant.EnumPlantType.byMetadata(block.getMetaFromState(state)).getName();
 		} else {
 			return "";
 		}
