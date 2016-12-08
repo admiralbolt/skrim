@@ -35,6 +35,8 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 
 public class SkillFishing extends Skill implements ISkillFishing {
@@ -104,7 +106,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
 			ItemStack stack = eitem.getEntityItem();
 			Item item = stack.getItem();
 			if (item == Items.FISHING_ROD) {
-				stack.setItem(ModItems.FISHING_ROD);
+				Reflection.hackValueTo(stack, ModItems.FISHING_ROD, Obfuscation.STACK_ITEM.getFieldNames());
 			}
 		}
 	}
@@ -114,7 +116,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
 		if (player != null && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
 			Item item = event.crafting.getItem();
 			if (item == Items.FISHING_ROD) {
-				event.crafting.setItem(ModItems.FISHING_ROD);
+				Reflection.hackValueTo(event.crafting, ModItems.FISHING_ROD, Obfuscation.STACK_ITEM.getFieldNames());
 			}
 		}
 	}

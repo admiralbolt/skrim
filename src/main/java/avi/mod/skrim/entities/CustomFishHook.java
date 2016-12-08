@@ -19,6 +19,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -91,25 +92,25 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 	private int ticksCatchableDelay;
 	private float fishApproachAngle;
 
-	public CustomFishHook(World par1World) {
-		super(par1World);
-		this.xTile = -1;
-		this.yTile = -1;
-		this.zTile = -1;
-		this.inGround = false;
-		this.shake = 0;
-		this.ticksInAir = 0;
-		this.ticksCatchable = 0;
-		this.bobber = null;
-		this.field_189740_d = new BlockPos(-1, -1, -1);
-		this.setSize(0.25F, 0.25F);
-		this.ignoreFrustumCheck = true;
-		this.canTeleport = false;
-	}
+//	public CustomFishHook(World par1World) {
+//		super(par1World);
+//		this.xTile = -1;
+//		this.yTile = -1;
+//		this.zTile = -1;
+//		this.inGround = false;
+//		this.shake = 0;
+//		this.ticksInAir = 0;
+//		this.ticksCatchable = 0;
+//		this.bobber = null;
+//		this.field_189740_d = new BlockPos(-1, -1, -1);
+//		this.setSize(0.25F, 0.25F);
+//		this.ignoreFrustumCheck = true;
+//		this.canTeleport = false;
+//	}
 
 	@SideOnly(Side.CLIENT)
-	public CustomFishHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
-		super(par1World, par2, par4, par6, par8EntityPlayer);
+	public CustomFishHook(World par1World, EntityPlayer par8EntityPlayer, double par2, double par4, double par6) {
+		super(par1World, par8EntityPlayer, par2, par4, par6);
 		this.setPosition(par2, par4, par6);
 		this.ignoreFrustumCheck = true;
 		this.angler = par8EntityPlayer;
@@ -318,7 +319,7 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 			}
 
 			if (!this.inGround) {
-				this.moveEntity(this.motionX, this.motionY, this.motionZ);
+				this.moveEntity(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 				float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
 				this.rotationYaw = (float) (MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
 
@@ -356,9 +357,10 @@ public class CustomFishHook extends EntityFishHook implements IEntityAdditionalS
 					double d11 = axisalignedbb.minY + d9 * (double) (l + 1) / 5.0D;
 					AxisAlignedBB axisalignedbb2 = new AxisAlignedBB(axisalignedbb.minX, d10, axisalignedbb.minZ, axisalignedbb.maxX, d11, axisalignedbb.maxZ);
 
-					if (this.worldObj.isAABBInMaterial(axisalignedbb2, Material.WATER)) {
-						d5 += 0.2D;
-					}
+					// TODO Overahul this motherfucker...
+//					if (this.worldObj.isAABBInMaterial(axisalignedbb2, Material.WATER)) {
+//						d5 += 0.2D;
+//					}
 				}
 
 				if (!this.worldObj.isRemote && d5 > 0.0D) {

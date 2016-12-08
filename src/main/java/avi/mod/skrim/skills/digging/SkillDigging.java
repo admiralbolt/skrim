@@ -15,6 +15,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.Block;
@@ -284,7 +285,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 									for (ItemStack stack : player.inventory.mainInventory) {
 										if (stack != null) {
 											if (stack.getItem() == Item.getItemFromBlock(Blocks.SAND)) {
-												totalSand += stack.stackSize;
+												totalSand += Obfuscation.getStackSize(stack);
 											}
 										}
 									}
@@ -306,8 +307,8 @@ public class SkillDigging extends Skill implements ISkillDigging {
 												ItemStack stack = player.inventory.getStackInSlot(i);
 												if (stack != null) {
 													if (stack.getItem() == Item.getItemFromBlock(Blocks.SAND)) {
-														int remove = Math.min(stack.stackSize, (REQUIRED_SAND - paidSand));
-														if (remove == stack.stackSize) {
+														int remove = Math.min(Obfuscation.getStackSize(stack), (REQUIRED_SAND - paidSand));
+														if (remove == Obfuscation.getStackSize(stack)) {
 															player.inventory.removeStackFromSlot(i);
 														} else {
 															player.inventory.decrStackSize(i, remove);

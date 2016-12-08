@@ -7,6 +7,7 @@ import avi.mod.skrim.blocks.CustomCakeBlock;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.tileentity.CakeTileEntity;
+import avi.mod.skrim.utils.Obfuscation;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.SoundType;
@@ -51,7 +52,8 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack stack = playerIn.getHeldItem(hand);
 		IBlockState iblockstate = worldIn.getBlockState(pos);
 		Block block = iblockstate.getBlock();
 		Block placeBlock = this.getBlock();
@@ -62,7 +64,7 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 			pos = pos.offset(facing);
 		}
 
-		if (playerIn.canPlayerEdit(pos, facing, stack) && stack.stackSize != 0 && worldIn.canBlockBePlaced(placeBlock, pos, false, facing, playerIn, stack)) {
+		if (playerIn.canPlayerEdit(pos, facing, stack) && Obfuscation.getStackSize(stack) != 0 && Obfuscation.canBlockBePlaced(worldIn, placeBlock, pos, false, facing, playerIn)) {
 			IBlockState iblockstate1 = placeBlock.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, 0, playerIn);
 
 			if (!worldIn.setBlockState(pos, iblockstate1, 11)) {
@@ -88,7 +90,7 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 
 				SoundType soundtype = iblockstate1.getBlock().getSoundType(iblockstate1, worldIn, pos, playerIn);
 				worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-				--stack.stackSize;
+				Obfuscation.setStackSize(stack, Obfuscation.getStackSize(stack) - 1);
 				return EnumActionResult.SUCCESS;
 			}
 		} else {

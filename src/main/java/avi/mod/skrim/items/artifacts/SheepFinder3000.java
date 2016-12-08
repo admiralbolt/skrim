@@ -32,7 +32,8 @@ public class SheepFinder3000 extends ArtifactItem {
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack itemStackIn = playerIn.getHeldItem(hand);
 		BlockPos pos = playerIn.getPosition();
 		int x = pos.getX();
 		int y = pos.getY();

@@ -33,6 +33,8 @@ import avi.mod.skrim.skills.ranged.ISkillRanged;
 import avi.mod.skrim.skills.ranged.RangedProvider;
 import avi.mod.skrim.skills.woodcutting.ISkillWoodcutting;
 import avi.mod.skrim.skills.woodcutting.WoodcuttingProvider;
+import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -46,6 +48,7 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntityPolarBear;
@@ -54,10 +57,11 @@ import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityStray;
 import net.minecraft.entity.monster.EntityWitch;
+import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.SkeletonType;
-import net.minecraft.entity.monster.ZombieType;
+import net.minecraft.entity.monster.EntityZombieVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -157,7 +161,8 @@ public class Skills {
 	public static void destroyComponents(ItemCraftedEvent event) {
 		if (event.player.inventory != null) {
 			event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
-			event.crafting.stackSize = 0;
+			Obfuscation.setStackSize(event.crafting, 0);
+			event.crafting.damageItem(event.crafting.getMaxDamage(), event.player);
 		}
 	}
 
@@ -165,33 +170,13 @@ public class Skills {
 		if (event.player.inventory != null) {
 			final Item targetItem = event.crafting.getItem();
 			event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
-			event.crafting.stackSize = 1;
+			
 			ItemStack slot;
 			Item slotItem;
 			ItemStack addStack;
 			boolean first = true;
-			for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
-				slot = event.craftMatrix.getStackInSlot(i);
-				if (slot != null) {
-					slotItem = slot.getItem();
-					if (slotItem != null) {
-						addStack = new ItemStack(slotItem, 1, slot.getMetadata());
-						/**
-						 * I honestly have no clue why this is happening.  It's
-						 * recognizing the item, but can't find it's model.  If you
-						 * drop then re-pick it up everything works.  Point is, we don't ever
-						 * want to put glowstone in the hands of the player after crafting.
-						 */
-						if (first && slotItem != Items.GLOWSTONE_DUST) {
-							event.crafting.setItem(slotItem);
-							event.crafting.setItemDamage(slot.getMetadata());
-							first = false;
-						} else {
-							event.player.inventory.addItemStackToInventory(addStack);
-						}
-					}
-				}
-			}
+			System.out.println("stackSize: " + Obfuscation.getStackSize(event.crafting));
+			Obfuscation.setStackSize(event.crafting, 0);
 			/**
 			 * Iterate through slots and destroy all items :/
 			 */
@@ -266,23 +251,18 @@ public class Skills {
 	}
 
 	public static Map<Class, Integer> killXp  = new HashMap<Class, Integer>();
-	public static Map<ZombieType, Integer> zombieVariants = new HashMap<ZombieType, Integer>();
-	public static Map<SkeletonType, Integer> skeletonVariants = new HashMap<SkeletonType, Integer>();
 	static {
 		/**
 		 * Handle variants
 		 */
-		zombieVariants.put(ZombieType.NORMAL, 750);
-		zombieVariants.put(ZombieType.HUSK, 1000);
-		zombieVariants.put(ZombieType.VILLAGER_BUTCHER, 850);
-		zombieVariants.put(ZombieType.VILLAGER_FARMER, 850);
-		zombieVariants.put(ZombieType.VILLAGER_LIBRARIAN, 850);
-		zombieVariants.put(ZombieType.VILLAGER_PRIEST, 850);
-		zombieVariants.put(ZombieType.VILLAGER_SMITH, 850);
-
-		skeletonVariants.put(SkeletonType.NORMAL, 850);
-		skeletonVariants.put(SkeletonType.STRAY, 1000);
-		skeletonVariants.put(SkeletonType.WITHER, 1500);
+		
+		killXp.put(EntityZombie.class, 750);
+		killXp.put(EntityZombieVillager.class, 850);
+		killXp.put(EntityHusk.class, 1000);
+		
+		killXp.put(EntitySkeleton.class, 850);
+		killXp.put(EntityStray.class, 1000);
+		killXp.put(EntityWitherSkeleton.class, 1500);
 
 		killXp.put(EntityPlayer.class, 100);
 
@@ -318,19 +298,8 @@ public class Skills {
 	 * For now we're just going to do a giant if else statement :\
 	 */
 	public static int entityKillXp(Entity entity) {
-		if (entity instanceof EntityZombie) {
-			EntityZombie zombie = (EntityZombie) entity;
-			// I just love how readable func_189777_di is!
-			zombieVariants.get(zombie.getZombieType());
-		} else if (entity instanceof EntitySkeleton) {
-			EntitySkeleton skeleton = (EntitySkeleton) entity;
-			// Wow!  This ones slightly different than last time!
-			// It's really helpful that they are different AND readable!
-			return skeletonVariants.get(skeleton.getSkeletonType());
-		} else {
-			if (killXp.containsKey(entity.getClass())) {
-				return killXp.get(entity.getClass());
-			}
+		if (killXp.containsKey(entity.getClass())) {
+			return killXp.get(entity.getClass());
 		}
 
 		return 0;

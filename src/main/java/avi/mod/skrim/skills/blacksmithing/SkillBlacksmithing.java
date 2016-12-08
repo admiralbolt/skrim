@@ -11,6 +11,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -61,34 +62,18 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		obsidianItems.add(ModItems.OBSIDIAN_SWORD);
 	}
 
-	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility(
-		"Master Craftsperson",
-		25,
-		"Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
-		"No longer risk breaking the anvil when repairing items.",
-		"Repairing an item with an undamaged equivalent provides a one time §a+25%" + SkillAbility.descColor + " durability bonus."
-	);
+	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("Master Craftsperson", 25,
+			"Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
+			"No longer risk breaking the anvil when repairing items.",
+			"Repairing an item with an undamaged equivalent provides a one time §a+25%" + SkillAbility.descColor + " durability bonus.");
 
-	public static SkillAbility PERSISTENCE = new SkillAbility(
-			"Persistence",
-			50,
-			"3 days later...",
-			"Remove prior work cost when repairing items."
-		);
+	public static SkillAbility PERSISTENCE = new SkillAbility("Persistence", 50, "3 days later...", "Remove prior work cost when repairing items.");
 
-	public static SkillAbility IRON_HEART = new SkillAbility(
-		"Iron Heart",
-		75,
-		"Can still pump blood.",
-		"Passively gain §a50%" + SkillAbility.descColor + " fire resistance."
-	);
+	public static SkillAbility IRON_HEART = new SkillAbility("Iron Heart", 75, "Can still pump blood.",
+			"Passively gain §a50%" + SkillAbility.descColor + " fire resistance.");
 
-	public static SkillAbility OBSIDIAN_SMITH = new SkillAbility(
-		"Obsidian Smith",
-		100,
-		"How can obsidian be real if our eyes aren't real?",
-		"Allows you to craft obsidian armor, weapons, and tools."
-	);
+	public static SkillAbility OBSIDIAN_SMITH = new SkillAbility("Obsidian Smith", 100, "How can obsidian be real if our eyes aren't real?",
+			"Allows you to craft obsidian armor, weapons, and tools.");
 
 	public SkillBlacksmithing() {
 		this(1, 0);
@@ -126,62 +111,63 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		return tooltip;
 	}
 
-  public boolean validBlacksmithingTarget(ItemStack stack) {
+	public boolean validBlacksmithingTarget(ItemStack stack) {
 		Item item = stack.getItem();
 		return xpMap.containsKey(Utils.snakeCase(item.getUnlocalizedName()));
-  }
+	}
 
-  public static void giveMoreIngots(ItemSmeltedEvent event) {
-  	if (event.player != null && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-  		SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
-	    if (blacksmithing.validBlacksmithingTarget(event.smelting)) {
-	      int stackSize = (event.smelting.stackSize == 0) ? blacksmithing.lastItemNumber : event.smelting.stackSize;
-	      int addItemSize = (int) (blacksmithing.extraIngot() * stackSize); // OOO
-	      if (addItemSize > 0) {
-	        ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
-	        event.player.inventory.addItemStackToInventory(newStack);
-	      }
-	      if (event.player instanceof EntityPlayerMP) {
-	        // Give xp for bonus items too!
-	      	blacksmithing.addXp((EntityPlayerMP) event.player, (stackSize + addItemSize) * blacksmithing.getXp(blacksmithing.getBlacksmithingName(event.smelting)));
-	      }
-	    }
-    }
-  }
+	public static void giveMoreIngots(ItemSmeltedEvent event) {
+		if (event.player != null && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
+			SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+			if (blacksmithing.validBlacksmithingTarget(event.smelting)) {
+				int stackSize = (Obfuscation.getStackSize(event.smelting) == 0) ? blacksmithing.lastItemNumber : Obfuscation.getStackSize(event.smelting);
+				int addItemSize = (int) (blacksmithing.extraIngot() * stackSize); // OOO
+				if (addItemSize > 0) {
+					ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
+					event.player.inventory.addItemStackToInventory(newStack);
+				}
+				if (event.player instanceof EntityPlayerMP) {
+					// Give xp for bonus items too!
+					blacksmithing.addXp((EntityPlayerMP) event.player,
+							(stackSize + addItemSize) * blacksmithing.getXp(blacksmithing.getBlacksmithingName(event.smelting)));
+				}
+			}
+		}
+	}
 
-  /**
-   * The hackiest of hacks.  Why does this always happen.
-   */
-  public static void saveItemNumber(PlayerContainerEvent.Open event) {
-    Container please = event.getContainer();
-    if (please instanceof ContainerFurnace) {
-      Slot output = please.getSlot(2);
-      ItemStack yas = output.getStack();
-      if (yas != null) {
-        EntityPlayer player = event.getEntityPlayer();
-        if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-          SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
-          blacksmithing.lastItemNumber = yas.stackSize;
-        }
-      }
-    }
-  }
+	/**
+	 * The hackiest of hacks. Why does this always happen.
+	 */
+	public static void saveItemNumber(PlayerContainerEvent.Open event) {
+		Container please = event.getContainer();
+		if (please instanceof ContainerFurnace) {
+			Slot output = please.getSlot(2);
+			ItemStack yas = output.getStack();
+			if (yas != null) {
+				EntityPlayer player = event.getEntityPlayer();
+				if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
+					SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+					blacksmithing.lastItemNumber = Obfuscation.getStackSize(yas);
+				}
+			}
+		}
+	}
 
-  public static void ironHeart(LivingHurtEvent event) {
-  	Entity entity = event.getEntity();
-  	if (entity instanceof EntityPlayer) {
-  		DamageSource source = event.getSource();
-  		if (source.isFireDamage()) {
-	  		EntityPlayer player = (EntityPlayer) entity;
-	  		if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-	  			SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
-	  			if (blacksmithing.hasAbility(3)) {
-	  				event.setAmount(event.getAmount() / 2);
-	  			}
-	  		}
-	  	}
-  	}
-  }
+	public static void ironHeart(LivingHurtEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			DamageSource source = event.getSource();
+			if (source.isFireDamage()) {
+				EntityPlayer player = (EntityPlayer) entity;
+				if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
+					SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+					if (blacksmithing.hasAbility(3)) {
+						event.setAmount(event.getAmount() / 2);
+					}
+				}
+			}
+		}
+	}
 
 	public static void enhanceRepair(AnvilRepairEvent event) {
 		Entity player = event.getEntityPlayer();
@@ -209,8 +195,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 					if (middle.getItemDamage() == 0 && middle.getItem() == output.getItem() && !compound.getBoolean("enhanced_durability")) {
 						/**
 						 * Yo dawg I heard you capped the max damage for items,
-						 * but you see, I want to make the cap go higher.
-						 * So uh, I'm gonna break your shit.
+						 * but you see, I want to make the cap go higher. So uh,
+						 * I'm gonna break your shit.
 						 */
 						Item outputItem = (Item) output.getItem();
 						Reflection.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage() * 1.25), "maxDamage", "field_77699_b");

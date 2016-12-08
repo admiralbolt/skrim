@@ -14,6 +14,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
@@ -70,10 +71,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		xpMap.put("sunflower", 5000);
 	}
 
-	public static SkillAbility SUN_FLOWER = new SkillAbility("Sun Flower", 25, "It was either this or mariglow, don't know which one is worse.", "Enables you to craft glowing flowers with a flower & glowstone dust.");
-	public static SkillAbility THORN_STYLE = new SkillAbility("Thorn Style", 50, "I'll let you try my thorn style.", "While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage.");
-	public static SkillAbility SEDUCE_VILLAGER = new SkillAbility("Seduce Villager", 75, "[Tongue waggling intensifies]", "Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + ".");
-	public static SkillAbility ENCHANTED_FLOWER = new SkillAbility("Enchanted Flower", 100, "It shares a giant friendliness beam! :D", "Enables you to craft enchanted flowers that function like speed beacons.");
+	public static SkillAbility SUN_FLOWER = new SkillAbility("Sun Flower", 25, "It was either this or mariglow, don't know which one is worse.",
+			"Enables you to craft glowing flowers with a flower & glowstone dust.");
+	public static SkillAbility THORN_STYLE = new SkillAbility("Thorn Style", 50, "I'll let you try my thorn style.",
+			"While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage.");
+	public static SkillAbility SEDUCE_VILLAGER = new SkillAbility("Seduce Villager", 75, "[Tongue waggling intensifies]",
+			"Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + ".");
+	public static SkillAbility ENCHANTED_FLOWER = new SkillAbility("Enchanted Flower", 100, "It shares a giant friendliness beam! :D",
+			"Enables you to craft enchanted flowers that function like speed beacons.");
 
 	public SkillBotany() {
 		this(1, 0);
@@ -110,7 +115,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
 			Item item = stack.getItem();
 			Block block = Block.getBlockFromItem(stack.getItem());
 			String name = Utils.snakeCase(item.getItemStackDisplayName(stack));
-			if ((item != null && (xpMap.containsKey(name) || name.equals("azure_bluet") || name.equals("lilac") || name.equals("peony"))) || (block != null && validFlowerBlock(block))) {
+			if ((item != null && (xpMap.containsKey(name) || name.equals("azure_bluet") || name.equals("lilac") || name.equals("peony")))
+					|| (block != null && validFlowerBlock(block))) {
 				return true;
 			}
 		}
@@ -142,8 +148,10 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	@Override
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r flower drops.");
-		tooltip.add("§a" + Utils.formatPercent(this.getSplosionChance()) + "%§r chance to cause a flowersplosion with radius §a" + this.getSplosionRadius() + "§r.");
+		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
+				+ "§r flower drops.");
+		tooltip.add("§a" + Utils.formatPercent(this.getSplosionChance()) + "%§r chance to cause a flowersplosion with radius §a" + this.getSplosionRadius()
+				+ "§r.");
 		return tooltip;
 	}
 
@@ -286,19 +294,21 @@ public class SkillBotany extends Skill implements ISkillBotany {
 						MerchantRecipeList buyingList = (MerchantRecipeList) Reflection.getPrivateField(villager, "buyingList", "field_70963_i");
 						for (MerchantRecipe recipe : buyingList) {
 							ItemStack first = recipe.getItemToBuy();
-							if (first.stackSize > 4) {
-								first.stackSize--;
+							if (Obfuscation.getStackSize(first) > 4) {
+								Obfuscation.setStackSize(first, Obfuscation.getStackSize(first) - 1);
 							}
 							if (recipe.hasSecondItemToBuy()) {
 								ItemStack second = recipe.getSecondItemToBuy();
-								if (second.stackSize > 4) {
-									second.stackSize--;
+								if (Obfuscation.getStackSize(second) > 4) {
+									Obfuscation.setStackSize(second, Obfuscation.getStackSize(second) - 1);
 								}
 							}
 						}
-						SkrimPacketHandler.INSTANCE.sendTo(new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height, villager.width), (EntityPlayerMP) player);
-						mainStack.stackSize--;
-						if (mainStack.stackSize == 0) {
+						SkrimPacketHandler.INSTANCE.sendTo(
+								new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height, villager.width),
+								(EntityPlayerMP) player);
+						Obfuscation.setStackSize(mainStack, Obfuscation.getStackSize(mainStack) - 1);
+						if (Obfuscation.getStackSize(mainStack) == 0) {
 							player.inventory.deleteStack(mainStack);
 							botany.addXp((EntityPlayerMP) player, 100);
 						}

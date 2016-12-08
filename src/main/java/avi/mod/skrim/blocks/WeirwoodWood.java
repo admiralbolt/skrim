@@ -10,6 +10,7 @@ import avi.mod.skrim.network.SpawnParticlePacket;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.WeirwoodCoords;
 import net.minecraft.block.SoundType;
@@ -39,9 +40,10 @@ public class WeirwoodWood extends BlockBase {
 	public int quantityDropped(IBlockState state, int fortune, Random random) {
 		return 0;
 	}
-
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem,
-			EnumFacing side, float hitX, float hitY, float hitZ) {
+	
+	@Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack heldItem = playerIn.getHeldItem(hand);
 		// Check and make sure there are at least two natural weirwood blocks directly above/below the activated block
 		if (WeirwoodCoords.validCoord(playerIn, pos)) {
 			// make sure that heldItem is not null AND is the totem.
@@ -50,6 +52,10 @@ public class WeirwoodWood extends BlockBase {
 				if (woodcutting.hasAbility(4)) {
 					if (heldItem != null && heldItem.getItem() == ModItems.WEIRWOOD_TOTEM) {
 						if (WeirwoodCoords.addCoord(playerIn, pos)) {
+							Obfuscation.setStackSize(heldItem, Obfuscation.getStackSize(heldItem) - 1);
+							if (Obfuscation.getStackSize(heldItem) == 0) {
+								playerIn.inventory.deleteStack(heldItem);
+							}
 							heldItem.damageItem(heldItem.getMaxDamage(), playerIn);
 							// SPAWN PARTICLES AND SHIT
 							double d0 = Utils.rand.nextGaussian() * 0.03D;

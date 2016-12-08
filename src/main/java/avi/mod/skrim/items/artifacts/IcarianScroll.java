@@ -31,8 +31,9 @@ public class IcarianScroll extends ArtifactItem {
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		playerIn.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, JUMP_DURATION, JUMP_LEVEL, false, true));
+		ItemStack itemStackIn = playerIn.getHeldItem(hand);
 		itemStackIn.damageItem(2, playerIn);
 		return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
 	}

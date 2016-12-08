@@ -14,6 +14,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CustomFood extends ItemFood implements ItemModelProvider {
 
@@ -27,13 +29,8 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 		this.setCreativeTab(Skrim.creativeTab);
 	}
 
-	/**
-	 * Right now we do nothing with this, but in the future we will
-	 * add some cool benefits.
-	 */
 	@Override
 	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-		super.onFoodEaten(stack, world, player);
 		if (stack.hasTagCompound()) {
 			NBTTagCompound compound = stack.getTagCompound();
 			if (compound.hasKey("level")) {
@@ -43,10 +40,10 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 				boolean overFull = level >= 25;
 				boolean panacea = level >= 50;
 				boolean superFood = level >= 75;
-				
+
 				int additionalHeal = getTotalFood(food, stack, level);
 				float additionalSaturation = getTotalSaturation(food, stack, level);
-				
+
 				FoodStats playerStats = player.getFoodStats();
 
 				int newFood = playerStats.getFoodLevel() + additionalHeal;
@@ -66,13 +63,13 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 					player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200, 1, false, false));
 				}
 				/**
-				 * A valiant attempt to keep me from over-filling.
-				 * But not valiant enough.
-				 * For some reason setFoodSaturationLevel is client side only.
-				 * But setFoodLevel bypasses the maximum for food...
-				 * BUT, addStats will reset the maximums for both.....
-				 * BUUTTT, readNBT(NBTTagCompound compound) assigns directly so.....
-				 * we need to set foodLevel, foodTimer, foodSaturationLevel, foodExhaustionLevel
+				 * A valiant attempt to keep me from over-filling. But not
+				 * valiant enough. For some reason setFoodSaturationLevel is
+				 * client side only. But setFoodLevel bypasses the maximum for
+				 * food... BUT, addStats will reset the maximums for both.....
+				 * BUUTTT, readNBT(NBTTagCompound compound) assigns directly
+				 * so..... we need to set foodLevel, foodTimer,
+				 * foodSaturationLevel, foodExhaustionLevel
 				 */
 				NBTTagCompound storeCompound = new NBTTagCompound();
 				storeCompound.setInteger("foodLevel", newFood);
@@ -83,38 +80,39 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 			}
 		}
 	}
-	
+
 	public static int getExtraFood(ItemFood food, ItemStack stack, int level) {
 		int baseHeal = food.getHealAmount(stack);
 		double extraFood = SkillCooking.extraFood(level);
-		return (int)(baseHeal * extraFood);
+		return (int) (baseHeal * extraFood);
 	}
-	
+
 	public static float getExtraSaturation(ItemFood food, ItemStack stack, int level) {
 		int baseHeal = food.getHealAmount(stack);
 		int additionalHeal = getExtraFood(food, stack, level);
 		float satMod = food.getSaturationModifier(stack);
 		double extraSaturation = SkillCooking.extraSaturation(level);
 		// Apply the old sat mod to the new healing, and the new sat mod to everything
-		return satMod * additionalHeal + (int)(extraSaturation * (baseHeal + additionalHeal));
+		return satMod * additionalHeal + (int) (extraSaturation * (baseHeal + additionalHeal));
 	}
-	
+
 	public static int getTotalFood(ItemFood food, ItemStack stack, int level) {
 		return getExtraFood(food, stack, level) + food.getHealAmount(stack);
 	}
-	
+
 	public static float getTotalSaturation(ItemFood food, ItemStack stack, int level) {
 		return getExtraSaturation(food, stack, level) + food.getSaturationModifier(stack) * food.getHealAmount(stack);
 	}
-	
+
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		if (stack.hasTagCompound()) {
 			NBTTagCompound compound = stack.getTagCompound();
 			if (compound.hasKey("level")) {
 				int level = compound.getInteger("level");
 				tooltip.add("Cooking Level: §a" + level + "§r");
-				tooltip.add("Food restored: §a" + getTotalFood((ItemFood) stack.getItem(), stack, level) + "§r, saturation restored: §a" + String.format("%.1f", getTotalSaturation((ItemFood) stack.getItem(), stack, level)) + "§r.");
+				tooltip.add("Food restored: §a" + getTotalFood((ItemFood) stack.getItem(), stack, level) + "§r, saturation restored: §a"
+						+ String.format("%.1f", getTotalSaturation((ItemFood) stack.getItem(), stack, level)) + "§r.");
 				if (level >= 25) {
 					tooltip.add("§4Overfull§r");
 					if (level >= 50) {
@@ -129,14 +127,14 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 	}
 
 	@Override
-  public void registerItemModel(Item item) {
-    Skrim.proxy.registerItemRenderer(this, 0, this.getUnlocalizedName());
-  }
+	public void registerItemModel(Item item) {
+		Skrim.proxy.registerItemRenderer(this, 0, this.getUnlocalizedName());
+	}
 
-  @Override
-  public CustomFood setCreativeTab(CreativeTabs tab) {
-    super.setCreativeTab(tab);
-    return this;
-  }
+	@Override
+	public CustomFood setCreativeTab(CreativeTabs tab) {
+		super.setCreativeTab(tab);
+		return this;
+	}
 
 }

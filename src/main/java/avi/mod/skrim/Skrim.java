@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
-@Mod(modid = Skrim.modId, name = Skrim.name, version = Skrim.version, acceptedMinecraftVersions = "[1.10.2]")
+@Mod(modid = Skrim.modId, name = Skrim.name, version = Skrim.version, acceptedMinecraftVersions = "[1.11.0, 1.11.1, 1.11.2]")
 public class Skrim {
 
 	@SidedProxy(serverSide = "avi.mod.skrim.proxy.ServerProxy", clientSide = "avi.mod.skrim.proxy.ClientProxy")

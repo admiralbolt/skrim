@@ -42,7 +42,7 @@ public class ClientProxy extends CommonProxy {
 		String baseName = block.getUnlocalizedName();
 		Item item = itemBlock.getItemFromBlock(block);
 		for (EnumFlowerType type : types) {
-			ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(Skrim.modId + ":" + baseName + "_" + type.getName(), "inventory");
+			ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(Skrim.modId + ":" + baseName + "_" + type.getName());
 			ModelLoader.setCustomModelResourceLocation(item, type.getMeta(), itemModelResourceLocation);
 			ModelBakery.registerItemVariants(item, itemModelResourceLocation);
 		}

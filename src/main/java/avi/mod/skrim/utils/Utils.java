@@ -164,7 +164,7 @@ public class Utils {
 	public static boolean isWearingArmor(EntityPlayer player, ItemArmor armor) {
 		InventoryPlayer inventory = player.inventory;
 		if (inventory != null) {
-			ItemStack stack = inventory.armorInventory[armor.armorType.getIndex()];
+			ItemStack stack = inventory.armorInventory.get(armor.armorType.getIndex());
 			if (stack != null) {
 				Item targetItem = stack.getItem();
 				if (targetItem == armor) {

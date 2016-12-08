@@ -95,7 +95,7 @@ public class LeafArmor extends CustomArmor {
 	public static BlockPlanks.EnumType getPlankTypeFullSet(EntityPlayer player) {
 		InventoryPlayer inventory = player.inventory;
 		if (inventory != null) {
-			ItemStack stack = inventory.armorInventory[0];
+			ItemStack stack = inventory.armorInventory.get(0);
 			if (stack != null) {
 				Item targetItem = stack.getItem();
 				if (targetItem instanceof LeafArmor) {

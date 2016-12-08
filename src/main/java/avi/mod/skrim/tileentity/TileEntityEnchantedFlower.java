@@ -269,25 +269,6 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 	}
 
 	/**
-	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-	 */
-	@Nullable
-	public ItemStack decrStackSize(int index, int count) {
-		if (index == 0 && this.payment != null) {
-			if (count >= this.payment.stackSize) {
-				ItemStack itemstack = this.payment;
-				this.payment = null;
-				return itemstack;
-			} else {
-				this.payment.stackSize -= count;
-				return new ItemStack(this.payment.getItem(), count, this.payment.getMetadata());
-			}
-		} else {
-			return null;
-		}
-	}
-
-	/**
 	 * Removes a stack from the given slot and returns it.
 	 */
 	@Nullable

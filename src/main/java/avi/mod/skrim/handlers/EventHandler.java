@@ -184,7 +184,7 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		// Utils.logBlockState(event.getState());
+		Utils.logBlockState(event.getState());
 		World world = event.getWorld();
 		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
 			if (!Utils.isSilkTouching(event)) {
@@ -242,6 +242,13 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onItemCrafted(ItemCraftedEvent event) {
+		/**
+		 * For cooking, potentially look at cancelling the event,
+		 * then doing a direct inventory add.
+		 * 
+		 * Look at setting the item of a stack as well.
+		 *  
+		 */
 		SkillBlacksmithing.verifyObsidian(event);
 		SkillBotany.verifyFlowers(event);
 		SkillCooking.injectCraftedFood(event);

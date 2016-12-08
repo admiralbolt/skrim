@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
@@ -76,7 +77,7 @@ public class CanesSword extends ArtifactSword {
 	}
 
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
 		ItemStack caneStack = new ItemStack(ModItems.CANES_SWORD);
 		caneStack.addEnchantment(Enchantments.FIRE_ASPECT, 2);
 		subItems.add(caneStack);

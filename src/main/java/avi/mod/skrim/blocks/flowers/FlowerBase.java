@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockFlower;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -17,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import avi.mod.skrim.Skrim;
@@ -68,7 +70,8 @@ public class FlowerBase extends BlockBush implements ItemModelProvider {
 	 * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
 	 */
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+	@Override
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
 		for (FlowerBase.EnumFlowerType blockflower$enumflowertype : FlowerBase.EnumFlowerType.getTypes(this.getBlockType())) {
 			list.add(new ItemStack(itemIn, 1, blockflower$enumflowertype.getMeta()));
 		}
@@ -138,6 +141,7 @@ public class FlowerBase extends BlockBush implements ItemModelProvider {
 	}
 
 	public static enum EnumFlowerType implements IStringSerializable, VariantEnum {
+		
 		DANDELION(FlowerBase.EnumFlowerColor.YELLOW, 0, "dandelion"), POPPY(FlowerBase.EnumFlowerColor.RED, 0, "poppy"), BLUE_ORCHID(FlowerBase.EnumFlowerColor.RED, 1, "blue_orchid", "blueOrchid"), ALLIUM(FlowerBase.EnumFlowerColor.RED, 2, "allium"), HOUSTONIA(FlowerBase.EnumFlowerColor.RED, 3, "houstonia"), RED_TULIP(FlowerBase.EnumFlowerColor.RED, 4, "red_tulip", "tulipRed"), ORANGE_TULIP(FlowerBase.EnumFlowerColor.RED, 5, "orange_tulip", "tulipOrange"), WHITE_TULIP(
 				FlowerBase.EnumFlowerColor.RED, 6, "white_tulip", "tulipWhite"), PINK_TULIP(FlowerBase.EnumFlowerColor.RED, 7, "pink_tulip", "tulipPink"), OXEYE_DAISY(FlowerBase.EnumFlowerColor.RED, 8, "oxeye_daisy", "oxeyeDaisy");
 

@@ -57,7 +57,7 @@ public class ApplyBonemealPacket implements IMessage {
 						public void run() {
 							ItemStack mainStack = player.getHeldItemMainhand();
 							InventoryPlayer inventory = player.inventory;
-							ItemStack stack = inventory.armorInventory[2];
+							ItemStack stack = inventory.armorInventory.get(2);
 							BlockPos targetPos = new BlockPos(message.x, message.y, message.z);
 							IBlockState targetState = world.getBlockState(targetPos);
 							Block targetBlock = targetState.getBlock();

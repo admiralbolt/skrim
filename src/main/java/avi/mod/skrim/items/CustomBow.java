@@ -3,6 +3,7 @@ package avi.mod.skrim.items;
 import javax.annotation.Nullable;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.utils.Obfuscation;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -123,9 +124,9 @@ public class CustomBow extends ItemBow implements ItemModelProvider {
 					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
 					if (!flag1) {
-						--itemstack.stackSize;
+						Obfuscation.setStackSize(itemstack, Obfuscation.getStackSize(itemstack) - 1);
 
-						if (itemstack.stackSize == 0) {
+						if (Obfuscation.getStackSize(itemstack) == 0) {
 							entityplayer.inventory.deleteStack(itemstack);
 						}
 					}

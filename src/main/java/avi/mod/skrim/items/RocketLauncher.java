@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.skills.demolition.SkillDemolition;
+import avi.mod.skrim.utils.Obfuscation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -78,10 +79,11 @@ public class RocketLauncher extends ItemBow implements ItemModelProvider {
 						worldIn.spawnEntityInWorld(rocket);
 					}
 
-					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-					--itemstack.stackSize;
+					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT,
+							SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+					Obfuscation.setStackSize(itemstack, Obfuscation.getStackSize(itemstack) - 1);
 
-					if (itemstack.stackSize == 0) {
+					if (Obfuscation.getStackSize(itemstack) == 0) {
 						entityplayer.inventory.deleteStack(itemstack);
 					}
 				}
@@ -108,13 +110,13 @@ public class RocketLauncher extends ItemBow implements ItemModelProvider {
 		return 0;
 	}
 
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack targetStack = playerIn.getHeldItem(hand);
 		if (this.findAmmo(playerIn) != null) {
-      playerIn.setActiveHand(hand);
-      return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+			playerIn.setActiveHand(hand);
+			return new ActionResult(EnumActionResult.SUCCESS, targetStack);
 		} else {
-			return new ActionResult(EnumActionResult.FAIL, itemStackIn);
+			return new ActionResult(EnumActionResult.FAIL, targetStack);
 		}
 	}
 

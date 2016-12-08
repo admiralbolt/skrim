@@ -15,6 +15,7 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.cooking.SkillCooking;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -384,8 +385,8 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
 						if (itemstack1 != null && entity instanceof EntityLivingBase) {
 							itemstack1.hitEntity((EntityLivingBase) entity, player);
-
-							if (itemstack1.stackSize <= 0) {
+							
+							if (Obfuscation.getStackSize(itemstack1) <= 0) {
 								player.setHeldItem(EnumHand.OFF_HAND, (ItemStack) null);
 								net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, EnumHand.OFF_HAND);
 							}

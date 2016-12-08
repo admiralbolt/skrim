@@ -43,53 +43,57 @@ public class CustomFishingRod extends Item implements ItemModelProvider {
 		this.setRegistryName(name);
 		this.setCreativeTab(Skrim.creativeTab);
 		this.setMaxDamage(64);
-    this.setMaxStackSize(1);
-    this.setCreativeTab(CreativeTabs.TOOLS);
-    this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
-    	@SideOnly(Side.CLIENT)
-      public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
-      {
-        return entityIn == null ? 0.0F : (entityIn.getHeldItemMainhand() == stack && entityIn instanceof EntityPlayer && ((EntityPlayer)entityIn).fishEntity != null ? 1.0F : 0.0F);
-      }
-    });
+		this.setMaxStackSize(1);
+		this.setCreativeTab(CreativeTabs.TOOLS);
+		this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
+			@SideOnly(Side.CLIENT)
+			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
+				return entityIn == null ? 0.0F
+						: (entityIn.getHeldItemMainhand() == stack && entityIn instanceof EntityPlayer && ((EntityPlayer) entityIn).fishEntity != null ? 1.0F
+								: 0.0F);
+			}
+		});
 	}
 
 	@Override
-  public void registerItemModel(Item item) {
-    Skrim.proxy.registerItemRenderer(this, 0, this.getUnlocalizedName());
-  }
+	public void registerItemModel(Item item) {
+		Skrim.proxy.registerItemRenderer(this, 0, this.getUnlocalizedName());
+	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    if (playerIn.fishEntity != null) {
-      int i = playerIn.fishEntity.handleHookRetraction();
-      itemStackIn.damageItem(i, playerIn);
-      playerIn.swingArm(hand);
-    } else {
-    	worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-    	if (!worldIn.isRemote) {
-    		worldIn.spawnEntityInWorld(new CustomFishHook(worldIn, playerIn));
-    	}
-    	playerIn.swingArm(hand);
-    	playerIn.addStat(StatList.getObjectUseStats(this));
-    }
-    return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
-  }
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack itemStackIn = playerIn.getHeldItem(hand);
+		if (playerIn.fishEntity != null) {
+			int i = playerIn.fishEntity.handleHookRetraction();
+			itemStackIn.damageItem(i, playerIn);
+			playerIn.swingArm(hand);
+		} else {
+			worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F,
+					0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+			if (!worldIn.isRemote) {
+				worldIn.spawnEntityInWorld(new CustomFishHook(worldIn, playerIn));
+			}
+			playerIn.swingArm(hand);
+			playerIn.addStat(StatList.getObjectUseStats(this));
+		}
+		return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+	}
 
-  /**
-   * Checks isDamagable and if it cannot be stacked
-   */
+	/**
+	 * Checks isDamagable and if it cannot be stacked
+	 */
 	@Override
-  public boolean isItemTool(ItemStack stack) {
-      return super.isItemTool(stack);
-  }
+	public boolean isItemTool(ItemStack stack) {
+		return super.isItemTool(stack);
+	}
 
-  /**
-   * Return the enchantability factor of the item, most of the time is based on material.
-   */
+	/**
+	 * Return the enchantability factor of the item, most of the time is based
+	 * on material.
+	 */
 	@Override
-  public int getItemEnchantability() {
-      return 1;
-  }
+	public int getItemEnchantability() {
+		return 1;
+	}
 
 }

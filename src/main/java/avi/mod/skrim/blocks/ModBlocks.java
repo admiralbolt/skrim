@@ -26,6 +26,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -84,7 +85,7 @@ public final class ModBlocks {
 		DYNAMITE = register(new Dynamite("dynamite"));
 		BIOBOMB = register(new BioBomb("biobomb"));
 		NAPALM = register(new Napalm("napalm"));
-		EntityRegistry.registerModEntity(CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20, 5, true);
+		EntityRegistry.registerModEntity(new ResourceLocation("skrim:custom_tnt_primed"), CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20, 5, true);
 		addExplosivesRecipes();
 
 		SKRIM_CAKE = register(new SkrimCakeBlock());

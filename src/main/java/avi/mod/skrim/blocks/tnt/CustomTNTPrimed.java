@@ -6,6 +6,7 @@ import avi.mod.skrim.network.SkrimPacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -80,7 +81,7 @@ public class CustomTNTPrimed extends Entity {
 			this.motionY -= 0.03999999910593033D;
 		}
 
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		this.moveEntity(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.9800000190734863D;
 		this.motionY *= 0.9800000190734863D;
 		this.motionZ *= 0.9800000190734863D;

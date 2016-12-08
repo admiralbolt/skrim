@@ -39,9 +39,9 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 	}
-
+	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		this.eatCustomCake(worldIn, pos, state, playerIn);
 		return true;
 	}
