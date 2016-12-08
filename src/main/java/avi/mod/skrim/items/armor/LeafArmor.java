@@ -176,7 +176,9 @@ public class LeafArmor extends CustomArmor {
 			EntityPlayer player = event.getEntityPlayer();
 			if (wearingFullSet(player)) {
 				if (!player.worldObj.isRemote) {
-					if (player.getHeldItemMainhand() == null) {
+					// Okay, I get that you don't want this to return null anymore,
+					// but WHY WOULD YOU WANT IT TO RETURN AIR!!??
+					if (player.getHeldItemMainhand() == ItemStack.field_190927_a) {
 						BlockPlanks.EnumType plankType = getPlankTypeFullSet(player);
 						WorldGenAbstractTree generator = getGenerator(plankType);
 						boolean createdTree = generator.generate(player.worldObj, Utils.rand, event.getPos());
