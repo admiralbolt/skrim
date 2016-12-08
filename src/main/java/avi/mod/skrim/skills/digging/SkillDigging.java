@@ -79,34 +79,13 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public double metalMeter = 0;
 	public Vec3d lastPos = null;
 
-	public static SkillAbility VITALIC_BREATHING = new SkillAbility(
-		"Vitalic Breathing",
-		25,
-		"Breathe, breathe in the... dirt?",
-		"No longer take suffocation damage from being trapped in walls."
-	);
-
-	public static SkillAbility METAL_DETECTOR = new SkillAbility(
-		"Metal Detector",
-		50,
-		"Beep....Beep....Beep....",
-		"Moving over dirt blocks causes random metal objects to appear!"
-	);
-
-	public static SkillAbility ENTOMB = new SkillAbility(
-		"Entomb",
-		75,
-		"Fuck Priest.",
-		"Right clicking an entity with a shovel buries it in the earth."
-	);
-
-	public static SkillAbility CASTLE = new SkillAbility(
-		"Castles Made of Sand",
-		100,
-		"Slips into the sea.  Eventually.",
-		"Right cliking with a shovel creates a desert temple."
-	);
-
+	public static SkillAbility VITALIC_BREATHING = new SkillAbility("Vitalic Breathing", 25, "Breathe, breathe in the... dirt?",
+			"No longer take suffocation damage from being trapped in walls.");
+	public static SkillAbility METAL_DETECTOR = new SkillAbility("Metal Detector", 50, "Beep....Beep....Beep....",
+			"Moving over dirt blocks causes random metal objects to appear!");
+	public static SkillAbility ENTOMB = new SkillAbility("Entomb", 75, "Fuck Priest.", "Right clicking an entity with a shovel buries it in the earth.");
+	public static SkillAbility CASTLE = new SkillAbility("Castles Made of Sand", 100, "Slips into the sea.  Eventually.",
+			"Right cliking with a shovel creates a desert temple.");
 
 	public SkillDigging() {
 		this(1, 0);
@@ -141,78 +120,80 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
-		return ((harvestTool != null && harvestTool.toLowerCase().equals("shovel"))
-			|| validTreasureTarget(state)
-			) ? true : false;
+		return ((harvestTool != null && harvestTool.toLowerCase().equals("shovel")) || validTreasureTarget(state)) ? true : false;
 	}
 
 	public static boolean validTreasureTarget(IBlockState state) {
 		Block block = state.getBlock();
-		return (block instanceof BlockDirt
-			|| block instanceof BlockGrass
-			|| block instanceof BlockSand
-			|| block instanceof BlockGravel
-			|| block instanceof BlockMycelium
-			|| block instanceof BlockSoulSand);
+		return (block instanceof BlockDirt || block instanceof BlockGrass || block instanceof BlockSand || block instanceof BlockGravel
+				|| block instanceof BlockMycelium || block instanceof BlockSoulSand);
 	}
 
-  public static String getDirtName(IBlockState state) {
-    Block block = state.getBlock();
-    if (block instanceof BlockDirt) {
-    	return state.getValue(BlockDirt.VARIANT).toString();
-    } else if (block instanceof BlockSand) {
-    	return state.getValue(BlockSand.VARIANT).toString();
-    } else {
-      return Utils.getBlockName(block);
-    }
-  }
-
-  public static void addDiggingXp(BlockEvent.BreakEvent event) {
-    EntityPlayer player = event.getPlayer();
-    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-      SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-      IBlockState state = event.getState();
-      Block target = state.getBlock();
-      int addXp = digging.getXp(getDirtName(state));
-      if (addXp > 0) {
-      	digging.addXp((EntityPlayerMP) player, addXp);
-      }
-    }
-  }
-
-  public static void digFaster(PlayerEvent.BreakSpeed event) {
-  	EntityPlayer player = event.getEntityPlayer();
-    SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-    if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-    	IBlockState state = event.getState();
-    	if (digging.validSpeedTarget(state)) {
-        event.setNewSpeed((float) (event.getOriginalSpeed() + digging.getSpeedBonus()));
-      }
-    }
-  }
-
-  public static void findTreasure(BlockEvent.HarvestDropsEvent event) {
-  	EntityPlayer player = event.getHarvester();
-		if (PlayerPlacedBlocks.isNaturalBlock(event.getWorld(), event.getPos())) {
-	    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
-	      SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
-	      IBlockState state = event.getState();
-	      if (validTreasureTarget(state)) {
-	        double random = Math.random();
-	        if (random < digging.getTreasureChance()) {
-	          ItemStack treasure = RandomTreasure.generateStandardTreasure();
-	          List<ItemStack> drops = event.getDrops();
-	          drops.add(treasure);
-						Skills.playFortuneSound(player);
-	          digging.addXp((EntityPlayerMP) player, 200);
-	        }
-	      }
-	    }
+	public static String getDirtName(IBlockState state) {
+		Block block = state.getBlock();
+		if (block instanceof BlockDirt) {
+			return state.getValue(BlockDirt.VARIANT).toString();
+		} else if (block instanceof BlockSand) {
+			return state.getValue(BlockSand.VARIANT).toString();
+		} else {
+			return Utils.getBlockName(block);
 		}
-  }
+	}
 
-  public static void vitalicBreathing(LivingHurtEvent event) {
-  	Entity entity = event.getEntity();
+	public static void addDiggingXp(BlockEvent.BreakEvent event) {
+		EntityPlayer player = event.getPlayer();
+		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+			SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+			IBlockState state = event.getState();
+			Block target = state.getBlock();
+			int addXp = digging.getXp(getDirtName(state));
+			if (addXp > 0) {
+				digging.addXp((EntityPlayerMP) player, addXp);
+			}
+		}
+	}
+
+	public static void digFaster(PlayerEvent.BreakSpeed event) {
+		EntityPlayer player = event.getEntityPlayer();
+		SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+		if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+			IBlockState state = event.getState();
+			if (digging.validSpeedTarget(state)) {
+				event.setNewSpeed((float) (event.getOriginalSpeed() + digging.getSpeedBonus()));
+			}
+		}
+	}
+
+	public static void findTreasure(BlockEvent.HarvestDropsEvent event) {
+		EntityPlayer player = event.getHarvester();
+		if (player != null) {
+			if (PlayerPlacedBlocks.isNaturalBlock(event.getWorld(), event.getPos())) {
+				ItemStack mainStack = player.getHeldItemMainhand();
+				if (mainStack != null) {
+					Item mainItem = mainStack.getItem();
+					if (mainItem != null && (mainItem instanceof ItemSpade || mainItem instanceof CustomSpade)) {
+						if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
+							SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+							IBlockState state = event.getState();
+							if (validTreasureTarget(state)) {
+								double random = Math.random();
+								if (random < digging.getTreasureChance()) {
+									ItemStack treasure = RandomTreasure.generateStandardTreasure();
+									List<ItemStack> drops = event.getDrops();
+									drops.add(treasure);
+									Skills.playFortuneSound(player);
+									digging.addXp((EntityPlayerMP) player, 200);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void vitalicBreathing(LivingHurtEvent event) {
+		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			final EntityPlayer player = (EntityPlayer) entity;
 			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
@@ -224,7 +205,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 				}
 			}
 		}
-  }
+	}
 
 	public static void metalDetector(LivingUpdateEvent event) {
 		Entity entity = event.getEntity();
@@ -259,7 +240,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 					ItemStack mainStack = player.getHeldItemMainhand();
 					Item mainItem = mainStack.getItem();
 					if (mainItem instanceof ItemSpade || mainItem instanceof CustomSpade) {
-						targetEntity.setPosition(targetEntity.posX, targetEntity.posY - 5, targetEntity.posZ);
+						targetEntity.setPosition(targetEntity.posX, Math.min(targetEntity.posY - 5, 5), targetEntity.posZ);
 						mainStack.damageItem(10, player);
 					}
 				}
@@ -296,9 +277,9 @@ public class SkillDigging extends Skill implements ISkillDigging {
 										StructureStart start = new MapGenScatteredFeature.Start(player.worldObj, Utils.rand, pos.getX() >> 4, pos.getZ() >> 4);
 										int x = (chunkPos.chunkXPos << 4) + 8;
 										int y = event.getPos().getY();
-						        int z = (chunkPos.chunkZPos << 4) + 8;
-						        StructureBoundingBox bound = new StructureBoundingBox(x - 8, y - 15, z - 8, x + 8, y + 12, z + 8);
-						        new StructureBoundingBox();
+										int z = (chunkPos.chunkZPos << 4) + 8;
+										StructureBoundingBox bound = new StructureBoundingBox(x - 8, y - 15, z - 8, x + 8, y + 12, z + 8);
+										new StructureBoundingBox();
 										start.generateStructure(player.worldObj, Utils.rand, bound);
 										start.notifyPostProcessAt(chunkPos);
 										if (!player.capabilities.isCreativeMode) {
@@ -329,6 +310,5 @@ public class SkillDigging extends Skill implements ISkillDigging {
 			}
 		}
 	}
-
 
 }
