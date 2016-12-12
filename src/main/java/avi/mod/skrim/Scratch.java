@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.brewing.PotionBrewEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
 public class Scratch {
 	
@@ -19,6 +20,11 @@ public class Scratch {
 		ItemStack leftInput = event.getItemInput();
 		ItemStack rightInput = event.getIngredientInput();
 		ItemStack output = event.getItemResult();
+	}
+	
+	@SubscribeEvent
+	private void onSpawn(EntityJoinWorldEvent event) {
+		event.getEntity();
 	}
 
   //  @SubscribeEvent
@@ -70,5 +76,7 @@ public class Scratch {
 //  private void test() {
 //	  BlockTNT block = new BlockTNT();
 //  }
+  
+  
 
 }

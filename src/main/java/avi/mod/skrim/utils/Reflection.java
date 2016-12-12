@@ -1,11 +1,13 @@
 package avi.mod.skrim.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 
 public class Reflection {
-	
+
 	public static void hackValueTo(Object instance, Object value, String... fieldNames) {
 		Field field;
 		for (String fieldName : fieldNames) {
@@ -21,7 +23,7 @@ public class Reflection {
 			}
 		}
 	}
-	
+
 	public static Object getPrivateField(Object instance, String... fieldNames) {
 		Field field;
 		for (String fieldName : fieldNames) {
@@ -38,7 +40,7 @@ public class Reflection {
 		}
 		return null;
 	}
-	
+
 	public static Object getSuperPrivateField(Object instance, String... fieldNames) {
 		Field field;
 		for (String fieldName : fieldNames) {
@@ -55,7 +57,7 @@ public class Reflection {
 		}
 		return null;
 	}
-	
+
 	public static Object getSuperSuperPrivateField(Object instance, String... fieldNames) {
 		Field field;
 		for (String fieldName : fieldNames) {
@@ -72,7 +74,61 @@ public class Reflection {
 		}
 		return null;
 	}
+
+	public static Object executePrivateMethod(Object instance, String... methodNames) {
+		Method method;
+		for (String methodName : methodNames) {
+			try {
+				method = instance.getClass().getDeclaredMethod(methodName);
+				method.setAccessible(true);
+				return method.invoke(instance);
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 	
+	public static Object executeSuperPrivateMethod(Object instance, String... methodNames) {
+		Method method;
+		for (String methodName : methodNames) {
+			try {
+				method = instance.getClass().getSuperclass().getDeclaredMethod(methodName);
+				method.setAccessible(true);
+				return method.invoke(instance);
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 	public static Object getFieldValue(Object instance, Field field) {
 		field.setAccessible(true);
 		try {
@@ -86,7 +142,7 @@ public class Reflection {
 		}
 		return null;
 	}
-	
+
 	public static void setFieldValue(Object instance, Field field, Object value) {
 		field.setAccessible(true);
 		try {
@@ -99,7 +155,7 @@ public class Reflection {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void hackSuperValueTo(Object instance, Object value, String... fieldNames) {
 		Field field;
 		try {
@@ -115,9 +171,9 @@ public class Reflection {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void printFields(Object instance) {
-		for (Field field: instance.getClass().getDeclaredFields()) {
+		for (Field field : instance.getClass().getDeclaredFields()) {
 			try {
 				field.setAccessible(true);
 				System.out.println("field: " + field.getName() + ", value: " + field.get(instance));
@@ -130,9 +186,9 @@ public class Reflection {
 			}
 		}
 	}
-	
+
 	public static void printSuperFields(Object instance) {
-		for (Field field: instance.getClass().getSuperclass().getDeclaredFields()) {
+		for (Field field : instance.getClass().getSuperclass().getDeclaredFields()) {
 			try {
 				field.setAccessible(true);
 				System.out.println("field: " + field.getName() + ", value: " + field.get(instance));
@@ -145,9 +201,9 @@ public class Reflection {
 			}
 		}
 	}
-	
+
 	public static void printSuperSuperFields(Object instance) {
-		for (Field field: instance.getClass().getSuperclass().getSuperclass().getDeclaredFields()) {
+		for (Field field : instance.getClass().getSuperclass().getSuperclass().getDeclaredFields()) {
 			try {
 				field.setAccessible(true);
 				System.out.println("field: " + field.getName() + ", value: " + field.get(instance));
@@ -160,7 +216,7 @@ public class Reflection {
 			}
 		}
 	}
-	
+
 	public static void hackAttributeTo(Object instance, Object value, String... fieldNames) {
 		Field field;
 		try {
@@ -185,7 +241,7 @@ public class Reflection {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static double getAttributeValue(Object instance, String... fieldNames) {
 		Field field;
 		for (String fieldName : fieldNames) {

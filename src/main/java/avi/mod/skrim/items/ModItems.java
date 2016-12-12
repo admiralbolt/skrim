@@ -56,8 +56,6 @@ public class ModItems {
 	public static SkrimCake SKRIM_CAKE;
 	public static AngelCake ANGEL_CAKE;
 
-	public static CustomFishingRod FISHING_ROD;
-
 	public static EnumRarity ARTIFACT_RARITY = EnumHelper.addRarity("artifact", TextFormatting.GOLD, "Artifact");
 
 	/**
@@ -180,9 +178,6 @@ public class ModItems {
 		OVERWRITE_RABBIT = register(new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab));
 		CANES_CHICKEN = register(new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab));
 		SKRIM_CAKE = register(new SkrimCake());
-
-		// Overwrite that fishing rod!
-		FISHING_ROD = register(new CustomFishingRod("fishing_rod"));
 
 		// Obsidian tools & armor
 		OBSIDIAN_SWORD = register(new CustomSword("obsidian_sword", OBSIDIAN_TOOL));

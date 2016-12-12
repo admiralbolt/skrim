@@ -97,28 +97,4 @@ public class SkillFishing extends Skill implements ISkillFishing {
 		return tooltip;
 	}
 
-
-	public static void pickupSkrimRod(EntityItemPickupEvent event) {
-		EntityPlayer player = event.getEntityPlayer();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
-			SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
-			EntityItem eitem = event.getItem();
-			ItemStack stack = eitem.getEntityItem();
-			Item item = stack.getItem();
-			if (item == Items.FISHING_ROD) {
-				Reflection.hackValueTo(stack, ModItems.FISHING_ROD, Obfuscation.STACK_ITEM.getFieldNames());
-			}
-		}
-	}
-
-	public static void craftSkrimRod(ItemCraftedEvent event) {
-		EntityPlayer player = event.player;
-		if (player != null && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
-			Item item = event.crafting.getItem();
-			if (item == Items.FISHING_ROD) {
-				Reflection.hackValueTo(event.crafting, ModItems.FISHING_ROD, Obfuscation.STACK_ITEM.getFieldNames());
-			}
-		}
-	}
-
 }

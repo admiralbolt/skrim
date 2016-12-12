@@ -21,6 +21,13 @@ public class Obfuscation {
 	public static ObfuscatedField STACK_ITEM = new ObfuscatedField("item", "field_151002_e");
 	public static ObfuscatedField STACK_SIZE = new ObfuscatedField("stackSize", "field_77994_a");
 	public static ObfuscatedField POTION_DURATION = new ObfuscatedField("duration", "field_76460_b");
+	public static ObfuscatedField FISH_HOOK_CATCHABLE = new ObfuscatedField("ticksCatchable", "field_146045_ax");
+	public static ObfuscatedField FISH_HOOK_CAUGHT_DELAY = new ObfuscatedField("ticksCaughtDelay", "field_146040_ay");
+	public static ObfuscatedField FISH_HOOK_IN_GROUND = new ObfuscatedField("inGround", "field_146051_au");
+	public static ObfuscatedField FISH_HOOK_ANGLER = new ObfuscatedField("angler", "field_146042_b");
+	public static ObfuscatedField FISH_HOOK_TICKS_IN_GROUND = new ObfuscatedField("ticksInGround", "field_146049_av");
+	public static ObfuscatedField FISH_HOOK_STATE = new ObfuscatedField("state", "this.field_190627_av");
+	public static ObfuscatedField FISH_HOOK_RAYTRACE = new ObfuscatedField("func_190624_r", "func_190624_r");
 
 	public static int getStackSize(ItemStack stack) {
 		return stack.func_190916_E();

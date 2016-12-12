@@ -1,5 +1,6 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.entities.SkrimFishHook;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
@@ -18,7 +19,6 @@ import avi.mod.skrim.skills.melee.SkillMelee;
 import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
-import avi.mod.skrim.stats.SkrimAchievements;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerCoords;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
@@ -28,10 +28,11 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -50,8 +51,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventHandler {
 
@@ -242,13 +241,6 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onItemCrafted(ItemCraftedEvent event) {
-		/**
-		 * For cooking, potentially look at cancelling the event,
-		 * then doing a direct inventory add.
-		 * 
-		 * Look at setting the item of a stack as well.
-		 *  
-		 */
 		SkillBlacksmithing.verifyObsidian(event);
 		SkillBotany.verifyFlowers(event);
 		SkillCooking.injectCraftedFood(event);
@@ -256,18 +248,12 @@ public class EventHandler {
 		SkillDemolition.verifyExplosives(event);
 		SkillWoodcutting.verifyItems(event);
 		SkillRanged.verifyItems(event);
-		SkillFishing.craftSkrimRod(event);
 	}
 
 	@SubscribeEvent
 	public void onContainerOpen(PlayerContainerEvent.Open event) {
 		SkillBlacksmithing.saveItemNumber(event);
 		SkillCooking.saveItemNumber(event);
-	}
-
-	@SubscribeEvent
-	public void onItemPickup(EntityItemPickupEvent event) {
-		SkillFishing.pickupSkrimRod(event);
 	}
 
 	@SubscribeEvent
@@ -281,6 +267,24 @@ public class EventHandler {
 			AddTreasure.generateSkrimPool();
 		}
 		AddTreasure.addTreasure(event);
+	}
+	
+	@SubscribeEvent
+	public void onEntitySpawn(EntityJoinWorldEvent event) {
+		Entity entity = event.getEntity();
+		World world = event.getWorld();
+		/**
+		 * The ol' infinite-loop-a-roo
+		 * How about no.
+		 */
+		if (entity instanceof EntityFishHook && !(entity instanceof SkrimFishHook)) {
+			System.out.println("is Fish hook, world.isClient: " + world.isRemote);
+			EntityFishHook oldHook = (EntityFishHook) entity;
+			SkrimFishHook newHook = new SkrimFishHook(event.getWorld(), oldHook.func_190619_l(), oldHook.posX, oldHook.posY, oldHook.posZ);
+			newHook.setVelocity(oldHook.motionX, oldHook.motionY, oldHook.motionZ);
+			event.setCanceled(true);
+			world.spawnEntityInWorld(newHook);
+		}
 	}
 
 
