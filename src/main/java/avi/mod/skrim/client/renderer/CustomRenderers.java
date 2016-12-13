@@ -2,6 +2,7 @@ package avi.mod.skrim.client.renderer;
 
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.entities.monster.BioCreeper;
+import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.tileentity.TileEntityEnchantedFlower;
@@ -22,6 +23,7 @@ public class CustomRenderers {
 		RenderingRegistry.registerEntityRenderingHandler(NapalmCreeper.class, new RenderCustomCreeper(Minecraft.getMinecraft().getRenderManager()));
 		RenderingRegistry.registerEntityRenderingHandler(BioCreeper.class, new RenderCustomCreeper(Minecraft.getMinecraft().getRenderManager()));
 		RenderingRegistry.registerEntityRenderingHandler(Rocket.class, new RenderRocket(Minecraft.getMinecraft().getRenderManager()));
+		RenderingRegistry.registerEntityRenderingHandler(MegaChicken.class, new RenderMegaChicken(Minecraft.getMinecraft().getRenderManager()));
 	}
 
 }

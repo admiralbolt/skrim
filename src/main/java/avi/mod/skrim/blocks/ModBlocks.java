@@ -96,6 +96,7 @@ public final class ModBlocks {
 		BEANSTALK_BLOCK = register(new BeanstalkBlock());
 		
 		WEIRWOOD_SAPLING = register(new WeirwoodSapling());
+		addWeirwoodRecipe();
 		WEIRWOOD_WOOD = register(new WeirwoodWood());
 		WEIRWOOD_LEAF = register(new WeirwoodLeaf());
 	}
@@ -148,6 +149,10 @@ public final class ModBlocks {
 	
 	private static void addBeanRecipe() {
 		GameRegistry.addShapelessRecipe(new ItemStack(MAGIC_BEAN), Items.CARROT, new ItemStack(Items.DYE, 1, 3), Items.NETHER_WART, Items.POTATO, Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS, Items.DIAMOND_HOE);
+	}
+	
+	private static void addWeirwoodRecipe() {
+		GameRegistry.addShapelessRecipe(new ItemStack(WEIRWOOD_SAPLING), new ItemStack(Blocks.SAPLING, 1, 0), new ItemStack(Blocks.SAPLING, 1, 1), new ItemStack(Blocks.SAPLING, 1, 2), new ItemStack(Blocks.SAPLING, 1, 3), new ItemStack(Blocks.SAPLING, 1, 4), new ItemStack(Blocks.SAPLING, 1, 5), new ItemStack(Items.ENDER_EYE));
 	}
 
 }

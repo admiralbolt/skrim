@@ -40,6 +40,14 @@ public class Obfuscation {
 	public static boolean canBlockBePlaced(World world, Block block, BlockPos pos, boolean notsure, EnumFacing facing, @Nullable Entity entity) {
 		return world.func_190527_a(block, pos, notsure, facing, entity);
 	}
+	
+	/**
+	 * Okay, I get that you don't want this to return null anymore,
+	 * but WHY WOULD YOU WANT IT TO RETURN AIR!!??
+	 */
+	public static boolean isEmptyStack(ItemStack stack) {
+		return stack == ItemStack.field_190927_a;
+	}
 
 	public static class ObfuscatedField {
 

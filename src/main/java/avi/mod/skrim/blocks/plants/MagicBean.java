@@ -27,5 +27,10 @@ public class MagicBean extends CustomPlant {
 		WorldGenBeanstalk generator = new WorldGenBeanstalk();
 		generator.generate(worldIn, rand, pos);
 	}
+	
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return false;
+	}
 
 }

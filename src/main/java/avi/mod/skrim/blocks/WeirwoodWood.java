@@ -19,11 +19,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -31,7 +33,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 public class WeirwoodWood extends BlockBase {
 
 	public WeirwoodWood() {
-		super(Material.WOOD, "weirwood");
+		super(Material.WOOD, "weirwood_wood");
 		this.setHardness(2.0F);
         this.setSoundType(SoundType.WOOD);
 	}
@@ -85,14 +87,20 @@ public class WeirwoodWood extends BlockBase {
 							}
 							return true;
 						}
-					} else if (heldItem == null) {
+					} else if (Obfuscation.isEmptyStack(heldItem)) {
 						// TELEPORT N' SHIT
 						if (!worldIn.isRemote) {
 							BlockPos teleportLoc = WeirwoodCoords.getCoord(playerIn);
 							if (teleportLoc != null) {
-								MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-								ICommandManager cm = server.getCommandManager();
-								cm.executeCommand(server, "/tp " + playerIn.getName() + " " + teleportLoc.getX() + " " + teleportLoc.getY() + " " + teleportLoc.getZ());
+								if (teleportLoc.getX() != pos.getX() || teleportLoc.getZ() != pos.getZ()) {
+									MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+									ICommandManager cm = server.getCommandManager();
+									int xMod = (Utils.rand.nextBoolean()) ? 1 : -1;
+									int zMod = (Utils.rand.nextBoolean()) ? 1 : -1;
+									cm.executeCommand(server, "/tp " + playerIn.getName() + " " + (teleportLoc.getX() + xMod) + " " + teleportLoc.getY() + " " + (teleportLoc.getZ() + zMod));
+									worldIn.playSound((EntityPlayer) null, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 0.5F);
+									worldIn.playSound((EntityPlayer) null, teleportLoc, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 0.5F);
+								}
 							}
 						}
 					}

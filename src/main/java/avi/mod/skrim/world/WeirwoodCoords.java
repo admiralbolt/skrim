@@ -26,6 +26,10 @@ public class WeirwoodCoords extends WorldSavedData {
 		super(DATA_NAME);
 	}
 	
+	public WeirwoodCoords(String name) {
+		super(name);
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		NBTBase weirTags = compound.getTag("weirwood");
@@ -50,7 +54,7 @@ public class WeirwoodCoords extends WorldSavedData {
 			NBTTagCompound weir = new NBTTagCompound();
 			weir.setString("uuid", uuid.toString());
 			weir.setInteger("x", pos.getX());
-			weir.setInteger("y", pos.getZ());
+			weir.setInteger("y", pos.getY());
 			weir.setInteger("z", pos.getZ());
 			weirTags.appendTag(weir);
 		}

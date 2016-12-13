@@ -8,6 +8,7 @@ import avi.mod.skrim.items.CustomArmor;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.InvisibilityPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockOldLeaf;
@@ -176,9 +177,7 @@ public class LeafArmor extends CustomArmor {
 			EntityPlayer player = event.getEntityPlayer();
 			if (wearingFullSet(player)) {
 				if (!player.worldObj.isRemote) {
-					// Okay, I get that you don't want this to return null anymore,
-					// but WHY WOULD YOU WANT IT TO RETURN AIR!!??
-					if (player.getHeldItemMainhand() == ItemStack.field_190927_a) {
+					if (Obfuscation.isEmptyStack(player.getHeldItemMainhand())) {
 						BlockPlanks.EnumType plankType = getPlankTypeFullSet(player);
 						WorldGenAbstractTree generator = getGenerator(plankType);
 						boolean createdTree = generator.generate(player.worldObj, Utils.rand, event.getPos());

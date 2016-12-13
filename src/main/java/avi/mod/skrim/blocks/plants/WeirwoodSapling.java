@@ -27,5 +27,10 @@ public class WeirwoodSapling extends CustomPlant {
 		WorldGenWeirwood generator = new WorldGenWeirwood();
 		generator.generate(worldIn, rand, pos);
 	}
+	
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return false;
+	}
 
 }
