@@ -264,7 +264,7 @@ public class ModItems {
 		ARUARIAN_DANCE = register(new CustomRecord("aruarian_dance", registerRecordEvent("aruarian_dance")));
 		BUBBERDUCKY = register(new CustomRecord("bubberducky", registerRecordEvent("bubberducky")));
 		CASSANDRA = register(new CustomRecord("cassandra", registerRecordEvent("cassandra")));
-		COLOR = register(new CustomRecord("color", registerRecordEvent("color")));
+		COLOR = register(new CustomRecord("lack_of_color", registerRecordEvent("lack_of_color")));
 		DOGSONG = register(new CustomRecord("dogsong", registerRecordEvent("dogsong")));
 		GDAWG = register(new CustomRecord("gdawg", registerRecordEvent("gdawg")));
 		HEYA = register(new CustomRecord("heya", registerRecordEvent("heya")));
@@ -277,7 +277,7 @@ public class ModItems {
 		SONGS.put("aruarian_dance", ARUARIAN_DANCE);
 		SONGS.put("bubberducky", BUBBERDUCKY);
 		SONGS.put("cassandra", CASSANDRA);
-		SONGS.put("color", COLOR);
+		SONGS.put("lack_of_color", COLOR);
 		SONGS.put("dogsong", DOGSONG);
 		SONGS.put("gdawg", GDAWG);
 		SONGS.put("heya", HEYA);
@@ -289,6 +289,7 @@ public class ModItems {
 	}
 
 	public static SoundEvent registerRecordEvent(String recordName) {
+		System.out.println("Registering record name: " + recordName);
 		ResourceLocation location = new ResourceLocation(Skrim.modId, recordName);
 		SoundEvent event = new SoundEvent(location);
 		GameRegistry.register(event, location);
@@ -304,6 +305,11 @@ public class ModItems {
 		registerHandSaw();
 		registerOveralls();
 		registerGreatBow();
+		registerWeirwoodSapling();
+	}
+	
+	public static void registerWeirwoodSapling() {
+		GameRegistry.addRecipe(new ItemStack(WEIRWOOD_TOTEM), " a ", "bcb", "b b", 'a', new ItemStack(Items.ENDER_EYE), 'b', new ItemStack(Items.STICK), 'c', new ItemStack(Items.DIAMOND));
 	}
 	
 	public static void registerRocketLauncher() {

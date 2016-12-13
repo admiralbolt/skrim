@@ -74,8 +74,8 @@ item.bubberducky.name=Bubberducky 3
 item.bubberducky.desc=Dunkey
 item.cassandra.name=Cassandra
 item.cassandra.desc=Dave Brubeck
-item.color.name=A Lack of Color
-item.color.desc=Death Cab for Cutie
+item.lack_of_color.name=A Lack of Color
+item.lack_of_color.desc=Death Cab for Cutie
 item.dogsong.name=Dogsong
 item.dogsong.desc=Toby Fox
 item.gdawg.name=G-Dawg is Hawt
@@ -131,8 +131,18 @@ item.icarian_scroll.name=Scroll of Icarian Flight
 
 item.tux.name=Tux
 
-entity.skrim.napalm_creeper.name=Napalm Creeper
-entity.skrim.bio_creeper.name=Bio Creeper
+tile.weirwood_wood.name=Weirwood
+item.weirwood_totem.name=Weirwood Totem
+tile.weirwood_leaf.name=Weirwood Leaf
+
+##### ENTITIES ######
+
+entity.napalm_creeper.name=Napalm Creeper
+entity.bio_creeper.name=Bio Creeper
+entity.mega_chicken.name=Mega Chicken
+
+
+##### ACHIEVEMENTS ######
 
 achievement.found_skills=Finding Skills
 achievement.found_skills.desc=Click the skills button on the inventory screen
