@@ -138,7 +138,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 		}
 	}
 
-	public static void onKillCrepper(LivingDeathEvent event) {
+	public static void onKillCreeper(LivingDeathEvent event) {
 		Entity sourceEntity = event.getSource().getEntity();
 		if (sourceEntity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sourceEntity;

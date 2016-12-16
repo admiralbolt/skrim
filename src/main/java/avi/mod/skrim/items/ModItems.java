@@ -60,15 +60,15 @@ public class ModItems {
 
 	/**
 	 * Default ArmorMaterials
-	 * 
+	 *
 	 * Durability: leather -> 5 chain/iron -> 15 gold -> 7 diamond -> 33
-	 * 
+	 *
 	 * Reductions: leather -> {1, 3, 2, 1} Total 7 / chain -> {2, 5, 4, 1} Total 12 iron -> {2, 6, 5, 2} Total 15 gold -> {2, 5, 3, 1} Total 11 diamond -> {3, 8, 6, 3} Total 20
-	 * 
+	 *
 	 * Enchantability: leather -> 15 chain -> 12 iron -> 9 gold -> 25 diamond -> 10
 	 */
-	
-	
+
+
 	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 9, 7, 4 }, 20, null, 2.0F);
 	public static ArmorMaterial OVERALLS_ARMOR = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
 
@@ -102,7 +102,7 @@ public class ModItems {
 	public static CustomArmor OBSIDIAN_PANTS;
 	public static CustomArmor OBSIDIAN_CHEST;
 	public static CustomArmor OBSIDIAN_HELMET;
-	
+
 	public static LeafArmor OAK_LEAF_BOOTS;
 	public static LeafArmor OAK_LEAF_PANTS;
 	public static LeafArmor OAK_LEAF_ARMOR;
@@ -137,9 +137,9 @@ public class ModItems {
 	public static LeafArmor DARK_OAK_LEAF_PANTS;
 	public static LeafArmor DARK_OAK_LEAF_ARMOR;
 	public static LeafArmor DARK_OAK_LEAF_HELMET;
-	
+
 	public static WeirwoodTotem WEIRWOOD_TOTEM;
-	
+
 	public static HandSaw HAND_SAW;
 	public static CustomArmor OVERALLS;
 	public static CustomBow GREAT_BOW;
@@ -196,7 +196,7 @@ public class ModItems {
 		GREAT_BOW = register(new GreatBow("great_bow"));
 		ANGEL_CAKE = register(new AngelCake());
 		ROCKET_LAUNCHER = register(new RocketLauncher());
-		
+
 		OAK_LEAF_BOOTS = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_boots", 1, EntityEquipmentSlot.FEET));
 		OAK_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
 		OAK_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
@@ -221,7 +221,7 @@ public class ModItems {
 		DARK_OAK_LEAF_PANTS = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_pants", 1, EntityEquipmentSlot.LEGS));
 		DARK_OAK_LEAF_ARMOR = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_armor", 1, EntityEquipmentSlot.CHEST));
 		DARK_OAK_LEAF_HELMET = register(new LeafArmor(BlockPlanks.EnumType.DARK_OAK, "leaf_helmet", 1, EntityEquipmentSlot.HEAD));
-		
+
 		WEIRWOOD_TOTEM = register(new WeirwoodTotem());
 
 		registerArtifacts();
@@ -253,7 +253,7 @@ public class ModItems {
 		// Artifact Items
 		SHEEP_FINDER = register(new SheepFinder3000());
 		ARTIFACTS.add(SHEEP_FINDER);
-		
+
 		ICARIAN_SCROLL = register(new IcarianScroll());
 		ARTIFACTS.add(ICARIAN_SCROLL);
 	}
@@ -289,7 +289,6 @@ public class ModItems {
 	}
 
 	public static SoundEvent registerRecordEvent(String recordName) {
-		System.out.println("Registering record name: " + recordName);
 		ResourceLocation location = new ResourceLocation(Skrim.modId, recordName);
 		SoundEvent event = new SoundEvent(location);
 		GameRegistry.register(event, location);
@@ -307,15 +306,15 @@ public class ModItems {
 		registerGreatBow();
 		registerWeirwoodSapling();
 	}
-	
+
 	public static void registerWeirwoodSapling() {
 		GameRegistry.addRecipe(new ItemStack(WEIRWOOD_TOTEM), " a ", "bcb", "b b", 'a', new ItemStack(Items.ENDER_EYE), 'b', new ItemStack(Items.STICK), 'c', new ItemStack(Items.DIAMOND));
 	}
-	
+
 	public static void registerRocketLauncher() {
 		GameRegistry.addRecipe(new ItemStack(ROCKET_LAUNCHER), " aa", "aaa", " bb", 'a', new ItemStack(Items.IRON_INGOT), 'b', new ItemStack(Items.STICK));
 	}
-	
+
 	public static void registerAngelCake() {
 		GameRegistry.addRecipe(new ItemStack(ANGEL_CAKE), "aba", "cdc", "eee", 'a', new ItemStack(Items.FEATHER), 'b', new ItemStack(Items.MILK_BUCKET), 'c', new ItemStack(Items.SUGAR), 'd', new ItemStack(Items.EGG), 'e', new ItemStack(Items.WHEAT));
 	}
@@ -383,7 +382,7 @@ public class ModItems {
 			GameRegistry.addRecipe(new ItemStack(boots), "   ", "A A", "A A", 'A', recipeItemStack);
 		}
 	}
-	
+
 	private static void registerLeafArmor() {
 		addArmorRecipes(new ItemStack(Blocks.LEAVES, 1, BlockPlanks.EnumType.OAK.getMetadata()), OAK_LEAF_HELMET, OAK_LEAF_ARMOR, OAK_LEAF_PANTS, OAK_LEAF_BOOTS);
 		addArmorRecipes(new ItemStack(Blocks.LEAVES, 1, BlockPlanks.EnumType.SPRUCE.getMetadata()), SPRUCE_LEAF_HELMET, SPRUCE_LEAF_ARMOR, SPRUCE_LEAF_PANTS, SPRUCE_LEAF_BOOTS);

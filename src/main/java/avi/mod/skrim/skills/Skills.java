@@ -176,7 +176,6 @@ public class Skills {
 			Item slotItem;
 			ItemStack addStack;
 			boolean first = true;
-			System.out.println("stackSize: " + Obfuscation.getStackSize(event.crafting));
 			Obfuscation.setStackSize(event.crafting, 0);
 			/**
 			 * Iterate through slots and destroy all items :/

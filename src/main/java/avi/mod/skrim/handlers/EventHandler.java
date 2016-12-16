@@ -1,6 +1,7 @@
 package avi.mod.skrim.handlers;
 
 import avi.mod.skrim.entities.SkrimFishHook;
+import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
@@ -14,7 +15,6 @@ import avi.mod.skrim.skills.defense.SkillDefense;
 import avi.mod.skrim.skills.demolition.SkillDemolition;
 import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.skills.farming.SkillFarming;
-import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.skills.melee.SkillMelee;
 import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
@@ -27,6 +27,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.util.math.BlockPos;
@@ -40,7 +41,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -78,11 +78,13 @@ public class EventHandler {
 		if (event.getSource().getEntity() instanceof EntityPlayer) {
 			SkillMelee.handleKill(event);
 			SkillRanged.handleKill(event);
-			SkillDemolition.onKillCrepper(event);
+			SkillDemolition.onKillCreeper(event);
 			SkillFarming.sideChick(event);
 			SkillCooking.fireCook(event);
 		} else if (event.getEntity() instanceof EntityPlayer) {
 			PlayerCoords.saveDeathLocation(event);
+		} else if (event.getEntity() instanceof EntityChicken && !(event.getEntity() instanceof MegaChicken)) {
+			MegaChicken.onChickenDeath(event);
 		}
 	}
 

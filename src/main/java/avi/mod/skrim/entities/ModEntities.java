@@ -22,7 +22,7 @@ public class ModEntities {
 		EntityRegistry.addSpawn(NapalmCreeper.class, 10, 2, 4, EnumCreatureType.MONSTER, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MUTATED_DESERT, Biomes.MUTATED_SAVANNA, Biomes.MUTATED_SAVANNA_ROCK, Biomes.SAVANNA_PLATEAU, Biomes.SAVANNA, Biomes.HELL);
 		EntityRegistry.registerModEntity(new ResourceLocation("skrim:bio_creeper"), BioCreeper.class, "bio_creeper", ENTITY_ID++, Skrim.instance, 48, 3, true, 0x00CCEE, 0x00CCBB);
 		EntityRegistry.addSpawn(BioCreeper.class, 20, 2, 4, EnumCreatureType.MONSTER, Biomes.SWAMPLAND, Biomes.COLD_TAIGA, Biomes.COLD_TAIGA_HILLS, Biomes.MUTATED_SWAMPLAND, Biomes.MUTATED_TAIGA_COLD);
-		EntityRegistry.registerModEntity(new ResourceLocation("skrim:mega_chicken"), MegaChicken.class, "mega_chicken", ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFFFF, 0xFF8888);
+		EntityRegistry.registerModEntity(new ResourceLocation("skrim:mega_chicken"), MegaChicken.class, MegaChicken.name, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFFFF, 0xFF8888);
 		
 		SkrimEntitySpawnHandler.init();
 	}

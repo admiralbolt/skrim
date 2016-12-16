@@ -34,7 +34,7 @@ public abstract class CustomPlant extends BlockBush implements ItemModelProvider
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 		setCreativeTab(Skrim.creativeTab);
-		
+
 		this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), Integer.valueOf(0)));
         this.setTickRandomly(true);
 	}
@@ -66,7 +66,6 @@ public abstract class CustomPlant extends BlockBush implements ItemModelProvider
 			i = j;
 		}
 
-		System.out.println("Setting age to: " + i + ", max: " + j);
 		worldIn.setBlockState(pos, this.withAge(i), 2);
 		if (i == j) {
 			this.finishedGrowing(worldIn, rand, pos, state);

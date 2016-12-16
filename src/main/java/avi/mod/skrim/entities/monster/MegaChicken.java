@@ -1,5 +1,8 @@
 package avi.mod.skrim.entities.monster;
 
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.SpawnEntityPacket;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -7,25 +10,24 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 public class MegaChicken extends EntityChicken {
-	
+
 	public static float SIZE_MULT = 5.0F;
+	public static String name = "mega_chicken";
 
 	public MegaChicken(World worldIn) {
 		super(worldIn);
@@ -34,10 +36,9 @@ public class MegaChicken extends EntityChicken {
 
 	@Override
 	protected void initEntityAI() {
-		System.out.println("entity AI tasks registering...");
 		this.tasks.addTask(0, new EntityAISwimming(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] {EntityPigZombie.class}));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] { EntityPigZombie.class }));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.tasks.addTask(2, new MegaChicken.AIMeleeAttack());
 		this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
 		this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D));
@@ -73,21 +74,37 @@ public class MegaChicken extends EntityChicken {
 		}
 		return flag;
 	}
-	
+
 	@Override
 	protected int getExperiencePoints(EntityPlayer player) {
 		return 20;
 	}
+	
+	/**
+	 * Spawn a Mega Chicken if a chicken dies and you roll poorly.
+	 */
+	
+	public static void onChickenDeath(LivingDeathEvent event) {
+		if (event.getEntity() instanceof EntityChicken) {
+			EntityChicken chicken = (EntityChicken) event.getEntity();
+			World world = event.getEntity().worldObj;
+			if (world.isRemote) {
+				if (Utils.rand.nextDouble() < 0.005) {
+					SkrimPacketHandler.INSTANCE.sendToServer(new SpawnEntityPacket(MegaChicken.name, true, chicken.posX, chicken.posY, chicken.posZ));
+				}
+			}
+		}
+	}
 
 	class AIMeleeAttack extends EntityAIAttackMelee {
-		
+
 		public AIMeleeAttack() {
-			super(MegaChicken.this, 1.25D, true);
+			super(MegaChicken.this, 1.0D, true);
 		}
 
 		protected void checkAndPerformAttack(EntityLivingBase targetEntity, double distance) {
 			double d0 = this.getAttackReachSqr(targetEntity);
-			
+
 			if (distance <= d0 && this.attackTick <= 0) {
 				this.attackTick = 20;
 				this.attacker.attackEntityAsMob(targetEntity);

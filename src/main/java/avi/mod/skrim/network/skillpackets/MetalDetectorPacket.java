@@ -45,26 +45,26 @@ public class MetalDetectorPacket implements IMessage {
 	public static class MetalDetectorPacketHandler implements IMessageHandler<MetalDetectorPacket, IMessage> {
 
 		public IMessage onMessage(final MetalDetectorPacket message, MessageContext ctx) {
-    	if (ctx.side.isServer()) {
-    		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    		player.getServerWorld();
-        if (player != null) {
-        	final WorldServer world = player.getServerWorld();
-      		world.addScheduledTask(new Runnable() {
-      			@Override
-      			public void run() {
-      				EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, RandomTreasure.generateMetalTreasure());
+			if (ctx.side.isServer()) {
+				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				player.getServerWorld();
+				if (player != null) {
+					final WorldServer world = player.getServerWorld();
+					world.addScheduledTask(new Runnable() {
+						@Override
+						public void run() {
+							EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, RandomTreasure.generateMetalTreasure());
 							world.spawnEntityInWorld(entityItem);
 							Skills.playFortuneSound(player);
 							if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
 								SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
 								digging.addXp(player, 200);
 							}
-      			}
-      		});
-        }
-    	}
-    	return null;
+						}
+					});
+				}
+			}
+			return null;
 		}
 
 	}

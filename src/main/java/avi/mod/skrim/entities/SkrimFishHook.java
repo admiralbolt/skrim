@@ -37,7 +37,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
 	private boolean hasAppliedCaught = false;
 	private boolean hasAppliedCatchable = false;
 	private EntityPlayer angler;
-	
+
 	/*
 	 * Potentially try to overwrite the entity on spawn world event, would prevent the need for having a custom fish hook in the first place
 	 */
@@ -63,20 +63,16 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
   				SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
   				int ticksCaught = (int) Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
   				if (ticksCaught > 0) {
-  					System.out.println("ticksCaughtSuper: " + Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames()));
   					Reflection.hackSuperValueTo(this, (int) (ticksCaught - ticksCaught * fishing.getDelayReduction()), Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
   					this.hasAppliedCaught = true;
-  					System.out.println("ticksCaughtSuper: " + Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames()));
   				}
   			}
   		}
   		if (!this.hasAppliedCatchable) {
   			int ticksCatchable = (int) Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
   			if (ticksCatchable > 0) {
-  				System.out.println("ticksCatchable: " + Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames()));
   				Reflection.hackSuperValueTo(this, 50, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
   				this.hasAppliedCatchable = true;
-  				System.out.println("ticksCatchable: " + Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames()));
   			}
   		}
   	}

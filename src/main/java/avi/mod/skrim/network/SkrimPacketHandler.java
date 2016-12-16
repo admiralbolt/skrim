@@ -7,6 +7,7 @@ import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.InvisibilityPacket.InvisibilityPacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
 import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
+import avi.mod.skrim.network.SpawnEntityPacket.SpawnEntityPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket.SpawnParticlePacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket.ApplyBonemealPacketHandler;
@@ -27,24 +28,25 @@ import net.minecraftforge.fml.relauncher.Side;
 public class SkrimPacketHandler {
 
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Skrim.modId);
-	public static int id = 0;
+	public static int PACKET_ID = 0;
 
 	public static void registerPackets() {
-		// Use id++ to guarentee unique ids for packets.
+		// Use PACKET_ID++ to guarentee unique ids for packets.
 		// REMEMBER: The side that receives the packet is here.
-		INSTANCE.registerMessage(SkillPacketHandler.class, SkillPacket.class, id++, Side.CLIENT);
-		INSTANCE.registerMessage(LevelUpPacketHandler.class, LevelUpPacket.class, id++, Side.CLIENT);
-		INSTANCE.registerMessage(FallDistancePacketHandler.class, FallDistancePacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(SpawnParticlePacketHandler.class, SpawnParticlePacket.class, id++, Side.CLIENT);
-		INSTANCE.registerMessage(OffHandAttackPacketHandler.class, OffHandAttackPacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(DrillPacketHandler.class, DrillPacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(ExplosionPacketHandler.class, ExplosionPacket.class, id++, Side.CLIENT);
-		INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(MetalDetectorPacketHandler.class, MetalDetectorPacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(WhirlingChopPacketHandler.class, WhirlingChopPacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(AchievementPacketHandler.class, AchievementPacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(InvisibilityPacketHandler.class, InvisibilityPacket.class, id++, Side.SERVER);
-		INSTANCE.registerMessage(CriticalAscensionPacketHandler.class, CriticalAscensionPacket.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(SkillPacketHandler.class, SkillPacket.class, PACKET_ID++, Side.CLIENT);
+		INSTANCE.registerMessage(LevelUpPacketHandler.class, LevelUpPacket.class, PACKET_ID++, Side.CLIENT);
+		INSTANCE.registerMessage(FallDistancePacketHandler.class, FallDistancePacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(SpawnParticlePacketHandler.class, SpawnParticlePacket.class, PACKET_ID++, Side.CLIENT);
+		INSTANCE.registerMessage(OffHandAttackPacketHandler.class, OffHandAttackPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(DrillPacketHandler.class, DrillPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(ExplosionPacketHandler.class, ExplosionPacket.class, PACKET_ID++, Side.CLIENT);
+		INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(MetalDetectorPacketHandler.class, MetalDetectorPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(WhirlingChopPacketHandler.class, WhirlingChopPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(AchievementPacketHandler.class, AchievementPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(InvisibilityPacketHandler.class, InvisibilityPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(CriticalAscensionPacketHandler.class, CriticalAscensionPacket.class, PACKET_ID++, Side.CLIENT);
+		INSTANCE.registerMessage(SpawnEntityPacketHandler.class, SpawnEntityPacket.class, PACKET_ID++, Side.SERVER);
 	}
 
 }
