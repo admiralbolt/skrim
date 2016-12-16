@@ -5,6 +5,7 @@ import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
+import avi.mod.skrim.items.artifacts.FoxMask;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import avi.mod.skrim.skills.Skills;
@@ -148,6 +149,7 @@ public class EventHandler {
 
 			// Artifact handlers
 			BlindingBoots.BlindingBootsHandler.goFast(event);
+			FoxMask.FoxHandler.beAFox(event);
 		}
 	}
 

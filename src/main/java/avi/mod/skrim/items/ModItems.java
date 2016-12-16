@@ -12,6 +12,7 @@ import avi.mod.skrim.items.artifacts.ArtifactItem;
 import avi.mod.skrim.items.artifacts.ArtifactSword;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
+import avi.mod.skrim.items.artifacts.FoxMask;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
 import avi.mod.skrim.items.artifacts.IcarianScroll;
 import avi.mod.skrim.items.artifacts.SheepFinder3000;
@@ -84,6 +85,7 @@ public class ModItems {
 	public static ArtifactArmor SPRINGHEEL_BOOTS;
 	public static ArtifactArmor BLINDING_BOOTS;
 	public static ArtifactArmor GRUESOME_MASK;
+	public static ArtifactArmor FOX_MASK;
 
 	public static ArtifactItem SHEEP_FINDER;
 	public static ArtifactItem ICARIAN_SCROLL;
@@ -245,6 +247,9 @@ public class ModItems {
 
 		GRUESOME_MASK = register(new GruesomeMask());
 		ARTIFACTS.add(GRUESOME_MASK);
+		
+		FOX_MASK = register(new FoxMask());
+		ARTIFACTS.add(FOX_MASK);
 
 		// Artifact Swords
 		CANES_SWORD = register(new CanesSword());
