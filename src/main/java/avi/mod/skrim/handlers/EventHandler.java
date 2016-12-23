@@ -34,6 +34,8 @@ import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.event.brewing.PlayerBrewedPotionEvent;
+import net.minecraftforge.event.brewing.PotionBrewEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -256,6 +258,7 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onContainerOpen(PlayerContainerEvent.Open event) {
+		System.out.println("event player: " + event.getEntityPlayer() + ", container: " + event.getContainer());
 		SkillBlacksmithing.saveItemNumber(event);
 		SkillCooking.saveItemNumber(event);
 	}
@@ -290,6 +293,26 @@ public class EventHandler {
 			world.spawnEntityInWorld(newHook);
 		}
 	}
+	
+	@SubscribeEvent
+	public void onPreBrew(PotionBrewEvent.Pre event) {
+		System.out.println("onPreBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
+		System.out.println("onPreBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", item3: " + event.getItem(3));
+	}
+	
+	@SubscribeEvent
+	public void onBrew(PotionBrewEvent.Post event) {
+		System.out.println("onPostBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
+		System.out.println("onPostBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", item3: " + event.getItem(3));
+	}
+	
+	@SubscribeEvent
+	public void grabPotion(PlayerBrewedPotionEvent event) {
+		System.out.println("PlayerBrewedPotion isCancellable: " + event.isCancelable());
+		System.out.println("player: " + event.getEntityPlayer());
+		System.out.println("item: " + event.getStack());
+	}
+
 
 
 }

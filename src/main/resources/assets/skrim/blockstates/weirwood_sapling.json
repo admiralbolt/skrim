@@ -51,6 +51,9 @@
     },
     "normal": {
       "model": "skrim:weirwood_sapling_stage0"
+    },
+    "inventory": {
+      "model": "skrim:weirwood_sapling_stage0"
     }
   }
 }

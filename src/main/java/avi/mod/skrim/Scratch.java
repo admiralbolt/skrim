@@ -36,10 +36,10 @@ public class Scratch {
 //		  animal2.
 //	  }
 //  }
+	
 
   @SubscribeEvent
   private void onBrew(PotionBrewEvent.Post event) {
-  	event.getItem(0);
   }
 //
   @SubscribeEvent

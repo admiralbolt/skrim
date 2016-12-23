@@ -3,7 +3,7 @@
   "defaults": {
     "parent": "cube_all",
     "textures": {
-      "all": "skrim:blocks/orepenguin"
+      "all": "skrim:blocks/weirwood_leaf"
     }
   },
   "variants": {
