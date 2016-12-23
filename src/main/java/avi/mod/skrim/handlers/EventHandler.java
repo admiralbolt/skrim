@@ -189,7 +189,7 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		Utils.logBlockState(event.getState());
+		// Utils.logBlockState(event.getState());
 		World world = event.getWorld();
 		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
 			if (!Utils.isSilkTouching(event)) {
@@ -258,7 +258,6 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onContainerOpen(PlayerContainerEvent.Open event) {
-		System.out.println("event player: " + event.getEntityPlayer() + ", container: " + event.getContainer());
 		SkillBlacksmithing.saveItemNumber(event);
 		SkillCooking.saveItemNumber(event);
 	}
@@ -275,7 +274,7 @@ public class EventHandler {
 		}
 		AddTreasure.addTreasure(event);
 	}
-	
+
 	@SubscribeEvent
 	public void onEntitySpawn(EntityJoinWorldEvent event) {
 		Entity entity = event.getEntity();
@@ -285,7 +284,6 @@ public class EventHandler {
 		 * How about no.
 		 */
 		if (entity instanceof EntityFishHook && !(entity instanceof SkrimFishHook)) {
-			System.out.println("is Fish hook, world.isClient: " + world.isRemote);
 			EntityFishHook oldHook = (EntityFishHook) entity;
 			SkrimFishHook newHook = new SkrimFishHook(event.getWorld(), oldHook.func_190619_l(), oldHook.posX, oldHook.posY, oldHook.posZ);
 			newHook.setVelocity(oldHook.motionX, oldHook.motionY, oldHook.motionZ);
@@ -293,24 +291,24 @@ public class EventHandler {
 			world.spawnEntityInWorld(newHook);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onPreBrew(PotionBrewEvent.Pre event) {
-		System.out.println("onPreBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
-		System.out.println("onPreBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", item3: " + event.getItem(3));
+		// System.out.println("onPreBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
+		// System.out.println("onPreBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", item3: " + event.getItem(3));
 	}
-	
+
 	@SubscribeEvent
 	public void onBrew(PotionBrewEvent.Post event) {
-		System.out.println("onPostBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
-		System.out.println("onPostBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", item3: " + event.getItem(3));
+		// System.out.println("onPostBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
+		// System.out.println("onPostBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", item3: " + event.getItem(3));
 	}
-	
+
 	@SubscribeEvent
 	public void grabPotion(PlayerBrewedPotionEvent event) {
-		System.out.println("PlayerBrewedPotion isCancellable: " + event.isCancelable());
-		System.out.println("player: " + event.getEntityPlayer());
-		System.out.println("item: " + event.getStack());
+		// System.out.println("PlayerBrewedPotion isCancellable: " + event.isCancelable());
+		// System.out.println("player: " + event.getEntityPlayer());
+		// System.out.println("item: " + event.getStack());
 	}
 
 
