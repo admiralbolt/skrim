@@ -1,7 +1,7 @@
 package avi.mod.skrim.handlers;
 
-import avi.mod.skrim.entities.SkrimFishHook;
 import avi.mod.skrim.entities.monster.MegaChicken;
+import avi.mod.skrim.entity.SkrimFishHook;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;

@@ -115,6 +115,13 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		"Tree!",
 		"Grants you the ability to craft armor out of leaves."
 	);
+	
+	public static SkillAbility WEIRWOOD = new SkillAbility(
+		"Weirwood",
+		100,
+		"Not 'weirdwood'.",
+		"Grants you the ability to craft weirwood saplings and totems."
+	);
 
 	public SkillWoodcutting() {
 		this(1, 0);
@@ -123,7 +130,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public SkillWoodcutting(int level, int currentXp) {
 		super("Woodcutting", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/woodcutting.png");
-		this.addAbilities(HAND_SAW, WHIRLING_CHOP, LEAF_ARMOR);
+		this.addAbilities(HAND_SAW, WHIRLING_CHOP, LEAF_ARMOR, WEIRWOOD);
 	}
 
 	public int getXp(String blockName) {

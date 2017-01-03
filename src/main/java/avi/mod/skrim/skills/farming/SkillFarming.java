@@ -104,6 +104,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		"You're a plant Vash.",
 		"Being in sunlight grants you a speed boost and saturation."
 	);
+	
+	public static SkillAbility MAGIC_BEANSTALK = new SkillAbility(
+		"Magic Beanstalk",
+		100,
+		"Fee-fi-fo-fum! Random chests for everyone!",
+		"Grants you the ability to craft a magic bean."
+	);
+		
 
 	public SkillFarming() {
 		this(1, 0);
@@ -112,7 +120,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public SkillFarming(int level, int currentXp) {
 		super("Farming", level, currentXp);
 		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/farming.png");
-		this.addAbilities(OVERALLS, SIDE_CHICK, FARMERS_TAN);
+		this.addAbilities(OVERALLS, SIDE_CHICK, FARMERS_TAN, MAGIC_BEANSTALK);
 	}
 
 	public int getXp(String blockName) {

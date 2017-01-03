@@ -1,4 +1,4 @@
-package avi.mod.skrim.client.renderer;
+package avi.mod.skrim.client.renderer.entity;
 
 import avi.mod.skrim.entities.monster.CustomCreeper;
 import net.minecraft.client.renderer.entity.RenderCreeper;

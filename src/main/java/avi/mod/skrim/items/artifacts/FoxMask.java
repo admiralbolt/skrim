@@ -28,7 +28,7 @@ public class FoxMask extends ArtifactArmor {
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
 		tooltip.add("§4Increase jump height, speed, and grants night vision.§r");
 		tooltip.add("§4Sneaking grants invisibility.§r");
-		tooltip.add("§e\"Foxy?\"");
+		tooltip.add("§e\"I'll wear my guy fox mask.\"");
 	}
 	
 	/**

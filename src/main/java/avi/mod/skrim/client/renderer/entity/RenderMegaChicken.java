@@ -1,4 +1,4 @@
-package avi.mod.skrim.client.renderer;
+package avi.mod.skrim.client.renderer.entity;
 
 import avi.mod.skrim.entities.monster.MegaChicken;
 import net.minecraft.client.model.ModelBase;

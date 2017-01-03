@@ -141,6 +141,7 @@ tile.weirwood_leaf.name=Weirwood Leaf
 entity.napalm_creeper.name=Napalm Creeper
 entity.bio_creeper.name=Bio Creeper
 entity.mega_chicken.name=Mega Chicken
+entity.fox.name=Fox
 
 
 ##### ACHIEVEMENTS ######

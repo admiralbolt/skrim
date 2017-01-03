@@ -2,7 +2,7 @@ package avi.mod.skrim.handlers;
 
 import com.google.common.base.Function;
 
-import avi.mod.skrim.entities.SkrimFishHook;
+import avi.mod.skrim.entity.SkrimFishHook;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

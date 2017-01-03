@@ -1,4 +1,4 @@
-package avi.mod.skrim.entities;
+package avi.mod.skrim.entity;
 
 import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skills;
