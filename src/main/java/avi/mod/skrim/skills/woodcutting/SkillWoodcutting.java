@@ -177,7 +177,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		}
 	}
 
-	public int hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, EntityPlayer player, ItemStack axe, boolean withSaw) {
+	public int hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, EntityPlayer player, ItemStack axe, boolean withSaw, int damagePerBreak) {
 		int addXp = 0;
 		IBlockState state = world.getBlockState(pos);
 		Block tree = state.getBlock();
@@ -190,7 +190,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		} else {
 			world.destroyBlock(pos, true);
 		}
-		axe.damageItem(1, player);
+		axe.damageItem(damagePerBreak, player);
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				for (int k = -1; k <= 1; k++) {
@@ -199,7 +199,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 						IBlockState targetState = world.getBlockState(targetPos);
 						Block targetBlock = targetState.getBlock();
 						if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-							addXp += this.hewTree(world, woodcutting, targetPos, start, player, axe, withSaw);
+							addXp += this.hewTree(world, woodcutting, targetPos, start, player, axe, withSaw, damagePerBreak);
 						}
 					}
 				}
@@ -227,7 +227,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 				int addXp = woodcutting.getXp(getWoodName(state));
 				if (Math.random() < woodcutting.getHewingChance() && item != null && (item instanceof ItemAxe || item instanceof CustomAxe)) {
 					BlockPos start = event.getPos();
-					addXp += woodcutting.hewTree(event.getWorld(), woodcutting, start, start, player, stack, (item instanceof HandSaw));
+					addXp += woodcutting.hewTree(event.getWorld(), woodcutting, start, start, player, stack, (item instanceof HandSaw), 1);
 				}
 				woodcutting.addXp((EntityPlayerMP) player, addXp);
 			}

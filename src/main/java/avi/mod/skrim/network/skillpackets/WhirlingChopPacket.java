@@ -47,27 +47,27 @@ public class WhirlingChopPacket implements IMessage {
 	public static class WhirlingChopPacketHandler implements IMessageHandler<WhirlingChopPacket, IMessage> {
 
 		public IMessage onMessage(final WhirlingChopPacket message, MessageContext ctx) {
-    	if (ctx.side.isServer()) {
-    		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    		player.getServerWorld();
-        if (player != null) {
-        	final WorldServer world = player.getServerWorld();
-      		world.addScheduledTask(new Runnable() {
-      			@Override
-      			public void run() {
-      				if (player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
-      					SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
-      					BlockPos start = new BlockPos(message.x, message.y, message.z);
-        				ItemStack mainStack = player.getHeldItemMainhand();
-        				Item mainItem = mainStack.getItem();
-        				int addXp = woodcutting.hewTree(world, woodcutting, start, start, player, mainStack, (mainItem instanceof HandSaw));
-        				woodcutting.addXp(player, addXp);
-      				}
-      			}
-      		});
-        }
-    	}
-    	return null;
+			if (ctx.side.isServer()) {
+				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				player.getServerWorld();
+				if (player != null) {
+					final WorldServer world = player.getServerWorld();
+					world.addScheduledTask(new Runnable() {
+						@Override
+						public void run() {
+							if (player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+								SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
+								BlockPos start = new BlockPos(message.x, message.y, message.z);
+								ItemStack mainStack = player.getHeldItemMainhand();
+								Item mainItem = mainStack.getItem();
+								int addXp = woodcutting.hewTree(world, woodcutting, start, start, player, mainStack, (mainItem instanceof HandSaw), 3);
+								woodcutting.addXp(player, addXp / 5);
+							}
+						}
+					});
+				}
+			}
+			return null;
 		}
 
 	}
