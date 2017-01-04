@@ -38,15 +38,21 @@ public class LeafArmor extends CustomArmor {
 	private BlockPlanks.EnumType plankType;
 	public static Map<UUID, Integer> TICKS_SINCE_MOVE = new HashMap<UUID, Integer>();
 	private static final IBlockState JUNGLE_LOG = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
-  private static final IBlockState JUNGLE_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+	private static final IBlockState JUNGLE_LEAF = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE)
+			.withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
 
-  public static ArmorMaterial OAK_LEAF_MATERIAL = EnumHelper.addArmorMaterial("oak_leaf_armor", "skrim:oak_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
-	public static ArmorMaterial SPRUCE_LEAF_MATERIAL = EnumHelper.addArmorMaterial("spruce_leaf_armor", "skrim:spruce_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
-	public static ArmorMaterial BIRCH_LEAF_MATERIAL = EnumHelper.addArmorMaterial("birch_leaf_armor", "skrim:birch_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
-	public static ArmorMaterial JUNGLE_LEAF_MATERIAL = EnumHelper.addArmorMaterial("jungle_leaf_armor", "skrim:jungle_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
-	public static ArmorMaterial ACACIA_LEAF_MATERIAL = EnumHelper.addArmorMaterial("acacia_leaf_armor", "skrim:acacia_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
-	public static ArmorMaterial DARK_OAK_LEAF_MATERIAL = EnumHelper.addArmorMaterial("dark_oak_leaf_armor", "skrim:dark_oak_leaf_armor", 20, new int[] {2, 4, 3, 2}, 30, null, 0.0F);
-
+	public static ArmorMaterial OAK_LEAF_MATERIAL = EnumHelper.addArmorMaterial("oak_leaf_armor", "skrim:oak_leaf_armor", 20, new int[] { 2, 4, 3, 2 }, 30,
+			null, 0.0F);
+	public static ArmorMaterial SPRUCE_LEAF_MATERIAL = EnumHelper.addArmorMaterial("spruce_leaf_armor", "skrim:spruce_leaf_armor", 20, new int[] { 2, 4, 3, 2 },
+			30, null, 0.0F);
+	public static ArmorMaterial BIRCH_LEAF_MATERIAL = EnumHelper.addArmorMaterial("birch_leaf_armor", "skrim:birch_leaf_armor", 20, new int[] { 2, 4, 3, 2 },
+			30, null, 0.0F);
+	public static ArmorMaterial JUNGLE_LEAF_MATERIAL = EnumHelper.addArmorMaterial("jungle_leaf_armor", "skrim:jungle_leaf_armor", 20, new int[] { 2, 4, 3, 2 },
+			30, null, 0.0F);
+	public static ArmorMaterial ACACIA_LEAF_MATERIAL = EnumHelper.addArmorMaterial("acacia_leaf_armor", "skrim:acacia_leaf_armor", 20, new int[] { 2, 4, 3, 2 },
+			30, null, 0.0F);
+	public static ArmorMaterial DARK_OAK_LEAF_MATERIAL = EnumHelper.addArmorMaterial("dark_oak_leaf_armor", "skrim:dark_oak_leaf_armor", 20,
+			new int[] { 2, 4, 3, 2 }, 30, null, 0.0F);
 
 	public LeafArmor(BlockPlanks.EnumType plankType, String name, int renderIndex, EntityEquipmentSlot armorType) {
 		super(plankType.getName() + "_" + name, getMaterial(plankType), renderIndex, armorType);
@@ -193,7 +199,6 @@ public class LeafArmor extends CustomArmor {
 				}
 			}
 		}
-
 	}
 
 }
