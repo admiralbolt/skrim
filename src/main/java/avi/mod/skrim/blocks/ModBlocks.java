@@ -58,6 +58,8 @@ public final class ModBlocks {
 	public static WeirwoodSapling WEIRWOOD_SAPLING;
 	public static WeirwoodWood WEIRWOOD_WOOD;
 	public static WeirwoodLeaf WEIRWOOD_LEAF;
+	
+	public static MegaChest MEGA_CHEST;
 
 	public static void createBlocks() {
 		ORE_PENGUIN = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
@@ -99,6 +101,8 @@ public final class ModBlocks {
 		addWeirwoodRecipe();
 		WEIRWOOD_WOOD = register(new WeirwoodWood());
 		WEIRWOOD_LEAF = register(new WeirwoodLeaf());
+		
+		MEGA_CHEST = register(new MegaChest());
 	}
 
 	private static <T extends Block> T register(T block, ItemBlock itemBlock) {

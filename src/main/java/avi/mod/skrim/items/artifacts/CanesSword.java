@@ -37,41 +37,43 @@ public class CanesSword extends ArtifactSword {
 	 */
 	public static class CanesHandler {
 
-	  public static void slayChicken(LivingHurtEvent event) {
-	    DamageSource source = event.getSource();
-	    Entity entity = source.getEntity();
-	    if (entity instanceof EntityPlayer) {
-	    	if (event.getEntity() instanceof EntityChicken) {
-		      EntityPlayer player = (EntityPlayer) entity;
-		      ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-		      if (stack != null) {
-			      Item sword = stack.getItem();
-			      if (sword == ModItems.CANES_SWORD) {
-			      	event.setAmount(event.getAmount() * 10);
-			      }
-		      }
-	    	}
-	    }
-	  }
+		public static void slayChicken(LivingHurtEvent event) {
+			DamageSource source = event.getSource();
+			Entity entity = source.getEntity();
+			if (entity instanceof EntityPlayer) {
+				if (event.getEntity() instanceof EntityChicken) {
+					EntityPlayer player = (EntityPlayer) entity;
+					ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+					if (stack != null) {
+						Item sword = stack.getItem();
+						if (sword == ModItems.CANES_SWORD) {
+							event.setAmount(event.getAmount() * 10);
+						}
+					}
+				}
+			}
+		}
 
 		public static void fryChicken(LivingDropsEvent event) {
 			if (event.getEntity() instanceof EntityChicken) {
 				DamageSource source = event.getSource();
-		    Entity sourceEntity = source.getEntity();
-		    if (sourceEntity instanceof EntityPlayer) {
-		      EntityPlayer player = (EntityPlayer) sourceEntity;
-		      ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-		      Item sword = stack.getItem();
-		      if (sword == ModItems.CANES_SWORD) {
-		      	List<EntityItem> drops = event.getDrops();
-		      	for (int i = 0; i < drops.size(); i++) {
-		      		EntityItem item = drops.get(i);
-		      		if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
-		      			drops.set(i, new EntityItem(player.worldObj, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
-		      		}
-		      	}
-		      }
-		    }
+				Entity sourceEntity = source.getEntity();
+				if (sourceEntity instanceof EntityPlayer) {
+					EntityPlayer player = (EntityPlayer) sourceEntity;
+					ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+					if (stack != null) {
+						Item sword = stack.getItem();
+						if (sword == ModItems.CANES_SWORD) {
+							List<EntityItem> drops = event.getDrops();
+							for (int i = 0; i < drops.size(); i++) {
+								EntityItem item = drops.get(i);
+								if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
+									drops.set(i, new EntityItem(player.worldObj, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -99,17 +101,19 @@ public class CanesSword extends ArtifactSword {
 
 	public static boolean canSweep(EntityPlayer player, EntityLivingBase targetEntity) {
 		boolean flag1 = player.isSprinting();
-	  boolean flag2 = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && targetEntity instanceof EntityLivingBase;
-	  double d0 = (double)(player.distanceWalkedModified - player.prevDistanceWalkedModified);
-	  return (!flag2 && !flag1 && player.onGround && d0 < (double) player.getAIMoveSpeed());
+		boolean flag2 = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater()
+				&& !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && targetEntity instanceof EntityLivingBase;
+		double d0 = (double) (player.distanceWalkedModified - player.prevDistanceWalkedModified);
+		return (!flag2 && !flag1 && player.onGround && d0 < (double) player.getAIMoveSpeed());
 	}
 
-
 	public static void doFireSweep(EntityPlayer player, EntityLivingBase targetEntity) {
-		for (EntityLivingBase entitylivingbase : player.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
-			if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase) && player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {
-	      entitylivingbase.setFire(4);
-	    }
+		for (EntityLivingBase entitylivingbase : player.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
+				targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
+			if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)
+					&& player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {
+				entitylivingbase.setFire(4);
+			}
 		}
 	}
 
