@@ -64,14 +64,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	static {
 		xpMap = new HashMap<String, Integer>();
-		xpMap.put("crops", 200);
-		xpMap.put("beetroots", 250);
-		xpMap.put("cocoa", 300);
-		xpMap.put("potatoes", 400);
-		xpMap.put("carrots", 400);
-		xpMap.put("pumpkin", 500);
-		xpMap.put("melon", 500);
-		xpMap.put("nether_wart", 600);
+		xpMap.put("crops", 225);
+		xpMap.put("beetroots", 275);
+		xpMap.put("cocoa", 325);
+		xpMap.put("potatoes", 425);
+		xpMap.put("carrots", 425);
+		xpMap.put("pumpkin", 525);
+		xpMap.put("melon", 525);
+		xpMap.put("nether_wart", 625);
 
 		cropBlocks.add(Blocks.WHEAT);
 		cropBlocks.add(Blocks.CARROTS);
@@ -104,14 +104,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		"You're a plant Vash.",
 		"Being in sunlight grants you a speed boost and saturation."
 	);
-	
+
 	public static SkillAbility MAGIC_BEANSTALK = new SkillAbility(
 		"Magic Beanstalk",
 		100,
 		"Fee-fi-fo-fum! Random chests for everyone!",
 		"Grants you the ability to craft a magic bean."
 	);
-		
+
 
 	public SkillFarming() {
 		this(1, 0);
@@ -268,7 +268,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
 		Item magicBean = new ItemStack(ModBlocks.MAGIC_BEAN).getItem();
-		
+
 		if (targetItem != null && targetItem == ModItems.OVERALLS) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
 				Skills.replaceWithComponents(event);

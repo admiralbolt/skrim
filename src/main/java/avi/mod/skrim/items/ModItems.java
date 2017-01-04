@@ -70,7 +70,7 @@ public class ModItems {
 	 */
 
 
-	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 9, 7, 4 }, 20, null, 2.0F);
+	public static ArmorMaterial OBSIDIAN_ARMOR = EnumHelper.addArmorMaterial("obsidian", "skrim:obsidian_armor", 165, new int[] { 4, 9, 7, 4 }, 20, null, 1.0F);
 	public static ArmorMaterial OVERALLS_ARMOR = EnumHelper.addArmorMaterial("overalls", "skrim:overalls", 10, new int[] { 1, 3, 2, 1 }, 15, null, 0.0F);
 
 	/**
@@ -247,7 +247,7 @@ public class ModItems {
 
 		GRUESOME_MASK = register(new GruesomeMask());
 		ARTIFACTS.add(GRUESOME_MASK);
-		
+
 		FOX_MASK = register(new FoxMask());
 		ARTIFACTS.add(FOX_MASK);
 

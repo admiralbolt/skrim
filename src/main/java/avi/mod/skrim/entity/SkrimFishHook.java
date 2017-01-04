@@ -110,7 +110,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
 							new EntityXPOrb(angler.worldObj, angler.posX, angler.posY + 0.5D, angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
 					if (angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
 						SkillFishing fishing = (SkillFishing) angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
-						fishing.addXp((EntityPlayerMP) angler, 1000);
+						fishing.addXp((EntityPlayerMP) angler, 1250);
 						// Roll for treasure chance
 						if (this.rand.nextDouble() < fishing.getTreasureChance()) {
 							EntityItem treasure = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, RandomTreasure.generateStandardTreasure());
