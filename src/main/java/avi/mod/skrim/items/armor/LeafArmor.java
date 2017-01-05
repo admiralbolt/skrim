@@ -171,6 +171,7 @@ public class LeafArmor extends CustomArmor {
 								TICKS_SINCE_MOVE.put(uuid, ((motion) ? 0 : TICKS_SINCE_MOVE.get(uuid) + 20));
 							}
 							if (TICKS_SINCE_MOVE.get(uuid) >= 100) {
+								player.getPersistentID().toString();
 								SkrimPacketHandler.INSTANCE.sendToServer(new InvisibilityPacket(20));
 							}
 						}
