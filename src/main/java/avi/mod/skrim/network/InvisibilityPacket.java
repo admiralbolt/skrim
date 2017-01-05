@@ -28,7 +28,7 @@ public class InvisibilityPacket implements IMessage {
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeDouble(this.duration);
+		buf.writeInt(this.duration);
 		ByteBufUtils.writeUTF8String(buf, this.uuid);
 	}
 
