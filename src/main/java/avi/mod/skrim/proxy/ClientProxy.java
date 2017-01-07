@@ -4,6 +4,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.handlers.GuiEventHandler;
+import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.items.CustomBow;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -24,6 +25,7 @@ public class ClientProxy extends CommonProxy {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
 		CustomRenderers.register();
+		SkrimEntitySpawnHandler.init();
 	}
 
 	@Override

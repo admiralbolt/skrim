@@ -25,9 +25,6 @@ public class ModEntities {
 		EntityRegistry.addSpawn(BioCreeper.class, 20, 2, 4, EnumCreatureType.MONSTER, Biomes.SWAMPLAND, Biomes.COLD_TAIGA, Biomes.COLD_TAIGA_HILLS, Biomes.MUTATED_SWAMPLAND, Biomes.MUTATED_TAIGA_COLD);
 		EntityRegistry.registerModEntity(new ResourceLocation("skrim:mega_chicken"), MegaChicken.class, MegaChicken.name, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFFFF, 0xFF8888);
 		EntityRegistry.registerModEntity(new ResourceLocation("skrim:fox"), EntityFox.class, EntityFox.name, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFF77, 0x222222);
-				
-		
-		SkrimEntitySpawnHandler.init();
 	}
 
 }

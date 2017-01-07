@@ -8,8 +8,8 @@ public class CustomLootTables {
 	
 	public static ResourceLocation CHESTS_BEANSTALK = null;
 	
-	private static ResourceLocation register(String id) {
-		return LootTableList.register(new ResourceLocation(Skrim.modId, id));
+	private static ResourceLocation register(String name) {
+		return LootTableList.register(new ResourceLocation(Skrim.modId, name));
 	}
 	
 	public static void registerLootTables() {
