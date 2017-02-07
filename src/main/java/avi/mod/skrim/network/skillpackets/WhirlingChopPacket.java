@@ -48,7 +48,7 @@ public class WhirlingChopPacket implements IMessage {
 
 		public IMessage onMessage(final WhirlingChopPacket message, MessageContext ctx) {
 			if (ctx.side.isServer()) {
-				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				final EntityPlayerMP player = ctx.getServerHandler().player;
 				player.getServerWorld();
 				if (player != null) {
 					final WorldServer world = player.getServerWorld();

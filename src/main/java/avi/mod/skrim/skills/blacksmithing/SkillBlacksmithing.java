@@ -211,7 +211,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		if (targetItem != null && obsidianItems.contains(targetItem)) {
 			if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
 				SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
 				blacksmithing.addXp((EntityPlayerMP) event.player, 5000);
 			}

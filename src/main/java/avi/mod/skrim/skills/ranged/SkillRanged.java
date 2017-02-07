@@ -134,7 +134,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					EntityLivingBase targetEntity = event.getEntityLiving();
 					int addXp = 0;
 					if (canHeadshot(targetEntity) && (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow < arrow.posY) && (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh > arrow.posY)) {
-						player.worldObj.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F, 1.0F);
+						player.world.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
 						addXp = 50;
 						if (ranged.hasAbility(4)) {
@@ -148,7 +148,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					if (ranged.hasAbility(1)) {
 						if (player.isSneaking() && targetEntity.getAITarget() != player) {
 							event.setAmount((float) (event.getAmount() * 1.25));
-							player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F, 1.0F);
+							player.world.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F, 1.0F);
 							addXp += 50;
 						}
 						if (ranged.hasAbility(2)) {
@@ -191,7 +191,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		if (targetItem != null && targetItem == ModItems.GREAT_BOW) {
 			if (!Skills.canCraft(event.player, Skills.RANGED, 75)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
 				SkillRanged ranged = (SkillRanged) event.player.getCapability(Skills.RANGED, EnumFacing.NORTH);
 				ranged.addXp((EntityPlayerMP) event.player, 1000);
 			}

@@ -63,13 +63,13 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 	 * Like the old updateEntity(), except more generic.
 	 */
 	public void update() {
-		if (this.worldObj.getTotalWorldTime() % 80L == 0L) {
+		if (this.world.getTotalWorldTime() % 80L == 0L) {
 			this.updateBeacon();
 		}
 	}
 
 	public void updateBeacon() {
-		if (this.worldObj != null) {
+		if (this.world != null) {
 			this.updateSegmentColors();
 			this.addEffectsToPlayers();
 		}
@@ -82,7 +82,7 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 	}
 
 	private void addEffectsToPlayers() {
-		if (this.isComplete && this.levels > 0 && !this.worldObj.isRemote && this.primaryEffect != null) {
+		if (this.isComplete && this.levels > 0 && !this.world.isRemote && this.primaryEffect != null) {
 			/**
 			 * This levels will ALWAYS be = 2
 			 * I am going to increase the radius to be the full level 4 beacon radius though.
@@ -98,8 +98,8 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 			int k = this.pos.getX();
 			int l = this.pos.getY();
 			int i1 = this.pos.getZ();
-			AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) k, (double) l, (double) i1, (double) (k + 1), (double) (l + 1), (double) (i1 + 1))).expandXyz(d0).addCoord(0.0D, (double) this.worldObj.getHeight(), 0.0D);
-			List<EntityPlayer> list = this.worldObj.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
+			AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) k, (double) l, (double) i1, (double) (k + 1), (double) (l + 1), (double) (i1 + 1))).expandXyz(d0).addCoord(0.0D, (double) this.world.getHeight(), 0.0D);
+			List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
 
 			for (EntityPlayer entityplayer : list) {
 				entityplayer.addPotionEffect(new PotionEffect(this.primaryEffect, j, i, true, true));
@@ -124,14 +124,14 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 		BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
 		for (int i1 = k + 1; i1 < 256; ++i1) {
-			IBlockState iblockstate = this.worldObj.getBlockState(blockpos$mutableblockpos.setPos(j, i1, l));
+			IBlockState iblockstate = this.world.getBlockState(blockpos$mutableblockpos.setPos(j, i1, l));
 			float[] afloat;
 
 			if (iblockstate.getBlock() == Blocks.STAINED_GLASS) {
 				afloat = EntitySheep.getDyeRgb((EnumDyeColor) iblockstate.getValue(BlockStainedGlass.COLOR));
 			} else {
 				if (iblockstate.getBlock() != Blocks.STAINED_GLASS_PANE) {
-					if (iblockstate.getLightOpacity(this.worldObj, blockpos$mutableblockpos) >= 15 && iblockstate.getBlock() != Blocks.BEDROCK) {
+					if (iblockstate.getLightOpacity(this.world, blockpos$mutableblockpos) >= 15 && iblockstate.getBlock() != Blocks.BEDROCK) {
 						this.isComplete = false;
 						this.beamSegments.clear();
 						break;
@@ -169,9 +169,9 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 
 				for (int j1 = j - l1; j1 <= j + l1 && flag1; ++j1) {
 					for (int k1 = l - l1; k1 <= l + l1; ++k1) {
-						Block block = this.worldObj.getBlockState(new BlockPos(j1, i2, k1)).getBlock();
+						Block block = this.world.getBlockState(new BlockPos(j1, i2, k1)).getBlock();
 
-						if (!block.isBeaconBase(this.worldObj, new BlockPos(j1, i2, k1), getPos())) {
+						if (!block.isBeaconBase(this.world, new BlockPos(j1, i2, k1), getPos())) {
 							flag1 = false;
 							break;
 						}
@@ -199,8 +199,8 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 		if (!this.isComplete) {
 			return 0.0F;
 		} else {
-			int i = (int) (this.worldObj.getTotalWorldTime() - this.beamRenderCounter);
-			this.beamRenderCounter = this.worldObj.getTotalWorldTime();
+			int i = (int) (this.world.getTotalWorldTime() - this.beamRenderCounter);
+			this.beamRenderCounter = this.world.getTotalWorldTime();
 
 			if (i > 1) {
 				this.beamRenderScale -= (float) i / 40.0F;
@@ -320,7 +320,7 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 	 * Do not make give this method the name canInteractWith because it clashes with Container
 	 */
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return this.worldObj.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+		return this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
 	}
 
 	public void openInventory(EntityPlayer player) {

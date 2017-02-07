@@ -1,7 +1,7 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.entities.SkrimFishHook;
 import avi.mod.skrim.entities.monster.MegaChicken;
-import avi.mod.skrim.entity.SkrimFishHook;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
@@ -285,10 +285,10 @@ public class EventHandler {
 		 */
 		if (entity instanceof EntityFishHook && !(entity instanceof SkrimFishHook)) {
 			EntityFishHook oldHook = (EntityFishHook) entity;
-			SkrimFishHook newHook = new SkrimFishHook(event.getWorld(), oldHook.func_190619_l(), oldHook.posX, oldHook.posY, oldHook.posZ);
+			SkrimFishHook newHook = new SkrimFishHook(event.getWorld(), oldHook.getAngler(), oldHook.posX, oldHook.posY, oldHook.posZ);
 			newHook.setVelocity(oldHook.motionX, oldHook.motionY, oldHook.motionZ);
 			event.setCanceled(true);
-			world.spawnEntityInWorld(newHook);
+			world.spawnEntity(newHook);
 		}
 	}
 

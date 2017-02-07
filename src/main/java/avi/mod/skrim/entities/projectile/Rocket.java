@@ -40,14 +40,14 @@ public class Rocket extends EntityArrow implements IEntityAdditionalSpawnData {
     if (pos != null) {
     	if (this.explosionType != null) {
 	    	if (this.explosionType.equals("normal_tnt")) {
-	    		this.worldObj.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 4.0F, false);
+	    		this.world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 4.0F, false);
 	    	} else {
-	    		Explosion explosion = CustomTNTPrimed.createExplosion(this.explosionType, this.worldObj, this.shootingEntity, pos.getX(), pos.getY(), pos.getZ());
+	    		Explosion explosion = CustomTNTPrimed.createExplosion(this.explosionType, this.world, this.shootingEntity, pos.getX(), pos.getY(), pos.getZ());
 	    		explosion.doExplosionA();
 					explosion.doExplosionB(true);
 	    	}
     	}
-    	this.worldObj.removeEntity(this);
+    	this.world.removeEntity(this);
     }
 	}
 

@@ -47,7 +47,7 @@ public class LevelUpPacket implements IMessage {
 	    	if (ctx.side.isClient()) {
 	    		if (message.skillName != null) {
 		    		Capability<? extends ISkill> cap = Skills.skillMap.get(message.skillName.toLowerCase());
-		        final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		        final EntityPlayerSP player = Minecraft.getMinecraft().player;
 		      	if (player != null && player.hasCapability(cap, EnumFacing.NORTH)) {
 		      		IThreadListener mainThread = Minecraft.getMinecraft();
 		      		mainThread.addScheduledTask(new Runnable() {

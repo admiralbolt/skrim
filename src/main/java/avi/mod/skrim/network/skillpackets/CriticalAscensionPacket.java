@@ -38,7 +38,7 @@ public class CriticalAscensionPacket implements IMessage {
 		@Override
 		public IMessage onMessage(final CriticalAscensionPacket message, MessageContext ctx) {
 			if (ctx.side.isClient()) {
-				EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+				EntityPlayerSP player = Minecraft.getMinecraft().player;
 				if (player != null && player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
 					IThreadListener mainThread = Minecraft.getMinecraft();
 					final SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);

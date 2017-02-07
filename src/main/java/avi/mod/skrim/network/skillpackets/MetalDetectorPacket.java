@@ -46,7 +46,7 @@ public class MetalDetectorPacket implements IMessage {
 
 		public IMessage onMessage(final MetalDetectorPacket message, MessageContext ctx) {
 			if (ctx.side.isServer()) {
-				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				final EntityPlayerMP player = ctx.getServerHandler().player;
 				player.getServerWorld();
 				if (player != null) {
 					final WorldServer world = player.getServerWorld();
@@ -54,7 +54,7 @@ public class MetalDetectorPacket implements IMessage {
 						@Override
 						public void run() {
 							EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, RandomTreasure.generateMetalTreasure());
-							world.spawnEntityInWorld(entityItem);
+							world.spawnEntity(entityItem);
 							Skills.playFortuneSound(player);
 							if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
 								SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);

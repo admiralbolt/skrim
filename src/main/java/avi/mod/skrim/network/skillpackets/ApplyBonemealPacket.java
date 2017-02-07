@@ -49,7 +49,7 @@ public class ApplyBonemealPacket implements IMessage {
 
 		public IMessage onMessage(final ApplyBonemealPacket message, MessageContext ctx) {
 			if (ctx.side.isServer()) {
-				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				final EntityPlayerMP player = ctx.getServerHandler().player;
 				if (player != null) {
 					final WorldServer world = player.getServerWorld();
 					world.addScheduledTask(new Runnable() {
@@ -61,7 +61,7 @@ public class ApplyBonemealPacket implements IMessage {
 							BlockPos targetPos = new BlockPos(message.x, message.y, message.z);
 							IBlockState targetState = world.getBlockState(targetPos);
 							Block targetBlock = targetState.getBlock();
-							((IGrowable) targetBlock).grow(player.worldObj, Utils.rand, targetPos, targetState);
+							((IGrowable) targetBlock).grow(player.world, Utils.rand, targetPos, targetState);
 							stack.damageItem(2, player);
 							mainStack.damageItem(1, player);
 						}

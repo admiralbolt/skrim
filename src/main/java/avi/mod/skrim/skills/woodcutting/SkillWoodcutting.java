@@ -186,7 +186,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		}
 		if (withSaw) {
 			world.destroyBlock(pos, false);
-			world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state)))));
+			world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state)))));
 		} else {
 			world.destroyBlock(pos, true);
 		}
@@ -251,21 +251,21 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		if (targetItem != null && targetItem == ModItems.HAND_SAW) {
 			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 25)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				woodcutting.addXp((EntityPlayerMP) event.player, 500);
 			}
 		} else if (targetItem != null && targetItem instanceof LeafArmor) {
 			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 75)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				woodcutting.addXp((EntityPlayerMP) event.player, 1000);
 			}
 		} else if (targetItem != null && (targetItem instanceof WeirwoodTotem || targetItem == weirwoodSapling)) {
 			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 100)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) event.player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				woodcutting.addXp((EntityPlayerMP) event.player, 10000);
 			}
@@ -293,7 +293,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public static void whirlingChop(PlayerInteractEvent.RightClickItem event) {
 		EntityPlayer player = event.getEntityPlayer();
 		if (player != null && player.hasCapability(Skills.MELEE, EnumFacing.NORTH)) {
-			if (player.worldObj.isRemote) {
+			if (player.world.isRemote) {
 				SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 				if (woodcutting.hasAbility(2)) {
 					ItemStack mainStack = player.getHeldItemMainhand();
@@ -302,14 +302,14 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 					Item offItem = (offStack == null) ? null : offStack.getItem();
 					if (mainItem != null && (mainItem instanceof ItemAxe || mainItem instanceof CustomAxe)) {
 						player.swingArm(EnumHand.MAIN_HAND);
-						if (player.worldObj.isRemote) {
+						if (player.world.isRemote) {
 							// Send packet here
 							BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
 							for (int i = -10; i <= 10; i++) {
 								for (int j = 0; j <= 2; j++) {
 									for (int k = -10; k <= 10; k++) {
 										BlockPos targetPos = new BlockPos(playerPos.getX() + i, playerPos.getY() + j, playerPos.getZ() + k);
-										IBlockState targetState = player.worldObj.getBlockState(targetPos);
+										IBlockState targetState = player.world.getBlockState(targetPos);
 										Block targetBlock = targetState.getBlock();
 										if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
 											SkrimPacketHandler.INSTANCE.sendToServer(

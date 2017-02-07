@@ -160,9 +160,9 @@ public class LeafArmor extends CustomArmor {
 			Entity entity = event.getEntity();
 			if (entity instanceof EntityPlayer) {
 				final EntityPlayer player = (EntityPlayer) entity;
-				if (player.worldObj.getTotalWorldTime() % 20L == 0L) {
+				if (player.world.getTotalWorldTime() % 20L == 0L) {
 					if (wearingFullSet(player)) {
-						if (player.worldObj.isRemote) {
+						if (player.world.isRemote) {
 							final UUID uuid = player.getPersistentID();
 							boolean motion = (player.motionX > 0 || player.motionY > 0 || player.motionZ > 0);
 							if (!TICKS_SINCE_MOVE.containsKey(uuid)) {
@@ -183,11 +183,11 @@ public class LeafArmor extends CustomArmor {
 		public static void plantTree(PlayerInteractEvent.RightClickBlock event) {
 			EntityPlayer player = event.getEntityPlayer();
 			if (wearingFullSet(player)) {
-				if (!player.worldObj.isRemote) {
-					if (Obfuscation.isEmptyStack(player.getHeldItemMainhand())) {
+				if (!player.world.isRemote) {
+					if (player.getHeldItemMainhand().isEmpty()) {
 						BlockPlanks.EnumType plankType = getPlankTypeFullSet(player);
 						WorldGenAbstractTree generator = getGenerator(plankType);
-						boolean createdTree = generator.generate(player.worldObj, Utils.rand, event.getPos());
+						boolean createdTree = generator.generate(player.world, Utils.rand, event.getPos());
 						if (createdTree) {
 							InventoryPlayer inventory = player.inventory;
 							if (inventory != null) {

@@ -42,7 +42,7 @@ public class InvisibilityPacket implements IMessage {
 
 		public IMessage onMessage(final InvisibilityPacket message, MessageContext ctx) {
 			if (ctx.side.isServer()) {
-				final WorldServer world = ctx.getServerHandler().playerEntity.getServerWorld();
+				final WorldServer world = ctx.getServerHandler().player.getServerWorld();
 				final EntityPlayer player = world.getPlayerEntityByUUID(UUID.fromString(message.uuid));
 				if (player != null) {
 					world.addScheduledTask(new Runnable() {

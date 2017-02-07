@@ -29,8 +29,10 @@ public class Obfuscation {
 	public static ObfuscatedField FISH_HOOK_STATE = new ObfuscatedField("state", "this.field_190627_av");
 	public static ObfuscatedField FISH_HOOK_RAYTRACE = new ObfuscatedField("func_190624_r", "func_190624_r");
 
+	public static ObfuscatedField FISH_HOOK_LUCK = new ObfuscatedField("field_191518_aw", "field_191518_aw");
+
 	public static int getStackSize(ItemStack stack) {
-		return stack.func_190916_E();
+		return stack.getCount();
 	}
 
 	public static void setStackSize(ItemStack stack, int stackSize) {
@@ -38,15 +40,7 @@ public class Obfuscation {
 	}
 
 	public static boolean canBlockBePlaced(World world, Block block, BlockPos pos, boolean notsure, EnumFacing facing, @Nullable Entity entity) {
-		return world.func_190527_a(block, pos, notsure, facing, entity);
-	}
-	
-	/**
-	 * Okay, I get that you don't want this to return null anymore,
-	 * but WHY WOULD YOU WANT IT TO RETURN AIR!!??
-	 */
-	public static boolean isEmptyStack(ItemStack stack) {
-		return stack == ItemStack.field_190927_a;
+		return world.mayPlace(block, pos, notsure, facing, entity);
 	}
 
 	public static class ObfuscatedField {

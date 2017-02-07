@@ -54,7 +54,7 @@ public class SpawnEntityPacket implements IMessage {
 		@Override
 		public IMessage onMessage(final SpawnEntityPacket message, MessageContext ctx) {
 			if (ctx.side.isServer()) {
-				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				final EntityPlayerMP player = ctx.getServerHandler().player;
 				if (player != null) {
 					final WorldServer world = player.getServerWorld();
 					world.addScheduledTask(new Runnable() {
@@ -62,7 +62,7 @@ public class SpawnEntityPacket implements IMessage {
 						public void run() {
 							Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation((message.isSkrim) ? "skrim" : "minecraft", message.entityName), world);
 							entity.setPosition(message.x, message.y, message.z);
-							world.spawnEntityInWorld(entity);
+							world.spawnEntity(entity);
 						}
 					});
 				}

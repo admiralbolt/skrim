@@ -56,7 +56,7 @@ public class TileEntityEnchantedFlowerRenderer extends TileEntitySpecialRenderer
 		VertexBuffer vertexbuffer = tessellator.getBuffer();
 		double d0 = p_188205_10_ + p_188205_6_;
 		double d1 = p_188205_13_ < 0 ? d0 : -d0;
-		double d2 = MathHelper.frac(d1 * 0.2D - (double) MathHelper.floor_double(d1 * 0.1D));
+		double d2 = MathHelper.frac(d1 * 0.2D - (double) MathHelper.floor(d1 * 0.1D));
 		float f = p_188205_14_[0];
 		float f1 = p_188205_14_[1];
 		float f2 = p_188205_14_[2];

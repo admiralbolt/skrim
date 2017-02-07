@@ -81,7 +81,7 @@ public class CustomTNTPrimed extends Entity {
 			this.motionY -= 0.03999999910593033D;
 		}
 
-		this.moveEntity(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+		this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.9800000190734863D;
 		this.motionY *= 0.9800000190734863D;
 		this.motionZ *= 0.9800000190734863D;
@@ -97,12 +97,12 @@ public class CustomTNTPrimed extends Entity {
 		if (this.fuse <= 0) {
 			this.setDead();
 
-			if (!this.worldObj.isRemote) {
+			if (!this.world.isRemote) {
 				this.explode();
 			}
 		} else {
 			this.handleWaterMovement();
-			this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+			this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
 		}
 	}
 
@@ -170,13 +170,13 @@ public class CustomTNTPrimed extends Entity {
 	}
 
 	public Explosion explode() {
-		for (EntityPlayer entityplayer : this.worldObj.playerEntities) {
+		for (EntityPlayer entityplayer : this.world.playerEntities) {
 			if (entityplayer.getDistanceSq(this.posX, this.posY, this.posZ) < 4096.0D) {
 				SkrimPacketHandler.INSTANCE.sendTo(new ExplosionPacket(this.getExplosionType(), this.getEntityId(), this.posX, this.posY + (double) (this.height / 16.0F), this.posZ), (EntityPlayerMP) entityplayer);
 			}
 		}
-		Explosion explosion = createExplosion(this.explosionType, this.worldObj, this, this.posX, this.posY + (double) (this.height / 16.0F), this.posZ);
-		if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.worldObj, explosion)) {
+		Explosion explosion = createExplosion(this.explosionType, this.world, this, this.posX, this.posY + (double) (this.height / 16.0F), this.posZ);
+		if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.world, explosion)) {
 			return explosion;
 		}
 		explosion.doExplosionA();

@@ -26,17 +26,17 @@ public class CoordCommand extends CommandBase implements ICommand {
 	}
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "coord";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender var1) {
+	public String getUsage(ICommandSender var1) {
 		return "/coord [add|get|list|remove] [Location Name|Page Number]";
 	}
 
 	@Override
-	public List getCommandAliases() {
+	public List<String> getAliases() {
 		return this.aliases;
 	}
 
@@ -59,7 +59,7 @@ public class CoordCommand extends CommandBase implements ICommand {
 		} else {
 			EntityPlayer player = getCommandSenderAsPlayer(sender);
 			String sendMessage = "";
-			sendMessage = this.getCommandUsage(sender);
+			sendMessage = this.getUsage(sender);
 			if (args.length > 0) {
 				if (args[0].equals("list")) {
 					if (args.length == 2 && StringUtils.isNumeric(args[1])) {
@@ -77,7 +77,7 @@ public class CoordCommand extends CommandBase implements ICommand {
 					}
 				}
 			}
-			sender.addChatMessage(new TextComponentString(sendMessage));
+			sender.sendMessage(new TextComponentString(sendMessage));
 		}
 	}
 

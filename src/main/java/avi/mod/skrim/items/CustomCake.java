@@ -63,9 +63,10 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 		} else if (!block.isReplaceable(worldIn, pos)) {
 			pos = pos.offset(facing);
 		}
+		
 
-		if (playerIn.canPlayerEdit(pos, facing, stack) && Obfuscation.getStackSize(stack) != 0 && Obfuscation.canBlockBePlaced(worldIn, placeBlock, pos, false, facing, playerIn)) {
-			IBlockState iblockstate1 = placeBlock.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, 0, playerIn);
+		if (playerIn.canPlayerEdit(pos, facing, stack) && !stack.isEmpty() && Obfuscation.canBlockBePlaced(worldIn, placeBlock, pos, false, facing, playerIn)) {
+			IBlockState iblockstate1 = placeBlock.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, 0, playerIn);
 
 			if (!worldIn.setBlockState(pos, iblockstate1, 11)) {
 				return EnumActionResult.FAIL;

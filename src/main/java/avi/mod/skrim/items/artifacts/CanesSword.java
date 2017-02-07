@@ -68,7 +68,7 @@ public class CanesSword extends ArtifactSword {
 							for (int i = 0; i < drops.size(); i++) {
 								EntityItem item = drops.get(i);
 								if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
-									drops.set(i, new EntityItem(player.worldObj, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
+									drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
 								}
 							}
 						}
@@ -108,7 +108,7 @@ public class CanesSword extends ArtifactSword {
 	}
 
 	public static void doFireSweep(EntityPlayer player, EntityLivingBase targetEntity) {
-		for (EntityLivingBase entitylivingbase : player.worldObj.getEntitiesWithinAABB(EntityLivingBase.class,
+		for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
 				targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
 			if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)
 					&& player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {

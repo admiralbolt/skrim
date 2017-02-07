@@ -125,18 +125,18 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					int addXp = 0;
 					if (Math.random() < melee.getCritChance()) {
 						EntityLivingBase targetEntity = event.getEntityLiving();
-						player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
+						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() * 2);
 						// Spin slash
 						if (melee.hasAbility(2)) {
 							ItemStack stack = player.getHeldItemMainhand();
 							Item item = (stack == null) ? null : stack.getItem();
 							if (item != null && item instanceof ItemSword) {
-								for (EntityLivingBase entitylivingbase : player.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(2.5D, 0.25D, 2.5D))) {
+								for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(2.5D, 0.25D, 2.5D))) {
 									if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase) && player.getDistanceSqToEntity(entitylivingbase) < 20.0D) {
 										entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
 										// Want to avoid an infinite player damage loop, use generic damage source
-										entitylivingbase.attackEntityFrom(DamageSource.generic, event.getAmount() / 4);
+										entitylivingbase.attackEntityFrom(DamageSource.GENERIC, event.getAmount() / 4);
 										addXp += event.getAmount() / 4;
 									}
 								}
@@ -147,16 +147,16 @@ public class SkillMelee extends Skill implements ISkillMelee {
 							ItemStack mainStack = player.getHeldItemMainhand();
 							Item mainItem = (mainStack == null) ? null : mainStack.getItem();
 							if (mainItem != null && mainItem instanceof ItemSword) {
-								EntityLightningBolt smite = new EntityLightningBolt(player.worldObj, targetEntity.posX, targetEntity.posY, targetEntity.posZ, true);
-								targetEntity.attackEntityFrom(source.lightningBolt, 100.0F);
-								player.worldObj.addWeatherEffect(smite);
-								if (!player.worldObj.isRemote) {
+								EntityLightningBolt smite = new EntityLightningBolt(player.world, targetEntity.posX, targetEntity.posY, targetEntity.posZ, true);
+								targetEntity.attackEntityFrom(source.LIGHTNING_BOLT, 100.0F);
+								player.world.addWeatherEffect(smite);
+								if (!player.world.isRemote) {
 									BlockPos blockpos = new BlockPos(targetEntity);
-	                if (player.worldObj.getGameRules().getBoolean("doFireTick")
-	              		&& player.worldObj.isAreaLoaded(blockpos, 10)
-	              		&& player.worldObj.getBlockState(blockpos).getMaterial() == Material.AIR
-	              		&& Blocks.FIRE.canPlaceBlockAt(player.worldObj, blockpos)) {
-	                    player.worldObj.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+	                if (player.world.getGameRules().getBoolean("doFireTick")
+	              		&& player.world.isAreaLoaded(blockpos, 10)
+	              		&& player.world.getBlockState(blockpos).getMaterial() == Material.AIR
+	              		&& Blocks.FIRE.canPlaceBlockAt(player.world, blockpos)) {
+	                    player.world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
 	                }
 								}
               }
@@ -178,7 +178,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	 * Returns the percentage of attack power available based on the cooldown (zero to one).
 	 */
 	public float getCooledAttackStrength(EntityPlayer player, float adjustTicks) {
-		return MathHelper.clamp_float(((float) this.ticksSinceLastLeft + adjustTicks) / this.getCooldownPeriod(player), 0.0F, 1.0F);
+		return MathHelper.clamp(((float) this.ticksSinceLastLeft + adjustTicks) / this.getCooldownPeriod(player), 0.0F, 1.0F);
 	}
 
 	public static void tickLeft(PlayerTickEvent event) {
@@ -219,7 +219,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 				Item offItem = (offStack == null) ? null : offStack.getItem();
 				if (mainItem != null && mainItem instanceof ItemSword && offItem != null && offItem instanceof ItemSword) {
 					player.swingArm(EnumHand.OFF_HAND);
-					if (player.worldObj.isRemote) {
+					if (player.world.isRemote) {
 						Entity targetEntity = getMouseOver(player, 1.0F);
 						if (targetEntity != null) {
 							SkrimPacketHandler.INSTANCE.sendToServer(
@@ -264,7 +264,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					i = i + EnchantmentHelper.getKnockbackModifier(player);
 
 					if (player.isSprinting() && flag) {
-						player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, player.getSoundCategory(), 1.0F, 1.0F);
+						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, player.getSoundCategory(), 1.0F, 1.0F);
 						++i;
 						flag1 = true;
 					}
@@ -319,14 +319,14 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						}
 
 						if (flag3) {
-							for (EntityLivingBase entitylivingbase : player.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
+							for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
 								if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase) && player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {
 									entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
 									entitylivingbase.attackEntityFrom(DamageSource.causePlayerDamage(player), 1.0F);
 								}
 							}
 
-							player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, player.getSoundCategory(), 1.0F, 1.0F);
+							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, player.getSoundCategory(), 1.0F, 1.0F);
 							player.spawnSweepParticles();
 						}
 
@@ -339,15 +339,15 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						}
 
 						if (flag2) {
-							player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
+							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
 							player.onCriticalHit(targetEntity);
 						}
 
 						if (!flag2 && !flag3) {
 							if (flag) {
-								player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, player.getSoundCategory(), 1.0F, 1.0F);
+								player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, player.getSoundCategory(), 1.0F, 1.0F);
 							} else {
-								player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, player.getSoundCategory(), 1.0F, 1.0F);
+								player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, player.getSoundCategory(), 1.0F, 1.0F);
 							}
 						}
 
@@ -355,7 +355,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 							player.onEnchantmentCritical(targetEntity);
 						}
 
-						if (!player.worldObj.isRemote && targetEntity instanceof EntityPlayer) {
+						if (!player.world.isRemote && targetEntity instanceof EntityPlayer) {
 							EntityPlayer entityplayer = (EntityPlayer) targetEntity;
 							ItemStack itemstack2 = player.getHeldItemOffhand();
 							ItemStack itemstack3 = entityplayer.isHandActive() ? entityplayer.getActiveItemStack() : null;
@@ -400,15 +400,15 @@ public class SkillMelee extends Skill implements ISkillMelee {
 								targetEntity.setFire(j * 4);
 							}
 
-							if (player.worldObj instanceof WorldServer && f5 > 2.0F) {
+							if (player.world instanceof WorldServer && f5 > 2.0F) {
 								int k = (int) ((double) f5 * 0.5D);
-								((WorldServer) player.worldObj).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, targetEntity.posX, targetEntity.posY + (double) (targetEntity.height * 0.5F), targetEntity.posZ, k, 0.1D, 0.0D, 0.1D, 0.2D, new int[0]);
+								((WorldServer) player.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, targetEntity.posX, targetEntity.posY + (double) (targetEntity.height * 0.5F), targetEntity.posZ, k, 0.1D, 0.0D, 0.1D, 0.2D, new int[0]);
 							}
 						}
 
 						player.addExhaustion(0.3F);
 					} else {
-						player.worldObj.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, player.getSoundCategory(), 1.0F, 1.0F);
+						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, player.getSoundCategory(), 1.0F, 1.0F);
 
 						if (flag4) {
 							targetEntity.extinguish();
@@ -425,7 +425,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 		Entity entity = mc.getRenderViewEntity();
 
 		if (player != null) {
-			if (player.worldObj != null) {
+			if (player.world != null) {
 				mc.mcProfiler.startSection("pick");
 				double d0 = (double) mc.playerController.getBlockReachDistance();
 				mc.objectMouseOver = entity.rayTrace(d0, partialTicks);
@@ -452,7 +452,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 				pointedEntity = null;
 				Vec3d vec3d3 = null;
 				float f = 1.0F;
-				List<Entity> list = player.worldObj.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>() {
+				List<Entity> list = player.world.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>() {
 					public boolean apply(@Nullable Entity p_apply_1_) {
 						return p_apply_1_ != null && p_apply_1_.canBeCollidedWith();
 					}

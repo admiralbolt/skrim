@@ -39,7 +39,7 @@ public class CustomCreeper extends EntityCreeper {
 	}
 
 	public void explode() {
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			this.dead = true;
 			Explosion explosion = this.getExplosion();
 			explosion.doExplosionA();

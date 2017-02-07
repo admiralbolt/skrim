@@ -37,7 +37,7 @@ public class Napalm extends BlockTNT implements ItemModelProvider {
 		if (!worldIn.isRemote) {
 			CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("napalm", worldIn, (double) ((float) pos.getX() + 0.5F), (double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), explosionIn.getExplosivePlacedBy());
 			entitytntprimed.setFuse((short) (worldIn.rand.nextInt(entitytntprimed.getFuse() / 4) + entitytntprimed.getFuse() / 8));
-			worldIn.spawnEntityInWorld(entitytntprimed);
+			worldIn.spawnEntity(entitytntprimed);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class Napalm extends BlockTNT implements ItemModelProvider {
 		if (!worldIn.isRemote) {
 			if (((Boolean) state.getValue(EXPLODE)).booleanValue()) {
 				CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("napalm", worldIn, (double) ((float) pos.getX() + 0.5F), (double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), igniter);
-				worldIn.spawnEntityInWorld(entitytntprimed);
+				worldIn.spawnEntity(entitytntprimed);
 				worldIn.playSound((EntityPlayer) null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		}

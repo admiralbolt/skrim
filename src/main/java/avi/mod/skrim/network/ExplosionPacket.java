@@ -56,12 +56,12 @@ public class ExplosionPacket implements IMessage {
 		public IMessage onMessage(final ExplosionPacket message, MessageContext ctx) {
 			if (ctx.side.isClient()) {
 				final IThreadListener mainThread = Minecraft.getMinecraft();
-				final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+				final EntityPlayerSP player = Minecraft.getMinecraft().player;
 				mainThread.addScheduledTask(new Runnable() {
 					@Override
 					public void run() {
-						Entity entity = player.worldObj.getEntityByID(message.entityId);
-						Explosion explosion = CustomTNTPrimed.createExplosion(message.explosionType, player.worldObj, entity, message.posX, message.posY, message.posZ);
+						Entity entity = player.world.getEntityByID(message.entityId);
+						Explosion explosion = CustomTNTPrimed.createExplosion(message.explosionType, player.world, entity, message.posX, message.posY, message.posZ);
 						explosion.doExplosionA();
 						explosion.doExplosionB(true);
 					}

@@ -226,7 +226,7 @@ public class Skills {
 	}
 
 	public static void playFortuneSound(EntityPlayer player) {
-		player.worldObj.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 0.4F, 1.0F);
+		player.world.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 0.4F, 1.0F);
 	}
 
 	public static void applyAttributes(LivingUpdateEvent event) {

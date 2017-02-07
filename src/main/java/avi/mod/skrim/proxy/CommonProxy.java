@@ -7,7 +7,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.capabilities.ModCapabilities;
-import avi.mod.skrim.entity.ModEntities;
+import avi.mod.skrim.entities.ModEntities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.items.CustomBow;
@@ -59,7 +59,7 @@ public class CommonProxy {
 	}
 
 	public EntityPlayer getPlayerEntity(MessageContext context) {
-  	return context.getServerHandler().playerEntity;
+  	return context.getServerHandler().player;
   }
 
 	public void registerItemRenderer(Item item, int meta, String id) {

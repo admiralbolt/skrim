@@ -21,7 +21,7 @@ public class GuiEventHandler {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onInventoryOpen(GuiOpenEvent event) {
 		if (event.getGui() instanceof GuiInventory) {
-      event.setGui(new CustomGuiInventory(Minecraft.getMinecraft().thePlayer));
+      event.setGui(new CustomGuiInventory(Minecraft.getMinecraft().player));
     }
   }
 	
@@ -42,7 +42,7 @@ public class GuiEventHandler {
 	@SubscribeEvent
 	public void onRenderPost(RenderGameOverlayEvent.Post event) {
 		if (event.getType() == ElementType.FOOD) {
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			if (player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
 				SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);
 				if (ranged.hasAbility(4)) {

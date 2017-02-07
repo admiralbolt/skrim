@@ -1,4 +1,4 @@
-package avi.mod.skrim.entity;
+package avi.mod.skrim.entities;
 
 import net.minecraft.util.ResourceLocation;
 

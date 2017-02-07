@@ -30,7 +30,7 @@ public class HealthOverlay extends Gui {
 		TextureManager manager = this.mc.getTextureManager();
 		ScaledResolution scaledRes = new ScaledResolution(this.mc);
 		EntityPlayer entityplayer = (EntityPlayer) this.mc.getRenderViewEntity();
-		int health = MathHelper.ceiling_float_int(entityplayer.getHealth());
+		int health = MathHelper.ceil(entityplayer.getHealth());
 		boolean flag = this.healthUpdateCounter > (long) this.updateCounter && (this.healthUpdateCounter - (long) this.updateCounter) / 3L % 2L == 1L;		
 		
 		if (health < this.playerHealth && entityplayer.hurtResistantTime > 0) {
@@ -57,16 +57,16 @@ public class HealthOverlay extends Gui {
 		int i1 = scaledRes.getScaledWidth() / 2 + 91;
 		int j1 = scaledRes.getScaledHeight() - 39;
 		float maxHealth = (float) iattributeinstance.getAttributeValue();
-		int absorptionAmount = MathHelper.ceiling_float_int(entityplayer.getAbsorptionAmount());
-		int l1 = MathHelper.ceiling_float_int((maxHealth + (float) absorptionAmount) / 2.0F / 10.0F);
+		int absorptionAmount = MathHelper.ceil(entityplayer.getAbsorptionAmount());
+		int l1 = MathHelper.ceil((maxHealth + (float) absorptionAmount) / 2.0F / 10.0F);
 		int i2 = Math.max(10 - (l1 - 2), 3);
 		int j3 = -1;
 
 		if (entityplayer.isPotionActive(MobEffects.REGENERATION)) {
-			j3 = this.updateCounter % MathHelper.ceiling_float_int(maxHealth + 5.0F);
+			j3 = this.updateCounter % MathHelper.ceil(maxHealth + 5.0F);
 		}
 		
-		boolean hardCore = entityplayer.worldObj.getWorldInfo().isHardcoreModeEnabled();
+		boolean hardCore = entityplayer.world.getWorldInfo().isHardcoreModeEnabled();
 		int hardCoreOffset = (hardCore) ? 5 : 0;
 				
 		int absHeight = j1 - i2;

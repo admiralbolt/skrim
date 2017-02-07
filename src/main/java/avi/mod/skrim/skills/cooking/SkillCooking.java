@@ -292,7 +292,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			if (player.worldObj.getTotalWorldTime() % CHECK_TICKS == 0L) {
+			if (player.world.getTotalWorldTime() % CHECK_TICKS == 0L) {
 				if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 					SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
 					if (cooking.hasAngel && cooking.currentTicks > 0) {

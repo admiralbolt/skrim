@@ -48,7 +48,7 @@ public class OffHandAttackPacket implements IMessage {
 
 		public IMessage onMessage(final OffHandAttackPacket message, MessageContext ctx) {
     	if (ctx.side.isServer()) {
-    		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+    		final EntityPlayerMP player = ctx.getServerHandler().player;
     		player.getServerWorld();
         if (player != null) {
       		IThreadListener mainThread = player.getServerWorld();

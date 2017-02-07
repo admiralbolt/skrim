@@ -272,14 +272,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		if (targetItem != null && targetItem == ModItems.OVERALLS) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 				farming.addXp((EntityPlayerMP) event.player, 500);
 			}
 		} else if (targetItem != null && targetItem == magicBean) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 100)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 				farming.addXp((EntityPlayerMP) event.player, 5000);
 			}
@@ -288,12 +288,12 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	public static void applyOveralls(PlayerInteractEvent.RightClickBlock event) {
 		EntityPlayer player = event.getEntityPlayer();
-		if (player.worldObj.isRemote) {
+		if (player.world.isRemote) {
 			RayTraceResult result = player.rayTrace(5.0D, 1.0F);
 			if (result != null) {
 				if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
 					BlockPos targetPos = result.getBlockPos();
-					IBlockState targetState = player.worldObj.getBlockState(targetPos);
+					IBlockState targetState = player.world.getBlockState(targetPos);
 					Block targetBlock = targetState.getBlock();
 					if (validCrop(targetState)) {
 						InventoryPlayer inventory = player.inventory;
@@ -338,8 +338,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				if (farming.hasAbility(2)) {
 					BlockPos aboveLocation = new BlockPos(targetEntity.posX, targetEntity.posY, targetEntity.posZ);
 					BlockPos groundLocation = new BlockPos(aboveLocation.getX(), aboveLocation.getY() - 1, aboveLocation.getZ());
-					IBlockState aboveState = player.worldObj.getBlockState(aboveLocation);
-					IBlockState groundState = player.worldObj.getBlockState(groundLocation);
+					IBlockState aboveState = player.world.getBlockState(aboveLocation);
+					IBlockState groundState = player.world.getBlockState(groundLocation);
 					Block aboveBlock = aboveState.getBlock();
 					Block groundBlock = groundState.getBlock();
 					if (aboveBlock instanceof BlockAir && (groundBlock instanceof BlockDirt || groundBlock instanceof BlockGrass || groundBlock instanceof BlockFarmland)) {
@@ -349,9 +349,9 @@ public class SkillFarming extends Skill implements ISkillFarming {
 							Item mainItem = (mainStack != null) ? mainStack.getItem() : null;
 							Item offItem = (offStack != null) ? offStack.getItem() : null;
 							if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe || offItem instanceof ItemHoe || offItem instanceof CustomHoe) {
-								player.worldObj.setBlockState(groundLocation, Blocks.FARMLAND.getDefaultState());
+								player.world.setBlockState(groundLocation, Blocks.FARMLAND.getDefaultState());
 								IBlockState placedState = cropBlocks.get(Utils.rand.nextInt(cropBlocks.size())).getDefaultState();
-								player.worldObj.setBlockState(
+								player.world.setBlockState(
 									aboveLocation,
 									farming.cropWithGrowth(placedState)
 								);
@@ -369,13 +369,13 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			if (!player.worldObj.isRemote) {
+			if (!player.world.isRemote) {
 				if (player != null && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 					SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 					if (farming.hasAbility(3)) {
-						if (player.worldObj.getTotalWorldTime() % tanCheck == 0L) {
+						if (player.world.getTotalWorldTime() % tanCheck == 0L) {
 							BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
-							if (player.worldObj.isDaytime() && player.worldObj.canSeeSky(playerPos)) {
+							if (player.world.isDaytime() && player.world.canSeeSky(playerPos)) {
 								player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, tanDuration, 0, true, false));
 								player.addPotionEffect(new PotionEffect(MobEffects.SPEED, tanDuration, 0, true, false));
 							}

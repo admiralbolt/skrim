@@ -139,7 +139,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			if (!player.worldObj.isRemote) {
+			if (!player.world.isRemote) {
 				if (player != null && player.hasCapability(Skills.DEFENSE, EnumFacing.NORTH)) {
 					SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
 					if (defense.hasAbility(1)) {
@@ -156,14 +156,14 @@ public class SkillDefense extends Skill implements ISkillDefense {
 						}
 
 						if (defense.hasAbility(2)) {
-							if (player.worldObj.getWorldTime() % 60L == 0L) {
+							if (player.world.getWorldTime() % 60L == 0L) {
 								BlockPos pos = player.getPosition();
 								int x = pos.getX();
 								int y = pos.getY();
 								int z = pos.getZ();
 								AxisAlignedBB bound = new AxisAlignedBB(x - CAPTAIN_RANGE, y - CAPTAIN_RANGE, z - CAPTAIN_RANGE, x + CAPTAIN_RANGE, y + CAPTAIN_RANGE, z + CAPTAIN_RANGE);
 
-								List<EntityPlayer> players = player.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bound);
+								List<EntityPlayer> players = player.world.getEntitiesWithinAABB(EntityPlayer.class, bound);
 								for (EntityPlayer playa : players) {
 									PotionEffect activeResistance = player.getActivePotionEffect(MobEffects.RESISTANCE);
 									PotionEffect addResistance = new PotionEffect(MobEffects.RESISTANCE, CAPTAIN_DURATION, 0, false, false);
@@ -186,8 +186,8 @@ public class SkillDefense extends Skill implements ISkillDefense {
 							}
 
 							if (defense.hasAbility(4)) {
-								if (player.worldObj.getTotalWorldTime() % 20L == 0L) {
-									if (!player.worldObj.isRemote) {
+								if (player.world.getTotalWorldTime() % 20L == 0L) {
+									if (!player.world.isRemote) {
 										boolean stance = (player.isSneaking() && isBlocking(player));
 										defense.stalwartTicks = (stance) ? defense.stalwartTicks + 20 : 0;
 										player.setEntityInvulnerable(defense.stalwartTicks >= STALWART_ACTIVATION_TICKS);

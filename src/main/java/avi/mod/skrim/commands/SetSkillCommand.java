@@ -38,17 +38,17 @@ public class SetSkillCommand extends CommandBase implements ICommand {
     }
 
     @Override
-    public String getCommandName() {
+    public String getName() {
         return "setskill";
     }
 
     @Override
-    public String getCommandUsage(ICommandSender var1) {
+    public String getUsage(ICommandSender var1) {
         return "setskill <name> <level> [player]";
     }
 
     @Override
-    public List getCommandAliases() {
+    public List<String> getAliases() {
         return this.aliases;
     }
 
@@ -82,22 +82,22 @@ public class SetSkillCommand extends CommandBase implements ICommand {
           		if (player instanceof EntityPlayerMP) {
           			SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) player);
           		}
-          		sender.addChatMessage(new TextComponentString("Set skill: " + args[0] + " to level: " + level));
+          		sender.sendMessage(new TextComponentString("Set skill: " + args[0] + " to level: " + level));
       			}
       		}
       	} else {
-      		sender.addChatMessage(new TextComponentString(this.getCommandUsage(sender)));
+      		sender.sendMessage(new TextComponentString(this.getUsage(sender)));
       	}
       }
 		}
 
 		@Override
 		public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-      return sender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName());
+			return sender.canUseCommand(this.getRequiredPermissionLevel(), this.getName());
 		}
 
 		public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
-        return args.length == 3 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : Collections.<String>emptyList();
+        return args.length == 3 ? getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : Collections.<String>emptyList();
     }
 
 		public int getRequiredPermissionLevel() {

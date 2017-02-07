@@ -33,7 +33,7 @@ public class SpringheelBoots extends ArtifactArmor {
 			Entity entity = event.getEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if (player.worldObj.isRemote) {
+				if (player.world.isRemote) {
 					if (Utils.isWearingArmor(player, ModItems.SPRINGHEEL_BOOTS)) {
 						player.motionY *= 3;
 						player.setVelocity(player.motionX, player.motionY, player.motionZ);

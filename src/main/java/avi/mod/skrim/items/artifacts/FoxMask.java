@@ -53,7 +53,7 @@ public class FoxMask extends ArtifactArmor {
 			Entity entity = event.getEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if (player.worldObj.getTotalWorldTime() % 60L == 0L && !player.worldObj.isRemote) {
+				if (player.world.getTotalWorldTime() % 60L == 0L && !player.world.isRemote) {
 					if (Utils.isWearingArmor(player, ModItems.FOX_MASK)) {
 						for (Potion potion : effects) {
 							PotionEffect activeEffect = player.getActivePotionEffect(potion);
@@ -66,7 +66,7 @@ public class FoxMask extends ArtifactArmor {
 						}
 					}
 				}
-				if (!player.worldObj.isRemote && player.isSneaking()) {
+				if (!player.world.isRemote && player.isSneaking()) {
 					PotionEffect activeEffect = player.getActivePotionEffect(MobEffects.INVISIBILITY);
 					PotionEffect newEffect = new PotionEffect(MobEffects.INVISIBILITY, 3, 0, true, false);
 					if (activeEffect != null) {

@@ -76,7 +76,7 @@ public class RocketLauncher extends ItemBow implements ItemModelProvider {
 						Rocket rocket = new Rocket(worldIn, entityplayer, itemstack);
 						rocket.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 						stack.damageItem(1, entityplayer);
-						worldIn.spawnEntityInWorld(rocket);
+						worldIn.spawnEntity(rocket);
 					}
 
 					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT,

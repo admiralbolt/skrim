@@ -87,7 +87,7 @@ public class MegaChicken extends EntityChicken {
 	public static void onChickenDeath(LivingDeathEvent event) {
 		if (event.getEntity() instanceof EntityChicken) {
 			EntityChicken chicken = (EntityChicken) event.getEntity();
-			World world = event.getEntity().worldObj;
+			World world = event.getEntity().world;
 			if (world.isRemote) {
 				if (Utils.rand.nextDouble() < 0.005) {
 					SkrimPacketHandler.INSTANCE.sendToServer(new SpawnEntityPacket(MegaChicken.name, true, chicken.posX, chicken.posY, chicken.posZ));

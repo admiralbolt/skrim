@@ -73,7 +73,7 @@ public abstract class CustomPlant extends BlockBush implements ItemModelProvider
 	}
 
 	protected int getBonemealAgeIncrease(World worldIn) {
-		return MathHelper.getRandomIntegerInRange(worldIn.rand, 2, 5);
+		return MathHelper.getInt(worldIn.rand, 2, 5);
 	}
 
 	public void finishedGrowing(World worldIn, Random rand, BlockPos pos, IBlockState state) {

@@ -116,10 +116,10 @@ public class SkillScreen extends GuiScreen {
   	int textLeft = this.left + this.scrollPaddingLeft + this.scrollBarWidth + this.titlePaddingLeft;
   	int titleTop = this.top + this.paddingTop - this.scrollY;
   	if (shouldRender(titleTop, titleTop + 7)) {
-  		this.mc.fontRendererObj.drawString("Total Skill Level: " + Skills.getTotalSkillLevels(this.player), textLeft, titleTop, this.headerColor);
+  		this.mc.fontRenderer.drawString("Total Skill Level: " + Skills.getTotalSkillLevels(this.player), textLeft, titleTop, this.headerColor);
   	}
     if (shouldRender(titleTop + 12, titleTop + 19)) {
-  		this.mc.fontRendererObj.drawString("Total Experience Boost: " + Utils.formatPercent(Skills.getTotalXpBonus(this.player)) + "%" , textLeft, titleTop + 12, this.headerColor);
+  		this.mc.fontRenderer.drawString("Total Experience Boost: " + Utils.formatPercent(Skills.getTotalXpBonus(this.player)) + "%" , textLeft, titleTop + 12, this.headerColor);
     }
     if (shouldRender(titleTop + 23, titleTop + 25)) {
     	this.drawHorizontalLine(textLeft, textLeft + this.levelBarWidth, titleTop + 24, this.dividerColor);
@@ -173,8 +173,8 @@ public class SkillScreen extends GuiScreen {
   public void drawSkillHeader(Skill skill, int left, int top) {
     int textLeft = left + this.skillPaddingDesc + this.skillIconSize;
     if (this.shouldRender(top, top + 7)) {
-      this.mc.fontRendererObj.drawString(skill.name, textLeft, top, this.headerColor);
-      this.mc.fontRendererObj.drawString("Level " + skill.level, this.levelTextLeft, top, this.headerColor);
+      this.mc.fontRenderer.drawString(skill.name, textLeft, top, this.headerColor);
+      this.mc.fontRenderer.drawString("Level " + skill.level, this.levelTextLeft, top, this.headerColor);
     }
   }
 
@@ -186,9 +186,9 @@ public class SkillScreen extends GuiScreen {
     if (shouldRender(levelTop, levelBottom)) {
       this.drawRect(levelLeft, levelTop, levelRight, levelBottom, this.levelBarColor);
       String levelText = skill.xp + " / " + skill.getNextLevelTotal();
-      int levelTextWidth = this.mc.fontRendererObj.getStringWidth(levelText);
+      int levelTextWidth = this.mc.fontRenderer.getStringWidth(levelText);
       int levelTextLeft = levelLeft + (int) (this.levelBarWidth / 2) - (int) ((double) levelTextWidth / 2);
-      this.mc.fontRendererObj.drawString(levelText, levelTextLeft, levelTop + 1, this.levelBarTextColor);
+      this.mc.fontRenderer.drawString(levelText, levelTextLeft, levelTop + 1, this.levelBarTextColor);
     }
   }
 
@@ -269,13 +269,13 @@ public class SkillScreen extends GuiScreen {
   public void initGui() {
     this.inventoryTab = new GuiButton(1995, this.left, this.top - 20 - 1, 176, 20, "Inventory");
     this.buttonList.add(this.inventoryTab);
-    this.player = Minecraft.getMinecraft().thePlayer;
+    this.player = Minecraft.getMinecraft().player;
   }
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button == this.inventoryTab) {
-      this.mc.displayGuiScreen(new CustomGuiInventory(Minecraft.getMinecraft().thePlayer));
+      this.mc.displayGuiScreen(new CustomGuiInventory(Minecraft.getMinecraft().player));
     }
   }
 

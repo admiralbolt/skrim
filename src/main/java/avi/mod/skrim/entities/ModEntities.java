@@ -1,4 +1,4 @@
-package avi.mod.skrim.entity;
+package avi.mod.skrim.entities;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.entities.monster.BioCreeper;

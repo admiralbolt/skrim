@@ -63,7 +63,7 @@ public class SpawnParticlePacket implements IMessage {
 		@Override
 		public IMessage onMessage(final SpawnParticlePacket message, MessageContext ctx) {
 			if (ctx.side.isClient()) {
-				final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+				final EntityPlayerSP player = Minecraft.getMinecraft().player;
 				IThreadListener mainThread = Minecraft.getMinecraft();
 				mainThread.addScheduledTask(new Runnable() {
 					@Override
@@ -72,7 +72,7 @@ public class SpawnParticlePacket implements IMessage {
 							double d0 = Utils.rand.nextGaussian() * 0.03D;
 							double d1 = Utils.rand.nextGaussian() * 0.03D;
 							double d2 = Utils.rand.nextGaussian() * 0.03D;
-							player.worldObj.spawnParticle(EnumParticleTypes.valueOf(message.particle), message.x + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, message.y + (double) (Utils.rand.nextFloat() * message.height), message.z + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, d0, d1, d2);
+							player.world.spawnParticle(EnumParticleTypes.valueOf(message.particle), message.x + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, message.y + (double) (Utils.rand.nextFloat() * message.height), message.z + (double) (Utils.rand.nextFloat() * message.width * 2.0F) - (double) message.width, d0, d1, d2);
 						}
 					}
 				});

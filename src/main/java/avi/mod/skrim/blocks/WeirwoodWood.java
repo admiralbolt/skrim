@@ -2,13 +2,8 @@ package avi.mod.skrim.blocks;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import avi.mod.skrim.items.ModItems;
-import avi.mod.skrim.network.SkrimPacketHandler;
-import avi.mod.skrim.network.SpawnParticlePacket;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
@@ -18,7 +13,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -87,7 +81,7 @@ public class WeirwoodWood extends BlockBase {
 							}
 							return true;
 						}
-					} else if (Obfuscation.isEmptyStack(heldItem)) {
+					} else if (heldItem.isEmpty()) {
 						// TELEPORT N' SHIT
 						if (!worldIn.isRemote) {
 							BlockPos teleportLoc = WeirwoodCoords.getCoord(playerIn);

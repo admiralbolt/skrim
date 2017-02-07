@@ -24,17 +24,17 @@ public class WTFDIDCommand extends CommandBase implements ICommand {
 	}
 
 	@Override
-	public String getCommandName() {
+	public String getName() {
 		return "wtfdid";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender var1) {
+	public String getUsage(ICommandSender var1) {
 		return "wtfdid";
 	}
 
 	@Override
-	public List getCommandAliases() {
+	public List<String> getAliases() {
 		return this.aliases;
 	}
 
@@ -56,7 +56,7 @@ public class WTFDIDCommand extends CommandBase implements ICommand {
 			System.out.println("Not processing on Client side WTFDID");
 		} else {
 			EntityPlayer player = getCommandSenderAsPlayer(sender);
-			sender.addChatMessage(new TextComponentString(PlayerCoords.getLastDeath(player)));
+			sender.sendMessage(new TextComponentString(PlayerCoords.getLastDeath(player)));
 		}
 	}
 

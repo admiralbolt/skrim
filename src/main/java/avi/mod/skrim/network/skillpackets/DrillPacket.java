@@ -45,18 +45,18 @@ public class DrillPacket implements IMessage {
 	public static class DrillPacketHandler implements IMessageHandler<DrillPacket, IMessage> {
 
 		public IMessage onMessage(final DrillPacket message, MessageContext ctx) {
-    	if (ctx.side.isServer()) {
-    		final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    		player.getServerWorld();
-        if (player != null) {
-        	final WorldServer world = player.getServerWorld();
-      		world.addScheduledTask(new Runnable() {
-      			@Override
-      			public void run() {
-      				ItemStack mainStack = player.getHeldItemMainhand();
-      				Item mainItem = mainStack.getItem();
-      				BlockPos targetPos = new BlockPos(message.x, message.y, message.z);
-      				IBlockState targetState = world.getBlockState(targetPos);
+			if (ctx.side.isServer()) {
+				final EntityPlayerMP player = ctx.getServerHandler().player;
+				player.getServerWorld();
+				if (player != null) {
+					final WorldServer world = player.getServerWorld();
+					world.addScheduledTask(new Runnable() {
+						@Override
+						public void run() {
+							ItemStack mainStack = player.getHeldItemMainhand();
+							Item mainItem = mainStack.getItem();
+							BlockPos targetPos = new BlockPos(message.x, message.y, message.z);
+							IBlockState targetState = world.getBlockState(targetPos);
 							Block targetBlock = targetState.getBlock();
 							blockDrill: for (int y = targetPos.getY(); y >= 1; y--) {
 								if (targetBlock.canEntityDestroy(targetState, world, targetPos, player)) {
@@ -72,11 +72,11 @@ public class DrillPacket implements IMessage {
 								targetState = world.getBlockState(targetPos);
 								targetBlock = targetState.getBlock();
 							}
-      			}
-      		});
-        }
-    	}
-    	return null;
+						}
+					});
+				}
+			}
+			return null;
 		}
 
 	}

@@ -1,9 +1,6 @@
 package avi.mod.skrim.tileentity;
 
 import javax.annotation.Nullable;
-
-import avi.mod.skrim.blocks.MegaChest;
-import avi.mod.skrim.inventory.ContainerMegaChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +14,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -28,259 +25,417 @@ import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityMegaChest extends TileEntityChest implements ITickable {
-	private NonNullList<ItemStack> chestContents = NonNullList.<ItemStack>func_191197_a(54, ItemStack.field_190927_a);
-	/** Determines if the check for adjacent chests has taken place. */
-	public boolean adjacentChestChecked;
-	/** Contains the chest tile located adjacent to this one (if any) */
-	public TileEntityMegaChest adjacentChestZNeg;
-	/** Contains the chest tile located adjacent to this one (if any) */
-	public TileEntityMegaChest adjacentChestXPos;
-	/** Contains the chest tile located adjacent to this one (if any) */
-	public TileEntityMegaChest adjacentChestXNeg;
-	/** Contains the chest tile located adjacent to this one (if any) */
-	public TileEntityMegaChest adjacentChestZPos;
-	/** The current angle of the lid (between 0 and 1) */
-	public float lidAngle;
-	/** The angle of the lid last tick */
-	public float prevLidAngle;
-	/** The number of players currently using this chest */
-	public int numPlayersUsing;
-	/** Server sync counter (once per 20 ticks) */
-	private int ticksSinceSync;
-	private BlockChest.Type cachedChestType;
+public class TileEntityMegaChest extends TileEntityLockableLoot implements ITickable
+{
+    private NonNullList<ItemStack> chestContents = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
+    /** Determines if the check for adjacent chests has taken place. */
+    public boolean adjacentChestChecked;
+    /** Contains the chest tile located adjacent to this one (if any) */
+    public TileEntityMegaChest adjacentChestZNeg;
+    /** Contains the chest tile located adjacent to this one (if any) */
+    public TileEntityMegaChest adjacentChestXPos;
+    /** Contains the chest tile located adjacent to this one (if any) */
+    public TileEntityMegaChest adjacentChestXNeg;
+    /** Contains the chest tile located adjacent to this one (if any) */
+    public TileEntityMegaChest adjacentChestZPos;
+    /** The current angle of the lid (between 0 and 1) */
+    public float lidAngle;
+    /** The angle of the lid last tick */
+    public float prevLidAngle;
+    /** The number of players currently using this chest */
+    public int numPlayersUsing;
+    /** Server sync counter (once per 20 ticks) */
+    private int ticksSinceSync;
+    private BlockChest.Type cachedChestType;
 
-	public TileEntityMegaChest() {
-	}
+    public TileEntityMegaChest()
+    {
+    }
 
-	public TileEntityMegaChest(BlockChest.Type typeIn) {
-		this.cachedChestType = typeIn;
-	}
+    public TileEntityMegaChest(BlockChest.Type typeIn)
+    {
+        this.cachedChestType = typeIn;
+    }
 
-	/**
-	 * Returns the number of slots in the inventory.
-	 */
-	@Override
-	public int getSizeInventory() {
-		return 54;
-	}
+    /**
+     * Returns the number of slots in the inventory.
+     */
+    public int getSizeInventory()
+    {
+        return 27;
+    }
 
-	@Override
-	protected NonNullList<ItemStack> func_190576_q() {
-		return this.chestContents;
-	}
+    public boolean isEmpty()
+    {
+        for (ItemStack itemstack : this.chestContents)
+        {
+            if (!itemstack.isEmpty())
+            {
+                return false;
+            }
+        }
 
-	@SuppressWarnings("incomplete-switch")
-	private void setNeighbor(TileEntityMegaChest chestTe, EnumFacing side) {
-		if (chestTe.isInvalid()) {
-			this.adjacentChestChecked = false;
-		} else if (this.adjacentChestChecked) {
-			switch (side) {
-				case NORTH:
+        return true;
+    }
 
-					if (this.adjacentChestZNeg != chestTe) {
-						this.adjacentChestChecked = false;
-					}
+    /**
+     * Get the name of this object. For players this returns their username
+     */
+    public String getName()
+    {
+        return this.hasCustomName() ? this.customName : "container.chest";
+    }
 
-					break;
-				case SOUTH:
+    public static void registerFixesChest(DataFixer fixer)
+    {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityMegaChest.class, new String[] {"Items"}));
+    }
 
-					if (this.adjacentChestZPos != chestTe) {
-						this.adjacentChestChecked = false;
-					}
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+        this.chestContents = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
-					break;
-				case EAST:
+        if (!this.checkLootAndRead(compound))
+        {
+            ItemStackHelper.loadAllItems(compound, this.chestContents);
+        }
 
-					if (this.adjacentChestXPos != chestTe) {
-						this.adjacentChestChecked = false;
-					}
+        if (compound.hasKey("CustomName", 8))
+        {
+            this.customName = compound.getString("CustomName");
+        }
+    }
 
-					break;
-				case WEST:
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        super.writeToNBT(compound);
 
-					if (this.adjacentChestXNeg != chestTe) {
-						this.adjacentChestChecked = false;
-					}
-			}
-		}
-	}
+        if (!this.checkLootAndWrite(compound))
+        {
+            ItemStackHelper.saveAllItems(compound, this.chestContents);
+        }
 
-	/**
-	 * Performs the check for adjacent chests to determine if this chest is
-	 * double or not.
-	 */
-	@Override
-	public void checkForAdjacentChests() {
-		if (!this.adjacentChestChecked) {
-			this.adjacentChestChecked = true;
-			this.adjacentChestXNeg = this.getAdjacentChest(EnumFacing.WEST);
-			this.adjacentChestXPos = this.getAdjacentChest(EnumFacing.EAST);
-			this.adjacentChestZNeg = this.getAdjacentChest(EnumFacing.NORTH);
-			this.adjacentChestZPos = this.getAdjacentChest(EnumFacing.SOUTH);
-		}
-	}
+        if (this.hasCustomName())
+        {
+            compound.setString("CustomName", this.customName);
+        }
 
-	@Override
-	@Nullable
-	protected TileEntityMegaChest getAdjacentChest(EnumFacing side) {
-		BlockPos blockpos = this.pos.offset(side);
+        return compound;
+    }
 
-		if (this.isMegaChestAt(blockpos)) {
-			TileEntity tileentity = this.worldObj.getTileEntity(blockpos);
+    /**
+     * Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended.
+     */
+    public int getInventoryStackLimit()
+    {
+        return 64;
+    }
 
-			if (tileentity instanceof TileEntityMegaChest) {
-				TileEntityMegaChest tileentitychest = (TileEntityMegaChest) tileentity;
-				tileentitychest.setNeighbor(this, side.getOpposite());
-				return tileentitychest;
-			}
-		}
+    public void updateContainingBlockInfo()
+    {
+        super.updateContainingBlockInfo();
+        this.adjacentChestChecked = false;
+        doubleChestHandler = null;
+    }
 
-		return null;
-	}
+    @SuppressWarnings("incomplete-switch")
+    private void setNeighbor(TileEntityMegaChest chestTe, EnumFacing side)
+    {
+        if (chestTe.isInvalid())
+        {
+            this.adjacentChestChecked = false;
+        }
+        else if (this.adjacentChestChecked)
+        {
+            switch (side)
+            {
+                case NORTH:
 
-	private boolean isMegaChestAt(BlockPos posIn) {
-		if (this.worldObj == null) {
-			return false;
-		} else {
-			Block block = this.worldObj.getBlockState(posIn).getBlock();
-			return block instanceof MegaChest && ((MegaChest) block).chestType == this.getChestType();
-		}
-	}
+                    if (this.adjacentChestZNeg != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
 
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-		this.fillWithLoot(playerIn);
-		return new ContainerMegaChest(playerInventory, this, playerIn);
-	}
+                    break;
+                case SOUTH:
 
-	/**
-	 * Like the old updateEntity(), except more generic.
-	 */
-	@Override
-	public void update() {
-		this.checkForAdjacentChests();
-		int i = this.pos.getX();
-		int j = this.pos.getY();
-		int k = this.pos.getZ();
-		++this.ticksSinceSync;
+                    if (this.adjacentChestZPos != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
 
-		if (!this.worldObj.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + i + j + k) % 200 == 0) {
-			this.numPlayersUsing = 0;
-			float f = 5.0F;
+                    break;
+                case EAST:
 
-			for (EntityPlayer entityplayer : this.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
-					new AxisAlignedBB((double) ((float) i - 5.0F), (double) ((float) j - 5.0F), (double) ((float) k - 5.0F), (double) ((float) (i + 1) + 5.0F),
-							(double) ((float) (j + 1) + 5.0F), (double) ((float) (k + 1) + 5.0F)))) {
-				if (entityplayer.openContainer instanceof ContainerChest) {
-					IInventory iinventory = ((ContainerChest) entityplayer.openContainer).getLowerChestInventory();
+                    if (this.adjacentChestXPos != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
 
-					if (iinventory == this || iinventory instanceof InventoryLargeChest && ((InventoryLargeChest) iinventory).isPartOfLargeChest(this)) {
-						++this.numPlayersUsing;
-					}
-				}
-			}
-		}
+                    break;
+                case WEST:
 
-		this.prevLidAngle = this.lidAngle;
-		float f1 = 0.1F;
+                    if (this.adjacentChestXNeg != chestTe)
+                    {
+                        this.adjacentChestChecked = false;
+                    }
+            }
+        }
+    }
 
-		if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null) {
-			double d1 = (double) i + 0.5D;
-			double d2 = (double) k + 0.5D;
+    /**
+     * Performs the check for adjacent chests to determine if this chest is double or not.
+     */
+    public void checkForAdjacentChests()
+    {
+        if (!this.adjacentChestChecked)
+        {
+            this.adjacentChestChecked = true;
+            this.adjacentChestXNeg = this.getAdjacentChest(EnumFacing.WEST);
+            this.adjacentChestXPos = this.getAdjacentChest(EnumFacing.EAST);
+            this.adjacentChestZNeg = this.getAdjacentChest(EnumFacing.NORTH);
+            this.adjacentChestZPos = this.getAdjacentChest(EnumFacing.SOUTH);
+        }
+    }
 
-			if (this.adjacentChestZPos != null) {
-				d2 += 0.5D;
-			}
+    @Nullable
+    protected TileEntityMegaChest getAdjacentChest(EnumFacing side)
+    {
+        BlockPos blockpos = this.pos.offset(side);
 
-			if (this.adjacentChestXPos != null) {
-				d1 += 0.5D;
-			}
+        if (this.isChestAt(blockpos))
+        {
+            TileEntity tileentity = this.world.getTileEntity(blockpos);
 
-			this.worldObj.playSound((EntityPlayer) null, d1, (double) j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F,
-					this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
-		}
+            if (tileentity instanceof TileEntityMegaChest)
+            {
+                TileEntityMegaChest tileentitychest = (TileEntityMegaChest)tileentity;
+                tileentitychest.setNeighbor(this, side.getOpposite());
+                return tileentitychest;
+            }
+        }
 
-		if (this.numPlayersUsing == 0 && this.lidAngle > 0.0F || this.numPlayersUsing > 0 && this.lidAngle < 1.0F) {
-			float f2 = this.lidAngle;
+        return null;
+    }
 
-			if (this.numPlayersUsing > 0) {
-				this.lidAngle += 0.1F;
-			} else {
-				this.lidAngle -= 0.1F;
-			}
+    private boolean isChestAt(BlockPos posIn)
+    {
+        if (this.world == null)
+        {
+            return false;
+        }
+        else
+        {
+            Block block = this.world.getBlockState(posIn).getBlock();
+            return block instanceof BlockChest && ((BlockChest)block).chestType == this.getChestType();
+        }
+    }
 
-			if (this.lidAngle > 1.0F) {
-				this.lidAngle = 1.0F;
-			}
+    /**
+     * Like the old updateEntity(), except more generic.
+     */
+    public void update()
+    {
+        this.checkForAdjacentChests();
+        int i = this.pos.getX();
+        int j = this.pos.getY();
+        int k = this.pos.getZ();
+        ++this.ticksSinceSync;
 
-			float f3 = 0.5F;
+        if (!this.world.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + i + j + k) % 200 == 0)
+        {
+            this.numPlayersUsing = 0;
+            float f = 5.0F;
 
-			if (this.lidAngle < 0.5F && f2 >= 0.5F && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null) {
-				double d3 = (double) i + 0.5D;
-				double d0 = (double) k + 0.5D;
+            for (EntityPlayer entityplayer : this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((double)((float)i - 5.0F), (double)((float)j - 5.0F), (double)((float)k - 5.0F), (double)((float)(i + 1) + 5.0F), (double)((float)(j + 1) + 5.0F), (double)((float)(k + 1) + 5.0F))))
+            {
+                if (entityplayer.openContainer instanceof ContainerChest)
+                {
+                    IInventory iinventory = ((ContainerChest)entityplayer.openContainer).getLowerChestInventory();
 
-				if (this.adjacentChestZPos != null) {
-					d0 += 0.5D;
-				}
+                    if (iinventory == this || iinventory instanceof InventoryLargeChest && ((InventoryLargeChest)iinventory).isPartOfLargeChest(this))
+                    {
+                        ++this.numPlayersUsing;
+                    }
+                }
+            }
+        }
 
-				if (this.adjacentChestXPos != null) {
-					d3 += 0.5D;
-				}
+        this.prevLidAngle = this.lidAngle;
+        float f1 = 0.1F;
 
-				this.worldObj.playSound((EntityPlayer) null, d3, (double) j + 0.5D, d0, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F,
-						this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
-			}
+        if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null)
+        {
+            double d1 = (double)i + 0.5D;
+            double d2 = (double)k + 0.5D;
 
-			if (this.lidAngle < 0.0F) {
-				this.lidAngle = 0.0F;
-			}
-		}
-	}
+            if (this.adjacentChestZPos != null)
+            {
+                d2 += 0.5D;
+            }
 
-	public static void registerFixesChest(DataFixer fixer) {
-		fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityChest.class, new String[] { "Items" }));
-	}
+            if (this.adjacentChestXPos != null)
+            {
+                d1 += 0.5D;
+            }
 
-	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		this.chestContents = NonNullList.<ItemStack>func_191197_a(this.getSizeInventory(), ItemStack.field_190927_a);
+            this.world.playSound((EntityPlayer)null, d1, (double)j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+        }
 
-		if (!this.checkLootAndRead(compound)) {
-			ItemStackHelper.func_191283_b(compound, this.chestContents);
-		}
+        if (this.numPlayersUsing == 0 && this.lidAngle > 0.0F || this.numPlayersUsing > 0 && this.lidAngle < 1.0F)
+        {
+            float f2 = this.lidAngle;
 
-		if (compound.hasKey("CustomName", 8)) {
-			this.field_190577_o = compound.getString("CustomName");
-		}
-	}
+            if (this.numPlayersUsing > 0)
+            {
+                this.lidAngle += 0.1F;
+            }
+            else
+            {
+                this.lidAngle -= 0.1F;
+            }
 
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
-		return compound;
-	}
+            if (this.lidAngle > 1.0F)
+            {
+                this.lidAngle = 1.0F;
+            }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, net.minecraft.util.EnumFacing facing) {
-		if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			if (doubleChestHandler == null || doubleChestHandler.needsRefresh())
-				doubleChestHandler = net.minecraftforge.items.VanillaDoubleChestItemHandler.get(this);
-			if (doubleChestHandler != null && doubleChestHandler != net.minecraftforge.items.VanillaDoubleChestItemHandler.NO_ADJACENT_CHESTS_INSTANCE)
-				return (T) doubleChestHandler;
-		}
-		return super.getCapability(capability, facing);
-	}
+            float f3 = 0.5F;
 
-	public net.minecraftforge.items.IItemHandler getSingleChestHandler() {
-		return super.getCapability(net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-	}
+            if (this.lidAngle < 0.5F && f2 >= 0.5F && this.adjacentChestZNeg == null && this.adjacentChestXNeg == null)
+            {
+                double d3 = (double)i + 0.5D;
+                double d0 = (double)k + 0.5D;
 
-	@Override
-	public String getGuiID() {
-		return "skrim:mega_chest";
-	}
+                if (this.adjacentChestZPos != null)
+                {
+                    d0 += 0.5D;
+                }
 
+                if (this.adjacentChestXPos != null)
+                {
+                    d3 += 0.5D;
+                }
+
+                this.world.playSound((EntityPlayer)null, d3, (double)j + 0.5D, d0, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+            }
+
+            if (this.lidAngle < 0.0F)
+            {
+                this.lidAngle = 0.0F;
+            }
+        }
+    }
+
+    public boolean receiveClientEvent(int id, int type)
+    {
+        if (id == 1)
+        {
+            this.numPlayersUsing = type;
+            return true;
+        }
+        else
+        {
+            return super.receiveClientEvent(id, type);
+        }
+    }
+
+    public void openInventory(EntityPlayer player)
+    {
+        if (!player.isSpectator())
+        {
+            if (this.numPlayersUsing < 0)
+            {
+                this.numPlayersUsing = 0;
+            }
+
+            ++this.numPlayersUsing;
+            this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, this.getBlockType(), false);
+
+            if (this.getChestType() == BlockChest.Type.TRAP)
+            {
+                this.world.notifyNeighborsOfStateChange(this.pos.down(), this.getBlockType(), false);
+            }
+        }
+    }
+
+    public void closeInventory(EntityPlayer player)
+    {
+        if (!player.isSpectator() && this.getBlockType() instanceof BlockChest)
+        {
+            --this.numPlayersUsing;
+            this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, this.getBlockType(), false);
+
+            if (this.getChestType() == BlockChest.Type.TRAP)
+            {
+                this.world.notifyNeighborsOfStateChange(this.pos.down(), this.getBlockType(), false);
+            }
+        }
+    }
+
+    public net.minecraftforge.items.VanillaDoubleChestItemHandler doubleChestHandler;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
+    {
+        if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if(doubleChestHandler == null || doubleChestHandler.needsRefresh())
+          //      doubleChestHandler = net.minecraftforge.items.VanillaDoubleChestItemHandler.get(this);
+            if (doubleChestHandler != null && doubleChestHandler != net.minecraftforge.items.VanillaDoubleChestItemHandler.NO_ADJACENT_CHESTS_INSTANCE)
+                return (T) doubleChestHandler;
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    public net.minecraftforge.items.IItemHandler getSingleChestHandler()
+    {
+        return super.getCapability(net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+    }
+
+
+    /**
+     * invalidates a tile entity
+     */
+    public void invalidate()
+    {
+        super.invalidate();
+        this.updateContainingBlockInfo();
+        this.checkForAdjacentChests();
+    }
+
+    public BlockChest.Type getChestType()
+    {
+        if (this.cachedChestType == null)
+        {
+            if (this.world == null || !(this.getBlockType() instanceof BlockChest))
+            {
+                return BlockChest.Type.BASIC;
+            }
+
+            this.cachedChestType = ((BlockChest)this.getBlockType()).chestType;
+        }
+
+        return this.cachedChestType;
+    }
+
+    public String getGuiID()
+    {
+        return "minecraft:chest";
+    }
+
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    {
+        this.fillWithLoot(playerIn);
+        return new ContainerChest(playerInventory, this, playerIn);
+    }
+
+    protected NonNullList<ItemStack> getItems()
+    {
+        return this.chestContents;
+    }
 }

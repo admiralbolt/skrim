@@ -174,7 +174,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 				if (xpMap.containsKey(flowerName) && Utils.rand.nextDouble() < botany.getFortuneChance()) {
 					ItemStack flowerStack = new ItemStack(droppedItem, botany.getFortuneAmount() - 1, meta);
 					EntityItem entityItem = new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), flowerStack);
-					event.getWorld().spawnEntityInWorld(entityItem);
+					event.getWorld().spawnEntity(entityItem);
 					Skills.playFortuneSound(player);
 					addXp += 200;
 				}
@@ -230,22 +230,22 @@ public class SkillBotany extends Skill implements ISkillBotany {
 						for (int j = -radius; j <= radius; j++) {
 							if (i != 0 || j != 0) {
 								BlockPos airPos = new BlockPos(placedPos.getX() + i, placedPos.getY(), placedPos.getZ() + j);
-								IBlockState airState = player.worldObj.getBlockState(airPos);
+								IBlockState airState = player.world.getBlockState(airPos);
 								if (airState != null) {
 									Block airBlock = airState.getBlock();
-									if (airBlock.isAir(airState, player.worldObj, airPos)) {
+									if (airBlock.isAir(airState, player.world, airPos)) {
 										BlockPos dirtPos = new BlockPos(airPos.getX(), airPos.getY() - 1, airPos.getZ());
-										IBlockState dirtState = player.worldObj.getBlockState(dirtPos);
+										IBlockState dirtState = player.world.getBlockState(dirtPos);
 										if (dirtState != null) {
 											Block dirtBlock = dirtState.getBlock();
 											if (dirtBlock instanceof BlockDirt || dirtBlock instanceof BlockGrass || dirtBlock instanceof BlockFarmland) {
 												if (placedBlock instanceof BlockDoublePlant) {
-													doublePlant.placeAt(player.worldObj, airPos, placedState.getValue(BlockDoublePlant.VARIANT), 3);
-													PlayerPlacedBlocks.addBlock(player.worldObj, airPos);
-													PlayerPlacedBlocks.addBlock(player.worldObj, airPos.up());
+													doublePlant.placeAt(player.world, airPos, placedState.getValue(BlockDoublePlant.VARIANT), 3);
+													PlayerPlacedBlocks.addBlock(player.world, airPos);
+													PlayerPlacedBlocks.addBlock(player.world, airPos.up());
 												} else {
-													player.worldObj.setBlockState(airPos, placedState);
-													PlayerPlacedBlocks.addBlock(player.worldObj, airPos);
+													player.world.setBlockState(airPos, placedState);
+													PlayerPlacedBlocks.addBlock(player.world, airPos);
 												}
 											}
 										}
@@ -272,7 +272,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 						DamageSource source = event.getSource();
 						if (source.damageType == "mob" || source.damageType == "player") {
 							Entity target = source.getEntity();
-							target.attackEntityFrom(DamageSource.magic, (float) (event.getAmount() * 0.25));
+							target.attackEntityFrom(DamageSource.MAGIC, (float) (event.getAmount() * 0.25));
 						}
 					}
 				}
@@ -324,14 +324,14 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		if (targetItem != null && targetItem instanceof GlowFlowerVariants) {
 			if (!Skills.canCraft(event.player, Skills.BOTANY, 25)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 				SkillBotany botany = (SkillBotany) event.player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 				botany.addXp((EntityPlayerMP) event.player, 500);
 			}
 		} else if (targetItem != null && targetItem instanceof EnchantedFlowerVariants) {
 			if (!Skills.canCraft(event.player, Skills.BOTANY, 100)) {
 				Skills.replaceWithComponents(event);
-			} else if (!event.player.worldObj.isRemote && event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
+			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 				SkillBotany botany = (SkillBotany) event.player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
 				botany.addXp((EntityPlayerMP) event.player, 10000);
 			}

@@ -244,7 +244,7 @@ public class SkillMining extends Skill implements ISkillMining {
 				if (mining.hasAbility(1)) {
 					BlockPos pos = player.getPosition();
 					if (pos.getY() <= 40) {
-						if (player.worldObj.getTotalWorldTime() % 80L == 0L) {
+						if (player.world.getTotalWorldTime() % 80L == 0L) {
 							PotionEffect activeEffect = player.getActivePotionEffect(MobEffects.NIGHT_VISION);
 							if (activeEffect != null) {
 								activeEffect.combine(new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
@@ -257,7 +257,7 @@ public class SkillMining extends Skill implements ISkillMining {
 				}
 				if (mining.hasAbility(3)) {
 					// Since we're using a packet only need to fire on client side.
-					if (player.worldObj.isRemote) {
+					if (player.world.isRemote) {
 						if (player.isCollidedHorizontally) {
 							KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
 							if (jumpKey.isKeyDown()) {
@@ -285,7 +285,7 @@ public class SkillMining extends Skill implements ISkillMining {
 				if (mainStack != null) {
 					Item mainItem = mainStack.getItem();
 					if (mainItem != null && mainItem instanceof ItemPickaxe) {
-						if (player.worldObj.isRemote) {
+						if (player.world.isRemote) {
 							RayTraceResult result = player.rayTrace(5.0D, 1.0F);
 							if (result != null) {
 								if (result.typeOfHit == RayTraceResult.Type.BLOCK) {

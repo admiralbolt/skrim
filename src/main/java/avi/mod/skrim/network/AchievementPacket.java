@@ -48,7 +48,7 @@ public class AchievementPacket implements IMessage {
 
 		public IMessage onMessage(final AchievementPacket message, MessageContext ctx) {
 			if (ctx.side.isServer()) {
-				final EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+				final EntityPlayerMP player = ctx.getServerHandler().player;
 				if (player != null) {
 					IThreadListener mainThread = player.getServerWorld();
 					mainThread.addScheduledTask(new Runnable() {
