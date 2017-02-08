@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.flowers.EnchantedFlowerVariants;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
@@ -180,7 +181,11 @@ public class SkillBotany extends Skill implements ISkillBotany {
 				}
 			}
 
-			addXp += botany.getXp(botany.getFlowerName(state));
+			if (Skrim.DEBUG) {
+				System.out.println("[BlockEvent.BreakEvent](botany) state: " + event.getState() + ", flowerName: " + flowerName);
+			}
+
+			addXp += botany.getXp(flowerName);
 			if (addXp > 0) {
 				botany.addXp((EntityPlayerMP) player, botany.getXp(botany.getFlowerName(state)));
 			}
@@ -273,6 +278,9 @@ public class SkillBotany extends Skill implements ISkillBotany {
 						if (source.damageType == "mob" || source.damageType == "player") {
 							Entity target = source.getEntity();
 							target.attackEntityFrom(DamageSource.MAGIC, (float) (event.getAmount() * 0.25));
+							if (Skrim.DEBUG) {
+								System.out.println("[LivingHurtEvent](botany) I'll give you a taste of my thorn style!");
+							}
 						}
 					}
 				}
@@ -313,6 +321,9 @@ public class SkillBotany extends Skill implements ISkillBotany {
 							botany.addXp((EntityPlayerMP) player, 100);
 						}
 						event.setCanceled(true);
+						if (Skrim.DEBUG) {
+							System.out.println("[PlayerInteractEvent.EntityInteract](botany) Seducing villager intiated...");
+						}
 					}
 				}
 			}

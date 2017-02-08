@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public interface ISkill {
 
   int getNextLevelTotal();
-  int getXpNeeded();
+  double getXpNeeded();
   boolean canLevelUp();
   void levelUp(EntityPlayerMP player);
   List<String> getToolTip();
@@ -18,10 +18,11 @@ public interface ISkill {
   ResourceLocation getAbilityTexture(int abilityLevel);
   boolean hasAbility(int abilityLevel);
   List<String> getAbilityTooltip(int abilityLevel);
-  void setXp(int xp);
+  void setXp(double xp);
   void setLevel(int level);
-  int getXp();
+  double getXp();
   int getLevel();
   void addXp(EntityPlayerMP player, int xp);
+  int getIntXp();
 
 }

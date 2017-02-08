@@ -11,7 +11,7 @@ public class SkillStorage<T> implements IStorage<T> {
   public NBTBase writeNBT(Capability<T> capability, T instance, EnumFacing side) {
     NBTTagCompound compound = new NBTTagCompound();
     final Skill saveSkill = (Skill) instance;
-    compound.setInteger(saveSkill.name + "-xp", saveSkill.xp);
+    compound.setDouble(saveSkill.name + "-xp", saveSkill.xp);
     compound.setInteger(saveSkill.name + "-level", saveSkill.level);
     return compound;
   }
@@ -19,7 +19,7 @@ public class SkillStorage<T> implements IStorage<T> {
   public void readNBT(Capability<T> capability, T instance, EnumFacing side, NBTBase nbt) {
     NBTTagCompound compound = (NBTTagCompound) nbt;
     final Skill loadSkill = (Skill) instance;
-    loadSkill.xp = compound.getInteger(loadSkill.name + "-xp");
+    loadSkill.xp = compound.getDouble(loadSkill.name + "-xp");
     loadSkill.level = compound.getInteger(loadSkill.name + "-level");
   }
 

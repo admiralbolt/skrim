@@ -224,6 +224,10 @@ public class Skills {
 	public static double getTotalXpBonus(EntityPlayer player) {
 		return (0.015 * player.experienceLevel) + (0.002 * getTotalSkillLevels(player));
 	}
+	
+	public static double getTotalXp(EntityPlayer player, int xp) {
+		return getTotalXpBonus(player) * xp + xp;
+	}
 
 	public static void playFortuneSound(EntityPlayer player) {
 		player.world.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 0.4F, 1.0F);

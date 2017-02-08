@@ -25,9 +25,9 @@ public class SkillPacket implements IMessage {
 
 	private String skillName;
 	private int level;
-	private int xp;
+	private double xp;
 
-	public SkillPacket(String skillName, int level, int xp) {
+	public SkillPacket(String skillName, int level, double xp) {
 		this.skillName = skillName;
 		this.level = level;
 		this.xp = xp;
@@ -38,14 +38,14 @@ public class SkillPacket implements IMessage {
 		// Pay attention to order!  Must be read in the same order!
 		ByteBufUtils.writeUTF8String(buf, this.skillName);
 		buf.writeInt(this.level);
-		buf.writeInt(this.xp);
+		buf.writeDouble(this.xp);
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.skillName = ByteBufUtils.readUTF8String(buf);
 		this.level = buf.readInt();
-		this.xp = buf.readInt();
+		this.xp = buf.readDouble();
 	}
 
 	public static class SkillPacketHandler implements IMessageHandler<SkillPacket, IMessage> {

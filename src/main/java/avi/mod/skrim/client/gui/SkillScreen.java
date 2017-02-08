@@ -185,7 +185,7 @@ public class SkillScreen extends GuiScreen {
     int levelBottom = levelTop + this.levelBarHeight;
     if (shouldRender(levelTop, levelBottom)) {
       this.drawRect(levelLeft, levelTop, levelRight, levelBottom, this.levelBarColor);
-      String levelText = skill.xp + " / " + skill.getNextLevelTotal();
+      String levelText = skill.getIntXp() + " / " + skill.getNextLevelTotal();
       int levelTextWidth = this.mc.fontRenderer.getStringWidth(levelText);
       int levelTextLeft = levelLeft + (int) (this.levelBarWidth / 2) - (int) ((double) levelTextWidth / 2);
       this.mc.fontRenderer.drawString(levelText, levelTextLeft, levelTop + 1, this.levelBarTextColor);

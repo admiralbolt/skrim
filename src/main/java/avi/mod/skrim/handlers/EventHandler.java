@@ -1,5 +1,6 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.entities.SkrimFishHook;
 import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
@@ -189,7 +190,9 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		// Utils.logBlockState(event.getState());
+		if (Skrim.DEBUG) {
+			Utils.logBlockState(event.getState());
+		}
 		World world = event.getWorld();
 		if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
 			if (!Utils.isSilkTouching(event)) {

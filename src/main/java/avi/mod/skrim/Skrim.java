@@ -21,6 +21,8 @@ public class Skrim {
 	public static final String version = "1.1.8";
 
 	public static final TestTab creativeTab = new TestTab();
+	
+	public static final boolean DEBUG = true;
 
 	@Mod.Instance(modId)
 	public static Skrim instance = new Skrim();

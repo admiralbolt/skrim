@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
@@ -65,9 +66,10 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("Master Craftsperson", 25,
 			"Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
 			"No longer risk breaking the anvil when repairing items.",
-			"Repairing an item with an undamaged equivalent provides a one time §a+25%" + SkillAbility.descColor + " durability bonus.");
+			"Repairing an item with an undamaged equivalent provides a one time §a+50%" + SkillAbility.descColor + " durability bonus.");
 
-	public static SkillAbility PERSISTENCE = new SkillAbility("Persistence", 50, "3 days later...", "Remove prior work cost when repairing items.");
+	public static SkillAbility PERSISTENCE = new SkillAbility("Persistence", 50, "3 days later...",
+			"Significantly reduce prior work cost when repairing items.");
 
 	public static SkillAbility IRON_HEART = new SkillAbility("Iron Heart", 75, "Can still pump blood.",
 			"Passively gain §a50%" + SkillAbility.descColor + " fire resistance.");
@@ -120,11 +122,14 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		if (event.player != null && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
 			SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
 			if (blacksmithing.validBlacksmithingTarget(event.smelting)) {
-				int stackSize = (Obfuscation.getStackSize(event.smelting) == 0) ? blacksmithing.lastItemNumber : Obfuscation.getStackSize(event.smelting);
+				int stackSize = (event.smelting.getCount() == 0) ? blacksmithing.lastItemNumber : Obfuscation.getStackSize(event.smelting);
 				int addItemSize = (int) (blacksmithing.extraIngot() * stackSize); // OOO
 				if (addItemSize > 0) {
 					ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
 					event.player.inventory.addItemStackToInventory(newStack);
+				}
+				if (Skrim.DEBUG) {
+					System.out.println("[ItemSmeltedEvent](blacksmithing) stackSize: " + stackSize + ", addItemSize: " + addItemSize);
 				}
 				if (event.player instanceof EntityPlayerMP) {
 					// Give xp for bonus items too!
@@ -137,6 +142,11 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
 	/**
 	 * The hackiest of hacks. Why does this always happen.
+	 * Basically, shift clicking is really FUCK and does
+	 * not correctly report the number of smelted items.
+	 * When we open the furnace we log the number
+	 * of items currently in it, and use that instead
+	 * when shift clicking.
 	 */
 	public static void saveItemNumber(PlayerContainerEvent.Open event) {
 		Container please = event.getContainer();
@@ -153,6 +163,10 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		}
 	}
 
+	/**
+	 * Reduce fire damage by half!  Pretty straightforward,
+	 * just lots of if checking.
+	 */
 	public static void ironHeart(LivingHurtEvent event) {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
@@ -162,6 +176,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 				if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
 					SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
 					if (blacksmithing.hasAbility(3)) {
+						if (Skrim.DEBUG) {
+							System.out.println("[LivingHurtEvent](blacksmithing) Applying iron heart.");
+						}
 						event.setAmount(event.getAmount() / 2);
 					}
 				}
@@ -169,6 +186,12 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		}
 	}
 
+	/**
+	 * A few things here:
+	 * 1.	We want to apply the base blacksmithing bonus when repairing,
+	 * 		that is the extra%/lvl repair
+	 * 2. 	We want to apply the two special repair skills that blacksmithing has.
+	 */
 	public static void enhanceRepair(AnvilRepairEvent event) {
 		Entity player = event.getEntityPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
@@ -180,9 +203,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 			int baseRepair = left.getItemDamage() - output.getItemDamage();
 			blacksmithing.addXp((EntityPlayerMP) player, (int) (baseRepair * (1 + blacksmithing.extraRepair())));
 			int finalRepair = output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair());
-			/**
-			 * PERSISTENCE!
-			 */
+			if (Skrim.DEBUG) {
+				System.out.println("[AnvilRepairEvent](blacksmithing) baseRepair: " + baseRepair + ", finalRepair: " + finalRepair);
+			}
 			if (blacksmithing.hasAbility(1)) {
 				event.setBreakChance(0);
 				if (blacksmithing.hasAbility(2)) {
@@ -199,7 +222,11 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 						 * I'm gonna break your shit.
 						 */
 						Item outputItem = (Item) output.getItem();
-						Reflection.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage() * 1.25), "maxDamage", "field_77699_b");
+						if (Skrim.DEBUG) {
+							System.out.println("[AnvilRepairEvent](blacksmithing) applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
+						}
+						outputItem.setMaxDamage((int) (outputItem.getMaxDamage(output) * 1.5));
+						// Reflection.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),  "maxDamage", "field_77699_b");
 					}
 				}
 			}
