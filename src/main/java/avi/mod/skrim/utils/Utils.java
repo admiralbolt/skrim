@@ -8,7 +8,9 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.skills.Skill;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
@@ -43,6 +45,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class Utils {
 
@@ -173,6 +176,16 @@ public class Utils {
 			}
 		}
 		return false;
+	}
+	
+	public static void log(String message) {
+		if (Skrim.DEBUG) {
+			System.out.println(message);
+		}
+	}
+	
+	public static void logSkillEvent(Event event, Skill skill, String message) {
+		log("[" + event + "](" + skill.name + ") " + message);
 	}
 	
 }

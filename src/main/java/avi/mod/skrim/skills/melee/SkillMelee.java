@@ -59,34 +59,15 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	public static SkillStorage<ISkillMelee> skillStorage = new SkillStorage<ISkillMelee>();
 	public int ticksSinceLastLeft = 0;
 
-	public static SkillAbility VAMPIRISM = new SkillAbility(
-		"Vampirism",
-		25,
-		"What I need is your blood. What I don't need is your permission.",
-		"Killing an enemy restores §a1" + SkillAbility.descColor + " heart."
-	);
+	public static SkillAbility VAMPIRISM = new SkillAbility("Vampirism", 25, "What I need is your blood. What I don't need is your permission.",
+			"Killing an enemy restores §a1" + SkillAbility.descColor + " heart.");
 
-	public static SkillAbility SPIN_SLASH = new SkillAbility(
-		"Spin Slash",
-		50,
-		"Spin to win.",
-		"Critting an enemy deals massive AOE damage."
-	);
+	public static SkillAbility SPIN_SLASH = new SkillAbility("Spin Slash", 50, "Spin to win.", "Critting an enemy deals massive AOE damage.");
 
-	public static SkillAbility DUAL_WIELDING = new SkillAbility(
-		"Dual Wielding",
-		75,
-		"Two swords are better than one.",
-		"Allows you to swing your off hand if you have two swords equipped.",
-		"Each hand uses a separate exhaustion meter for damage & swipe attacks."
-	);
+	public static SkillAbility DUAL_WIELDING = new SkillAbility("Dual Wielding", 75, "Two swords are better than one.",
+			"Allows you to swing your off hand if you have two swords equipped.", "Each hand uses a separate exhaustion meter for damage & swipe attacks.");
 
-	public static SkillAbility GRAND_SMITE = new SkillAbility(
-		"Grand Smite",
-		100,
-		"DESTRUUUUCTIOOONNN",
-		"Criitting an enemy call down lightning."
-	);
+	public static SkillAbility GRAND_SMITE = new SkillAbility("Grand Smite", 100, "DESTRUUUUCTIOOONNN", "Criitting an enemy call down lightning.");
 
 	public SkillMelee() {
 		this(1, 0);
@@ -121,20 +102,26 @@ public class SkillMelee extends Skill implements ISkillMelee {
 			if (player != null && player.hasCapability(Skills.MELEE, EnumFacing.NORTH)) {
 				if (source.damageType == "player") {
 					SkillMelee melee = (SkillMelee) player.getCapability(Skills.MELEE, EnumFacing.NORTH);
+					Utils.logSkillEvent(event, melee, "Base Damage: " + event.getAmount());
 					event.setAmount(event.getAmount() + (float) (melee.getExtraDamage() * event.getAmount()));
 					int addXp = 0;
 					if (Math.random() < melee.getCritChance()) {
+						Utils.logSkillEvent(event, melee, "CRITIKAL");
 						EntityLivingBase targetEntity = event.getEntityLiving();
-						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
+						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT,
+								player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() * 2);
 						// Spin slash
 						if (melee.hasAbility(2)) {
 							ItemStack stack = player.getHeldItemMainhand();
 							Item item = (stack == null) ? null : stack.getItem();
 							if (item != null && item instanceof ItemSword) {
-								for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(2.5D, 0.25D, 2.5D))) {
-									if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase) && player.getDistanceSqToEntity(entitylivingbase) < 20.0D) {
-										entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
+								for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
+										targetEntity.getEntityBoundingBox().expand(2.5D, 0.25D, 2.5D))) {
+									if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)
+											&& player.getDistanceSqToEntity(entitylivingbase) < 20.0D) {
+										entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F),
+												(double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
 										// Want to avoid an infinite player damage loop, use generic damage source
 										entitylivingbase.attackEntityFrom(DamageSource.GENERIC, event.getAmount() / 4);
 										addXp += event.getAmount() / 4;
@@ -147,22 +134,23 @@ public class SkillMelee extends Skill implements ISkillMelee {
 							ItemStack mainStack = player.getHeldItemMainhand();
 							Item mainItem = (mainStack == null) ? null : mainStack.getItem();
 							if (mainItem != null && mainItem instanceof ItemSword) {
-								EntityLightningBolt smite = new EntityLightningBolt(player.world, targetEntity.posX, targetEntity.posY, targetEntity.posZ, true);
+								EntityLightningBolt smite = new EntityLightningBolt(player.world, targetEntity.posX, targetEntity.posY, targetEntity.posZ,
+										true);
 								targetEntity.attackEntityFrom(source.LIGHTNING_BOLT, 100.0F);
 								player.world.addWeatherEffect(smite);
 								if (!player.world.isRemote) {
 									BlockPos blockpos = new BlockPos(targetEntity);
-	                if (player.world.getGameRules().getBoolean("doFireTick")
-	              		&& player.world.isAreaLoaded(blockpos, 10)
-	              		&& player.world.getBlockState(blockpos).getMaterial() == Material.AIR
-	              		&& Blocks.FIRE.canPlaceBlockAt(player.world, blockpos)) {
-	                    player.world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
-	                }
+									if (player.world.getGameRules().getBoolean("doFireTick") && player.world.isAreaLoaded(blockpos, 10)
+											&& player.world.getBlockState(blockpos).getMaterial() == Material.AIR
+											&& Blocks.FIRE.canPlaceBlockAt(player.world, blockpos)) {
+										player.world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+									}
 								}
-              }
+							}
 						}
 						addXp += 200;
 					}
+					Utils.logSkillEvent(event, melee, "Modified Damage: " + event.getAmount());
 					addXp += (int) event.getAmount() * 10;
 					melee.addXp((EntityPlayerMP) player, addXp);
 				}
@@ -175,7 +163,8 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	}
 
 	/**
-	 * Returns the percentage of attack power available based on the cooldown (zero to one).
+	 * Returns the percentage of attack power available based on the cooldown
+	 * (zero to one).
 	 */
 	public float getCooledAttackStrength(EntityPlayer player, float adjustTicks) {
 		return MathHelper.clamp(((float) this.ticksSinceLastLeft + adjustTicks) / this.getCooldownPeriod(player), 0.0F, 1.0F);
@@ -222,9 +211,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					if (player.world.isRemote) {
 						Entity targetEntity = getMouseOver(player, 1.0F);
 						if (targetEntity != null) {
-							SkrimPacketHandler.INSTANCE.sendToServer(
-								new OffHandAttackPacket(player.getEntityId(), targetEntity.getEntityId())
-							);
+							SkrimPacketHandler.INSTANCE.sendToServer(new OffHandAttackPacket(player.getEntityId(), targetEntity.getEntityId()));
 						}
 					}
 				}
@@ -264,12 +251,14 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					i = i + EnchantmentHelper.getKnockbackModifier(player);
 
 					if (player.isSprinting() && flag) {
-						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, player.getSoundCategory(), 1.0F, 1.0F);
+						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK,
+								player.getSoundCategory(), 1.0F, 1.0F);
 						++i;
 						flag1 = true;
 					}
 
-					boolean flag2 = flag && player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && targetEntity instanceof EntityLivingBase;
+					boolean flag2 = flag && player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater()
+							&& !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && targetEntity instanceof EntityLivingBase;
 					flag2 = flag2 && !player.isSprinting();
 
 					if (flag2) {
@@ -308,9 +297,12 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					if (flag5) {
 						if (i > 0) {
 							if (targetEntity instanceof EntityLivingBase) {
-								((EntityLivingBase) targetEntity).knockBack(player, (float) i * 0.5F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
+								((EntityLivingBase) targetEntity).knockBack(player, (float) i * 0.5F,
+										(double) MathHelper.sin(player.rotationYaw * 0.017453292F),
+										(double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
 							} else {
-								targetEntity.addVelocity((double) (-MathHelper.sin(player.rotationYaw * 0.017453292F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(player.rotationYaw * 0.017453292F) * (float) i * 0.5F));
+								targetEntity.addVelocity((double) (-MathHelper.sin(player.rotationYaw * 0.017453292F) * (float) i * 0.5F), 0.1D,
+										(double) (MathHelper.cos(player.rotationYaw * 0.017453292F) * (float) i * 0.5F));
 							}
 
 							player.motionX *= 0.6D;
@@ -319,14 +311,18 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						}
 
 						if (flag3) {
-							for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class, targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
-								if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase) && player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {
-									entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F), (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
+							for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
+									targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
+								if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)
+										&& player.getDistanceSqToEntity(entitylivingbase) < 9.0D) {
+									entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F),
+											(double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
 									entitylivingbase.attackEntityFrom(DamageSource.causePlayerDamage(player), 1.0F);
 								}
 							}
 
-							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, player.getSoundCategory(), 1.0F, 1.0F);
+							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
+									player.getSoundCategory(), 1.0F, 1.0F);
 							player.spawnSweepParticles();
 						}
 
@@ -339,15 +335,18 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						}
 
 						if (flag2) {
-							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT, player.getSoundCategory(), 1.0F, 1.0F);
+							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT,
+									player.getSoundCategory(), 1.0F, 1.0F);
 							player.onCriticalHit(targetEntity);
 						}
 
 						if (!flag2 && !flag3) {
 							if (flag) {
-								player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_STRONG, player.getSoundCategory(), 1.0F, 1.0F);
+								player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_STRONG,
+										player.getSoundCategory(), 1.0F, 1.0F);
 							} else {
-								player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK, player.getSoundCategory(), 1.0F, 1.0F);
+								player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_WEAK,
+										player.getSoundCategory(), 1.0F, 1.0F);
 							}
 						}
 
@@ -385,7 +384,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
 						if (itemstack1 != null && entity instanceof EntityLivingBase) {
 							itemstack1.hitEntity((EntityLivingBase) entity, player);
-							
+
 							if (Obfuscation.getStackSize(itemstack1) <= 0) {
 								player.setHeldItem(EnumHand.OFF_HAND, (ItemStack) null);
 								net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, EnumHand.OFF_HAND);
@@ -402,13 +401,15 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
 							if (player.world instanceof WorldServer && f5 > 2.0F) {
 								int k = (int) ((double) f5 * 0.5D);
-								((WorldServer) player.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, targetEntity.posX, targetEntity.posY + (double) (targetEntity.height * 0.5F), targetEntity.posZ, k, 0.1D, 0.0D, 0.1D, 0.2D, new int[0]);
+								((WorldServer) player.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, targetEntity.posX,
+										targetEntity.posY + (double) (targetEntity.height * 0.5F), targetEntity.posZ, k, 0.1D, 0.0D, 0.1D, 0.2D, new int[0]);
 							}
 						}
 
 						player.addExhaustion(0.3F);
 					} else {
-						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, player.getSoundCategory(), 1.0F, 1.0F);
+						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE,
+								player.getSoundCategory(), 1.0F, 1.0F);
 
 						if (flag4) {
 							targetEntity.extinguish();
@@ -452,11 +453,13 @@ public class SkillMelee extends Skill implements ISkillMelee {
 				pointedEntity = null;
 				Vec3d vec3d3 = null;
 				float f = 1.0F;
-				List<Entity> list = player.world.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>() {
-					public boolean apply(@Nullable Entity p_apply_1_) {
-						return p_apply_1_ != null && p_apply_1_.canBeCollidedWith();
-					}
-				}));
+				List<Entity> list = player.world.getEntitiesInAABBexcluding(entity,
+						entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand(1.0D, 1.0D, 1.0D),
+						Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>() {
+							public boolean apply(@Nullable Entity p_apply_1_) {
+								return p_apply_1_ != null && p_apply_1_.canBeCollidedWith();
+							}
+						}));
 				double d2 = d1;
 
 				for (int j = 0; j < list.size(); ++j) {

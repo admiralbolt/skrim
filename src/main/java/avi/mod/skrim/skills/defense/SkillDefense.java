@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -122,6 +123,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 					if (canBlockDamageSource(player, source)) {
 						if (source.isProjectile()) {
 							int sourceId = source.getEntity().getEntityId();
+							Utils.logSkillEvent(event, defense, "Projectile, sourceId: " + sourceId);
 							addXp += (defense.blocked.contains(sourceId)) ? 25 : 300;
 							defense.blocked.add(sourceId);
 						} else {
@@ -144,6 +146,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 					SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
 					if (defense.hasAbility(1)) {
 						if (defense.canRegen && player.getHealth() <= (float) (defense.healthPercent * player.getMaxHealth())) {
+							Utils.logSkillEvent(event, defense, "Applying regeneration.");
 							PotionEffect activeEffect = player.getActivePotionEffect(MobEffects.REGENERATION);
 							if (activeEffect != null) {
 								activeEffect.combine(new PotionEffect(MobEffects.REGENERATION, regenLength));
@@ -180,8 +183,10 @@ public class SkillDefense extends Skill implements ISkillDefense {
 							Collection<PotionEffect> effects = player.getActivePotionEffects();
 							for (PotionEffect effect : effects) {
 								if (Utils.isNegativeEffect(effect)) {
+									Utils.logSkillEvent(event, defense, "Pre reduce effect: " + effect);
 									Reflection.hackValueTo(effect, effect.getDuration() - 1, Obfuscation.POTION_DURATION.getFieldNames());
 									effect.combine(effect);
+									Utils.logSkillEvent(event, defense, "Post reduce effect: " + effect);
 								}
 							}
 

@@ -43,33 +43,15 @@ public class SkillFishing extends Skill implements ISkillFishing {
 
 	public static SkillStorage<ISkillFishing> skillStorage = new SkillStorage<ISkillFishing>();
 
-	public static SkillAbility BATMAN = new SkillAbility(
-		"Batman",
-		25,
-		"na na na na na na na na",
-		"Your fishing rod can now be used as a grappling hook."
-	);
+	public static SkillAbility BATMAN = new SkillAbility("Batman", 25, "na na na na na na na na", "Your fishing rod can now be used as a grappling hook.");
 
-	public static SkillAbility TRIPLE_HOOK = new SkillAbility(
-		"Triple Hook",
-		50,
-		"Triple the hooks, triple the pleasure.",
-		"You now catch §a3x" + SkillAbility.descColor + " as many items."
-	);
+	public static SkillAbility TRIPLE_HOOK = new SkillAbility("Triple Hook", 50, "Triple the hooks, triple the pleasure.",
+			"You now catch §a3x" + SkillAbility.descColor + " as many items.");
 
-	public static SkillAbility BOUNTIFUL_CATCH = new SkillAbility(
-		"Bountiful Catch",
-		75,
-		"On that E-X-P grind.",
-		"Catching a fish provides an additional§a 9-24" + SkillAbility.descColor + " xp."
-	);
+	public static SkillAbility BOUNTIFUL_CATCH = new SkillAbility("Bountiful Catch", 75, "On that E-X-P grind.",
+			"Catching a fish provides an additional§a 9-24" + SkillAbility.descColor + " xp.");
 
-	public static SkillAbility FLING = new SkillAbility(
-		"Fling",
-		100,
-		"Sometimes I don't know my own strength.",
-		"Launch hooked entities into the air."
-	);
+	public static SkillAbility FLING = new SkillAbility("Fling", 100, "Sometimes I don't know my own strength.", "Launch hooked entities into the air.");
 
 	public SkillFishing() {
 		this(1, 0);

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.blocks.tnt.CustomExplosion;
 import avi.mod.skrim.entities.monster.BioCreeper;
@@ -88,6 +89,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			EntityPlayer player = validGoBoom.get(location);
 			if (player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
+				Utils.logSkillEvent(event, demolition, "explosive placed by: " + event.getExplosion().getExplosivePlacedBy());
 				if (boom instanceof CustomExplosion) {
 					CustomExplosion customBoom = (CustomExplosion) boom;
 					customBoom.setExplosionSize((float) (customBoom.getExplosionSize() * (1 + demolition.getExtraPower())));
@@ -108,6 +110,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			validGoBoom.remove(location);
 			if (player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
+				Utils.logSkillEvent(event, demolition, "explosive placed by: " + event.getExplosion().getExplosivePlacedBy());
 				demolition.addXp((EntityPlayerMP) player, 7500);
 			}
 		}

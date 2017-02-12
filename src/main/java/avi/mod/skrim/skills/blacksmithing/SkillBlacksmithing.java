@@ -128,9 +128,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 					ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
 					event.player.inventory.addItemStackToInventory(newStack);
 				}
-				if (Skrim.DEBUG) {
-					System.out.println("[ItemSmeltedEvent](blacksmithing) stackSize: " + stackSize + ", addItemSize: " + addItemSize);
-				}
+				Utils.logSkillEvent(event, blacksmithing, " stackSize: " + stackSize + ", addItemSize: " + addItemSize);
 				if (event.player instanceof EntityPlayerMP) {
 					// Give xp for bonus items too!
 					blacksmithing.addXp((EntityPlayerMP) event.player,
@@ -176,9 +174,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 				if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
 					SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
 					if (blacksmithing.hasAbility(3)) {
-						if (Skrim.DEBUG) {
-							System.out.println("[LivingHurtEvent](blacksmithing) Applying iron heart.");
-						}
+						Utils.logSkillEvent(event, blacksmithing, "Applying iron heart.");
 						event.setAmount(event.getAmount() / 2);
 					}
 				}
@@ -203,9 +199,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 			int baseRepair = left.getItemDamage() - output.getItemDamage();
 			blacksmithing.addXp((EntityPlayerMP) player, (int) (baseRepair * (1 + blacksmithing.extraRepair())));
 			int finalRepair = output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair());
-			if (Skrim.DEBUG) {
-				System.out.println("[AnvilRepairEvent](blacksmithing) baseRepair: " + baseRepair + ", finalRepair: " + finalRepair);
-			}
+			Utils.logSkillEvent(event, blacksmithing, "baseRepair: " + baseRepair + ", finalRepair: " + finalRepair);
 			if (blacksmithing.hasAbility(1)) {
 				event.setBreakChance(0);
 				if (blacksmithing.hasAbility(2)) {
@@ -222,9 +216,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 						 * I'm gonna break your shit.
 						 */
 						Item outputItem = (Item) output.getItem();
-						if (Skrim.DEBUG) {
-							System.out.println("[AnvilRepairEvent](blacksmithing) applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
-						}
+						Utils.logSkillEvent(event, blacksmithing, "applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
 						outputItem.setMaxDamage((int) (outputItem.getMaxDamage(output) * 1.5));
 						// Reflection.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),  "maxDamage", "field_77699_b");
 					}

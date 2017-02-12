@@ -2,6 +2,7 @@ package avi.mod.skrim.blocks.plants;
 
 import java.util.Random;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.world.gen.WorldGenBeanstalk;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +31,7 @@ public class MagicBean extends CustomPlant {
 
 	@Override
 	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-		return false;
+		return Skrim.DEBUG;
 	}
 
 }

@@ -22,6 +22,11 @@ public class Skrim {
 
 	public static final TestTab creativeTab = new TestTab();
 	
+	/**
+	 * The debug flag is used for logging several different
+	 * messages for debugging individual skills and abilities.
+	 * Make sure to set to false before building a relase verison.
+	 */
 	public static final boolean DEBUG = true;
 
 	@Mod.Instance(modId)

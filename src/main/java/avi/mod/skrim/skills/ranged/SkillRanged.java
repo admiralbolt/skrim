@@ -129,6 +129,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
 				if (source.isProjectile()) {
 					SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);
+					Utils.logSkillEvent(event, ranged, "Base Damage: " + event.getAmount());
 					event.setAmount(event.getAmount() + (float) (ranged.getExtraDamage() * event.getAmount()));
 					Entity arrow = source.getSourceOfDamage();
 					EntityLivingBase targetEntity = event.getEntityLiving();
@@ -158,6 +159,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 							SkrimPacketHandler.INSTANCE.sendTo(new CriticalAscensionPacket(ranged.getStacks()), (EntityPlayerMP) player);
 						}
 					}
+					Utils.logSkillEvent(event, ranged, "Modified Damage: " + event.getAmount());
 					addXp += event.getAmount() * 10;
 					ranged.addXp((EntityPlayerMP) player, addXp);
 				}

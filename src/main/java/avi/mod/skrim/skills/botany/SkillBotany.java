@@ -181,9 +181,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 				}
 			}
 
-			if (Skrim.DEBUG) {
-				System.out.println("[BlockEvent.BreakEvent](botany) state: " + event.getState() + ", flowerName: " + flowerName);
-			}
+			Utils.logSkillEvent(event, botany, "state: " + event.getState() + ", flowerName: " + flowerName);
 
 			addXp += botany.getXp(flowerName);
 			if (addXp > 0) {
@@ -278,9 +276,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 						if (source.damageType == "mob" || source.damageType == "player") {
 							Entity target = source.getEntity();
 							target.attackEntityFrom(DamageSource.MAGIC, (float) (event.getAmount() * 0.25));
-							if (Skrim.DEBUG) {
-								System.out.println("[LivingHurtEvent](botany) I'll give you a taste of my thorn style!");
-							}
+							Utils.logSkillEvent(event, botany, "I'll give you a taste of my thorn style!");
 						}
 					}
 				}
@@ -321,9 +317,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 							botany.addXp((EntityPlayerMP) player, 100);
 						}
 						event.setCanceled(true);
-						if (Skrim.DEBUG) {
-							System.out.println("[PlayerInteractEvent.EntityInteract](botany) Seducing villager intiated...");
-						}
+						Utils.logSkillEvent(event, botany, "Seducing villager intiated...");
 					}
 				}
 			}
