@@ -5,6 +5,7 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -124,7 +125,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
 						fishing.addXp((EntityPlayerMP) angler, 1250);
 						// Roll for treasure chance
 						if (this.rand.nextDouble() < fishing.getTreasureChance()) {
-							EntityItem treasure = new EntityItem(this.world, this.posX, this.posY, this.posZ, RandomTreasure.generateStandardTreasure());
+							EntityItem treasure = new EntityItem(this.world, this.posX, this.posY, this.posZ, CustomLootTables.getRandomTreasure(this.world, this.angler, fishing.level));
 							treasure.motionX = d0 * 0.1D;
 							treasure.motionY = d1 * 0.1D + (double) MathHelper.sqrt(d3) * 0.08D;
 							treasure.motionZ = d2 * 0.1D;

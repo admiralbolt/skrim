@@ -16,6 +16,7 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
+import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockGrass;
@@ -45,6 +46,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.MapGenScatteredFeature;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureStart;
+import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -175,7 +177,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 							if (validTreasureTarget(state)) {
 								double random = Math.random();
 								if (random < digging.getTreasureChance()) {
-									ItemStack treasure = RandomTreasure.generateStandardTreasure();
+									ItemStack treasure = CustomLootTables.getRandomTreasure(event.getWorld(), player, digging.level);
 									List<ItemStack> drops = event.getDrops();
 									drops.add(treasure);
 									Skills.playFortuneSound(player);
