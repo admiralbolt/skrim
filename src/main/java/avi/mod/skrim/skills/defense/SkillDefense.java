@@ -185,7 +185,8 @@ public class SkillDefense extends Skill implements ISkillDefense {
 								if (Utils.isNegativeEffect(effect)) {
 									Utils.logSkillEvent(event, defense, "Pre reduce effect: " + effect);
 									Reflection.hackValueTo(effect, effect.getDuration() - 1, Obfuscation.POTION_DURATION.getFieldNames());
-									effect.combine(effect);
+									PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration() - 1, effect.getAmplifier(), effect.getIsAmbient(), effect.doesShowParticles());
+									player.addPotionEffect(newEffect);
 									Utils.logSkillEvent(event, defense, "Post reduce effect: " + effect);
 								}
 							}

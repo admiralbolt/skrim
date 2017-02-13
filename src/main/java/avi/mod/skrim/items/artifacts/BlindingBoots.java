@@ -9,10 +9,8 @@ import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -40,30 +38,26 @@ public class BlindingBoots extends ArtifactArmor {
 		public static Map<Potion, Integer> effectStrength = new HashMap<Potion, Integer>();
 		static {
 			effects.add(MobEffects.NAUSEA);
-			effectStrength.put(MobEffects.NAUSEA, 2);
+			effectStrength.put(MobEffects.NAUSEA, 0);
 
 			effects.add(MobEffects.BLINDNESS);
-			effectStrength.put(MobEffects.BLINDNESS, 2);
+			effectStrength.put(MobEffects.BLINDNESS, 0);
 
 			effects.add(MobEffects.SPEED);
 			effectStrength.put(MobEffects.SPEED, 10);
 		}
 
-
 		public static void goFast(LivingUpdateEvent event) {
 			Entity entity = event.getEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if (player.world.getTotalWorldTime() % 60L == 0L && !player.world.isRemote) {
+				if (player.world.getTotalWorldTime() % 40L == 0L && !player.world.isRemote) {
+					Utils.log("<BlindingBoots> %60 == 0");
 					if (Utils.isWearingArmor(player, ModItems.BLINDING_BOOTS)) {
+						Utils.log("<BlindingBoots> is wearing.");
 						for (Potion potion : effects) {
-							PotionEffect activeEffect = player.getActivePotionEffect(potion);
-							PotionEffect newEffect = new PotionEffect(potion, 100, effectStrength.get(potion), true, false);
-							if (activeEffect != null) {
-								activeEffect.combine(newEffect);
-							} else {
-								player.addPotionEffect(newEffect);
-							}
+							PotionEffect newEffect = new PotionEffect(potion, 100, effectStrength.get(potion), false, false);
+							Utils.addOrCombineEffect(player, newEffect);
 						}
 					}
 				}

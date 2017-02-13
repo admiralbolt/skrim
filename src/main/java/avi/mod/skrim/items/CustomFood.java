@@ -4,6 +4,7 @@ import java.util.List;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.skills.cooking.SkillCooking;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -59,8 +60,10 @@ public class CustomFood extends ItemFood implements ItemModelProvider {
 				}
 
 				if (superFood) {
-					player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 200, 1, false, false));
-					player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200, 1, false, false));
+					PotionEffect regenEffect = new PotionEffect(MobEffects.REGENERATION, 200, 1, false, false);
+					PotionEffect speedEffect = new PotionEffect(MobEffects.SPEED, 200, 1, false, false);
+					Utils.addOrCombineEffect(player, regenEffect);
+					Utils.addOrCombineEffect(player, speedEffect);
 				}
 				/**
 				 * A valiant attempt to keep me from over-filling. But not

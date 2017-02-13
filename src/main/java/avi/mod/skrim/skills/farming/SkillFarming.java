@@ -42,9 +42,9 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -79,39 +79,22 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		cropBlocks.add(Blocks.BEETROOTS);
 	}
 
-	public static int tanDuration = 160;
-	public static long tanCheck = 40L;
+	public static int TAN_DURATION = 160;
+	public static long TAN_CHECK = 40L;
 	public int ticks = 0;
 
-	public static SkillAbility OVERALLS = new SkillAbility(
-		"Overalls",
-		25,
-		"Overall, this ability seems pretty good! AHAHAHA Get it?  (Please help me I need sleep.)",
-		"Grants you the ability to craft overalls.",
-		"While worn, right clicking with a hoe acts like applying bonemeal."
-	);
+	public static SkillAbility OVERALLS = new SkillAbility("Overalls", 25,
+			"Overall, this ability seems pretty good! AHAHAHA Get it?  (Please help me I need sleep.)", "Grants you the ability to craft overalls.",
+			"While worn, right clicking with a hoe acts like applying bonemeal.");
 
-	public static SkillAbility SIDE_CHICK = new SkillAbility(
-		"Side Chick",
-		50,
-		"This IS my other hoe.",
-		"Killing an entity while holding a hoe automatically plants a random plant."
-	);
+	public static SkillAbility SIDE_CHICK = new SkillAbility("Side Chick", 50, "This IS my other hoe.",
+			"Killing an entity while holding a hoe automatically plants a random plant.");
 
-	public static SkillAbility FARMERS_TAN = new SkillAbility(
-		"Farmer's Tan",
-		75,
-		"You're a plant Vash.",
-		"Being in sunlight grants you a speed boost and saturation."
-	);
+	public static SkillAbility FARMERS_TAN = new SkillAbility("Farmer's Tan", 75, "You're a plant Vash.",
+			"Being in sunlight grants you a speed boost and saturation.");
 
-	public static SkillAbility MAGIC_BEANSTALK = new SkillAbility(
-		"Magic Beanstalk",
-		100,
-		"Fee-fi-fo-fum! Random chests for everyone!",
-		"Grants you the ability to craft a magic bean."
-	);
-
+	public static SkillAbility MAGIC_BEANSTALK = new SkillAbility("Magic Beanstalk", 100, "Fee-fi-fo-fum! Random chests for everyone!",
+			"Grants you the ability to craft a magic bean.");
 
 	public SkillFarming() {
 		this(1, 0);
@@ -138,7 +121,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	@Override
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r harvest drops.");
+		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
+				+ "§r harvest drops.");
 		tooltip.add("   This bonus stacks with fortune.");
 		if (this.getGrowthStage() > 1) {
 			tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
@@ -148,18 +132,12 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	public static boolean validCrop(IBlockState state) {
 		Block block = state.getBlock();
-		return (block instanceof BlockStem
-				|| block instanceof BlockCarrot
-				|| block instanceof BlockPotato
-				|| block instanceof BlockCrops
-				|| block instanceof BlockCocoa
-				|| block instanceof BlockNetherWart
-				);
+		return (block instanceof BlockStem || block instanceof BlockCarrot || block instanceof BlockPotato || block instanceof BlockCrops
+				|| block instanceof BlockCocoa || block instanceof BlockNetherWart);
 	}
 
 	/**
-	 * Need to cap this shit @ 6 to avoid super OPNESS
-	 * Still pretty OPOP
+	 * Need to cap this shit @ 6 to avoid super OPNESS Still pretty OPOP
 	 */
 	public int getGrowthStage() {
 		int growthStage = (int) Math.floor((double) this.level / 10) + 1;
@@ -170,23 +148,18 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		Block block = state.getBlock();
 		/**
 		 * They decided to make every plants growth go from 0-7 EXCEPT for beets
-		 * for some reason they go from 0-3.  I guess you could say it...
-		 * Beets me!  AHAHAHAHAHAHAHAHA! (Can't wake up)
+		 * for some reason they go from 0-3. I guess you could say it... Beets
+		 * me! AHAHAHAHAHAHAHAHA! (Can't wake up)
 		 *
-		 * UPDATE: Okay seriously?  Cocoa beans have 3 stages, but instead of
-		 * using 0-1-2 like the established standard, they use 2/6/10?
-		 * WTF?
+		 * UPDATE: Okay seriously? Cocoa beans have 3 stages, but instead of
+		 * using 0-1-2 like the established standard, they use 2/6/10? WTF?
 		 *
-		 * UPDATE: Netherwart has FOUR growth stages.  The legend continues.
+		 * UPDATE: Netherwart has FOUR growth stages. The legend continues.
 		 */
-		return (block instanceof BlockMelon
-				|| ((block instanceof BlockCarrot || block instanceof BlockPotato)
-						&& block.getMetaFromState(state) == 7)
-				|| (block instanceof BlockCrops && block.getMetaFromState(state) == 7)
-				|| (block instanceof BlockBeetroot && block.getMetaFromState(state) == 3)
+		return (block instanceof BlockMelon || ((block instanceof BlockCarrot || block instanceof BlockPotato) && block.getMetaFromState(state) == 7)
+				|| (block instanceof BlockCrops && block.getMetaFromState(state) == 7) || (block instanceof BlockBeetroot && block.getMetaFromState(state) == 3)
 				|| (block instanceof BlockCocoa && block.getMetaFromState(state) == 10)
-				|| (block instanceof BlockNetherWart && block.getMetaFromState(state) == 4)
-				) ? true : false;
+				|| (block instanceof BlockNetherWart && block.getMetaFromState(state) == 4)) ? true : false;
 	}
 
 	public static void addFarmingXp(BlockEvent.BreakEvent event) {
@@ -215,36 +188,36 @@ public class SkillFarming extends Skill implements ISkillFarming {
 					List<ItemStack> drops = event.getDrops();
 					// Let's not loop infinitely, that seems like a good idea.
 					int dropSize = drops.size();
-          for (int j = 0; j < farming.getFortuneAmount() - 1; j++) {
-            for (int i = 0; i < dropSize; i++) {
-              drops.add(drops.get(i).copy());
-            }
-          }
+					for (int j = 0; j < farming.getFortuneAmount() - 1; j++) {
+						for (int i = 0; i < dropSize; i++) {
+							drops.add(drops.get(i).copy());
+						}
+					}
 					Skills.playFortuneSound(player);
-          farming.addXp((EntityPlayerMP) player, 200);
+					farming.addXp((EntityPlayerMP) player, 200);
 				}
 			}
 		}
 	}
 
-  public static void applyGrowth(BlockEvent.PlaceEvent event) {
-  	EntityPlayer player = event.getPlayer();
+	public static void applyGrowth(BlockEvent.PlaceEvent event) {
+		EntityPlayer player = event.getPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-	  	IBlockState placedState = event.getPlacedBlock();
-	  	IBlockState targetState = event.getPlacedAgainst();
-	  	Block placedBlock = placedState.getBlock();
-	  	Block targetBlock = targetState.getBlock();
-	  	if (validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
-	  		World world = event.getWorld();
-	  		world.setBlockState(event.getPos(), farming.cropWithGrowth(placedState));
-	  	}
+			IBlockState placedState = event.getPlacedBlock();
+			IBlockState targetState = event.getPlacedAgainst();
+			Block placedBlock = placedState.getBlock();
+			Block targetBlock = targetState.getBlock();
+			if (validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
+				World world = event.getWorld();
+				world.setBlockState(event.getPos(), farming.cropWithGrowth(placedState));
+			}
 		}
-  }
+	}
 
-  public IBlockState cropWithGrowth(IBlockState placedState) {
-  	Block placedBlock = placedState.getBlock();
-  	PropertyInteger prop = null;
+	public IBlockState cropWithGrowth(IBlockState placedState) {
+		Block placedBlock = placedState.getBlock();
+		PropertyInteger prop = null;
 		int growthStage = this.getGrowthStage();
 		if (placedBlock instanceof BlockStem) {
 			prop = BlockStem.AGE;
@@ -255,7 +228,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 			}
 		} else if (placedBlock instanceof BlockCocoa) {
 			// Because fuck it.
-			int[] cocoaStages = {2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6};
+			int[] cocoaStages = { 2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
 			growthStage = cocoaStages[growthStage];
 			prop = BlockCocoa.AGE;
 		} else if (placedBlock instanceof BlockCrops) {
@@ -263,7 +236,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		}
 		return placedState.withProperty(prop, growthStage);
 
-  }
+	}
 
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
@@ -342,7 +315,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
 					IBlockState groundState = player.world.getBlockState(groundLocation);
 					Block aboveBlock = aboveState.getBlock();
 					Block groundBlock = groundState.getBlock();
-					if (aboveBlock instanceof BlockAir && (groundBlock instanceof BlockDirt || groundBlock instanceof BlockGrass || groundBlock instanceof BlockFarmland)) {
+					if (aboveBlock instanceof BlockAir
+							&& (groundBlock instanceof BlockDirt || groundBlock instanceof BlockGrass || groundBlock instanceof BlockFarmland)) {
 						ItemStack mainStack = player.getHeldItemMainhand();
 						ItemStack offStack = player.getHeldItemOffhand();
 						if (mainStack != null || offStack != null) {
@@ -351,10 +325,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 							if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe || offItem instanceof ItemHoe || offItem instanceof CustomHoe) {
 								player.world.setBlockState(groundLocation, Blocks.FARMLAND.getDefaultState());
 								IBlockState placedState = cropBlocks.get(Utils.rand.nextInt(cropBlocks.size())).getDefaultState();
-								player.world.setBlockState(
-									aboveLocation,
-									farming.cropWithGrowth(placedState)
-								);
+								player.world.setBlockState(aboveLocation, farming.cropWithGrowth(placedState));
 								farming.addXp((EntityPlayerMP) player, 200);
 								Skills.playFortuneSound(player);
 							}
@@ -373,11 +344,13 @@ public class SkillFarming extends Skill implements ISkillFarming {
 				if (player != null && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
 					SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
 					if (farming.hasAbility(3)) {
-						if (player.world.getTotalWorldTime() % tanCheck == 0L) {
+						if (player.world.getTotalWorldTime() % TAN_CHECK == 0L) {
 							BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
 							if (player.world.isDaytime() && player.world.canSeeSky(playerPos)) {
-								player.addPotionEffect(new PotionEffect(MobEffects.SATURATION, tanDuration, 0, true, false));
-								player.addPotionEffect(new PotionEffect(MobEffects.SPEED, tanDuration, 0, true, false));
+								for (Potion potion : new Potion[] { MobEffects.SATURATION, MobEffects.SPEED }) {
+									PotionEffect newEffect = new PotionEffect(potion, TAN_DURATION, 0, true, false);
+									Utils.addOrCombineEffect(player, newEffect);
+								}
 							}
 						}
 					}

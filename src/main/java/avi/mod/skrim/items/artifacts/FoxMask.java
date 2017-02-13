@@ -56,13 +56,8 @@ public class FoxMask extends ArtifactArmor {
 				if (player.world.getTotalWorldTime() % 60L == 0L && !player.world.isRemote) {
 					if (Utils.isWearingArmor(player, ModItems.FOX_MASK)) {
 						for (Potion potion : effects) {
-							PotionEffect activeEffect = player.getActivePotionEffect(potion);
-							PotionEffect newEffect = new PotionEffect(potion, 70, effectStrength.get(potion), true, false);
-							if (activeEffect != null) {
-								activeEffect.combine(newEffect);
-							} else {
-								player.addPotionEffect(newEffect);
-							}
+							PotionEffect newEffect = new PotionEffect(potion, 80, effectStrength.get(potion), true, false);
+							Utils.addOrCombineEffect(player, newEffect);
 						}
 					}
 				}

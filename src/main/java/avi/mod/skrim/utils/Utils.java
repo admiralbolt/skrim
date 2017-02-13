@@ -188,4 +188,14 @@ public class Utils {
 		log("[" + event + "](" + skill.name + ") " + message);
 	}
 	
+	public static void addOrCombineEffect(EntityPlayer player, PotionEffect effect) {
+		PotionEffect activeEffect = player.getActivePotionEffect(effect.getPotion());
+		if (activeEffect != null) {
+			activeEffect.combine(effect);
+		} else {
+			activeEffect = effect;
+		}
+		player.addPotionEffect(activeEffect);
+	}
+	
 }

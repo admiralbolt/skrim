@@ -249,8 +249,9 @@ public class SkillMining extends Skill implements ISkillMining {
 							if (activeEffect != null) {
 								activeEffect.combine(new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
 							} else {
-								player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
+								activeEffect = new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false);
 							}
+							player.addPotionEffect(activeEffect);
 
 						}
 					}
