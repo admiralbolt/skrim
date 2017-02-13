@@ -32,7 +32,7 @@ public class FoxMask extends ArtifactArmor {
 	}
 
 	/**
-	 * Handlers for boots of springheel jack
+	 * Handlers for fox mask
 	 */
 	public static class FoxHandler {
 
