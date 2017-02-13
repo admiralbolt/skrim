@@ -10,6 +10,7 @@ import avi.mod.skrim.items.ItemModelProvider;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.tileentity.CakeTileEntity;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.BlockCake;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -75,8 +76,10 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 				}
 
 				if (superFood) {
-					player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 200, 1, false, false));
-					player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200, 1, false, false));
+					PotionEffect regenEffect = new PotionEffect(MobEffects.REGENERATION, 200, 1, false, false);
+					PotionEffect speedEffect = new PotionEffect(MobEffects.SPEED, 200, 1, false, false);
+					Utils.addOrCombineEffect(player, regenEffect);
+					Utils.addOrCombineEffect(player, speedEffect);
 				}
 				
 				this.applyAdditionalEffects(player);
