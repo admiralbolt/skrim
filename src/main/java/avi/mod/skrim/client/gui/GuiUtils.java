@@ -83,7 +83,6 @@ public class GuiUtils {
 
 	public static Icon getAbilityIcon(String skillName, int level, boolean unlocked) {
 		Icon abilityIcon = new Icon(skillName + "_" + level, SKILL_ABILITY_X.get(skillName) + (level - 1) * 16, SKILL_ABILITY_Y.get(skillName) + ((unlocked) ? 0 : 48), 16, 16);
-		System.out.println(abilityIcon);
 		return abilityIcon;
 	}
 	
