@@ -1,0 +1,160 @@
+{
+  "pools": [
+    {
+      "name": "treasure",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "minecraft:golden_apple",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_carrot",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_sword",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_shovel",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_pickaxe",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_horse_armor",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_hoe",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_helmet",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_chestplate",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_boots",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_axe",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_leggings",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_sword",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_shovel",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_pickaxe",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_horse_armor",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_hoe",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_helmet",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_door",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_chestplate",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_boots",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_axe",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_leggings",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_ingot",
+          "weight": 40,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:gold_ingot",
+          "weight": 40,
+          "quality": 2
+        }
+      ]
+    }
+  ]
+}

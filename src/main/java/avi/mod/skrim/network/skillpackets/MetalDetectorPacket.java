@@ -1,8 +1,8 @@
 package avi.mod.skrim.network.skillpackets;
 
-import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.digging.SkillDigging;
+import avi.mod.skrim.world.loot.CustomLootTables;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -53,11 +53,12 @@ public class MetalDetectorPacket implements IMessage {
 					world.addScheduledTask(new Runnable() {
 						@Override
 						public void run() {
-							EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ, RandomTreasure.generateMetalTreasure());
-							world.spawnEntity(entityItem);
-							Skills.playFortuneSound(player);
 							if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
 								SkillDigging digging = (SkillDigging) player.getCapability(Skills.DIGGING, EnumFacing.NORTH);
+								EntityItem entityItem = new EntityItem(world, player.posX, player.posY, player.posZ,
+										CustomLootTables.getMetalTreasure(world, player, digging.level));
+								world.spawnEntity(entityItem);
+								Skills.playFortuneSound(player);
 								digging.addXp(player, 200);
 							}
 						}

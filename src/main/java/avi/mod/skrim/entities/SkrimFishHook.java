@@ -1,24 +1,17 @@
 package avi.mod.skrim.entities;
 
-import avi.mod.skrim.skills.RandomTreasure;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.world.loot.CustomLootTables;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandManager;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityFishHook;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
