@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.client.gui.GuiUtils;
+import avi.mod.skrim.client.gui.GuiUtils.Icon;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.stats.SkrimAchievements;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ResourceLocation;
 
 public class Skill implements ISkill {
 
@@ -21,8 +22,8 @@ public class Skill implements ISkill {
 	public int level;
 	public double xp;
 	public List<String> tooltip = new ArrayList<String>();
-	public ResourceLocation iconTexture;
 	public Map<Integer, SkillAbility> abilities = new HashMap<Integer, SkillAbility>();
+	private Icon icon;
 
 	public static int xpFactor = 10000;
 
@@ -33,7 +34,7 @@ public class Skill implements ISkill {
 		this.name = name;
 		this.level = level;
 		this.xp = xp;
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/" + name.toLowerCase() + ".png");
+		this.icon = GuiUtils.getSkillIcon(this.name.toLowerCase());
 	}
 
 	/**
@@ -80,14 +81,14 @@ public class Skill implements ISkill {
 	}
 
 	public SkillAbility getAbility(int abilityLevel) {
-		return (this.abilities.containsKey(abilityLevel)) ? this.abilities.get(abilityLevel) : SkillAbility.defaultSkill;
+		return (this.abilities.containsKey(abilityLevel)) ? this.abilities.get(abilityLevel) : null;
 	}
 
 	public boolean hasAbility(int abilityLevel) {
 		return (this.level / 25) >= abilityLevel;
 	}
 
-	public ResourceLocation getAbilityTexture(int abilityLevel) {
+	public Icon getAbilityIcon(int abilityLevel) {
 		return SkillAbility.getAbilityIcon(this.getAbility(abilityLevel), this.hasAbility(abilityLevel));
 	}
 
@@ -124,9 +125,9 @@ public class Skill implements ISkill {
 		tooltip.add("Tooltip for " + this.name);
 		return tooltip;
 	}
-
-	public ResourceLocation getIconTexture() {
-		return this.iconTexture;
+	
+	public Icon getIcon() {
+		return this.icon;
 	}
 
 	public void setXp(double xp) {

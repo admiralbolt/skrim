@@ -90,6 +90,9 @@ public class Skills {
 	public static Map<String, Capability<? extends ISkill>> skillMap = new HashMap<String, Capability<? extends ISkill>>();
 	public static List<Capability<? extends ISkill>> ALL_SKILLS = new ArrayList<Capability<? extends ISkill>>();
 
+	public static String[] ALPHABETICAL_SKILLS = { "blacksmithing", "botany", "cooking", "defense", "demolition", "digging", "farming", "fishing", "melee",
+			"mining", "ranged", "woodcutting" };
+
 	public static void register() {
 		MiningProvider.register();
 		WoodcuttingProvider.register();
@@ -224,7 +227,7 @@ public class Skills {
 	public static double getTotalXpBonus(EntityPlayer player) {
 		return (0.015 * player.experienceLevel) + (0.002 * getTotalSkillLevels(player));
 	}
-	
+
 	public static double getTotalXp(EntityPlayer player, int xp) {
 		return getTotalXpBonus(player) * xp + xp;
 	}

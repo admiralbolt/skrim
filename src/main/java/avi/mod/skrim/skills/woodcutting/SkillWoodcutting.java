@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.blocks.plants.WeirwoodSapling;
 import avi.mod.skrim.items.CustomAxe;
 import avi.mod.skrim.items.HandSaw;
 import avi.mod.skrim.items.ModItems;
@@ -75,53 +74,20 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		xpMap.put("dark_oak", 250);
 	}
 
-	public static List<String> validWoodcuttingBlocks = new ArrayList<String>(Arrays.asList(
-			"oak_door",
-			"spruce_door",
-			"birch_door",
-			"jungle_door",
-			"dark_oak_door",
-			"acacia_door",
-			"wooden_trapdoor",
-			"wooden_pressure_plate",
-			"oak_wood_stairs",
-			"spruce_wood_stairs",
-			"birch_wood_stairs",
-			"jungle_wood_stairs",
-			"dark_oak_wood_stairs",
-			"acacia_wood_stairs",
-			"crafting_table",
-			"sign"
-	));
+	public static List<String> validWoodcuttingBlocks = new ArrayList<String>(Arrays.asList("oak_door", "spruce_door", "birch_door", "jungle_door",
+			"dark_oak_door", "acacia_door", "wooden_trapdoor", "wooden_pressure_plate", "oak_wood_stairs", "spruce_wood_stairs", "birch_wood_stairs",
+			"jungle_wood_stairs", "dark_oak_wood_stairs", "acacia_wood_stairs", "crafting_table", "sign"));
 
-	public static SkillAbility HAND_SAW = new SkillAbility(
-		"Hand Saw",
-		25,
-		"Wee Saw!",
-		"Allows you to craft a hand saw!",
-		"Hand saws instantly convert broken wood logs into 8 planks."
-	);
+	public static SkillAbility HAND_SAW = new SkillAbility("woodcutting", "Hand Saw", 25, "Wee Saw!", "Allows you to craft a hand saw!",
+			"Hand saws instantly convert broken wood logs into 8 planks.");
 
-	public static SkillAbility WHIRLING_CHOP = new SkillAbility(
-		"Whirling Chop",
-		50,
-		"My roflchopter go soi soi soi soi soi.",
-		"Right click with an axe to massacre trees in a 10 block radius."
-	);
+	public static SkillAbility WHIRLING_CHOP = new SkillAbility("woodcutting", "Whirling Chop", 50, "My roflchopter go soi soi soi soi soi.",
+			"Right click with an axe to massacre trees in a 10 block radius.");
 
-	public static SkillAbility LEAF_ARMOR = new SkillAbility(
-		"Leaf Armor",
-		75,
-		"Tree!",
-		"Grants you the ability to craft armor out of leaves."
-	);
+	public static SkillAbility LEAF_ARMOR = new SkillAbility("woodcutting", "Leaf Armor", 75, "Tree!", "Grants you the ability to craft armor out of leaves.");
 
-	public static SkillAbility WEIRWOOD = new SkillAbility(
-		"Weirwood",
-		100,
-		"Not 'weirdwood'.",
-		"Grants you the ability to craft weirwood saplings and totems."
-	);
+	public static SkillAbility WEIRWOOD = new SkillAbility("woodcutting", "Weirwood", 100, "Not 'weirdwood'.",
+			"Grants you the ability to craft weirwood saplings and totems.");
 
 	public SkillWoodcutting() {
 		this(1, 0);
@@ -129,7 +95,6 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 	public SkillWoodcutting(int level, int currentXp) {
 		super("Woodcutting", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/woodcutting.png");
 		this.addAbilities(HAND_SAW, WHIRLING_CHOP, LEAF_ARMOR, WEIRWOOD);
 	}
 
@@ -156,13 +121,9 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
-		return ((harvestTool != null && harvestTool.toLowerCase().equals("axe"))
-			|| validWoodcuttingBlocks.contains(Utils.getBlockName(block))
-			|| block instanceof BlockFence
-			|| block instanceof BlockFenceGate
-			|| block instanceof BlockWoodSlab
-			|| block instanceof BlockHalfWoodSlab
-			) ? true : false;
+		return ((harvestTool != null && harvestTool.toLowerCase().equals("axe")) || validWoodcuttingBlocks.contains(Utils.getBlockName(block))
+				|| block instanceof BlockFence || block instanceof BlockFenceGate || block instanceof BlockWoodSlab || block instanceof BlockHalfWoodSlab)
+						? true : false;
 	}
 
 	// Assuming its a wood block
@@ -177,7 +138,8 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 		}
 	}
 
-	public int hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, EntityPlayer player, ItemStack axe, boolean withSaw, int damagePerBreak) {
+	public int hewTree(World world, SkillWoodcutting woodcutting, BlockPos pos, BlockPos start, EntityPlayer player, ItemStack axe, boolean withSaw,
+			int damagePerBreak) {
 		int addXp = 0;
 		IBlockState state = world.getBlockState(pos);
 		Block tree = state.getBlock();
@@ -212,9 +174,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 	public static boolean validTarget(BlockPos targetPos, BlockPos start) {
 		int radius = 2;
-		return (Math.abs(targetPos.getX() - start.getX()) <= radius
-				&& Math.abs(targetPos.getZ() - start.getZ()) <= radius) ?
-						true: false;
+		return (Math.abs(targetPos.getX() - start.getX()) <= radius && Math.abs(targetPos.getZ() - start.getZ()) <= radius) ? true : false;
 	}
 
 	public static void addWoodcuttingXp(BlockEvent.BreakEvent event) {
@@ -237,7 +197,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	}
 
 	public static void chopFaster(PlayerEvent.BreakSpeed event) {
-  	EntityPlayer player = event.getEntityPlayer();
+		EntityPlayer player = event.getEntityPlayer();
 		if (player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {
 			SkillWoodcutting woodcutting = (SkillWoodcutting) player.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
 			IBlockState state = event.getState();
@@ -314,9 +274,8 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 										IBlockState targetState = player.world.getBlockState(targetPos);
 										Block targetBlock = targetState.getBlock();
 										if (targetBlock instanceof BlockOldLog || targetBlock instanceof BlockNewLog) {
-											SkrimPacketHandler.INSTANCE.sendToServer(
-												new WhirlingChopPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ())
-											);
+											SkrimPacketHandler.INSTANCE
+													.sendToServer(new WhirlingChopPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ()));
 										}
 									}
 								}

@@ -14,7 +14,6 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.material.Material;
@@ -59,15 +58,15 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	public static SkillStorage<ISkillMelee> skillStorage = new SkillStorage<ISkillMelee>();
 	public int ticksSinceLastLeft = 0;
 
-	public static SkillAbility VAMPIRISM = new SkillAbility("Vampirism", 25, "What I need is your blood. What I don't need is your permission.",
+	public static SkillAbility VAMPIRISM = new SkillAbility("melee", "Vampirism", 25, "What I need is your blood. What I don't need is your permission.",
 			"Killing an enemy restores §a1" + SkillAbility.descColor + " heart.");
 
-	public static SkillAbility SPIN_SLASH = new SkillAbility("Spin Slash", 50, "Spin to win.", "Critting an enemy deals massive AOE damage.");
+	public static SkillAbility SPIN_SLASH = new SkillAbility("melee", "Spin Slash", 50, "Spin to win.", "Critting an enemy deals massive AOE damage.");
 
-	public static SkillAbility DUAL_WIELDING = new SkillAbility("Dual Wielding", 75, "Two swords are better than one.",
+	public static SkillAbility DUAL_WIELDING = new SkillAbility("melee", "Dual Wielding", 75, "Two swords are better than one.",
 			"Allows you to swing your off hand if you have two swords equipped.", "Each hand uses a separate exhaustion meter for damage & swipe attacks.");
 
-	public static SkillAbility GRAND_SMITE = new SkillAbility("Grand Smite", 100, "DESTRUUUUCTIOOONNN", "Criitting an enemy call down lightning.");
+	public static SkillAbility GRAND_SMITE = new SkillAbility("melee", "Grand Smite", 100, "DESTRUUUUCTIOOONNN", "Criitting an enemy call down lightning.");
 
 	public SkillMelee() {
 		this(1, 0);

@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -63,14 +62,18 @@ public class SkillDefense extends Skill implements ISkillDefense {
 		this(1, 0);
 	}
 
-	public static SkillAbility RITE_OF_PASSAGE = new SkillAbility("Rite of Passage", 25, "It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.", "You must fully heal before regeneration will activate again.");
-	public static SkillAbility CAPTAIN = new SkillAbility("Captain", 50, "Leader of the pack.  Vroom.", "Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r" + SkillAbility.descColor + " radius.");
-	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("Aspect of the Golem", 75, "The new spell resistance.", "Negative status effects last for half as long.");
-	public static SkillAbility STALWART_STANCE = new SkillAbility("Stalwart Stance", 100, "That tickles.", "Crouching and blocking with a shield for at least 3 seconds grants invulnerability.");
+	public static SkillAbility RITE_OF_PASSAGE = new SkillAbility("defense", "Rite of Passage", 25,
+			"It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.",
+			"You must fully heal before regeneration will activate again.");
+	public static SkillAbility CAPTAIN = new SkillAbility("defense", "Captain", 50, "Leader of the pack.  Vroom.",
+			"Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r" + SkillAbility.descColor + " radius.");
+	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("defense", "Aspect of the Golem", 75, "The new spell resistance.",
+			"Negative status effects last for half as long.");
+	public static SkillAbility STALWART_STANCE = new SkillAbility("defense", "Stalwart Stance", 100, "That tickles.",
+			"Crouching and blocking with a shield for at least 3 seconds grants invulnerability.");
 
 	public SkillDefense(int level, int currentXp) {
 		super("Defense", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/defense.png");
 		this.addAbilities(RITE_OF_PASSAGE, CAPTAIN, GOLEMS_ASPECT, STALWART_STANCE);
 	}
 
@@ -164,7 +167,8 @@ public class SkillDefense extends Skill implements ISkillDefense {
 								int x = pos.getX();
 								int y = pos.getY();
 								int z = pos.getZ();
-								AxisAlignedBB bound = new AxisAlignedBB(x - CAPTAIN_RANGE, y - CAPTAIN_RANGE, z - CAPTAIN_RANGE, x + CAPTAIN_RANGE, y + CAPTAIN_RANGE, z + CAPTAIN_RANGE);
+								AxisAlignedBB bound = new AxisAlignedBB(x - CAPTAIN_RANGE, y - CAPTAIN_RANGE, z - CAPTAIN_RANGE, x + CAPTAIN_RANGE,
+										y + CAPTAIN_RANGE, z + CAPTAIN_RANGE);
 
 								List<EntityPlayer> players = player.world.getEntitiesWithinAABB(EntityPlayer.class, bound);
 								for (EntityPlayer playa : players) {
@@ -185,7 +189,8 @@ public class SkillDefense extends Skill implements ISkillDefense {
 								if (Utils.isNegativeEffect(effect)) {
 									Utils.logSkillEvent(event, defense, "Pre reduce effect: " + effect);
 									Reflection.hackValueTo(effect, effect.getDuration() - 1, Obfuscation.POTION_DURATION.getFieldNames());
-									PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration() - 1, effect.getAmplifier(), effect.getIsAmbient(), effect.doesShowParticles());
+									PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration() - 1, effect.getAmplifier(),
+											effect.getIsAmbient(), effect.doesShowParticles());
 									player.addPotionEffect(newEffect);
 									Utils.logSkillEvent(event, defense, "Post reduce effect: " + effect);
 								}
@@ -225,7 +230,8 @@ public class SkillDefense extends Skill implements ISkillDefense {
 	public Entry<IAttribute, AttributeModifier> getAttributeModifier() {
 		if (this.shouldUpdateAttribute) {
 			this.shouldUpdateAttribute = false;
-			return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(SharedMonsterAttributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", (double) this.getExtraHealth(), 0));
+			return new AbstractMap.SimpleEntry<IAttribute, AttributeModifier>(SharedMonsterAttributes.MAX_HEALTH,
+					new AttributeModifier(UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "skrim-overshields", (double) this.getExtraHealth(), 0));
 		}
 		return null;
 	}

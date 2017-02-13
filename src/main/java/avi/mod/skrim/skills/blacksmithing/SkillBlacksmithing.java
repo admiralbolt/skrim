@@ -1,19 +1,16 @@
 package avi.mod.skrim.skills.blacksmithing;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
-import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -63,18 +60,18 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 		obsidianItems.add(ModItems.OBSIDIAN_SWORD);
 	}
 
-	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("Master Craftsperson", 25,
+	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("blacksmithing", "Master Craftsperson", 25,
 			"Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
 			"No longer risk breaking the anvil when repairing items.",
 			"Repairing an item with an undamaged equivalent provides a one time §a+50%" + SkillAbility.descColor + " durability bonus.");
 
-	public static SkillAbility PERSISTENCE = new SkillAbility("Persistence", 50, "3 days later...",
+	public static SkillAbility PERSISTENCE = new SkillAbility("blacksmithing", "Persistence", 50, "3 days later...",
 			"Significantly reduce prior work cost when repairing items.");
 
-	public static SkillAbility IRON_HEART = new SkillAbility("Iron Heart", 75, "Can still pump blood.",
+	public static SkillAbility IRON_HEART = new SkillAbility("blacksmithing", "Iron Heart", 75, "Can still pump blood.",
 			"Passively gain §a50%" + SkillAbility.descColor + " fire resistance.");
 
-	public static SkillAbility OBSIDIAN_SMITH = new SkillAbility("Obsidian Smith", 100, "How can obsidian be real if our eyes aren't real?",
+	public static SkillAbility OBSIDIAN_SMITH = new SkillAbility("blacksmithing", "Obsidian Smith", 100, "How can obsidian be real if our eyes aren't real?",
 			"Allows you to craft obsidian armor, weapons, and tools.");
 
 	public SkillBlacksmithing() {
@@ -83,7 +80,6 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
 	public SkillBlacksmithing(int level, int currentXp) {
 		super("Blacksmithing", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/blacksmithing.png");
 		this.addAbilities(MASTER_CRAFTS_PERSON, PERSISTENCE, IRON_HEART, OBSIDIAN_SMITH);
 	}
 
@@ -139,12 +135,10 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	}
 
 	/**
-	 * The hackiest of hacks. Why does this always happen.
-	 * Basically, shift clicking is really FUCK and does
-	 * not correctly report the number of smelted items.
-	 * When we open the furnace we log the number
-	 * of items currently in it, and use that instead
-	 * when shift clicking.
+	 * The hackiest of hacks. Why does this always happen. Basically, shift
+	 * clicking is really FUCK and does not correctly report the number of
+	 * smelted items. When we open the furnace we log the number of items
+	 * currently in it, and use that instead when shift clicking.
 	 */
 	public static void saveItemNumber(PlayerContainerEvent.Open event) {
 		Container please = event.getContainer();
@@ -162,8 +156,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	}
 
 	/**
-	 * Reduce fire damage by half!  Pretty straightforward,
-	 * just lots of if checking.
+	 * Reduce fire damage by half! Pretty straightforward, just lots of if
+	 * checking.
 	 */
 	public static void ironHeart(LivingHurtEvent event) {
 		Entity entity = event.getEntity();
@@ -183,10 +177,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	}
 
 	/**
-	 * A few things here:
-	 * 1.	We want to apply the base blacksmithing bonus when repairing,
-	 * 		that is the extra%/lvl repair
-	 * 2. 	We want to apply the two special repair skills that blacksmithing has.
+	 * A few things here: 1. We want to apply the base blacksmithing bonus when
+	 * repairing, that is the extra%/lvl repair 2. We want to apply the two
+	 * special repair skills that blacksmithing has.
 	 */
 	public static void enhanceRepair(AnvilRepairEvent event) {
 		Entity player = event.getEntityPlayer();
@@ -216,7 +209,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 						 * I'm gonna break your shit.
 						 */
 						Item outputItem = (Item) output.getItem();
-						Utils.logSkillEvent(event, blacksmithing, "applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
+						Utils.logSkillEvent(event, blacksmithing,
+								"applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
 						outputItem.setMaxDamage((int) (outputItem.getMaxDamage(output) * 1.5));
 						// Reflection.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),  "maxDamage", "field_77699_b");
 					}

@@ -39,36 +39,18 @@ public class SkillRanged extends Skill implements ISkillRanged {
 	public static float headshotBufferHigh = 2.2F;
 	public static int glowDuration = 120;
 
-	public static SkillAbility SNEAK_ATTACK = new SkillAbility(
-		"Sneak Attack",
-		25,
-		"Surprise Motherfucker.",
-		"Deal 25% extra damage to enemies while crouching & undetected."
-	);
+	public static SkillAbility SNEAK_ATTACK = new SkillAbility("ranged", "Sneak Attack", 25, "Surprise Motherfucker.",
+			"Deal 25% extra damage to enemies while crouching & undetected.");
 
-	public static SkillAbility FAERIE_FIRE = new SkillAbility(
-		"Faerie Fire",
-		50,
-		"Light that shit up.",
-		"Your arrows automatically light up the enemy."
-	);
+	public static SkillAbility FAERIE_FIRE = new SkillAbility("ranged", "Faerie Fire", 50, "Light that shit up.",
+			"Your arrows automatically light up the enemy.");
 
-	public static SkillAbility GREAT_BOW = new SkillAbility(
-		"Great Bow",
-		75,
-		"gr8 bow m8, I r8 8/8.",
-		"Gain the ability to craft a powerful great bow."
-	);
+	public static SkillAbility GREAT_BOW = new SkillAbility("ranged", "Great Bow", 75, "gr8 bow m8, I r8 8/8.",
+			"Gain the ability to craft a powerful great bow.");
 
-	public static SkillAbility CRITICAL_ASCENSION = new SkillAbility(
-		"Critical Ascension",
-		100,
-		"Boom, Headshot.",
-		"Getting a head shot grants a stack of accuracy.",
-		"Missing a head shot removes 2 stacks of accuracy.",
-		"Dying removes all stacks of accuracy.",
-		"Each stack of accuracy grants §a+0.5%" + SkillAbility.descColor + " ranged damage AND headshot damage."
-	);
+	public static SkillAbility CRITICAL_ASCENSION = new SkillAbility("ranged", "Critical Ascension", 100, "Boom, Headshot.",
+			"Getting a head shot grants a stack of accuracy.", "Missing a head shot removes 2 stacks of accuracy.", "Dying removes all stacks of accuracy.",
+			"Each stack of accuracy grants §a+0.5%" + SkillAbility.descColor + " ranged damage AND headshot damage.");
 
 	private int accuracyStacks = 0;
 
@@ -78,7 +60,6 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
 	public SkillRanged(int level, int currentXp) {
 		super("Ranged", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/ranged.png");
 		this.addAbilities(SNEAK_ATTACK, FAERIE_FIRE, GREAT_BOW, CRITICAL_ASCENSION);
 	}
 
@@ -134,8 +115,10 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					Entity arrow = source.getSourceOfDamage();
 					EntityLivingBase targetEntity = event.getEntityLiving();
 					int addXp = 0;
-					if (canHeadshot(targetEntity) && (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow < arrow.posY) && (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh > arrow.posY)) {
-						player.world.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F, 1.0F);
+					if (canHeadshot(targetEntity) && (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow < arrow.posY)
+							&& (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh > arrow.posY)) {
+						player.world.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F,
+								1.0F);
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
 						addXp = 50;
 						if (ranged.hasAbility(4)) {
@@ -149,7 +132,8 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					if (ranged.hasAbility(1)) {
 						if (player.isSneaking() && targetEntity.getAITarget() != player) {
 							event.setAmount((float) (event.getAmount() * 1.25));
-							player.world.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F, 1.0F);
+							player.world.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F,
+									1.0F);
 							addXp += 50;
 						}
 						if (ranged.hasAbility(2)) {
@@ -199,7 +183,5 @@ public class SkillRanged extends Skill implements ISkillRanged {
 			}
 		}
 	}
-
-
 
 }

@@ -83,17 +83,17 @@ public class SkillFarming extends Skill implements ISkillFarming {
 	public static long TAN_CHECK = 40L;
 	public int ticks = 0;
 
-	public static SkillAbility OVERALLS = new SkillAbility("Overalls", 25,
+	public static SkillAbility OVERALLS = new SkillAbility("farming", "Overalls", 25,
 			"Overall, this ability seems pretty good! AHAHAHA Get it?  (Please help me I need sleep.)", "Grants you the ability to craft overalls.",
 			"While worn, right clicking with a hoe acts like applying bonemeal.");
 
-	public static SkillAbility SIDE_CHICK = new SkillAbility("Side Chick", 50, "This IS my other hoe.",
+	public static SkillAbility SIDE_CHICK = new SkillAbility("farming", "Side Chick", 50, "This IS my other hoe.",
 			"Killing an entity while holding a hoe automatically plants a random plant.");
 
-	public static SkillAbility FARMERS_TAN = new SkillAbility("Farmer's Tan", 75, "You're a plant Vash.",
+	public static SkillAbility FARMERS_TAN = new SkillAbility("farming", "Farmer's Tan", 75, "You're a plant Vash.",
 			"Being in sunlight grants you a speed boost and saturation.");
 
-	public static SkillAbility MAGIC_BEANSTALK = new SkillAbility("Magic Beanstalk", 100, "Fee-fi-fo-fum! Random chests for everyone!",
+	public static SkillAbility MAGIC_BEANSTALK = new SkillAbility("farming", "Magic Beanstalk", 100, "Fee-fi-fo-fum! Random chests for everyone!",
 			"Grants you the ability to craft a magic bean.");
 
 	public SkillFarming() {
@@ -102,7 +102,6 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	public SkillFarming(int level, int currentXp) {
 		super("Farming", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/farming.png");
 		this.addAbilities(OVERALLS, SIDE_CHICK, FARMERS_TAN, MAGIC_BEANSTALK);
 	}
 

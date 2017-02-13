@@ -12,9 +12,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.utils.Obfuscation;
-import avi.mod.skrim.utils.Reflection;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -100,13 +98,13 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
 	}
 
-	public static SkillAbility OVERFULL = new SkillAbility("Overfull", 25, "Just keep eating, just keep eating, just keep eating...",
+	public static SkillAbility OVERFULL = new SkillAbility("cooking", "Overfull", 25, "Just keep eating, just keep eating, just keep eating...",
 			"Your cooked food now ignores food and saturation limits.");
-	public static SkillAbility PANACEA = new SkillAbility("Panacea", 50, "Cures everything that's less than half dead.",
+	public static SkillAbility PANACEA = new SkillAbility("cooking", "Panacea", 50, "Cures everything that's less than half dead.",
 			"Your cooked food now removes nausea, hunger, and poison.");
-	public static SkillAbility SUPER_FOOD = new SkillAbility("Super Food", 75, "You won't believe how good these 11 foods are for you!",
+	public static SkillAbility SUPER_FOOD = new SkillAbility("cooking", "Super Food", 75, "You won't believe how good these 11 foods are for you!",
 			"Your cooked food now grants a speed boost and a short period of regeneration.");
-	public static SkillAbility ANGEL_CAKE = new SkillAbility("Angel Cake", 100, "I believe I can fly.",
+	public static SkillAbility ANGEL_CAKE = new SkillAbility("cooking", "Angel Cake", 100, "I believe I can fly.",
 			"Gain the ability to craft angel cake, which grants 30 seconds of flight.");
 
 	public SkillCooking() {
@@ -115,7 +113,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
 	public SkillCooking(int level, int currentXp) {
 		super("Cooking", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/cooking.png");
 		this.addAbilities(OVERFULL, PANACEA, SUPER_FOOD, ANGEL_CAKE);
 	}
 

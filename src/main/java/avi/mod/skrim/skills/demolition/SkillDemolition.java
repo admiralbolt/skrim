@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.blocks.tnt.CustomExplosion;
 import avi.mod.skrim.entities.monster.BioCreeper;
@@ -34,7 +31,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -46,13 +42,13 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 	public static SkillStorage<ISkillDemolition> skillStorage = new SkillStorage<ISkillDemolition>();
 	public static Map<BlockPos, EntityPlayer> validGoBoom = new HashMap<BlockPos, EntityPlayer>();
 
-	public static SkillAbility DYNAMITE = new SkillAbility("Dynamite", 25, "Boom goes the dynamite.",
+	public static SkillAbility DYNAMITE = new SkillAbility("demolition", "Dynamite", 25, "Boom goes the dynamite.",
 			"Grants you the ability to craft dynamite with tnt & a pickaxe.", "Dynamite has a larger blast radius and a 100% chance to drop blocks.");
-	public static SkillAbility BIOBOMB = new SkillAbility("Bio-Bomb", 50, "A whole new meaning for c'mon BB.",
+	public static SkillAbility BIOBOMB = new SkillAbility("demolition", "Bio-Bomb", 50, "A whole new meaning for c'mon BB.",
 			"Grants you the ability to craft Bio-Bomb with... Stuff...", "Bio-bombs have twice the blast radius of tnt, and don't affect blocks.");
-	public static SkillAbility NAPALM = new SkillAbility("Napalm", 75, "Handle with care.", "Grants you the ability to craft Napalm with... Stuff...",
-			"Napalm has triple the blast radius of tnt, starts fires, and creates lava spawns.");
-	public static SkillAbility BADONKADONK = new SkillAbility("Badonkadonk", 100, "Gut full of dynamite and booty like POW.",
+	public static SkillAbility NAPALM = new SkillAbility("demolition", "Napalm", 75, "Handle with care.",
+			"Grants you the ability to craft Napalm with... Stuff...", "Napalm has triple the blast radius of tnt, starts fires, and creates lava spawns.");
+	public static SkillAbility BADONKADONK = new SkillAbility("demolition", "Badonkadonk", 100, "Gut full of dynamite and booty like POW.",
 			"Grants you the ability to craft a rocket launcher.");
 
 	public SkillDemolition() {
@@ -61,7 +57,6 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
 	public SkillDemolition(int level, int currentXp) {
 		super("Demolition", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/demolition.png");
 		this.addAbilities(DYNAMITE, BIOBOMB, NAPALM, BADONKADONK);
 	}
 

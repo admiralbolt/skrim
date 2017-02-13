@@ -38,7 +38,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -77,37 +76,23 @@ public class SkillMining extends Skill implements ISkillMining {
 		XP_MAP.put("emerald_ore", 3500); // Nice xp bonus for an otherwise useless ore
 	}
 
-	public static List<String> VALID_MINING_BLOCKS = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs", "nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));
+	public static List<String> VALID_MINING_BLOCKS = new ArrayList<String>(Arrays.asList("cobblestone_stairs", "stone_brick_stairs", "quartz_stairs",
+			"nether_brick_stairs", "brick_stairs", "sandstone_stairs", "red_sandstone_stairs", "purpur_block", "purpur_pillar", "iron_door"));
 
-	public static List<String> VALID_FORTUNE_ORES = new ArrayList<String>(Arrays.asList("coal_ore", "iron_ore", "gold_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
+	public static List<String> VALID_FORTUNE_ORES = new ArrayList<String>(
+			Arrays.asList("coal_ore", "iron_ore", "gold_ore", "lapis_lazuli_ore", "diamond_ore", "emerald_ore", "redstone_ore", "quartz_ore"));
 
-	public static SkillAbility DARKVISION = new SkillAbility(
-		"Darkvision",
-		25,
-		"I was born in the darkness.",
-		"While close to the bottom of the world you have a constant night vision effect."
-	);
+	public static SkillAbility DARKVISION = new SkillAbility("mining", "Darkvision", 25, "I was born in the darkness.",
+			"While close to the bottom of the world you have a constant night vision effect.");
 
-	public static SkillAbility LAVA_SWIMMER = new SkillAbility(
-		"Lava Swimmer",
-		50,
-		"Reducing the number of 'oh shit' moments.",
-		"While close to the bottom of the world you take §a50%" + SkillAbility.descColor + " damage from lava, and don't get set on fire by it."
-	);
+	public static SkillAbility LAVA_SWIMMER = new SkillAbility("mining", "Lava Swimmer", 50, "Reducing the number of 'oh shit' moments.",
+			"While close to the bottom of the world you take §a50%" + SkillAbility.descColor + " damage from lava, and don't get set on fire by it.");
 
-	public static SkillAbility SPELUNKER = new SkillAbility(
-		"Spelunker",
-		75,
-		"Spelunkey?  More like Spedunkey.  AHAHAHAHA.",
-		"Allows you to climb walls while holding jump."
-	);
+	public static SkillAbility SPELUNKER = new SkillAbility("mining", "Spelunker", 75, "Spelunkey?  More like Spedunkey.  AHAHAHAHA.",
+			"Allows you to climb walls while holding jump.");
 
-	public static SkillAbility DRILL = new SkillAbility(
-		"Drill",
-		100,
-		"Without the risk of earthquakes!",
-		"Right clicking with a pickaxe instantly mines to bedrock."
-	);
+	public static SkillAbility DRILL = new SkillAbility("mining", "Drill", 100, "Without the risk of earthquakes!",
+			"Right clicking with a pickaxe instantly mines to bedrock.");
 
 	public SkillMining() {
 		this(1, 0);
@@ -115,7 +100,6 @@ public class SkillMining extends Skill implements ISkillMining {
 
 	public SkillMining(int level, int currentXp) {
 		super("Mining", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/mining.png");
 		this.addAbilities(DARKVISION, LAVA_SWIMMER, SPELUNKER, DRILL);
 	}
 
@@ -139,7 +123,8 @@ public class SkillMining extends Skill implements ISkillMining {
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
 		tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r mining speed bonus.");
-		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r ore drops.");
+		tooltip.add(
+				"§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r ore drops.");
 		tooltip.add("   This bonus stacks with fortune.");
 		return tooltip;
 	}
@@ -147,8 +132,10 @@ public class SkillMining extends Skill implements ISkillMining {
 	public boolean validSpeedTarget(IBlockState state) {
 		Block block = state.getBlock();
 		String harvestTool = block.getHarvestTool(state);
-		return ((harvestTool != null && harvestTool.toLowerCase().equals("pickaxe")) || VALID_MINING_BLOCKS.contains(Utils.getBlockName(block)) || block instanceof BlockOre || block instanceof BlockRedstoneOre || block instanceof BlockStone || block instanceof BlockStoneSlab || block instanceof BlockStoneSlabNew || block instanceof BlockObsidian || block instanceof BlockStoneBrick || block instanceof BlockNetherBrick || block instanceof BlockNetherrack || block instanceof BlockSandStone
-				|| block instanceof BlockRedSandstone) ? true : false;
+		return ((harvestTool != null && harvestTool.toLowerCase().equals("pickaxe")) || VALID_MINING_BLOCKS.contains(Utils.getBlockName(block))
+				|| block instanceof BlockOre || block instanceof BlockRedstoneOre || block instanceof BlockStone || block instanceof BlockStoneSlab
+				|| block instanceof BlockStoneSlabNew || block instanceof BlockObsidian || block instanceof BlockStoneBrick || block instanceof BlockNetherBrick
+				|| block instanceof BlockNetherrack || block instanceof BlockSandStone || block instanceof BlockRedSandstone) ? true : false;
 	}
 
 	public boolean validFortuneTarget(IBlockState state) {

@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.jna.Structure;
-
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.CustomSpade;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
@@ -41,7 +38,6 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
@@ -80,12 +76,13 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	public double metalMeter = 0;
 	public Vec3d lastPos = null;
 
-	public static SkillAbility VITALIC_BREATHING = new SkillAbility("Vitalic Breathing", 25, "Breathe, breathe in the... dirt?",
+	public static SkillAbility VITALIC_BREATHING = new SkillAbility("digging", "Vitalic Breathing", 25, "Breathe, breathe in the... dirt?",
 			"No longer take suffocation damage from being trapped in walls.");
-	public static SkillAbility METAL_DETECTOR = new SkillAbility("Metal Detector", 50, "Beep....Beep....Beep....",
+	public static SkillAbility METAL_DETECTOR = new SkillAbility("digging", "Metal Detector", 50, "Beep....Beep....Beep....",
 			"Moving over dirt blocks causes random metal objects to appear!");
-	public static SkillAbility ENTOMB = new SkillAbility("Entomb", 75, "Fuck Priest.", "Right clicking an entity with a shovel buries it in the earth.");
-	public static SkillAbility CASTLE = new SkillAbility("Castles Made of Sand", 100, "Slips into the sea.  Eventually.",
+	public static SkillAbility ENTOMB = new SkillAbility("digging", "Entomb", 75, "Fuck Priest.",
+			"Right clicking an entity with a shovel buries it in the earth.");
+	public static SkillAbility CASTLE = new SkillAbility("digging", "Castles Made of Sand", 100, "Slips into the sea.  Eventually.",
 			"Right cliking with a shovel creates a desert temple.");
 
 	public SkillDigging() {
@@ -94,7 +91,6 @@ public class SkillDigging extends Skill implements ISkillDigging {
 
 	public SkillDigging(int level, int currentXp) {
 		super("Digging", level, currentXp);
-		this.iconTexture = new ResourceLocation("skrim", "textures/guis/skills/digging.png");
 		this.addAbilities(VITALIC_BREATHING, METAL_DETECTOR, ENTOMB, CASTLE);
 	}
 

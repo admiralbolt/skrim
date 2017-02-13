@@ -9,45 +9,45 @@ import net.minecraft.item.ItemStack;
 
 public class RandomTreasure {
 
-  private static RandomCollection<Item> metalTreasure = new RandomCollection<Item>();
-  static {
-    metalTreasure.add(0.4, Items.IRON_INGOT);
-    metalTreasure.add(0.4, Items.GOLD_INGOT);
-    metalTreasure.add(0.05, Items.IRON_LEGGINGS);
-    metalTreasure.add(0.05, Items.IRON_AXE);
-    metalTreasure.add(0.05, Items.IRON_BOOTS);
-    metalTreasure.add(0.05, Items.IRON_CHESTPLATE);
-    metalTreasure.add(0.05, Items.IRON_DOOR);
-    metalTreasure.add(0.05, Items.IRON_HELMET);
-    metalTreasure.add(0.05, Items.IRON_HOE);
-    metalTreasure.add(0.05, Items.IRON_HORSE_ARMOR);
-    metalTreasure.add(0.05, Items.IRON_PICKAXE);
-    metalTreasure.add(0.05, Items.IRON_SHOVEL);
-    metalTreasure.add(0.05, Items.IRON_SWORD);
-    metalTreasure.add(0.05, Items.GOLDEN_LEGGINGS);
-    metalTreasure.add(0.05, Items.GOLDEN_AXE);
-    metalTreasure.add(0.05, Items.GOLDEN_BOOTS);
-    metalTreasure.add(0.05, Items.GOLDEN_CHESTPLATE);
-    metalTreasure.add(0.05, Items.GOLDEN_HELMET);
-    metalTreasure.add(0.05, Items.GOLDEN_HOE);
-    metalTreasure.add(0.05, Items.GOLDEN_HORSE_ARMOR);
-    metalTreasure.add(0.05, Items.GOLDEN_PICKAXE);
-    metalTreasure.add(0.05, Items.GOLDEN_SHOVEL);
-    metalTreasure.add(0.05, Items.GOLDEN_SWORD);
-    metalTreasure.add(0.01, Items.GOLDEN_APPLE);
-    metalTreasure.add(0.01, Items.GOLDEN_CARROT);
-  }
+	private static RandomCollection<Item> metalTreasure = new RandomCollection<Item>();
+	static {
+		metalTreasure.add(0.4, Items.IRON_INGOT);
+		metalTreasure.add(0.4, Items.GOLD_INGOT);
+		metalTreasure.add(0.05, Items.IRON_LEGGINGS);
+		metalTreasure.add(0.05, Items.IRON_AXE);
+		metalTreasure.add(0.05, Items.IRON_BOOTS);
+		metalTreasure.add(0.05, Items.IRON_CHESTPLATE);
+		metalTreasure.add(0.05, Items.IRON_DOOR);
+		metalTreasure.add(0.05, Items.IRON_HELMET);
+		metalTreasure.add(0.05, Items.IRON_HOE);
+		metalTreasure.add(0.05, Items.IRON_HORSE_ARMOR);
+		metalTreasure.add(0.05, Items.IRON_PICKAXE);
+		metalTreasure.add(0.05, Items.IRON_SHOVEL);
+		metalTreasure.add(0.05, Items.IRON_SWORD);
+		metalTreasure.add(0.05, Items.GOLDEN_LEGGINGS);
+		metalTreasure.add(0.05, Items.GOLDEN_AXE);
+		metalTreasure.add(0.05, Items.GOLDEN_BOOTS);
+		metalTreasure.add(0.05, Items.GOLDEN_CHESTPLATE);
+		metalTreasure.add(0.05, Items.GOLDEN_HELMET);
+		metalTreasure.add(0.05, Items.GOLDEN_HOE);
+		metalTreasure.add(0.05, Items.GOLDEN_HORSE_ARMOR);
+		metalTreasure.add(0.05, Items.GOLDEN_PICKAXE);
+		metalTreasure.add(0.05, Items.GOLDEN_SHOVEL);
+		metalTreasure.add(0.05, Items.GOLDEN_SWORD);
+		metalTreasure.add(0.01, Items.GOLDEN_APPLE);
+		metalTreasure.add(0.01, Items.GOLDEN_CARROT);
+	}
 
-  private static RandomCollection<Item> treasure = new RandomCollection<Item>();
+	private static RandomCollection<Item> treasure = new RandomCollection<Item>();
 	static {
 		treasure.add(0.08, Items.ARROW);
-    treasure.add(0.08, Items.STRING);
-    treasure.add(0.04, Items.CLAY_BALL);
-    treasure.add(0.01, Items.RABBIT_FOOT);
-    treasure.add(0.02, Items.SLIME_BALL);
+		treasure.add(0.08, Items.STRING);
+		treasure.add(0.04, Items.CLAY_BALL);
+		treasure.add(0.01, Items.RABBIT_FOOT);
+		treasure.add(0.02, Items.SLIME_BALL);
 		treasure.add(0.2, Items.GOLD_NUGGET);
 		treasure.add(0.01, Items.SADDLE);
-    treasure.add(0.01, Items.NAME_TAG);
+		treasure.add(0.01, Items.NAME_TAG);
 		treasure.add(0.1, Items.FEATHER);
 		treasure.add(0.12, Items.GUNPOWDER);
 		treasure.add(0.001, Items.DIAMOND_SWORD);
@@ -72,7 +72,7 @@ public class RandomTreasure {
 		for (CustomRecord record : ModItems.SONGS.values()) {
 			treasure.add(0.001, record);
 		}
-		treasure.add(0.00,  Items.SPECTRAL_ARROW);
+		treasure.add(0.00, Items.SPECTRAL_ARROW);
 		treasure.add(0.006, Items.DIAMOND_HORSE_ARMOR);
 		treasure.add(0.11, Items.POTATO);
 		treasure.add(0.1, Items.BOOK);
@@ -80,12 +80,12 @@ public class RandomTreasure {
 		treasure.add(0.0008, Items.NETHER_STAR);
 	}
 
-  public static ItemStack generateStandardTreasure() {
+	public static ItemStack generateStandardTreasure() {
 		return new ItemStack(treasure.next());
 	}
 
-  public static ItemStack generateMetalTreasure() {
-  	return new ItemStack(metalTreasure.next());
-  }
+	public static ItemStack generateMetalTreasure() {
+		return new ItemStack(metalTreasure.next());
+	}
 
 }
