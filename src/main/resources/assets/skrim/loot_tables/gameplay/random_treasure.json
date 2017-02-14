@@ -193,12 +193,6 @@
         },
         {
           "type": "item",
-          "name": "skrim:bio_creeper",
-          "weight": 1,
-          "quality": 5
-        },
-        {
-          "type": "item",
           "name": "minecraft:record_11",
           "weight": 50,
           "quality": 3
