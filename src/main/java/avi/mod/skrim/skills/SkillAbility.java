@@ -5,7 +5,6 @@ import java.util.List;
 
 import avi.mod.skrim.client.gui.GuiUtils;
 import avi.mod.skrim.client.gui.GuiUtils.Icon;
-import net.minecraft.util.ResourceLocation;
 
 public class SkillAbility {
 
