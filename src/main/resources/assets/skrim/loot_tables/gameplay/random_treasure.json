@@ -6,6 +6,24 @@
       "entries": [
         {
           "type": "item",
+          "name": "minecraft:bowl",
+          "weight": 750,
+          "quality": -30
+        },
+        {
+          "type": "item",
+          "name": "minecraft:gold_ingot",
+          "weight": 50,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_nugget",
+          "weight": 500,
+          "quality": -5
+        },
+        {
+          "type": "item",
           "name": "minecraft:golden_apple",
           "weight": 75,
           "quality": 5
@@ -97,19 +115,6 @@
             {
               "function": "enchant_with_levels",
               "levels": 30,
-              "treasure": true
-            }
-          ]
-        },
-        {
-          "type": "item",
-          "name": "minecraft:book",
-          "weight": 0,
-          "quality": 8,
-          "functions": [
-            {
-              "function": "enchant_with_levels",
-              "levels": 60,
               "treasure": true
             }
           ]
