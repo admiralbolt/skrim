@@ -31,14 +31,14 @@
         {
           "type": "item",
           "name": "minecraft:arrow",
-          "weight": 750,
-          "quality": -25
+          "weight": 800,
+          "quality": -26
         },
         {
           "type": "item",
           "name": "minecraft:string",
-          "weight": 750,
-          "quality": -25
+          "weight": 800,
+          "quality": -26
         },
         {
           "type": "item",
@@ -73,19 +73,19 @@
         {
           "type": "item",
           "name": "minecraft:feather",
-          "weight": 750,
-          "quality": -25
+          "weight": 800,
+          "quality": -26
         },
         {
           "type": "item",
           "name": "minecraft:gunpowder",
-          "weight": 250,
+          "weight": 300,
           "quality": -1
         },
         {
           "type": "item",
           "name": "minecraft:coal",
-          "weight": 200,
+          "weight": 250,
           "quality": 0
         },
         {
@@ -97,14 +97,8 @@
         {
           "type": "item",
           "name": "minecraft:experience_bottle",
-          "weight": 200,
+          "weight": 210,
           "quality": 1
-        },
-        {
-          "type": "item",
-          "name": "minecraft:book",
-          "weight": 500,
-          "quality": -12
         },
         {
           "type": "item",

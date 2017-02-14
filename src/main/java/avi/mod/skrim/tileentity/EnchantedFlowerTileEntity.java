@@ -36,12 +36,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
+public class EnchantedFlowerTileEntity extends TileEntity implements ITickable {
 
 	/** List of effects that Enchanted Flowers can apply */
 	public static final Potion[][] EFFECTS_LIST = new Potion[][] { { MobEffects.SPEED, MobEffects.HASTE }, { MobEffects.RESISTANCE, MobEffects.JUMP_BOOST }, { MobEffects.STRENGTH }, { MobEffects.REGENERATION } };
 	private static final Set<Potion> VALID_EFFECTS = Sets.<Potion>newHashSet();
-	private final List<TileEntityEnchantedFlower.BeamSegment> beamSegments = Lists.<TileEntityEnchantedFlower.BeamSegment>newArrayList();
+	private final List<EnchantedFlowerTileEntity.BeamSegment> beamSegments = Lists.<EnchantedFlowerTileEntity.BeamSegment>newArrayList();
 	@SideOnly(Side.CLIENT)
 	private long beamRenderCounter;
 
@@ -118,7 +118,7 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 		this.levels = 2;
 		this.beamSegments.clear();
 		this.isComplete = true;
-		TileEntityEnchantedFlower.BeamSegment customTileEntityBeacon$beamsegment = new TileEntityEnchantedFlower.BeamSegment(EntitySheep.getDyeRgb(EnumDyeColor.WHITE));
+		EnchantedFlowerTileEntity.BeamSegment customTileEntityBeacon$beamsegment = new EnchantedFlowerTileEntity.BeamSegment(EntitySheep.getDyeRgb(EnumDyeColor.WHITE));
 		this.beamSegments.add(customTileEntityBeacon$beamsegment);
 		boolean flag = true;
 		BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -150,7 +150,7 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 			if (Arrays.equals(afloat, customTileEntityBeacon$beamsegment.getColors())) {
 				customTileEntityBeacon$beamsegment.incrementHeight();
 			} else {
-				customTileEntityBeacon$beamsegment = new TileEntityEnchantedFlower.BeamSegment(afloat);
+				customTileEntityBeacon$beamsegment = new EnchantedFlowerTileEntity.BeamSegment(afloat);
 				this.beamSegments.add(customTileEntityBeacon$beamsegment);
 			}
 
@@ -190,7 +190,7 @@ public class TileEntityEnchantedFlower extends TileEntity implements ITickable {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public List<TileEntityEnchantedFlower.BeamSegment> getBeamSegments() {
+	public List<EnchantedFlowerTileEntity.BeamSegment> getBeamSegments() {
 		return this.beamSegments;
 	}
 

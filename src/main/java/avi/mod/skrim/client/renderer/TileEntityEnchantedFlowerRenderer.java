@@ -2,7 +2,7 @@ package avi.mod.skrim.client.renderer;
 
 import java.util.List;
 
-import avi.mod.skrim.tileentity.TileEntityEnchantedFlower;
+import avi.mod.skrim.tileentity.EnchantedFlowerTileEntity;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -14,14 +14,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityEnchantedFlowerRenderer extends TileEntitySpecialRenderer<TileEntityEnchantedFlower> {
+public class TileEntityEnchantedFlowerRenderer extends TileEntitySpecialRenderer<EnchantedFlowerTileEntity> {
 	public static final ResourceLocation TEXTURE_BEACON_BEAM = new ResourceLocation("textures/entity/beacon_beam.png");
 
-	public void renderTileEntityAt(TileEntityEnchantedFlower te, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void renderTileEntityAt(EnchantedFlowerTileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
 		this.renderBeacon(x, y + 1, z, (double) partialTicks, (double) te.shouldBeamRender(), te.getBeamSegments(), (double) te.getWorld().getTotalWorldTime());
 	}
 
-	public void renderBeacon(double p_188206_1_, double p_188206_3_, double p_188206_5_, double p_188206_7_, double p_188206_9_, List<TileEntityEnchantedFlower.BeamSegment> p_188206_11_, double p_188206_12_) {
+	public void renderBeacon(double p_188206_1_, double p_188206_3_, double p_188206_5_, double p_188206_7_, double p_188206_9_, List<EnchantedFlowerTileEntity.BeamSegment> p_188206_11_, double p_188206_12_) {
 		GlStateManager.alphaFunc(516, 0.1F);
 		this.bindTexture(TEXTURE_BEACON_BEAM);
 
@@ -30,7 +30,7 @@ public class TileEntityEnchantedFlowerRenderer extends TileEntitySpecialRenderer
 			int i = 0;
 
 			for (int j = 0; j < p_188206_11_.size(); ++j) {
-				TileEntityEnchantedFlower.BeamSegment tileentitybeacon$beamsegment = (TileEntityEnchantedFlower.BeamSegment) p_188206_11_.get(j);
+				EnchantedFlowerTileEntity.BeamSegment tileentitybeacon$beamsegment = (EnchantedFlowerTileEntity.BeamSegment) p_188206_11_.get(j);
 				renderBeamSegment(p_188206_1_, p_188206_3_, p_188206_5_, p_188206_7_, p_188206_9_, p_188206_12_, i, tileentitybeacon$beamsegment.getHeight(), tileentitybeacon$beamsegment.getColors());
 				i += tileentitybeacon$beamsegment.getHeight();
 			}
@@ -129,7 +129,7 @@ public class TileEntityEnchantedFlowerRenderer extends TileEntitySpecialRenderer
 		GlStateManager.depthMask(true);
 	}
 
-	public boolean isGlobalRenderer(TileEntityEnchantedFlower te) {
+	public boolean isGlobalRenderer(EnchantedFlowerTileEntity te) {
 		return true;
 	}
 }

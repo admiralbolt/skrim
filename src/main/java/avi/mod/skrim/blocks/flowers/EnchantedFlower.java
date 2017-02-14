@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import avi.mod.skrim.blocks.BlockBase;
-import avi.mod.skrim.tileentity.TileEntityEnchantedFlower;
+import avi.mod.skrim.tileentity.EnchantedFlowerTileEntity;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -52,7 +52,7 @@ public class EnchantedFlower extends FlowerBase implements ITileEntityProvider {
 	}
 
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityEnchantedFlower();
+		return new EnchantedFlowerTileEntity();
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class EnchantedFlower extends FlowerBase implements ITileEntityProvider {
 		if (stack.hasDisplayName()) {
 			TileEntity tileentity = worldIn.getTileEntity(pos);
 
-			if (tileentity instanceof TileEntityEnchantedFlower) {
-				((TileEntityEnchantedFlower) tileentity).setName(stack.getDisplayName());
+			if (tileentity instanceof EnchantedFlowerTileEntity) {
+				((EnchantedFlowerTileEntity) tileentity).setName(stack.getDisplayName());
 			}
 		}
 	}
