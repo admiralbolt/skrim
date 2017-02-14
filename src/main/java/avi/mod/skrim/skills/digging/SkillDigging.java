@@ -71,6 +71,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	}
 
 	private static int REQUIRED_SAND = 640;
+	private static int MAX_SAND = 1280;
 	private static double METER_FILLED = 100;
 
 	public double metalMeter = 0;
@@ -279,7 +280,13 @@ public class SkillDigging extends Skill implements ISkillDigging {
 										int x = (chunkPos.chunkXPos << 4) + 8;
 										int y = event.getPos().getY();
 										int z = (chunkPos.chunkZPos << 4) + 8;
-										StructureBoundingBox bound = new StructureBoundingBox(x - 8, y - 15, z - 8, x + 8, y + 12, z + 8);
+										
+										double mult = totalSand / (double) REQUIRED_SAND;
+										int horizontalMod = (int) (6 * mult);										
+										int usedSand = Math.min(MAX_SAND, totalSand);
+										
+										StructureBoundingBox bound = new StructureBoundingBox(x - horizontalMod, y - 15, z - horizontalMod, x + horizontalMod, y + 12, z + horizontalMod);
+										
 										new StructureBoundingBox();
 										start.generateStructure(player.world, Utils.rand, bound);
 										start.notifyPostProcessAt(chunkPos);
@@ -289,8 +296,8 @@ public class SkillDigging extends Skill implements ISkillDigging {
 												ItemStack stack = player.inventory.getStackInSlot(i);
 												if (stack != null) {
 													if (stack.getItem() == Item.getItemFromBlock(Blocks.SAND)) {
-														int remove = Math.min(Obfuscation.getStackSize(stack), (REQUIRED_SAND - paidSand));
-														if (remove == Obfuscation.getStackSize(stack)) {
+														int remove = Math.min(stack.getCount(), (usedSand - paidSand));
+														if (remove == stack.getCount()) {
 															player.inventory.removeStackFromSlot(i);
 														} else {
 															player.inventory.decrStackSize(i, remove);
