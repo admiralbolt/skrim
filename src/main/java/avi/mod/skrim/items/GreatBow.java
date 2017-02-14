@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class GreatBow extends CustomBow {
 
 	public GreatBow(String name) {
-		super(name, 40.0F, 2.0F);
+		super(name, 40.0F, 1.5F);
 	}
 
 	public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
