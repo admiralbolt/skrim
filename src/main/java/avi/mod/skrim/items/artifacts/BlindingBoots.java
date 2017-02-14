@@ -52,9 +52,7 @@ public class BlindingBoots extends ArtifactArmor {
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
 				if (player.world.getTotalWorldTime() % 40L == 0L && !player.world.isRemote) {
-					Utils.log("<BlindingBoots> %60 == 0");
 					if (Utils.isWearingArmor(player, ModItems.BLINDING_BOOTS)) {
-						Utils.log("<BlindingBoots> is wearing.");
 						for (Potion potion : effects) {
 							PotionEffect newEffect = new PotionEffect(potion, 100, effectStrength.get(potion), false, false);
 							Utils.addOrCombineEffect(player, newEffect);
