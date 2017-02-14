@@ -20,8 +20,7 @@ public class SkillAbility {
 	public String flavor;
 	public Icon locked;
 	public Icon unlocked;
-
-	// fishing_1_locked.png & fishing_1_unlocked.png
+	
 	public SkillAbility(String skillName, String name, int level, String flavor, String... descLines) {
 		this.name = name;
 		this.level = level;
