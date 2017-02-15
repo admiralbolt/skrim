@@ -4,7 +4,7 @@ import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.client.renderer.entity.RenderCustomCreeper;
 import avi.mod.skrim.client.renderer.entity.RenderFox;
 import avi.mod.skrim.client.renderer.entity.RenderMegaChicken;
-import avi.mod.skrim.client.renderer.tileentity.TileEntityMegaChestRenderer;
+import avi.mod.skrim.client.renderer.tileentity.MegaChestRenderer;
 import avi.mod.skrim.entities.monster.BioCreeper;
 import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
@@ -25,7 +25,7 @@ public class CustomRenderers {
 	public static void register() {
 		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
 		ClientRegistry.bindTileEntitySpecialRenderer(EnchantedFlowerTileEntity.class, new TileEntityEnchantedFlowerRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MegaChestTileEntity.class, new TileEntityMegaChestRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(MegaChestTileEntity.class, new MegaChestRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(CustomTNTPrimed.class, new EntityCustomTNTPrimedRenderer(Minecraft.getMinecraft().getRenderManager()));
 		RenderingRegistry.registerEntityRenderingHandler(NapalmCreeper.class, new RenderCustomCreeper(Minecraft.getMinecraft().getRenderManager()));
 		RenderingRegistry.registerEntityRenderingHandler(BioCreeper.class, new RenderCustomCreeper(Minecraft.getMinecraft().getRenderManager()));

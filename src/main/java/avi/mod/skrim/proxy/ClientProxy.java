@@ -1,8 +1,10 @@
 package avi.mod.skrim.proxy;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.client.renderer.CustomRenderers;
+import avi.mod.skrim.client.renderer.tileentity.SkrimTileEntityItemRenderer;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.items.CustomBow;
@@ -10,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -25,6 +28,7 @@ public class ClientProxy extends CommonProxy {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
 		CustomRenderers.register();
+		TileEntityItemStackRenderer.instance = new SkrimTileEntityItemRenderer();
 		SkrimEntitySpawnHandler.init();
 	}
 

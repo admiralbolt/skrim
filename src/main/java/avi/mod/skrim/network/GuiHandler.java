@@ -1,7 +1,7 @@
 package avi.mod.skrim.network;
 
 import avi.mod.skrim.client.gui.MegaChestGui;
-import avi.mod.skrim.tileentity.MegaChestContainerTileEntity;
+import avi.mod.skrim.inventory.MegaChestContainer;
 import avi.mod.skrim.tileentity.MegaChestTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +17,7 @@ public class GuiHandler implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		System.out.println("SERVER GUI ID == " + ID);
 		if (ID == MEGA_CHEST_GUI) {
-			MegaChestContainerTileEntity entity = new MegaChestContainerTileEntity(player.inventory, (MegaChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
+			MegaChestContainer entity = new MegaChestContainer(player.inventory, (MegaChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)));
 			System.out.println("Created entity :" + entity);
 			return entity;
 		}

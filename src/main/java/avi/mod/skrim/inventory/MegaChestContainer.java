@@ -1,17 +1,20 @@
-package avi.mod.skrim.tileentity;
+package avi.mod.skrim.inventory;
 
+import avi.mod.skrim.tileentity.MegaChestTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class MegaChestContainerTileEntity extends Container {
+public class MegaChestContainer extends Container {
 
 	private MegaChestTileEntity entity;
 
-	public MegaChestContainerTileEntity(IInventory playerInventory, MegaChestTileEntity entity) {
+	public MegaChestContainer(IInventory playerInventory, MegaChestTileEntity entity) {
 		this.entity = entity;
+		entity.openInventory(((InventoryPlayer) playerInventory).player);
 		
 		int inventoryStartX = 8 + 7 * 18;
 		int inventoryStartY = 12 + 18 * 9;
@@ -79,6 +82,12 @@ public class MegaChestContainerTileEntity extends Container {
 	        slot.onTake(playerIn, current);
 	    }
 	    return previous;
+	}
+	
+	@Override
+	public void onContainerClosed(EntityPlayer player) {
+		super.onContainerClosed(player);
+		entity.closeInventory(player);
 	}
 
 }

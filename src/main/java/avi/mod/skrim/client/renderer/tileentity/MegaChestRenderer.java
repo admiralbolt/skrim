@@ -14,15 +14,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityMegaChestRenderer extends TileEntitySpecialRenderer<MegaChestTileEntity> {
+public class MegaChestRenderer extends TileEntitySpecialRenderer<MegaChestTileEntity> {
 
-	// private static final ResourceLocation TEXTURE = new ResourceLocation("skrim", "textures/entities/chests/mega_chest.png");
-	
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/chest/normal.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("skrim", "textures/entities/chests/mega_chest.png");
 
 	private final ModelChest simpleChest = new ModelChest();
 
-	public TileEntityMegaChestRenderer() {
+	public MegaChestRenderer() {
 	}
 
 	public void renderTileEntityAt(MegaChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
@@ -57,11 +55,11 @@ public class TileEntityMegaChestRenderer extends TileEntitySpecialRenderer<MegaC
 		GlStateManager.scale(1.0F, -1.0F, -1.0F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-		// float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
+		float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
 
-		// f = 1.0F - f;
-		// f = 1.0F - f * f * f;
-		modelchest.chestLid.rotateAngleX = -(0.1F * ((float) Math.PI / 2F));
+		f = 1.0F - f;
+		f = 1.0F - f * f * f;
+		modelchest.chestLid.rotateAngleX = -(f * ((float) Math.PI / 2F));
 		modelchest.renderAll();
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.popMatrix();

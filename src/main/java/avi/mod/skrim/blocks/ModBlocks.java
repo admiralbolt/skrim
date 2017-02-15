@@ -32,7 +32,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class ModBlocks {
 
-	public static Block ORE_PENGUIN;
 	public static Block CLONE_OLD_LOG;
 
 	public static GlowFlower GLOW_FLOWER_RED;
@@ -62,8 +61,6 @@ public final class ModBlocks {
 	public static MegaChest MEGA_CHEST;
 
 	public static void createBlocks() {
-		ORE_PENGUIN = register(new BlockOre("orePenguin").setCreativeTab(CreativeTabs.MATERIALS));
-
 		GlowFlowerRed red = new GlowFlowerRed("glow_flower_red");
 		GLOW_FLOWER_RED_VARIANTS = new GlowFlowerVariants(red);
 		GLOW_FLOWER_RED = register(red, GLOW_FLOWER_RED_VARIANTS);

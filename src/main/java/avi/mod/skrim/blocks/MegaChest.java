@@ -26,7 +26,7 @@ public class MegaChest extends BlockContainer implements ItemModelProvider {
 	private String name = "mega_chest";
 
 	protected MegaChest() {
-		super(Material.IRON);
+		super(Material.WOOD);
 		this.setUnlocalizedName(this.name);
 		this.setRegistryName(this.name);
 		this.setHardness(2.0F);

@@ -1,6 +1,6 @@
 package avi.mod.skrim.client.gui;
 
-import avi.mod.skrim.tileentity.MegaChestContainerTileEntity;
+import avi.mod.skrim.inventory.MegaChestContainer;
 import avi.mod.skrim.tileentity.MegaChestTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,7 +14,7 @@ public class MegaChestGui extends GuiContainer {
 	private String title;
 	
 	public MegaChestGui(IInventory playerInventory, MegaChestTileEntity entity) {
-		super(new MegaChestContainerTileEntity(playerInventory, entity));
+		super(new MegaChestContainer(playerInventory, entity));
 		
 		this.playerInventory = playerInventory;
 		this.entity = entity;

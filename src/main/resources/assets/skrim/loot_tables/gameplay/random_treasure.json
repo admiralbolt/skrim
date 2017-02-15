@@ -169,7 +169,7 @@
         },
         {
           "type": "item",
-          "name": "minecraft:angel_cake",
+          "name": "skrim:angel_cake",
           "weight": 0,
           "quality": 6
         },
@@ -181,7 +181,7 @@
         },
         {
           "type": "item",
-          "name": "minecraft:totem",
+          "name": "minecraft:totem_of_undying",
           "weight": 100,
           "quality": 4
         },
