@@ -6,6 +6,7 @@ import java.util.Map;
 import avi.mod.skrim.skills.ISkill;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
@@ -23,6 +24,12 @@ public class GuiUtils {
 
 	@SideOnly(Side.CLIENT)
 	public static CriticalAscensionOverlay CRITICAL_ASCENSION_OVERLAY = new CriticalAscensionOverlay(Minecraft.getMinecraft());
+	
+	public static String[] randomNames = {
+			"WEEE HAA",
+			"Mo chest mo problems",
+			"Dayumm Boiii"
+	};
 
 	public static ResourceLocation CUSTOM_ICONS = new ResourceLocation("skrim:textures/guis/overlays/custom_icons.png");
 	public static ResourceLocation ABILITY_ICONS = new ResourceLocation("skrim:textures/guis/skills/skill_abilities.png");
@@ -105,6 +112,11 @@ public class GuiUtils {
 		} else if ((yCoord + icon.getHeight()) > boundTop && boundBottom > yCoord) {
 			gui.drawTexturedModalRect(xCoord, yCoord, icon.getX(), icon.getY(), icon.getWidth(), icon.getHeight());
 		}
+	}
+	
+	public static String getRandomChestText() {
+		int aynRandom = Utils.rand.nextInt(randomNames.length);
+		return randomNames[aynRandom];
 	}
 
 	/**

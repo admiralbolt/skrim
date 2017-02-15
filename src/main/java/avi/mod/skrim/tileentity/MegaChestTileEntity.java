@@ -2,6 +2,7 @@ package avi.mod.skrim.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -10,7 +11,7 @@ import net.minecraft.util.NonNullList;
 
 public class MegaChestTileEntity extends TileEntity implements IInventory {
 
-    private NonNullList<ItemStack> inventory;
+	private NonNullList<ItemStack> inventory;
 	private String customName;
 
 	public MegaChestTileEntity() {
@@ -37,7 +38,7 @@ public class MegaChestTileEntity extends TileEntity implements IInventory {
 
 	@Override
 	public int getSizeInventory() {
-		return 9;
+		return 207;
 	}
 
 	@Override

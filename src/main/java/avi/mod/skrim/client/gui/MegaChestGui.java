@@ -11,31 +11,43 @@ public class MegaChestGui extends GuiContainer {
 	
 	private IInventory playerInventory;
 	private MegaChestTileEntity entity;
+	private String title;
 	
 	public MegaChestGui(IInventory playerInventory, MegaChestTileEntity entity) {
 		super(new MegaChestContainerTileEntity(playerInventory, entity));
 		
 		this.playerInventory = playerInventory;
 		this.entity = entity;
+				
 		
-		this.xSize = 176;
-		this.ySize = 166;
+		this.xSize = 428;
+		this.ySize = 256;
+		this.title = GuiUtils.getRandomChestText();
 	}
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 	    GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-	    this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim:textures/guis/containers/fucked_up_container.png"));
-	    this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+	    
+	    int nwX = 256;
+	    int nwY = 256;
+	    int neX = 172;
+	    int neY = 256;
+	    
+	    int left = this.guiLeft;
+	    int top = this.guiTop;
+	    
+	    this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim:textures/guis/containers/mega_chest_nw.png"));
+	    this.drawTexturedModalRect(left, top, 0, 0, nwX, nwY);
+	    
+	    this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim:textures/guis/containers/mega_chest_ne.png"));
+	    this.drawTexturedModalRect(left + nwX, top, 0, 0, neX, neY);
 	}
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		System.out.println("this.entity.getDisplayName();: " + this.entity.getDisplayName());
-	    // String s = this.entity.getDisplayName().getUnformattedText();
-		String s = "TEST";
-	    this.fontRenderer.drawString(s, 88 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);            //#404040
-	    this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
+	    this.fontRenderer.drawString(this.title, 89 - this.fontRenderer.getStringWidth(this.title) / 2, 6, 4210752);
+	    this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 9, 108, 4210752);
 	}
 
 }
