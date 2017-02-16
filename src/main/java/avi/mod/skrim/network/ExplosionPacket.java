@@ -61,7 +61,8 @@ public class ExplosionPacket implements IMessage {
 					@Override
 					public void run() {
 						Entity entity = player.world.getEntityByID(message.entityId);
-						Explosion explosion = CustomTNTPrimed.createExplosion(message.explosionType, player.world, entity, message.posX, message.posY, message.posZ);
+						Explosion explosion = CustomTNTPrimed.createExplosion(message.explosionType, player.world, entity, message.posX, message.posY,
+								message.posZ);
 						explosion.doExplosionA();
 						explosion.doExplosionB(true);
 					}

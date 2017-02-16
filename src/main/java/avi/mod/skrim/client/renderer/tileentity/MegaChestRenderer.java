@@ -23,11 +23,17 @@ public class MegaChestRenderer extends TileEntitySpecialRenderer<MegaChestTileEn
 	public MegaChestRenderer() {
 	}
 
+	@Override
 	public void renderTileEntityAt(MegaChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
 		GlStateManager.enableDepth();
 		GlStateManager.depthFunc(515);
 		GlStateManager.depthMask(true);
-		int i = 0;
+		int facing = 0;
+
+		if (te.hasWorld()) {
+			Block block = te.getBlockType();
+			facing = te.getBlockMetadata();
+		}
 
 		ModelChest modelchest;
 		modelchest = this.simpleChest;
@@ -54,6 +60,23 @@ public class MegaChestRenderer extends TileEntitySpecialRenderer<MegaChestTileEn
 		GlStateManager.translate((float) x, (float) y + 1.0F, (float) z + 1.0F);
 		GlStateManager.scale(1.0F, -1.0F, -1.0F);
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
+		
+
+		int rotationDegrees = 0;
+		
+		if (facing == 2) {
+			rotationDegrees = 0;
+		} else if (facing == 3) {
+			rotationDegrees = 180;
+		} else if (facing == 4) {
+			rotationDegrees = -90;
+		} else if (facing == 5) {
+			rotationDegrees = 90;
+		}
+		
+		
+        GlStateManager.rotate((float) rotationDegrees, 0.0F, 1.0F, 0.0F);
+
 		GlStateManager.translate(-0.5F, -0.5F, -0.5F);
 		float f = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
 

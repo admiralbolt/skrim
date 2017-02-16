@@ -106,5 +106,19 @@
         "stream":true
       }
     ]
+  },
+  "zelda_big": {
+    "category": "chests",
+    "sounds": [{
+      "name": "skrim:chests/zelda_big",
+      "stream": true
+    }]
+  },
+  "zelda_spooky": {
+    "category": "chests",
+    "sounds": [{
+      "name": "skrim:chests/zelda_spooky",
+      "stream": true
+    }]
   }
 }

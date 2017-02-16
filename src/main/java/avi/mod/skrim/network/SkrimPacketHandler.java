@@ -7,6 +7,7 @@ import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.InvisibilityPacket.InvisibilityPacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
 import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
+import avi.mod.skrim.network.SortChestPacket.SortChestPacketHandler;
 import avi.mod.skrim.network.SpawnEntityPacket.SpawnEntityPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket.SpawnParticlePacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
@@ -47,6 +48,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(InvisibilityPacketHandler.class, InvisibilityPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(CriticalAscensionPacketHandler.class, CriticalAscensionPacket.class, PACKET_ID++, Side.CLIENT);
 		INSTANCE.registerMessage(SpawnEntityPacketHandler.class, SpawnEntityPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(SortChestPacketHandler.class, SortChestPacket.class, PACKET_ID++, Side.SERVER);
 	}
 
 }

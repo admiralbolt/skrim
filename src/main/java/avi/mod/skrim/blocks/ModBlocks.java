@@ -20,7 +20,6 @@ import avi.mod.skrim.blocks.tnt.Dynamite;
 import avi.mod.skrim.blocks.tnt.Napalm;
 import avi.mod.skrim.items.ItemModelProvider;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -100,6 +99,7 @@ public final class ModBlocks {
 		WEIRWOOD_LEAF = register(new WeirwoodLeaf());
 		
 		MEGA_CHEST = register(new MegaChest());
+		GameRegistry.addShapedRecipe(new ItemStack(MEGA_CHEST), "AAA", "AAA", "AAA", 'A', new ItemStack(Blocks.CHEST));
 	}
 
 	private static <T extends Block> T register(T block, ItemBlock itemBlock) {

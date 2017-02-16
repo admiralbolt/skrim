@@ -28,7 +28,9 @@ public class GuiUtils {
 	public static String[] randomNames = {
 			"WEEE HAA",
 			"Mo chest mo problems",
-			"Dayumm Boiii"
+			"Dayumm Boiii",
+			"Mega Chest",
+			"Chest O-Mega"
 	};
 
 	public static ResourceLocation CUSTOM_ICONS = new ResourceLocation("skrim:textures/guis/overlays/custom_icons.png");

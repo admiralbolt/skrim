@@ -136,6 +136,8 @@ tile.weirwood_wood.name=Weirwood
 item.weirwood_totem.name=Weirwood Totem
 tile.weirwood_leaf.name=Weirwood Leaf
 
+tile.mega_chest.name=Mega Chest
+
 ##### ENTITIES ######
 
 entity.napalm_creeper.name=Napalm Creeper

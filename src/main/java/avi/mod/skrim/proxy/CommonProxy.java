@@ -10,6 +10,7 @@ import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.entities.ModEntities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
+import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.items.CustomBow;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.GuiHandler;
@@ -37,6 +38,7 @@ public class CommonProxy {
 		config = new Configuration(new File(directory.getPath(), "modtut.cfg"));
 		Config.readConfig();
 		CustomLootTables.registerLootTables();
+		SkrimSoundEvents.register();
 		ModItems.createItems();
 		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();

@@ -1,7 +1,11 @@
 package avi.mod.skrim.tileentity;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import avi.mod.skrim.blocks.MegaChest;
 import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.inventory.MegaChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -38,6 +42,22 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
 
 	public void setCustomName(String customName) {
 		this.customName = customName;
+	}
+	
+	public void sort() {
+		Collections.sort(this.inventory, new Comparator<ItemStack>() {
+			@Override
+			public int compare(ItemStack stack1, ItemStack stack2) {
+				if (stack1 == ItemStack.EMPTY) {
+					return 1;
+				} else if (stack2 == ItemStack.EMPTY) {
+					return -1;
+				} else {
+					return stack1.getDisplayName().compareTo(stack2.getDisplayName());
+				}
+			}
+		});
+		this.markDirty();
 	}
 
 	@Override
@@ -222,7 +242,7 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
 			double d1 = (double) i + 0.5D;
 			double d2 = (double) k + 0.5D;
 
-			this.world.playSound((EntityPlayer) null, d1, (double) j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F,
+			this.world.playSound((EntityPlayer) null, d1, (double) j + 0.5D, d2, SkrimSoundEvents.randomZeldaSound(), SoundCategory.BLOCKS, 0.5F,
 					this.world.rand.nextFloat() * 0.1F + 0.9F);
 		}
 
