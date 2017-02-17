@@ -79,7 +79,7 @@ public class PlayerPlacedBlocks extends WorldSavedData {
 	}
 
 	public boolean isNaturalBlock(BlockPos pos) {
-		return !placedPos.contains(pos);
+		return !placedPos.contains(pos) || !Skrim.ENFORCE_NATURAL;
 	}
 
 	public void addBlock(BlockPos pos) {

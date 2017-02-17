@@ -28,6 +28,14 @@ public class Skrim {
 	 * Make sure to set to false before building a relase verison.
 	 */
 	public static final boolean DEBUG = true;
+	
+	/**
+	 * Whether or not to enforce only giving xp / bonuses
+	 * for NON player placed blocks.  If enforce=true
+	 * then NO experience will be given for breaking
+	 * player placed blocks.
+	 */
+	public static final boolean ENFORCE_NATURAL = false;
 
 	@Mod.Instance(modId)
 	public static Skrim instance = new Skrim();

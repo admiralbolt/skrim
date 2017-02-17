@@ -185,7 +185,13 @@ public class Utils {
 	}
 	
 	public static void logSkillEvent(Event event, Skill skill, String message) {
-		log("[" + event + "](" + skill.name + ") " + message);
+		log("[" + getEventName(event) + "](" + skill.name + ") " + message);
+	}
+	
+	public static String getEventName(Event event) {
+		String className = event.getClass().getName();
+		String[] split = className.split("\\.");
+		return split[split.length - 1];
 	}
 	
 	public static void addOrCombineEffect(EntityPlayer player, PotionEffect effect) {

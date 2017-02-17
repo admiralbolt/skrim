@@ -64,7 +64,6 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		xpMap.put("allium", 1200);
 		// Only forest & flower forest on generation
 		xpMap.put("syringa", 3000); // lilac
-		xpMap.put("rose_bush", 3000);
 		xpMap.put("double_rose", 3000);
 		xpMap.put("paeonia", 3000); // peony
 		// Only sunflower plains on generation
@@ -141,7 +140,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 	public static boolean validFlowerState(IBlockState state) {
 		Block flower = state.getBlock();
 		String name = getFlowerName(state);
-		return validFlowerBlock(flower) || (name.equals("sunflower") || name.equals("paeonia") || name.equals("rose_bush") || name.equals("syringa"));
+		return validFlowerBlock(flower) || (name.equals("sunflower") || name.equals("paeonia") || name.equals("double_rose") || name.equals("syringa"));
 	}
 
 	@Override
@@ -193,7 +192,9 @@ public class SkillBotany extends Skill implements ISkillBotany {
 		EntityPlayer player = event.getHarvester();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
 			SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
-			if (botany.validFlowerState(state) && !(state.getBlock() instanceof BlockDoublePlant)) {
+			Utils.logSkillEvent(event, botany,
+					"state: " + state + ", name: " + SkillBotany.getFlowerName(state) + ", valid: " + SkillBotany.validFlowerState(state));
+			if (botany.validFlowerState(state)) {
 				Block block = state.getBlock();
 				double random = Utils.rand.nextDouble();
 				if (random < botany.getFortuneChance()) {
