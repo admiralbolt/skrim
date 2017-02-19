@@ -147,8 +147,6 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 			addXp += this.getXp(getWoodName(state));
 		}
 		if (withSaw) {
-			System.out.println("getWoodName: " + getWoodName(state));
-			System.out.println("plankMap: " + plankMap.get(getWoodName(state)));
 			world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Blocks.PLANKS, 8, plankMap.get(getWoodName(state)))));
 			world.destroyBlock(pos, false);
 		} else {
