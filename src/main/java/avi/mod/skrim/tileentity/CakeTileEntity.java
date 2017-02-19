@@ -16,11 +16,17 @@ public class CakeTileEntity extends TileEntity {
 		this.level = level;
 	}
 
+	@Override
 	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		
 		this.level = compound.getInteger("level");
 	}
 
+	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		
 		compound.setInteger("level", this.level);
 		return compound;
 	}
