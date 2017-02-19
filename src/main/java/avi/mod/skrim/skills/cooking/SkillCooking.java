@@ -93,7 +93,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");
 		addFood("rabbitstew", ModItems.OVERWRITE_RABBIT_STEW, 1000);
 
-		xpMap.put("cake", 1500);
+		xpMap.put("item.cake", 1500);
 		xpMap.put("angel_cake", 2000);
 
 	}
@@ -120,7 +120,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		return (foodMap.containsKey(name)) ? foodMap.get(name) : null;
 	}
 
-	public int getXp(String blockName) {
+	public static int getXp(String blockName) {
 		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
 	}
 
@@ -152,7 +152,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		return (item instanceof ItemFood || item instanceof ItemFishFood || item == Items.CAKE) ? true : false;
 	}
 
-	public String getFoodName(ItemStack stack) {
+	public static String getFoodName(ItemStack stack) {
 		Item item = stack.getItem();
 		if (item instanceof ItemFishFood) {
 			ItemFishFood fish = (ItemFishFood) item;
@@ -176,7 +176,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public static void injectFakeFood(PlayerEvent event, ItemStack stack, EntityPlayer player) {
 		if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 			SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-			String foodName = cooking.getFoodName(stack);
+			String foodName = getFoodName(stack);
+			Utils.logSkillEvent(event, cooking, "crafting food: " + foodName);
 			if (cooking.validCookingTarget(stack)) {
 				Item replaceFood;
 				if (stack.getItem() == Items.CAKE || stack.getItem() == ModItems.ANGEL_CAKE) {
@@ -187,14 +188,12 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				if (replaceFood != null) {
 					NBTTagCompound compound = new NBTTagCompound();
 					compound.setInteger("level", cooking.level);
-					int stackSize = Obfuscation.getStackSize(stack);
-					ItemStack addStack = new ItemStack(replaceFood, stackSize);
-					// Obfuscation.setStackSize(stack, 0);
+					ItemStack addStack = new ItemStack(replaceFood, 1);
 					addStack.setStackDisplayName(player.getName() + "'s " + addStack.getDisplayName());
 					addStack.setTagCompound(compound);
 					player.inventory.addItemStackToInventory(addStack);
 					if (player instanceof EntityPlayerMP) {
-						cooking.addXp((EntityPlayerMP) player, stackSize * cooking.getXp(foodName));
+						cooking.addXp((EntityPlayerMP) player, getXp(foodName));
 					}
 				}
 			}

@@ -43,6 +43,7 @@ public class CustomLootTables {
 		LootContext.Builder builder = new LootContext.Builder((WorldServer) world);
 		builder.withLuck(player.getLuck() + (float) (level / 5));
 		List<ItemStack> items = world.getLootTableManager().getLootTableFromLocation(METAL_TREASURE).generateLootForPools(Utils.rand, builder.build());
+		System.out.println(items);
 		return items.get(0);
 	}
 

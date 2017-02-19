@@ -113,7 +113,7 @@ public class CustomCake extends ItemBlockSpecial implements ItemModelProvider {
 		return (int) (baseHeal * extraFood);
 	}
 
-	public static float getExtraSaturation(CustomCake cake,int level) {
+	public static float getExtraSaturation(CustomCake cake, int level) {
 		int baseHeal = cake.getBaseFood();
 		int additionalHeal = getExtraFood(cake, level);
 		float satMod = cake.getBaseSaturation();

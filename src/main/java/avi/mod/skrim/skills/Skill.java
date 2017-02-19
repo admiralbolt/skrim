@@ -46,9 +46,7 @@ public class Skill implements ISkill {
 
 	public void addXp(EntityPlayerMP player, int xp) {
 		if (xp > 0) {
-			if (Skrim.DEBUG) {
-				System.out.println("Giving player " + player + ": " + Skills.getTotalXp(player, xp) + " " + this.name + " xp");
-			}
+			Utils.log("Giving player " + player + ": " + Skills.getTotalXp(player, xp) + " " + this.name + " xp (Boost: " + Skills.getTotalXpBonus(player) + ")");
 			this.xp += Skills.getTotalXp(player, xp);
 			this.levelUp(player);
 		}
