@@ -176,9 +176,9 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public static void injectFakeFood(PlayerEvent event, ItemStack stack, EntityPlayer player) {
 		if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 			SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-			String foodName = getFoodName(stack);
-			Utils.logSkillEvent(event, cooking, "crafting food: " + foodName);
 			if (cooking.validCookingTarget(stack)) {
+				String foodName = getFoodName(stack);
+				Utils.logSkillEvent(event, cooking, "crafting food: " + foodName);
 				Item replaceFood;
 				if (stack.getItem() == Items.CAKE || stack.getItem() == ModItems.ANGEL_CAKE) {
 					replaceFood = getOverwriteCake(stack.getItem());
