@@ -93,8 +93,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");
 		addFood("rabbitstew", ModItems.OVERWRITE_RABBIT_STEW, 1000);
 
-		xpMap.put("item.cake", 1500);
-		xpMap.put("angel_cake", 2000);
+		xpMap.put("item.cake", 2000);
+		xpMap.put("angel_cake", 2500);
 
 	}
 
