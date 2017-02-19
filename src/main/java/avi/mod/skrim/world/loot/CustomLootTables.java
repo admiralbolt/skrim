@@ -29,7 +29,7 @@ public class CustomLootTables {
 	public static void registerLootTables() {
 		CHESTS_BEANSTALK = register("chests/beanstalk");
 		RANDOM_TREASURE = register("gameplay/random_treasure");
-		METAL_TREASURE = register("gamplay/metal_treasure");
+		METAL_TREASURE = register("gameplay/metal_treasure");
 	}
 	
 	public static ItemStack getRandomTreasure(World world, EntityPlayer player, int level) {
@@ -43,7 +43,6 @@ public class CustomLootTables {
 		LootContext.Builder builder = new LootContext.Builder((WorldServer) world);
 		builder.withLuck(player.getLuck() + (float) (level / 5));
 		List<ItemStack> items = world.getLootTableManager().getLootTableFromLocation(METAL_TREASURE).generateLootForPools(Utils.rand, builder.build());
-		System.out.println(items);
 		return items.get(0);
 	}
 

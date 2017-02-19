@@ -1,7 +1,7 @@
 {
   "pools": [
     {
-      "name": "treasure",
+      "name": "metal_treasure",
       "rolls": 1,
       "entries": [
         {
