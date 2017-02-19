@@ -187,10 +187,16 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				}
 				if (replaceFood != null) {
 					NBTTagCompound compound = new NBTTagCompound();
+					NBTTagCompound customName = new NBTTagCompound();
 					compound.setInteger("level", cooking.level);
 					ItemStack addStack = new ItemStack(replaceFood, 1);
-					addStack.setStackDisplayName(player.getName() + "'s " + addStack.getDisplayName());
+					/**
+					 * Custom names come from the Name property in the subtag display.
+					 */
+					customName.setString("Name", player.getName() + "'s " + addStack.getDisplayName());
+					compound.setTag("display", customName);
 					addStack.setTagCompound(compound);
+					
 					player.inventory.addItemStackToInventory(addStack);
 					if (player instanceof EntityPlayerMP) {
 						cooking.addXp((EntityPlayerMP) player, getXp(foodName));
