@@ -227,10 +227,25 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public static void injectCraftedFood(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
 		if (targetItem != null && targetItem == ModItems.ANGEL_CAKE) {
-			if (!Skills.canCraft(event.player, Skills.COOKING, 100)) {
-				Skills.replaceWithComponents(event);
+			if (Skills.canCraft(event.player, Skills.COOKING, 100)) {
+				if (event.player != null && event.player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
+					SkillCooking cooking = (SkillCooking) event.player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+					NBTTagCompound compound = new NBTTagCompound();
+					NBTTagCompound customName = new NBTTagCompound();
+					compound.setInteger("level", cooking.level);
+					/**
+					 * Custom names come from the Name property in the subtag
+					 * display.
+					 */
+					customName.setString("Name", event.player.getName() + "'s " + event.crafting.getDisplayName());
+					compound.setTag("display", customName);
+					event.crafting.setTagCompound(compound);
+					if (event.player instanceof EntityPlayerMP) {
+						cooking.addXp((EntityPlayerMP) event.player, getXp("angel_cake"));
+					}
+				}
 			} else {
-				injectFakeFood(event, event.crafting, event.player);
+				Skills.replaceWithComponents(event);
 			}
 		} else {
 			injectFakeFood(event, event.crafting, event.player);

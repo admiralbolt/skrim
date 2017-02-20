@@ -53,7 +53,7 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 			if (te instanceof CakeTileEntity) {
 				CakeTileEntity cakeEntity = (CakeTileEntity) te;
 				int level = cakeEntity.getLevel();
-
+				
 				boolean overFull = level >= 25;
 				boolean panacea = level >= 50;
 				boolean superFood = level >= 75;
@@ -81,9 +81,7 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 					Utils.addOrCombineEffect(player, regenEffect);
 					Utils.addOrCombineEffect(player, speedEffect);
 				}
-				
-				this.applyAdditionalEffects(player);
-				
+								
 				/**
 				 * A valiant attempt to keep me from over-filling.
 				 * But not valiant enough.
@@ -105,16 +103,16 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 
 				if (i < 6) {
 					world.setBlockState(pos, state.withProperty(BITES, Integer.valueOf(i + 1)), 3);
+					TileEntity newCake = world.getTileEntity(pos);
+					if (newCake instanceof CakeTileEntity) {
+						((CakeTileEntity) newCake).setLevel(level);
+					}
 				} else {
 					world.setBlockToAir(pos);
 				}
 			}
 
 		}
-	}
-
-	public void applyAdditionalEffects(EntityPlayer player) {
-		
 	}
 
 	@Override
