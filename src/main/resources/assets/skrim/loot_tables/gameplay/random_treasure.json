@@ -8,7 +8,7 @@
           "type": "item",
           "name": "minecraft:bowl",
           "weight": 750,
-          "quality": -30
+          "quality": -25
         },
         {
           "type": "item",
@@ -20,31 +20,31 @@
           "type": "item",
           "name": "minecraft:iron_nugget",
           "weight": 500,
-          "quality": -5
+          "quality": -3
         },
         {
           "type": "item",
           "name": "minecraft:golden_apple",
           "weight": 75,
-          "quality": 5
+          "quality": 6
         },
         {
           "type": "item",
           "name": "minecraft:arrow",
           "weight": 800,
-          "quality": -26
+          "quality": -20
         },
         {
           "type": "item",
           "name": "minecraft:string",
           "weight": 800,
-          "quality": -26
+          "quality": -20
         },
         {
           "type": "item",
           "name": "minecraft:clay_ball",
           "weight": 250,
-          "quality": -3
+          "quality": -2
         },
         {
           "type": "item",
@@ -56,31 +56,31 @@
           "type": "item",
           "name": "minecraft:gold_nugget",
           "weight": 100,
-          "quality": 1
+          "quality": 2
         },
         {
           "type": "item",
           "name": "minecraft:saddle",
           "weight": 100,
-          "quality": 3
+          "quality": 4
         },
         {
           "type": "item",
           "name": "minecraft:name_tag",
           "weight": 100,
-          "quality": 3
+          "quality": 4
         },
         {
           "type": "item",
           "name": "minecraft:feather",
           "weight": 800,
-          "quality": -26
+          "quality": -20
         },
         {
           "type": "item",
           "name": "minecraft:gunpowder",
           "weight": 300,
-          "quality": -1
+          "quality": 0
         },
         {
           "type": "item",
@@ -98,13 +98,13 @@
           "type": "item",
           "name": "minecraft:experience_bottle",
           "weight": 210,
-          "quality": 1
+          "quality": 5
         },
         {
           "type": "item",
           "name": "minecraft:book",
           "weight": 0,
-          "quality": 8,
+          "quality": 9,
           "functions": [
             {
               "function": "enchant_with_levels",
@@ -117,37 +117,55 @@
           "type": "item",
           "name": "minecraft:spectral_arrow",
           "weight": 100,
-          "quality": 2
+          "quality": 3
         },
         {
           "type": "item",
           "name": "minecraft:diamond_horse_armor",
           "weight": 50,
-          "quality": 6
+          "quality": 7
         },
         {
           "type": "item",
           "name": "minecraft:diamond",
           "weight": 20,
-          "quality": 7
+          "quality": 8
         },
         {
           "type": "item",
           "name": "minecraft:nether_star",
           "weight": 0,
-          "quality": 6
+          "quality": 5
         },
         {
           "type": "item",
           "name": "minecraft:potato",
           "weight": 500,
-          "quality": -15
+          "quality": -12
         },
         {
           "type": "item",
           "name": "minecraft:carrot",
           "weight": 500,
-          "quality": -15
+          "quality": -12
+        },
+        {
+          "type": "item",
+          "name": "minecraft:ender_pearl",
+          "weight": 300,
+          "quality": -1
+        },
+        {
+          "type": "item",
+          "name": "minecraft:bone",
+          "weight": 800,
+          "quality": -30
+        },
+        {
+          "type": "item",
+          "name": "minecraft:rotten_flesh",
+          "weight": 800,
+          "quality": -35
         },
         {
           "type": "item",
@@ -177,7 +195,7 @@
           "type": "item",
           "name": "minecraft:compass",
           "weight": 250,
-          "quality": -2
+          "quality": -1
         },
         {
           "type": "item",
@@ -261,73 +279,73 @@
           "type": "item",
           "name": "skrim:aruarian_dance",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:bubberducky",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:cassandra",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:lack_of_color",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:dogsong",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:gdawg",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:heya",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:money",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:north",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:number10",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:samurai",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         },
         {
           "type": "item",
           "name": "skrim:truck",
           "weight": 0,
-          "quality": 5
+          "quality": 2
         }
       ]
     }
