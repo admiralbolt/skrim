@@ -9,6 +9,7 @@ import avi.mod.skrim.items.artifacts.CanesSword;
 import avi.mod.skrim.items.artifacts.CeruleanSandals;
 import avi.mod.skrim.items.artifacts.FoxMask;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
+import avi.mod.skrim.items.artifacts.PowerSuitChestplate;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
@@ -153,6 +154,7 @@ public class EventHandler {
 			LeafArmor.LeafArmorHandler.invisibility(event);
 
 			// Artifact handlers
+			PowerSuitChestplate.applyChozoTech(event);
 			BlindingBoots.Handler.goFast(event);
 			CeruleanSandals.Handler.walkOnWater(event);
 			FoxMask.FoxHandler.beAFox(event);
@@ -234,7 +236,6 @@ public class EventHandler {
 		}
 	}
 
-
 	@SubscribeEvent
 	public void onTick(PlayerTickEvent event) {
 		SkillMelee.tickLeft(event);
@@ -286,8 +287,7 @@ public class EventHandler {
 		Entity entity = event.getEntity();
 		World world = event.getWorld();
 		/**
-		 * The ol' infinite-loop-a-roo
-		 * How about no.
+		 * The ol' infinite-loop-a-roo How about no.
 		 */
 		if (entity instanceof EntityFishHook && !(entity instanceof SkrimFishHook)) {
 			EntityFishHook oldHook = (EntityFishHook) entity;
@@ -316,7 +316,5 @@ public class EventHandler {
 		// System.out.println("player: " + event.getEntityPlayer());
 		// System.out.println("item: " + event.getStack());
 	}
-
-
 
 }

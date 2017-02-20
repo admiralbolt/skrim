@@ -37,6 +37,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -176,6 +177,10 @@ public class Utils {
 			}
 		}
 		return false;
+	}
+	
+	public static ItemStack getArmor(EntityPlayer player, EntityEquipmentSlot armorType) {
+		return player.inventory.armorInventory.get(armorType.getIndex());
 	}
 	
 	public static void log(String message) {

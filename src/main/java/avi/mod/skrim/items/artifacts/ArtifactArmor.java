@@ -34,7 +34,7 @@ public class ArtifactArmor extends ItemArmor implements ItemModelProvider {
 
 	// Default armor stats
 	public static ArmorMaterial getAndCreateMaterial(String name) {
-		return EnumHelper.addArmorMaterial(name, "skrim:" + name, 50, new int[] {3, 8, 6, 3}, 30, null, 0.0F);
+		return EnumHelper.addArmorMaterial(name, "skrim:" + name, 50, new int[] {3, 8, 6, 3}, 0, null, 0.0F);
 	}
 
 	@Override

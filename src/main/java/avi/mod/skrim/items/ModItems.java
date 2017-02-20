@@ -16,6 +16,7 @@ import avi.mod.skrim.items.artifacts.CeruleanSandals;
 import avi.mod.skrim.items.artifacts.FoxMask;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
 import avi.mod.skrim.items.artifacts.IcarianScroll;
+import avi.mod.skrim.items.artifacts.PowerSuitChestplate;
 import avi.mod.skrim.items.artifacts.SheepFinder3000;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
 import net.minecraft.block.BlockBush;
@@ -82,6 +83,8 @@ public class ModItems {
 	public static ToolMaterial OBSIDIAN_TOOL = EnumHelper.addToolMaterial("obsidian", 3, 7500, 9.0F, 4.0F, 20);
 
 	public static ArtifactSword CANES_SWORD;
+	
+	public static ArtifactArmor POWER_SUIT_CHESTPLATE;
 
 	public static ArtifactArmor SPRINGHEEL_BOOTS;
 	public static ArtifactArmor BLINDING_BOOTS;
@@ -242,6 +245,9 @@ public class ModItems {
 
 	public static void registerArtifacts() {
 		// Artifact Armors
+		POWER_SUIT_CHESTPLATE = register(new PowerSuitChestplate());
+		ARTIFACTS.add(POWER_SUIT_CHESTPLATE);
+		
 		SPRINGHEEL_BOOTS = register(new SpringheelBoots());
 		ARTIFACTS.add(SPRINGHEEL_BOOTS);
 
