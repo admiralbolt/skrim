@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.client.audio.AngelCakeFlyingSound;
+import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.items.CustomCake;
 import avi.mod.skrim.items.CustomFood;
 import avi.mod.skrim.items.ModItems;
@@ -14,6 +16,7 @@ import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -36,7 +39,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -56,6 +58,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public static long CHECK_TICKS = 60;
 
 	public boolean hasAngel = false;
+	public AngelCakeFlyingSound flyingSound = null;
 	public int currentTicks = 0;
 	public int lastItemNumber;
 
@@ -191,12 +194,13 @@ public class SkillCooking extends Skill implements ISkillCooking {
 					compound.setInteger("level", cooking.level);
 					ItemStack addStack = new ItemStack(replaceFood, 1);
 					/**
-					 * Custom names come from the Name property in the subtag display.
+					 * Custom names come from the Name property in the subtag
+					 * display.
 					 */
 					customName.setString("Name", player.getName() + "'s " + addStack.getDisplayName());
 					compound.setTag("display", customName);
 					addStack.setTagCompound(compound);
-					
+
 					player.inventory.addItemStackToInventory(addStack);
 					if (player instanceof EntityPlayerMP) {
 						cooking.addXp((EntityPlayerMP) player, getXp(foodName));
@@ -294,18 +298,17 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		Entity entity = event.getEntity();
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			if (player.world.getTotalWorldTime() % CHECK_TICKS == 0L) {
-				if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
-					SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-					if (cooking.hasAngel && cooking.currentTicks > 0) {
-						cooking.currentTicks -= (int) CHECK_TICKS;
-					} else {
-						cooking.hasAngel = false;
-						cooking.currentTicks = 0;
-						if (!player.capabilities.isCreativeMode) {
-							player.capabilities.allowFlying = false;
-							player.capabilities.isFlying = false;
-						}
+			if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
+				SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+				if (cooking.hasAngel && cooking.currentTicks > 0) {
+					cooking.currentTicks -= 1;
+				} else {
+					cooking.hasAngel = false;
+					cooking.currentTicks = 0;
+					cooking.flyingSound = null;
+					if (!player.capabilities.isCreativeMode) {
+						player.capabilities.allowFlying = false;
+						player.capabilities.isFlying = false;
 					}
 				}
 			}
@@ -330,6 +333,12 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		this.hasAngel = true;
 		player.capabilities.allowFlying = true;
 		this.currentTicks = ANGEL_DURATION;
+		if (player.world.isRemote) {
+			if (this.flyingSound == null) {
+				this.flyingSound = new AngelCakeFlyingSound(player);
+				Minecraft.getMinecraft().getSoundHandler().playSound(this.flyingSound);
+			}
+		}
 	}
 
 }
