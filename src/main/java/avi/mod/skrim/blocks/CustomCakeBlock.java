@@ -44,7 +44,12 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		this.eatCustomCake(worldIn, pos, state, playerIn);
+		this.applyAdditionalEffects(playerIn);
 		return true;
+	}
+	
+	public void applyAdditionalEffects(EntityPlayer player) {
+		
 	}
 
 	public void eatCustomCake(World world, BlockPos pos, IBlockState state, EntityPlayer player) {

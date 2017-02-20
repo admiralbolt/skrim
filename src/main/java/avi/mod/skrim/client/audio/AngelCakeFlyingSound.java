@@ -34,6 +34,7 @@ public class AngelCakeFlyingSound extends MovingSound {
 		if (this.player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 			SkillCooking cooking = (SkillCooking) this.player.getCapability(Skills.COOKING, EnumFacing.NORTH);
 			if (!cooking.hasAngel) {
+				this.repeat = false;
 				this.donePlaying = true;
 			} else {
 				this.xPosF = (float) this.player.posX;

@@ -12,6 +12,7 @@ public class AngelCakeBlock extends CustomCakeBlock {
 		super("angel_cake_block");
 	}
 
+	@Override
 	public void applyAdditionalEffects(EntityPlayer player) {
 		if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 			SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
