@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.ArtifactArmor;
 import avi.mod.skrim.items.artifacts.ArtifactItem;
@@ -274,42 +275,34 @@ public class ModItems {
 		ICARIAN_SCROLL = register(new IcarianScroll());
 		ARTIFACTS.add(ICARIAN_SCROLL);
 	}
-
-	public static Map<String, CustomRecord> SONGS = new HashMap<String, CustomRecord>();
+	
+	public static List<CustomRecord> SONGS = new ArrayList<CustomRecord>();
 
 	public static void registerSongs() {
-		ARUARIAN_DANCE = register(new CustomRecord("aruarian_dance", registerRecordEvent("aruarian_dance")));
-		BUBBERDUCKY = register(new CustomRecord("bubberducky", registerRecordEvent("bubberducky")));
-		CASSANDRA = register(new CustomRecord("cassandra", registerRecordEvent("cassandra")));
-		COLOR = register(new CustomRecord("lack_of_color", registerRecordEvent("lack_of_color")));
-		DOGSONG = register(new CustomRecord("dogsong", registerRecordEvent("dogsong")));
-		GDAWG = register(new CustomRecord("gdawg", registerRecordEvent("gdawg")));
-		HEYA = register(new CustomRecord("heya", registerRecordEvent("heya")));
-		MONEY = register(new CustomRecord("money", registerRecordEvent("money")));
-		NORTH = register(new CustomRecord("north", registerRecordEvent("north")));
-		NUMBER10 = register(new CustomRecord("number10", registerRecordEvent("number10")));
-		SAMURAI = register(new CustomRecord("samurai", registerRecordEvent("samurai")));
-		TRUCK = register(new CustomRecord("truck", registerRecordEvent("truck")));
-
-		SONGS.put("aruarian_dance", ARUARIAN_DANCE);
-		SONGS.put("bubberducky", BUBBERDUCKY);
-		SONGS.put("cassandra", CASSANDRA);
-		SONGS.put("lack_of_color", COLOR);
-		SONGS.put("dogsong", DOGSONG);
-		SONGS.put("gdawg", GDAWG);
-		SONGS.put("heya", HEYA);
-		SONGS.put("money", MONEY);
-		SONGS.put("north", NORTH);
-		SONGS.put("number10", NUMBER10);
-		SONGS.put("samurai", SAMURAI);
-		SONGS.put("truck", TRUCK);
-	}
-
-	public static SoundEvent registerRecordEvent(String recordName) {
-		ResourceLocation location = new ResourceLocation(Skrim.modId, recordName);
-		SoundEvent event = new SoundEvent(location);
-		GameRegistry.register(event, location);
-		return event;
+		ARUARIAN_DANCE = register(new CustomRecord("aruarian_dance", SkrimSoundEvents.ARUARIAN_DANCE));
+		BUBBERDUCKY = register(new CustomRecord("bubberducky", SkrimSoundEvents.BUBBERDUCKY));
+		CASSANDRA = register(new CustomRecord("cassandra", SkrimSoundEvents.CASSANDRA));
+		COLOR = register(new CustomRecord("lack_of_color", SkrimSoundEvents.LACK_OF_COLOR));
+		DOGSONG = register(new CustomRecord("dogsong", SkrimSoundEvents.DOGSONG));
+		GDAWG = register(new CustomRecord("gdawg", SkrimSoundEvents.GDAWG));
+		HEYA = register(new CustomRecord("heya", SkrimSoundEvents.HEYA));
+		MONEY = register(new CustomRecord("money", SkrimSoundEvents.MONEY));
+		NORTH = register(new CustomRecord("north", SkrimSoundEvents.NORTH));
+		NUMBER10 = register(new CustomRecord("number10", SkrimSoundEvents.NUMBER10));
+		SAMURAI = register(new CustomRecord("samurai", SkrimSoundEvents.SAMURAI));
+		TRUCK = register(new CustomRecord("truck", SkrimSoundEvents.TRUCK));
+		
+		SONGS.add(ARUARIAN_DANCE);
+		SONGS.add(BUBBERDUCKY);
+		SONGS.add(CASSANDRA);
+		SONGS.add(DOGSONG);
+		SONGS.add(GDAWG);
+		SONGS.add(HEYA);
+		SONGS.add(MONEY);
+		SONGS.add(NORTH);
+		SONGS.add(NUMBER10);
+		SONGS.add(SAMURAI);
+		SONGS.add(TRUCK);
 	}
 
 	public static void registerCraftingRecipes() {

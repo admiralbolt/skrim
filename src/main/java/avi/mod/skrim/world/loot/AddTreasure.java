@@ -69,15 +69,15 @@ public class AddTreasure {
 	public static void generateSkrimPool() {
 		LootCondition[] lootCondition = new LootCondition[0];
 		LootFunction[] lootFunction = new LootFunction[0];
-		for (Entry<String, CustomRecord> entry : ModItems.SONGS.entrySet()) {
+		for (CustomRecord record : ModItems.SONGS) {
 			lootEntries.add(
 				new LootEntryItem(
-					entry.getValue(),
+					record,
 					recordWeight,
 					recordQuality,
 					lootFunction,
 					lootCondition,
-					entry.getValue().getRecordNameLocal()
+					record.getRecordNameLocal()
 				)
 			);
 			currentWeight += recordWeight;

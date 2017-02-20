@@ -114,11 +114,11 @@ public class SkillMelee extends Skill implements ISkillMelee {
 						event.setAmount(event.getAmount() * 2);
 						// Spin slash
 						if (melee.hasAbility(2)) {
-							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SkrimSoundEvents.SPIN_SLASH,
-									player.getSoundCategory(), 1.0F, 1.0F);
 							ItemStack stack = player.getHeldItemMainhand();
 							Item item = (stack == null) ? null : stack.getItem();
 							if (item != null && item instanceof ItemSword) {
+								player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SkrimSoundEvents.SPIN_SLASH,
+										player.getSoundCategory(), 1.0F, 1.0F);
 								for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
 										targetEntity.getEntityBoundingBox().expand(2.5D, 0.25D, 2.5D))) {
 									if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)

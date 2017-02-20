@@ -26,11 +26,11 @@
       }
     ]
   },
-  "color":{
-    "category":"record",
-    "sounds":[
+  "lack_of_color": {
+    "category": "record",
+    "sounds": [
       {
-        "name":"skrim:records/color",
+        "name":"skrim:records/lack_of_color",
         "stream":true
       }
     ]
