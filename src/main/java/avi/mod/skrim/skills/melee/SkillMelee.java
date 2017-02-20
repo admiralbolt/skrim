@@ -8,6 +8,8 @@ import javax.annotation.Nullable;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+import avi.mod.skrim.Skrim;
+import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket;
 import avi.mod.skrim.skills.Skill;
@@ -104,14 +106,16 @@ public class SkillMelee extends Skill implements ISkillMelee {
 					Utils.logSkillEvent(event, melee, "Base Damage: " + event.getAmount());
 					event.setAmount(event.getAmount() + (float) (melee.getExtraDamage() * event.getAmount()));
 					int addXp = 0;
-					if (Math.random() < melee.getCritChance()) {
+					if (Math.random() < melee.getCritChance() || Skrim.ALWAYS_CRIT) {
 						Utils.logSkillEvent(event, melee, "CRITIKAL");
 						EntityLivingBase targetEntity = event.getEntityLiving();
-						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT,
+						player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SkrimSoundEvents.CRITICAL_HIT,
 								player.getSoundCategory(), 1.0F, 1.0F);
 						event.setAmount(event.getAmount() * 2);
 						// Spin slash
 						if (melee.hasAbility(2)) {
+							player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SkrimSoundEvents.SPIN_SLASH,
+									player.getSoundCategory(), 1.0F, 1.0F);
 							ItemStack stack = player.getHeldItemMainhand();
 							Item item = (stack == null) ? null : stack.getItem();
 							if (item != null && item instanceof ItemSword) {

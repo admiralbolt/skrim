@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.skills.blacksmithing.BlacksmithingProvider;
 import avi.mod.skrim.skills.blacksmithing.ISkillBlacksmithing;
 import avi.mod.skrim.skills.botany.BotanyProvider;
@@ -232,6 +233,10 @@ public class Skills {
 
 	public static void playFortuneSound(EntityPlayer player) {
 		player.world.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 0.4F, 1.0F);
+	}
+
+	public static void playRandomTreasureSound(EntityPlayer player) {
+		player.world.playSound((EntityPlayer) null, player.getPosition(), SkrimSoundEvents.RANDOM_TREASURE, player.getSoundCategory(), 0.2F, 1.0F);
 	}
 
 	public static void applyAttributes(LivingUpdateEvent event) {

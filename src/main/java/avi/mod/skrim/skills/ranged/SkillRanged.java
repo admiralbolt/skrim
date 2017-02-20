@@ -3,6 +3,7 @@ package avi.mod.skrim.skills.ranged;
 import java.util.ArrayList;
 import java.util.List;
 
+import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket;
@@ -35,7 +36,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
 	public static SkillStorage<ISkillRanged> skillStorage = new SkillStorage<ISkillRanged>();
 
-	public static float headshotBufferLow = -0.1F;
+	public static float headshotBufferLow = 0.05F;
 	public static float headshotBufferHigh = 2.2F;
 	public static int glowDuration = 120;
 
@@ -117,8 +118,8 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					int addXp = 0;
 					if (canHeadshot(targetEntity) && (targetEntity.posY + targetEntity.getEyeHeight() - headshotBufferLow < arrow.posY)
 							&& (targetEntity.posY + targetEntity.getEyeHeight() + headshotBufferHigh > arrow.posY)) {
-						player.world.playSound((EntityPlayer) null, targetEntity.getPosition(), SoundEvents.ENTITY_HORSE_ANGRY, player.getSoundCategory(), 1.0F,
-								1.0F);
+						player.world.playSound((EntityPlayer) null, player.getPosition(), SkrimSoundEvents.HEAD_SHOT, player.getSoundCategory(), 0.1F,
+								0.6F);
 						event.setAmount(event.getAmount() + (float) (ranged.getHeadshotDamage() * event.getAmount()));
 						addXp = 50;
 						if (ranged.hasAbility(4)) {
@@ -132,7 +133,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 					if (ranged.hasAbility(1)) {
 						if (player.isSneaking() && targetEntity.getAITarget() != player) {
 							event.setAmount((float) (event.getAmount() * 1.25));
-							player.world.playSound((EntityPlayer) null, player.getPosition(), SoundEvents.BLOCK_NOTE_PLING, player.getSoundCategory(), 1.0F,
+							player.world.playSound((EntityPlayer) null, player.getPosition(), SkrimSoundEvents.SNEAK_ATTACK, player.getSoundCategory(), 0.2F,
 									1.0F);
 							addXp += 50;
 						}

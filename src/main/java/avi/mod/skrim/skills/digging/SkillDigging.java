@@ -179,7 +179,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 									ItemStack treasure = CustomLootTables.getRandomTreasure(event.getWorld(), player, digging.level);
 									List<ItemStack> drops = event.getDrops();
 									drops.add(treasure);
-									Skills.playFortuneSound(player);
+									Skills.playRandomTreasureSound(player);
 									digging.addXp((EntityPlayerMP) player, 200);
 								}
 							}

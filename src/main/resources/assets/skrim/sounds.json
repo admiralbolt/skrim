@@ -120,5 +120,47 @@
       "name": "skrim:chests/zelda_spooky",
       "stream": true
     }]
+  },
+  "angel_cake_flying": {
+    "category": "skills",
+    "sounds": [{
+      "name": "skrim:skills/angel_cake_flying",
+      "stream": true
+    }]
+  },
+  "critical_hit": {
+    "category": "skills",
+    "sounds": [{
+      "name": "skrim:skills/critical_hit",
+      "stream": true
+    }]
+  },
+  "head_shot": {
+    "category": "skills",
+    "sounds": [{
+      "name": "skrim:skills/head_shot",
+      "stream": true
+    }]
+  },
+  "random_treasure": {
+    "category": "skills",
+    "sounds": [{
+      "name": "skrim:skills/random_treasure",
+      "stream": true
+    }]
+  },
+  "sneak_attacK": {
+    "category": "skills",
+    "sounds": [{
+      "name": "skrim:skills/sneak_attack",
+      "stream": true
+    }]
+  },
+  "spin_slash": {
+    "category": "skills",
+    "sounds": [{
+      "name": "skrim:skills/spin_slash",
+      "stream": true
+    }]
   }
 }

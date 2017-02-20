@@ -232,14 +232,8 @@ public class SkillMining extends Skill implements ISkillMining {
 					BlockPos pos = player.getPosition();
 					if (pos.getY() <= 40) {
 						if (player.world.getTotalWorldTime() % 80L == 0L) {
-							PotionEffect activeEffect = player.getActivePotionEffect(MobEffects.NIGHT_VISION);
-							if (activeEffect != null) {
-								activeEffect.combine(new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false));
-							} else {
-								activeEffect = new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false);
-							}
-							player.addPotionEffect(activeEffect);
-
+							PotionEffect effect = new PotionEffect(MobEffects.NIGHT_VISION, NIGHT_VISION_DURATION, 0, true, false);
+							Utils.addOrCombineEffect(player, effect);
 						}
 					}
 				}

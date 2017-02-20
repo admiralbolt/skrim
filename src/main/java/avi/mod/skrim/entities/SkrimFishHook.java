@@ -123,7 +123,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
 							treasure.motionY = d1 * 0.1D + (double) MathHelper.sqrt(d3) * 0.08D;
 							treasure.motionZ = d2 * 0.1D;
 							this.world.spawnEntity(treasure);
-							Skills.playFortuneSound(angler);
+							Skills.playRandomTreasureSound(angler);
 							fishing.addXp((EntityPlayerMP) angler, 200);
 						}
 
