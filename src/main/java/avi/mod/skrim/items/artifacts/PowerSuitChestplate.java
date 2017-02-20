@@ -2,8 +2,10 @@ package avi.mod.skrim.items.artifacts;
 
 import java.util.List;
 
+import avi.mod.skrim.client.audio.ShineSparkSound;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.utils.Utils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -14,6 +16,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 public class PowerSuitChestplate extends ArtifactArmor {
 	
 	public int sprintingTicks = 0;
+	public boolean spark = false;
 
 	public PowerSuitChestplate() {
 		super("power_suit_chestplate", EntityEquipmentSlot.CHEST);
@@ -35,19 +38,26 @@ public class PowerSuitChestplate extends ArtifactArmor {
 				if (armor instanceof PowerSuitChestplate) {
 					PowerSuitChestplate chozoChest = (PowerSuitChestplate) armor;
 					// Shine spark
+					// System.out.println("player.isSprinting(): " + player.isSprinting() + ", onGround: " + player.onGround + ", isSpark: " + chozoChest.spark);
 					if (player.isSprinting() && chozoChest.sprintingTicks >= 100) {
+						if (!chozoChest.spark) {
+							chozoChest.spark = true;
+							Minecraft.getMinecraft().getSoundHandler().playSound(new ShineSparkSound(player));
+							System.out.println("creating new ShineSparkSound()");
+						}
 						if (player.onGround) {
-							player.motionX *= 1.8;
-							player.motionZ *= 1.8;
+							player.motionX *= 1.75;
+							player.motionZ *= 1.75;
 						} else {
-							player.motionX *= 1.8;
-							player.motionZ *= 1.8;
+							player.motionX *= 1.75;
+							player.motionZ *= 1.75;
 							chozoChest.sprintingTicks = 0;
 						}
 					} else if (player.isSprinting() && player.onGround) {
 						chozoChest.sprintingTicks++;
 					} else {
 						chozoChest.sprintingTicks = 0;
+						chozoChest.spark = false;
 					}
 				}
 			}

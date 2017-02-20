@@ -162,5 +162,19 @@
       "name": "skrim:skills/spin_slash",
       "stream": true
     }]
+  },
+  "shinespark_start": {
+    "category": "artifacts",
+    "sounds": [{
+      "name": "skrim:artifacts/shinespark_start",
+      "stream": true
+    }]
+  },
+  "shinespark_loop": {
+    "category": "artifacts",
+    "sounds": [{
+      "name": "skrim:artifacts/shinespark_loop",
+      "stream": true
+    }]
   }
 }

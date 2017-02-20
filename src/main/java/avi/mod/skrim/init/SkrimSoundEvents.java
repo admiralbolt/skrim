@@ -13,12 +13,19 @@ public class SkrimSoundEvents {
 
 	public static SoundEvent ZELDA_BIG;
 	public static SoundEvent ZELDA_SPOOKY;
+	
+	// Skill sounds
 	public static SoundEvent ANGEL_CAKE_FLYING;
 	public static SoundEvent CRITICAL_HIT;
 	public static SoundEvent HEAD_SHOT;
 	public static SoundEvent RANDOM_TREASURE;
 	public static SoundEvent SNEAK_ATTACK;
 	public static SoundEvent SPIN_SLASH;
+	
+	// Artifact sounds
+	public static SoundEvent SHINESPARK_START;
+	public static SoundEvent SHINESPARK_LOOP;
+	
 
 	public static List<SoundEvent> ZELDA_SOUNDS;
 
@@ -45,6 +52,9 @@ public class SkrimSoundEvents {
 		RANDOM_TREASURE = registerSoundEvent("random_treasure");
 		SNEAK_ATTACK = registerSoundEvent("sneak_attack");
 		SPIN_SLASH = registerSoundEvent("spin_slash");
+		
+		SHINESPARK_START = registerSoundEvent("shinespark_start");
+		SHINESPARK_LOOP = registerSoundEvent("shinespark_loop");
 	}
 
 	public static SoundEvent randomZeldaSound() {
