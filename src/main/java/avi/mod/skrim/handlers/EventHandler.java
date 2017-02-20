@@ -6,6 +6,7 @@ import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.artifacts.BlindingBoots;
 import avi.mod.skrim.items.artifacts.CanesSword;
+import avi.mod.skrim.items.artifacts.CeruleanSandals;
 import avi.mod.skrim.items.artifacts.FoxMask;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
 import avi.mod.skrim.items.artifacts.SpringheelBoots;
@@ -152,7 +153,8 @@ public class EventHandler {
 			LeafArmor.LeafArmorHandler.invisibility(event);
 
 			// Artifact handlers
-			BlindingBoots.BlindingBootsHandler.goFast(event);
+			BlindingBoots.Handler.goFast(event);
+			CeruleanSandals.Handler.walkOnWater(event);
 			FoxMask.FoxHandler.beAFox(event);
 		}
 	}

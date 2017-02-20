@@ -32,7 +32,7 @@ public class BlindingBoots extends ArtifactArmor {
 	/**
 	 * Handlers for boots of blinding speed
 	 */
-	public static class BlindingBootsHandler {
+	public static class Handler {
 
 		public static List<Potion> effects = new ArrayList<Potion>();
 		public static Map<Potion, Integer> effectStrength = new HashMap<Potion, Integer>();
