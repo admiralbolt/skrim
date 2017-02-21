@@ -69,7 +69,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 			"Significantly reduce prior work cost when repairing items.");
 
 	public static SkillAbility IRON_HEART = new SkillAbility("blacksmithing", "Iron Heart", 75, "Can still pump blood.",
-			"Passively gain §a50%" + SkillAbility.descColor + " fire resistance.");
+			"Passively gain §a25%" + SkillAbility.descColor + " fire resistance.");
 
 	public static SkillAbility OBSIDIAN_SMITH = new SkillAbility("blacksmithing", "Obsidian Smith", 100, "How can obsidian be real if our eyes aren't real?",
 			"Allows you to craft obsidian armor, weapons, and tools.");
@@ -169,7 +169,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 					SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
 					if (blacksmithing.hasAbility(3)) {
 						Utils.logSkillEvent(event, blacksmithing, "Applying iron heart.");
-						event.setAmount(event.getAmount() / 2);
+						event.setAmount((float) (event.getAmount() * 0.75));
 					}
 				}
 			}
