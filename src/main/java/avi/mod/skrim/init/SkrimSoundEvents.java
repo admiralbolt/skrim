@@ -29,6 +29,7 @@ public class SkrimSoundEvents {
 	public static SoundEvent ZELDA_BIG;
 	public static SoundEvent ZELDA_SPOOKY;
 	public static SoundEvent ZELDA_WINDWAKER;
+	public static SoundEvent ZELDA_CHEST_OPEN;
 
 	// Skill sounds
 	public static SoundEvent ANGEL_CAKE_FLYING;
@@ -75,7 +76,7 @@ public class SkrimSoundEvents {
 		ZELDA_BIG = registerSoundEvent("zelda_big", ZELDA_SOUNDS);
 		ZELDA_SPOOKY = registerSoundEvent("zelda_spooky", ZELDA_SOUNDS);
 		ZELDA_WINDWAKER = registerSoundEvent("zelda_windwaker", ZELDA_SOUNDS);
-		ZELDA_CHEST_OPEN = registerSoundEvent("zelda_chest_open", ZELDA_CHEST_OPEN);
+		ZELDA_CHEST_OPEN = registerSoundEvent("zelda_chest_open", ZELDA_SOUNDS);
 
 		ANGEL_CAKE_FLYING = registerSoundEvent("angel_cake_flying");
 		CRITICAL_HIT = registerSoundEvent("critical_hit");
