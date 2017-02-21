@@ -19,7 +19,7 @@ public class PowerSuitChestplate extends ArtifactArmor {
 	public boolean spark = false;
 
 	public PowerSuitChestplate() {
-		super("power_suit_chestplate", EntityEquipmentSlot.CHEST);
+		super("powersuit_chestplate", EntityEquipmentSlot.CHEST);
 	}
 
 	@Override
