@@ -74,30 +74,30 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		addFood("bread", ModItems.OVERWRITE_BREAD, 200);
 		addFood("cookie", ModItems.OVERWRITE_COOKIE, 25);
 
-		addFood("potatobaked", ModItems.OVERWRITE_BAKED_POTATO, 300);
+		addFood("potatobaked", ModItems.OVERWRITE_BAKED_POTATO, 200);
 
-		addFood("beetroot_soup", ModItems.OVERWRITE_BEETROOT_SOUP, 400);
-		addFood("mushroomstew", ModItems.OVERWRITE_MUSHROOM_STEW, 400);
+		addFood("beetroot_soup", ModItems.OVERWRITE_BEETROOT_SOUP, 250);
+		addFood("mushroomstew", ModItems.OVERWRITE_MUSHROOM_STEW, 250);
 
-		addFood("muttoncooked", ModItems.OVERWRITE_MUTTON, 600);
+		addFood("muttoncooked", ModItems.OVERWRITE_MUTTON, 500);
 		entityFoodMap.put(EntitySheep.class, "muttoncooked");
-		addFood("beefcooked", ModItems.OVERWRITE_STEAK, 600);
+		addFood("beefcooked", ModItems.OVERWRITE_STEAK, 500);
 		entityFoodMap.put(EntityCow.class, "beefcooked");
-		addFood("porkchopcooked", ModItems.OVERWRITE_PORKCHOP, 600);
+		addFood("porkchopcooked", ModItems.OVERWRITE_PORKCHOP, 500);
 		entityFoodMap.put(EntityPig.class, "porkchopcooked");
-		addFood("chickencooked", ModItems.OVERWRITE_CHICKEN, 600);
+		addFood("chickencooked", ModItems.OVERWRITE_CHICKEN, 500);
 		entityFoodMap.put(EntityChicken.class, "chickencooked");
 
-		addFood("cooked_fish", ModItems.OVERWRITE_FISH, 700);
-		addFood("pumpkinpie", ModItems.OVERWRITE_PUMPKIN_STEW, 750);
-		addFood("cooked_salmon", ModItems.OVERWRITE_SALMON, 800);
+		addFood("cooked_fish", ModItems.OVERWRITE_FISH, 800);
+		addFood("pumpkinpie", ModItems.OVERWRITE_PUMPKIN_STEW, 1500);
+		addFood("cooked_salmon", ModItems.OVERWRITE_SALMON, 1000);
 
-		addFood("rabbitcooked", ModItems.OVERWRITE_RABBIT, 1000);
+		addFood("rabbitcooked", ModItems.OVERWRITE_RABBIT, 2500);
 		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");
-		addFood("rabbitstew", ModItems.OVERWRITE_RABBIT_STEW, 1000);
+		addFood("rabbitstew", ModItems.OVERWRITE_RABBIT_STEW, 3000);
 
-		xpMap.put("item.cake", 2000);
-		xpMap.put("angel_cake", 2500);
+		xpMap.put("item.cake", 7500);
+		xpMap.put("angel_cake", 10000);
 
 	}
 
