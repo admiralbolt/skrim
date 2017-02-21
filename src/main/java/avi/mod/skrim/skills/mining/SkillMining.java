@@ -108,7 +108,7 @@ public class SkillMining extends Skill implements ISkillMining {
 	}
 
 	public double getSpeedBonus() {
-		return 0.1 * this.level;
+		return 0.01 * this.level;
 	}
 
 	public double getFortuneChance() {
@@ -169,7 +169,7 @@ public class SkillMining extends Skill implements ISkillMining {
 			SkillMining mining = (SkillMining) player.getCapability(Skills.MINING, EnumFacing.NORTH);
 			IBlockState state = event.getState();
 			if (mining.validSpeedTarget(state)) {
-				event.setNewSpeed((float) (event.getOriginalSpeed() + mining.getSpeedBonus()));
+				event.setNewSpeed((float) (event.getOriginalSpeed() * (1 + mining.getSpeedBonus())));
 			}
 		}
 	}

@@ -100,7 +100,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	}
 
 	public double getSpeedBonus() {
-		return 0.1 * this.level;
+		return 0.01 * this.level;
 	}
 
 	public double getTreasureChance() {
@@ -157,7 +157,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 		if (player.hasCapability(Skills.DIGGING, EnumFacing.NORTH)) {
 			IBlockState state = event.getState();
 			if (digging.validSpeedTarget(state)) {
-				event.setNewSpeed((float) (event.getOriginalSpeed() + digging.getSpeedBonus()));
+				event.setNewSpeed((float) (event.getOriginalSpeed() * (1 + digging.getSpeedBonus())));
 			}
 		}
 	}
