@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "skrim:blocks/weirwood_sapling_stage0"
+    "cross": "skrim:blocks/weirwood_sapling_stage1"
   }
 }

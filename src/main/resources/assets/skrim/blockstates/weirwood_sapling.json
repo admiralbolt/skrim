@@ -8,22 +8,22 @@
       "model": "skrim:weirwood_sapling_stage0"
     },
     "age=10": {
-      "model": "skrim:weirwood_sapling_stage0"
+      "model": "skrim:weirwood_sapling_stage1"
     },
     "age=11": {
-      "model": "skrim:weirwood_sapling_stage0"
+      "model": "skrim:weirwood_sapling_stage1"
     },
     "age=12": {
-      "model": "skrim:weirwood_sapling_stage0"
+      "model": "skrim:weirwood_sapling_stage1"
     },
     "age=13": {
-      "model": "skrim:weirwood_sapling_stage0"
+      "model": "skrim:weirwood_sapling_stage1"
     },
     "age=14": {
-      "model": "skrim:weirwood_sapling_stage0"
+      "model": "skrim:weirwood_sapling_stage1"
     },
     "age=15": {
-      "model": "skrim:weirwood_sapling_stage0"
+      "model": "skrim:weirwood_sapling_stage1"
     },
     "age=2": {
       "model": "skrim:weirwood_sapling_stage0"
@@ -53,7 +53,7 @@
       "model": "skrim:weirwood_sapling_stage0"
     },
     "inventory": {
-      "model": "skrim:weirwood_sapling_stage0"
+      "model": "skrim:weirwood_sapling_stage1"
     }
   }
 }
