@@ -409,9 +409,16 @@ public class ModItems {
 	}
 
 	public static void registerObsidian() {
-		addArmorRecipes(new ItemStack(Blocks.OBSIDIAN), OBSIDIAN_HELMET, OBSIDIAN_CHEST, OBSIDIAN_PANTS, OBSIDIAN_BOOTS);
-		addToolRecipes(new ItemStack(Blocks.OBSIDIAN), OBSIDIAN_AXE, OBSIDIAN_HOE, OBSIDIAN_PICKAXE, OBSIDIAN_SHOVEL);
-		addWeaponRecipes(new ItemStack(Blocks.OBSIDIAN), OBSIDIAN_SWORD);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_HELMET), "OOO", "D D", "   ", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_CHEST), "D D", "ODO", "OOO", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_PANTS), "DOD", "O O", "O O", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_BOOTS), "O O", "D D", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND);
+		
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_SWORD), " O ", " O ", "DSD", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND, 'S', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_AXE), " OO", " SO", "DSD", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND, 'S', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_HOE), "OO ", " S ", "DSD", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND, 'S', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_PICKAXE), "OOO", " S ", "DSD", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND, 'S', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(OBSIDIAN_SHOVEL), " O ", " S ", "DSD", 'O', Blocks.OBSIDIAN, 'D', Items.DIAMOND, 'S', Items.STICK);
 	}
 
 	private static <T extends Item> T register(T item) {

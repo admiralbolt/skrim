@@ -104,7 +104,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	}
 
 	public double getTreasureChance() {
-		return 0.002 * this.level;
+		return 0.0008 * this.level;
 	}
 
 	@Override
