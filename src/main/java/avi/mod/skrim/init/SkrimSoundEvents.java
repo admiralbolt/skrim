@@ -11,7 +11,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class SkrimSoundEvents {
-	
+
 	// Records
 	public static SoundEvent ARUARIAN_DANCE;
 	public static SoundEvent BUBBERDUCKY;
@@ -25,11 +25,11 @@ public class SkrimSoundEvents {
 	public static SoundEvent NUMBER10;
 	public static SoundEvent SAMURAI;
 	public static SoundEvent TRUCK;
-	
 
 	public static SoundEvent ZELDA_BIG;
 	public static SoundEvent ZELDA_SPOOKY;
-	
+	public static SoundEvent ZELDA_WINDWAKER;
+
 	// Skill sounds
 	public static SoundEvent ANGEL_CAKE_FLYING;
 	public static SoundEvent CRITICAL_HIT;
@@ -37,11 +37,10 @@ public class SkrimSoundEvents {
 	public static SoundEvent RANDOM_TREASURE;
 	public static SoundEvent SNEAK_ATTACK;
 	public static SoundEvent SPIN_SLASH;
-	
+
 	// Artifact sounds
 	public static SoundEvent SHINESPARK_START;
 	public static SoundEvent SHINESPARK_LOOP;
-	
 
 	public static List<SoundEvent> ZELDA_SOUNDS = new ArrayList<SoundEvent>();
 	public static List<SoundEvent> RECORDS = new ArrayList<SoundEvent>();
@@ -72,16 +71,19 @@ public class SkrimSoundEvents {
 		NUMBER10 = registerSoundEvent("number10", RECORDS);
 		SAMURAI = registerSoundEvent("samurai", RECORDS);
 		TRUCK = registerSoundEvent("truck", RECORDS);
-		
+
 		ZELDA_BIG = registerSoundEvent("zelda_big", ZELDA_SOUNDS);
 		ZELDA_SPOOKY = registerSoundEvent("zelda_spooky", ZELDA_SOUNDS);
+		ZELDA_WINDWAKER = registerSoundEvent("zelda_windwaker", ZELDA_SOUNDS);
+		ZELDA_CHEST_OPEN = registerSoundEvent("zelda_chest_open", ZELDA_CHEST_OPEN);
+
 		ANGEL_CAKE_FLYING = registerSoundEvent("angel_cake_flying");
 		CRITICAL_HIT = registerSoundEvent("critical_hit");
 		HEAD_SHOT = registerSoundEvent("head_shot");
 		RANDOM_TREASURE = registerSoundEvent("random_treasure");
 		SNEAK_ATTACK = registerSoundEvent("sneak_attack");
 		SPIN_SLASH = registerSoundEvent("spin_slash");
-		
+
 		SHINESPARK_START = registerSoundEvent("shinespark_start");
 		SHINESPARK_LOOP = registerSoundEvent("shinespark_loop");
 	}

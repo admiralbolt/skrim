@@ -121,6 +121,20 @@
       "stream": true
     }]
   },
+  "zelda_windwaker": {
+    "category": "chests",
+    "sounds": [{
+      "name": "skrim:chests/zelda_windwaker",
+      "stream": true
+    }]
+  },
+  "zelda_chest_open": {
+    "category": "chests",
+    "sounds": [{
+      "name": "skrim:chests/zelda_open_chest",
+      "stream": true
+    }]
+  },
   "angel_cake_flying": {
     "category": "skills",
     "sounds": [{
