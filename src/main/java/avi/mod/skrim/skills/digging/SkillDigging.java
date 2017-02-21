@@ -110,7 +110,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
 	@Override
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r digging speed bonus.");
+		tooltip.add("§a+" + Utils.formatPercent(this.getSpeedBonus()) + "%§r digging speed bonus.");
 		tooltip.add("§a" + Utils.formatPercent(this.getTreasureChance()) + "%§r chance to find treasure.");
 		return tooltip;
 	}

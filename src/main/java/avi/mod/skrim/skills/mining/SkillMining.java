@@ -122,7 +122,7 @@ public class SkillMining extends Skill implements ISkillMining {
 	@Override
 	public List<String> getToolTip() {
 		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r mining speed bonus.");
+		tooltip.add("§a+" + Utils.formatPercent(this.getSpeedBonus()) + "%§r mining speed bonus.");
 		tooltip.add(
 				"§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r ore drops.");
 		tooltip.add("   This bonus stacks with fortune.");
