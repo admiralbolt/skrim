@@ -44,13 +44,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class Utils {
 
-	public static String[] tuplets = { "zero-adsf", "one-asdf", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octople", "nontople", "decuple" };
+	public static String[] tuplets = { "zero-adsf", "one-asdf", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octople", "nontople",
+			"decuple" };
 	public static Random rand = new Random();
 	public static DecimalFormat oneDigit = new DecimalFormat("0.0");
 	public static DecimalFormat twoDigit = new DecimalFormat("0.00");
@@ -85,10 +87,11 @@ public class Utils {
 		Block block = state.getBlock();
 		System.out.println("harvestTool: " + block.getHarvestTool(state) + ", name: " + getBlockName(block) + ", class: " + block.getClass());
 	}
-	
+
 	public static void logHurtEvent(LivingHurtEvent event) {
 		DamageSource source = event.getSource();
-		System.out.println("source.damageType: " + source.damageType + ", damageAmount: " + event.getAmount() + ", isExplosion: " + source.isExplosion() + ", isFire: " + source.isFireDamage() + ", isMagic: " + source.isMagicDamage() + ", isProjectile: " + source.isProjectile());
+		System.out.println("source.damageType: " + source.damageType + ", damageAmount: " + event.getAmount() + ", isExplosion: " + source.isExplosion()
+				+ ", isFire: " + source.isFireDamage() + ", isMagic: " + source.isMagicDamage() + ", isProjectile: " + source.isProjectile());
 	}
 
 	public static String getFortuneString(int fortuneAmount) {
@@ -118,39 +121,23 @@ public class Utils {
 			if (iattributeinstance != null) {
 				AttributeModifier attributemodifier = (AttributeModifier) entry.getValue();
 				iattributeinstance.removeModifier(attributemodifier);
-				iattributeinstance.applyModifier(new AttributeModifier(attributemodifier.getID(), attributemodifier.getName(), getAttributeModifierAmount(amplifier, attributemodifier), attributemodifier.getOperation()));
+				iattributeinstance.applyModifier(new AttributeModifier(attributemodifier.getID(), attributemodifier.getName(),
+						getAttributeModifierAmount(amplifier, attributemodifier), attributemodifier.getOperation()));
 			}
 		}
 	}
 
 	public static double getAttributeModifierAmount(int amplifier, AttributeModifier modifier) {
-  	return modifier.getAmount() * (double)(amplifier + 1);
+		return modifier.getAmount() * (double) (amplifier + 1);
 	}
 
 	public static boolean isRawXpBlock(Block block) {
-		return (
-			block instanceof BlockOldLog ||
-			block instanceof BlockNewLog ||
-			block instanceof BlockRedFlower ||
-			block instanceof BlockYellowFlower ||
-			block instanceof BlockSand ||
-			block instanceof BlockGravel ||
-			block instanceof BlockDirt ||
-			block instanceof BlockMycelium ||
-			block instanceof BlockGrass ||
-			block instanceof BlockSoulSand ||
-			block instanceof BlockPumpkin ||
-			block instanceof BlockMelon ||
-			block instanceof BlockDoublePlant ||
-			block == Blocks.IRON_ORE ||
-			block == Blocks.GOLD_ORE ||
-			block == Blocks.DIAMOND_ORE ||
-			block == Blocks.LAPIS_ORE ||
-			block == Blocks.REDSTONE_ORE ||
-			block == Blocks.COAL_ORE ||
-			block == Blocks.EMERALD_ORE ||
-			block == ModBlocks.WEIRWOOD_WOOD
-		);
+		return (block instanceof BlockOldLog || block instanceof BlockNewLog || block instanceof BlockRedFlower || block instanceof BlockYellowFlower
+				|| block instanceof BlockSand || block instanceof BlockGravel || block instanceof BlockDirt || block instanceof BlockMycelium
+				|| block instanceof BlockGrass || block instanceof BlockSoulSand || block instanceof BlockPumpkin || block instanceof BlockMelon
+				|| block instanceof BlockDoublePlant || block == Blocks.IRON_ORE || block == Blocks.GOLD_ORE || block == Blocks.DIAMOND_ORE
+				|| block == Blocks.LAPIS_ORE || block == Blocks.REDSTONE_ORE || block == Blocks.COAL_ORE || block == Blocks.EMERALD_ORE
+				|| block == ModBlocks.WEIRWOOD_WOOD);
 	}
 
 	public static boolean isSilkTouching(BlockEvent.BreakEvent event) {
@@ -159,12 +146,12 @@ public class Utils {
 		int silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, mainStack);
 		return silkTouch > 0;
 	}
-	
+
 	public static boolean isNegativeEffect(PotionEffect effect) {
 		Potion potion = (Potion) Reflection.getPrivateField(effect, "potion", "field_188420_b");
 		return (potion != null && negativeEffects.contains(potion));
 	}
-	
+
 	public static boolean isWearingArmor(EntityPlayer player, ItemArmor armor) {
 		InventoryPlayer inventory = player.inventory;
 		if (inventory != null) {
@@ -178,27 +165,27 @@ public class Utils {
 		}
 		return false;
 	}
-	
+
 	public static ItemStack getArmor(EntityPlayer player, EntityEquipmentSlot armorType) {
 		return player.inventory.armorInventory.get(armorType.getIndex());
 	}
-	
+
 	public static void log(String message) {
 		if (Skrim.DEBUG) {
 			System.out.println(message);
 		}
 	}
-	
+
 	public static void logSkillEvent(Event event, Skill skill, String message) {
 		log("[" + getEventName(event) + "](" + skill.name + ") " + message);
 	}
-	
+
 	public static String getEventName(Event event) {
 		String className = event.getClass().getName();
 		String[] split = className.split("\\.");
 		return split[split.length - 1];
 	}
-	
+
 	public static void addOrCombineEffect(EntityPlayer player, PotionEffect effect) {
 		PotionEffect activeEffect = player.getActivePotionEffect(effect.getPotion());
 		if (activeEffect != null) {
@@ -208,5 +195,19 @@ public class Utils {
 		}
 		player.addPotionEffect(activeEffect);
 	}
-	
+
+	public static int getNumberOfItems(NonNullList<ItemStack> inventory) {
+		int size = 0;
+		for (ItemStack stack : inventory) {
+			if (stack != ItemStack.EMPTY) {
+				size++;
+			}
+		}
+		return size;
+	}
+
+	public static boolean areSimilarStacks(ItemStack stack1, ItemStack stack2) {
+		return (stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata() && stack1 != ItemStack.EMPTY && stack2 != ItemStack.EMPTY && stack1.getCount() > 0 && stack2.getCount() > 0);
+	}
+
 }
