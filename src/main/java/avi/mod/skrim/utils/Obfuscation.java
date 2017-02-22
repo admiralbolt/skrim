@@ -30,6 +30,8 @@ public class Obfuscation {
 	public static ObfuscatedField FISH_HOOK_RAYTRACE = new ObfuscatedField("func_190624_r", "func_190624_r");
 
 	public static ObfuscatedField FISH_HOOK_LUCK = new ObfuscatedField("field_191518_aw", "field_191518_aw");
+	
+	public static ObfuscatedField HORSE_JUMP_ATTRIBUTE = new ObfuscatedField("JUMP_STRENGTH", "field_110271_bv");
 
 	public static int getStackSize(ItemStack stack) {
 		return stack.getCount();

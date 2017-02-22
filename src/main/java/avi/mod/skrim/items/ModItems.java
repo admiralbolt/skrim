@@ -1,9 +1,7 @@
 package avi.mod.skrim.items;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.init.SkrimSoundEvents;
@@ -16,6 +14,9 @@ import avi.mod.skrim.items.artifacts.CanesSword;
 import avi.mod.skrim.items.artifacts.CeruleanSandals;
 import avi.mod.skrim.items.artifacts.FoxMask;
 import avi.mod.skrim.items.artifacts.GruesomeMask;
+import avi.mod.skrim.items.artifacts.HorseSteroidHealth;
+import avi.mod.skrim.items.artifacts.HorseSteroidJump;
+import avi.mod.skrim.items.artifacts.HorseSteroidSpeed;
 import avi.mod.skrim.items.artifacts.IcarianScroll;
 import avi.mod.skrim.items.artifacts.PowerSuitChestplate;
 import avi.mod.skrim.items.artifacts.SheepFinder3000;
@@ -30,8 +31,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -96,6 +95,9 @@ public class ModItems {
 
 	public static ArtifactItem SHEEP_FINDER;
 	public static ArtifactItem ICARIAN_SCROLL;
+	public static ArtifactItem HORSE_STEROID_SPEED;
+	public static ArtifactItem HORSE_STEROID_HEALTH;
+	public static ArtifactItem HORSE_STEROID_JUMP;
 
 	/**
 	 * Custom items created from skills
@@ -274,6 +276,15 @@ public class ModItems {
 
 		ICARIAN_SCROLL = register(new IcarianScroll());
 		ARTIFACTS.add(ICARIAN_SCROLL);
+		
+		HORSE_STEROID_SPEED = register(new HorseSteroidSpeed());
+		ARTIFACTS.add(HORSE_STEROID_SPEED);
+		
+		HORSE_STEROID_HEALTH = register(new HorseSteroidHealth());
+		ARTIFACTS.add(HORSE_STEROID_HEALTH);
+		
+		HORSE_STEROID_JUMP = register(new HorseSteroidJump());
+		ARTIFACTS.add(HORSE_STEROID_JUMP);
 	}
 	
 	public static List<CustomRecord> SONGS = new ArrayList<CustomRecord>();
