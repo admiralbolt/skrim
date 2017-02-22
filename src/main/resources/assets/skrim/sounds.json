@@ -131,7 +131,7 @@
   "zelda_chest_open": {
     "category": "chests",
     "sounds": [{
-      "name": "skrim:chests/zelda_open_chest",
+      "name": "skrim:chests/zelda_chest_open",
       "stream": true
     }]
   },
