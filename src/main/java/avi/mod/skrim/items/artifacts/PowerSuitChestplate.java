@@ -24,7 +24,7 @@ public class PowerSuitChestplate extends ArtifactArmor {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
-		tooltip.add("§4Oh fuck yeah.§r");
+		tooltip.add("§4Sprinting for an extended duration activates your speed booster.§r");
 		tooltip.add("§e\"Time and reality swirl together like estuary waters.\"");
 	}
 

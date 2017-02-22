@@ -24,7 +24,7 @@ public class CeruleanSandals extends ArtifactArmor {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean par4) {
-		tooltip.add("§4Walk on water.§r");
+		tooltip.add("§4Turns water you walk over into ice.§r");
 		tooltip.add("§e\"Jesus baby.\"");
 	}
 
