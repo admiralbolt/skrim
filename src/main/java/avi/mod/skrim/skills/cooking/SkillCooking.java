@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.client.audio.AngelCakeFlyingSound;
-import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.items.CustomCake;
 import avi.mod.skrim.items.CustomFood;
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.skillpackets.AngelFlyingSoundPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -58,7 +59,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	public static long CHECK_TICKS = 60;
 
 	public boolean hasAngel = false;
-	public AngelCakeFlyingSound flyingSound = null;
+	public boolean startFlyingSound = true;
+	
 	public int currentTicks = 0;
 	public int lastItemNumber;
 
@@ -316,11 +318,11 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 				SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
 				if (cooking.hasAngel && cooking.currentTicks > 0) {
-					cooking.currentTicks -= 1;
+					cooking.currentTicks--;
 				} else {
 					cooking.hasAngel = false;
 					cooking.currentTicks = 0;
-					cooking.flyingSound = null;
+					cooking.startFlyingSound = true;
 					if (!player.capabilities.isCreativeMode) {
 						player.capabilities.allowFlying = false;
 						player.capabilities.isFlying = false;
@@ -348,10 +350,10 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		this.hasAngel = true;
 		player.capabilities.allowFlying = true;
 		this.currentTicks = ANGEL_DURATION;
-		if (player.world.isRemote) {
-			if (this.flyingSound == null) {
-				this.flyingSound = new AngelCakeFlyingSound(player);
-				Minecraft.getMinecraft().getSoundHandler().playSound(this.flyingSound);
+		if (!player.world.isRemote) {
+			if (this.startFlyingSound) {
+				SkrimPacketHandler.INSTANCE.sendTo(new AngelFlyingSoundPacket(), (EntityPlayerMP) player);
+				this.startFlyingSound = false;
 			}
 		}
 	}

@@ -6,12 +6,15 @@ import avi.mod.skrim.client.audio.ShineSparkSound;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PowerSuitChestplate extends ArtifactArmor {
 	
@@ -27,6 +30,12 @@ public class PowerSuitChestplate extends ArtifactArmor {
 		tooltip.add("§4Sprinting for an extended duration activates your speed booster.§r");
 		tooltip.add("§e\"Time and reality swirl together like estuary waters.\"");
 	}
+	
+	@SideOnly(Side.CLIENT)
+	public void playShineSpark(EntityPlayer player) {
+		Minecraft.getMinecraft().getSoundHandler().playSound(new ShineSparkSound(player));
+	}
+	
 
 	public static void applyChozoTech(LivingUpdateEvent event) {
 		Entity entity = event.getEntity();
@@ -38,12 +47,10 @@ public class PowerSuitChestplate extends ArtifactArmor {
 				if (armor instanceof PowerSuitChestplate) {
 					PowerSuitChestplate chozoChest = (PowerSuitChestplate) armor;
 					// Shine spark
-					// System.out.println("player.isSprinting(): " + player.isSprinting() + ", onGround: " + player.onGround + ", isSpark: " + chozoChest.spark);
 					if (player.isSprinting() && chozoChest.sprintingTicks >= 100) {
 						if (!chozoChest.spark) {
 							chozoChest.spark = true;
-							Minecraft.getMinecraft().getSoundHandler().playSound(new ShineSparkSound(player));
-							System.out.println("creating new ShineSparkSound()");
+							chozoChest.playShineSpark(player);
 						}
 						if (player.onGround) {
 							player.motionX *= 1.75;

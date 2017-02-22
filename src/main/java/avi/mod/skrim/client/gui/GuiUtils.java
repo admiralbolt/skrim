@@ -16,22 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUtils {
 
-	@SideOnly(Side.CLIENT)
-	public static ArmorOverlay ARMOR_OVERLAY = new ArmorOverlay(Minecraft.getMinecraft());
-
-	@SideOnly(Side.CLIENT)
-	public static HealthOverlay HEALTH_OVERLAY = new HealthOverlay(Minecraft.getMinecraft());
-
-	@SideOnly(Side.CLIENT)
-	public static CriticalAscensionOverlay CRITICAL_ASCENSION_OVERLAY = new CriticalAscensionOverlay(Minecraft.getMinecraft());
-	
-	public static String[] randomNames = {
-			"WEEE HAA",
-			"Mo chest mo problems",
-			"Dayumm Boiii",
-			"Mega Chest",
-			"Chest O-Mega"
-	};
+	public static String[] randomNames = { "WEEE HAA", "Mo chest mo problems", "Dayumm Boiii", "Mega Chest", "Chest O-Mega" };
 
 	public static ResourceLocation CUSTOM_ICONS = new ResourceLocation("skrim:textures/guis/overlays/custom_icons.png");
 	public static ResourceLocation ABILITY_ICONS = new ResourceLocation("skrim:textures/guis/skills/skill_abilities.png");
@@ -91,10 +76,11 @@ public class GuiUtils {
 	}
 
 	public static Icon getAbilityIcon(String skillName, int level, boolean unlocked) {
-		Icon abilityIcon = new Icon(skillName + "_" + level, SKILL_ABILITY_X.get(skillName) + (level - 1) * 16, SKILL_ABILITY_Y.get(skillName) + ((unlocked) ? 0 : 48), 16, 16);
+		Icon abilityIcon = new Icon(skillName + "_" + level, SKILL_ABILITY_X.get(skillName) + (level - 1) * 16,
+				SKILL_ABILITY_Y.get(skillName) + ((unlocked) ? 0 : 48), 16, 16);
 		return abilityIcon;
 	}
-	
+
 	public static Icon getSkillIcon(String skillName) {
 		return new Icon(skillName + "_icon", SKILL_X.get(skillName), SKILL_Y.get(skillName), 32, 32);
 	}
@@ -115,7 +101,7 @@ public class GuiUtils {
 			gui.drawTexturedModalRect(xCoord, yCoord, icon.getX(), icon.getY(), icon.getWidth(), icon.getHeight());
 		}
 	}
-	
+
 	public static String getRandomChestText() {
 		int aynRandom = Utils.rand.nextInt(randomNames.length);
 		return randomNames[aynRandom];
@@ -139,7 +125,7 @@ public class GuiUtils {
 			this.width = width;
 			this.height = height;
 		}
-		
+
 		public String toString() {
 			return "(" + this.name + ")[" + this.xStart + ", " + this.yStart + ", " + this.width + ", " + this.height + "]";
 		}

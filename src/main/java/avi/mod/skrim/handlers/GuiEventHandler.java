@@ -1,7 +1,10 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.client.gui.ArmorOverlay;
+import avi.mod.skrim.client.gui.CriticalAscensionOverlay;
 import avi.mod.skrim.client.gui.CustomGuiInventory;
 import avi.mod.skrim.client.gui.GuiUtils;
+import avi.mod.skrim.client.gui.HealthOverlay;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import net.minecraft.client.Minecraft;
@@ -17,6 +20,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiEventHandler {
+	
+	@SideOnly(Side.CLIENT)
+	public static ArmorOverlay ARMOR_OVERLAY = new ArmorOverlay(Minecraft.getMinecraft());
+
+	@SideOnly(Side.CLIENT)
+	public static HealthOverlay HEALTH_OVERLAY = new HealthOverlay(Minecraft.getMinecraft());
+
+	@SideOnly(Side.CLIENT)
+	public static CriticalAscensionOverlay CRITICAL_ASCENSION_OVERLAY = new CriticalAscensionOverlay(Minecraft.getMinecraft());
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onInventoryOpen(GuiOpenEvent event) {
@@ -30,11 +42,11 @@ public class GuiEventHandler {
 	public void onRenderPre(RenderGameOverlayEvent.Pre event) {
 		if (event.getType() == ElementType.ARMOR) {
 			event.setCanceled(true);
-			GuiUtils.ARMOR_OVERLAY.render();
+			ARMOR_OVERLAY.render();
 		} else if (event.getType() == ElementType.HEALTH) {
 			event.setCanceled(true);
-			GuiUtils.HEALTH_OVERLAY.render();
-			GuiUtils.HEALTH_OVERLAY.updateTick();
+			HEALTH_OVERLAY.render();
+			HEALTH_OVERLAY.updateTick();
 		}
 	}
 	
@@ -46,7 +58,7 @@ public class GuiEventHandler {
 			if (player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {
 				SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);
 				if (ranged.hasAbility(4)) {
-					GuiUtils.CRITICAL_ASCENSION_OVERLAY.render(ranged.getStacks());
+					CRITICAL_ASCENSION_OVERLAY.render(ranged.getStacks());
 				}
 			}
 		}

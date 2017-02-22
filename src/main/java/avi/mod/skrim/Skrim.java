@@ -21,14 +21,14 @@ public class Skrim {
 	public static final String version = "1.1.8";
 
 	public static final TestTab creativeTab = new TestTab();
-	
+
 	/**
 	 * The debug flag is used for logging several different
 	 * messages for debugging individual skills and abilities.
 	 * Should be FALSE for release.
 	 */
 	public static final boolean DEBUG = true;
-	
+
 	/**
 	 * Whether or not to enforce only giving xp / bonuses
 	 * for NON player placed blocks.  If enforce=true
@@ -37,7 +37,7 @@ public class Skrim {
 	 * Should be TRUE for release.
 	 */
 	public static final boolean ENFORCE_NATURAL = false;
-	
+
 	/**
 	 * Pretty straight forward, every hit is a critical hit.
 	 * Should be FALSE for release.

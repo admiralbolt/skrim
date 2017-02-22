@@ -11,6 +11,8 @@ import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
 import avi.mod.skrim.network.SortChestPacket.SortChestPacketHandler;
 import avi.mod.skrim.network.SpawnEntityPacket.SpawnEntityPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket.SpawnParticlePacketHandler;
+import avi.mod.skrim.network.skillpackets.AngelFlyingSoundPacket;
+import avi.mod.skrim.network.skillpackets.AngelFlyingSoundPacket.AngelFlyingSoundPacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket.ApplyBonemealPacketHandler;
 import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket;
@@ -51,6 +53,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(SpawnEntityPacketHandler.class, SpawnEntityPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(SortChestPacketHandler.class, SortChestPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(SetBlockPacketHandler.class, SetBlockPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(AngelFlyingSoundPacketHandler.class, AngelFlyingSoundPacket.class, PACKET_ID++, Side.CLIENT);
 	}
 
 }
