@@ -7,6 +7,7 @@ import avi.mod.skrim.blocks.MegaChest;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.inventory.MegaChestContainer;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -44,11 +45,17 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
 		this.customName = customName;
 	}
 	
+	/**
+	 * Currently bugged if there are gaps in the inventory.  Also, 
+	 * should merge things if possible...
+	 */
 	public void sort() {
 		Collections.sort(this.inventory, new Comparator<ItemStack>() {
 			@Override
 			public int compare(ItemStack stack1, ItemStack stack2) {
-				if (stack1 == ItemStack.EMPTY) {
+				if (stack1 == ItemStack.EMPTY && stack2 == ItemStack.EMPTY) {
+					return 0;
+				}	else if (stack1 == ItemStack.EMPTY) {
 					return 1;
 				} else if (stack2 == ItemStack.EMPTY) {
 					return -1;
@@ -57,7 +64,47 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
 				}
 			}
 		});
+		int totalStacks = Utils.getNumberOfItems(this.inventory);
+		for (int i = 0; i < totalStacks; i++) {
+			ItemStack current = this.inventory.get(i);
+			int shifted = 0;
+			int next = i + 1;
+			ItemStack target = this.inventory.get(next);
+			while (current.getCount() < current.getMaxStackSize() && (Utils.areSimilarStacks(current, target) || target == ItemStack.EMPTY)) {
+				if (target != ItemStack.EMPTY) {
+					mergeFrom(target, current);
+					if (target.getCount() == 0) {
+						shifted++;
+					}
+				}
+				if (current.getCount() < current.getMaxStackSize()) {
+					next++;
+					if (next >= this.inventory.size()) {
+						break;
+					}
+					target = this.inventory.get(next);
+				}
+			}
+			if (shifted > 0) {
+				this.shiftLeft(next, shifted);
+			}
+		}
 		this.markDirty();
+	}
+	
+	public void shiftLeft(int start, int shift) {
+		for (int i = start; i < this.inventory.size(); i++) {
+			this.inventory.set(i - shift, this.inventory.get(i));
+		}
+	}
+	
+	public static void mergeFrom(ItemStack from, ItemStack to) {
+		if (Utils.areSimilarStacks(from, to)) {
+			int maxSize = to.getMaxStackSize();
+			int transferSize = Math.min(maxSize - to.getCount(), from.getCount());
+			to.setCount(to.getCount() + transferSize);
+			from.setCount(from.getCount() - transferSize);
+		}
 	}
 
 	@Override
