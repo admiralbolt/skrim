@@ -27,7 +27,7 @@ public class Skrim {
 	 * messages for debugging individual skills and abilities.
 	 * Should be FALSE for release.
 	 */
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	/**
 	 * Whether or not to enforce only giving xp / bonuses
@@ -36,13 +36,13 @@ public class Skrim {
 	 * player placed blocks.
 	 * Should be TRUE for release.
 	 */
-	public static final boolean ENFORCE_NATURAL = false;
+	public static final boolean ENFORCE_NATURAL = true;
 
 	/**
 	 * Pretty straight forward, every hit is a critical hit.
 	 * Should be FALSE for release.
 	 */
-	public static final boolean ALWAYS_CRIT = true;
+	public static final boolean ALWAYS_CRIT = false;
 
 	@Mod.Instance(modId)
 	public static Skrim instance = new Skrim();

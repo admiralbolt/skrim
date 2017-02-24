@@ -20,61 +20,61 @@
           "type": "item",
           "name": "minecraft:golden_sword",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_shovel",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_pickaxe",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_horse_armor",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_hoe",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_helmet",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_chestplate",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_boots",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_axe",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
           "name": "minecraft:golden_leggings",
           "weight": 50,
-          "quality": 2
+          "quality": 1
         },
         {
           "type": "item",
@@ -146,7 +146,7 @@
           "type": "item",
           "name": "minecraft:iron_ingot",
           "weight": 15,
-          "quality": 5,
+          "quality": 7,
           "set_count": {
             "min": 3,
             "max": 6
@@ -156,7 +156,7 @@
           "type": "item",
           "name": "minecraft:gold_ingot",
           "weight": 0,
-          "quality": 7,
+          "quality": 10,
           "set_count": {
             "min": 3,
             "max": 6
