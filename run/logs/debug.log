@@ -470,37 +470,37 @@ Details:
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.LeafArmor@4812c244, registryName: skrim:acacia_leaf_pants, path: armor
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.LeafArmor@231e5af, registryName: skrim:acacia_leaf_armor, path: armor
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.LeafArmor@89537c1, registryName: skrim:acacia_leaf_helmet, path: armor
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomArmor@4d71deeb, registryName: skrim:obsidian_helmet, path: armor
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomArmor@2006673c, registryName: skrim:obsidian_chest, path: armor
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomArmor@749aa36f, registryName: skrim:obsidian_pants, path: armor
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomArmor@5f966dee, registryName: skrim:obsidian_boots, path: armor
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomAxe@11a3ffe6, registryName: skrim:obsidian_axe, path: tools
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomHoe@66cdde2b, registryName: skrim:obsidian_hoe, path: tools
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomPickaxe@68321229, registryName: skrim:obsidian_pickaxe, path: tools
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomSpade@53ce41e7, registryName: skrim:obsidian_spade, path: tools
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomSword@5d9cd8b7, registryName: skrim:obsidian_sword, path: weapons
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.CustomArmor@4d71deeb, registryName: skrim:obsidian_helmet, path: armor
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.CustomArmor@2006673c, registryName: skrim:obsidian_chest, path: armor
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.CustomArmor@749aa36f, registryName: skrim:obsidian_pants, path: armor
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.CustomArmor@5f966dee, registryName: skrim:obsidian_boots, path: armor
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomAxe@11a3ffe6, registryName: skrim:obsidian_axe, path: tools
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomHoe@66cdde2b, registryName: skrim:obsidian_hoe, path: tools
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomPickaxe@68321229, registryName: skrim:obsidian_pickaxe, path: tools
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomSpade@53ce41e7, registryName: skrim:obsidian_spade, path: tools
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.weapons.CustomSword@5d9cd8b7, registryName: skrim:obsidian_sword, path: weapons
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.WeirwoodTotem@55a869a9, registryName: skrim:weirwood_totem, path: items
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.RocketLauncher@2d739a6f, registryName: skrim:rocket_launcher, path: weapons
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.GreatBow@c93275f, registryName: skrim:great_bow, path: weapons
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.weapons.RocketLauncher@2d739a6f, registryName: skrim:rocket_launcher, path: weapons
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.weapons.GreatBow@c93275f, registryName: skrim:great_bow, path: weapons
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.armor.Overalls@295692fd, registryName: skrim:overalls, path: armor
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.HandSaw@37711f1a, registryName: skrim:hand_saw, path: tools
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@2182cd7c, registryName: skrim:overwrite_porkchop, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@10939bc1, registryName: skrim:overwrite_baked_potato, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@5afef53, registryName: skrim:overwrite_beetroot_soup, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@3a19b933, registryName: skrim:overwrite_bread, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@d476a21, registryName: skrim:overwrite_chicken, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@186b5db, registryName: skrim:overwrite_fish, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@7ba907cf, registryName: skrim:overwrite_mutton, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@c0ef9a8, registryName: skrim:overwrite_salmon, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@3a2e8c6a, registryName: skrim:overwrite_cookie, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@eb2ce99, registryName: skrim:overwrite_mushroom_stew, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@3d1637ff, registryName: skrim:overwrite_pumpkin_pie, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@46ae5a4c, registryName: skrim:overwrite_rabbit_stew, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@8add32f, registryName: skrim:overwrite_steak, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@107302a5, registryName: skrim:overwrite_rabbit, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomFood@1cd6769b, registryName: skrim:canes_chicken, path: food
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.SkrimCake@281e2377, registryName: skrim:skrim_cake, path: blocks
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.AngelCake@4eccb9f0, registryName: skrim:angel_cake, path: blocks
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.HandSaw@37711f1a, registryName: skrim:hand_saw, path: tools
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@2182cd7c, registryName: skrim:overwrite_porkchop, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@10939bc1, registryName: skrim:overwrite_baked_potato, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@5afef53, registryName: skrim:overwrite_beetroot_soup, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@3a19b933, registryName: skrim:overwrite_bread, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@d476a21, registryName: skrim:overwrite_chicken, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@186b5db, registryName: skrim:overwrite_fish, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@7ba907cf, registryName: skrim:overwrite_mutton, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@c0ef9a8, registryName: skrim:overwrite_salmon, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@3a2e8c6a, registryName: skrim:overwrite_cookie, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@eb2ce99, registryName: skrim:overwrite_mushroom_stew, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@3d1637ff, registryName: skrim:overwrite_pumpkin_pie, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@46ae5a4c, registryName: skrim:overwrite_rabbit_stew, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@8add32f, registryName: skrim:overwrite_steak, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@107302a5, registryName: skrim:overwrite_rabbit, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.CustomFood@1cd6769b, registryName: skrim:canes_chicken, path: food
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.SkrimCake@281e2377, registryName: skrim:skrim_cake, path: blocks
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.food.AngelCake@4eccb9f0, registryName: skrim:angel_cake, path: blocks
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.artifacts.CanesSword@46a2eca6, registryName: skrim:raising_canes_fry_sword, path: weapons
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.artifacts.PowerSuitChestplate@46756a5b, registryName: skrim:powersuit_chestplate, path: armor
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.artifacts.SpringheelBoots@156d47c5, registryName: skrim:boots_of_springheel_jak, path: armor
@@ -513,18 +513,18 @@ Details:
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.artifacts.HorseSteroidSpeed@1b9b8759, registryName: skrim:horse_steroid_speed, path: items
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.artifacts.HorseSteroidHealth@4a8d8f50, registryName: skrim:horse_steroid_health, path: items
 [09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.artifacts.HorseSteroidJump@5a30ab46, registryName: skrim:horse_steroid_jump, path: items
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@7772549d, registryName: skrim:aruarian_dance, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@3094b465, registryName: skrim:bubberducky, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@16454a28, registryName: skrim:cassandra, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@4970b93d, registryName: skrim:lack_of_color, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@2c43da32, registryName: skrim:dogsong, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@39e16443, registryName: skrim:gdawg, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@5c97d5d, registryName: skrim:heya, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@49bc9588, registryName: skrim:money, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@7b9c54c7, registryName: skrim:north, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@496de48b, registryName: skrim:number10, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@7005b6e, registryName: skrim:samurai, path: records
-[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.CustomRecord@2a3d9ed3, registryName: skrim:truck, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@7772549d, registryName: skrim:aruarian_dance, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@3094b465, registryName: skrim:bubberducky, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@16454a28, registryName: skrim:cassandra, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@4970b93d, registryName: skrim:lack_of_color, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@2c43da32, registryName: skrim:dogsong, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@39e16443, registryName: skrim:gdawg, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@5c97d5d, registryName: skrim:heya, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@49bc9588, registryName: skrim:money, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@7b9c54c7, registryName: skrim:north, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@496de48b, registryName: skrim:number10, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@7005b6e, registryName: skrim:samurai, path: records
+[09:00:51] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:310]: item: avi.mod.skrim.items.tools.CustomRecord@2a3d9ed3, registryName: skrim:truck, path: records
 [09:00:51] [Client thread/INFO] [FML]: Applying holder lookups
 [09:00:51] [Client thread/INFO] [FML]: Holder lookups applied
 [09:00:51] [Client thread/INFO] [FML]: Applying holder lookups
@@ -1444,37 +1444,37 @@ Details:
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4117 skrim:acacia_leaf_pants avi.mod.skrim.items.armor.LeafArmor@4812c244
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4118 skrim:acacia_leaf_armor avi.mod.skrim.items.armor.LeafArmor@231e5af
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4119 skrim:acacia_leaf_helmet avi.mod.skrim.items.armor.LeafArmor@89537c1
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4120 skrim:obsidian_helmet avi.mod.skrim.items.CustomArmor@4d71deeb
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4121 skrim:obsidian_chest avi.mod.skrim.items.CustomArmor@2006673c
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4122 skrim:obsidian_pants avi.mod.skrim.items.CustomArmor@749aa36f
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4123 skrim:obsidian_boots avi.mod.skrim.items.CustomArmor@5f966dee
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4124 skrim:obsidian_axe avi.mod.skrim.items.CustomAxe@11a3ffe6
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4125 skrim:obsidian_hoe avi.mod.skrim.items.CustomHoe@66cdde2b
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4126 skrim:obsidian_pickaxe avi.mod.skrim.items.CustomPickaxe@68321229
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4127 skrim:obsidian_spade avi.mod.skrim.items.CustomSpade@53ce41e7
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4128 skrim:obsidian_sword avi.mod.skrim.items.CustomSword@5d9cd8b7
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4120 skrim:obsidian_helmet avi.mod.skrim.items.armor.CustomArmor@4d71deeb
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4121 skrim:obsidian_chest avi.mod.skrim.items.armor.CustomArmor@2006673c
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4122 skrim:obsidian_pants avi.mod.skrim.items.armor.CustomArmor@749aa36f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4123 skrim:obsidian_boots avi.mod.skrim.items.armor.CustomArmor@5f966dee
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4124 skrim:obsidian_axe avi.mod.skrim.items.tools.CustomAxe@11a3ffe6
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4125 skrim:obsidian_hoe avi.mod.skrim.items.tools.CustomHoe@66cdde2b
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4126 skrim:obsidian_pickaxe avi.mod.skrim.items.tools.CustomPickaxe@68321229
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4127 skrim:obsidian_spade avi.mod.skrim.items.tools.CustomSpade@53ce41e7
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4128 skrim:obsidian_sword avi.mod.skrim.items.weapons.CustomSword@5d9cd8b7
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4129 skrim:weirwood_totem avi.mod.skrim.items.WeirwoodTotem@55a869a9
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4130 skrim:rocket_launcher avi.mod.skrim.items.RocketLauncher@2d739a6f
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4131 skrim:great_bow avi.mod.skrim.items.GreatBow@c93275f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4130 skrim:rocket_launcher avi.mod.skrim.items.weapons.RocketLauncher@2d739a6f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4131 skrim:great_bow avi.mod.skrim.items.weapons.GreatBow@c93275f
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4132 skrim:overalls avi.mod.skrim.items.armor.Overalls@295692fd
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4133 skrim:hand_saw avi.mod.skrim.items.HandSaw@37711f1a
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4134 skrim:overwrite_porkchop avi.mod.skrim.items.CustomFood@2182cd7c
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4135 skrim:overwrite_baked_potato avi.mod.skrim.items.CustomFood@10939bc1
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4136 skrim:overwrite_beetroot_soup avi.mod.skrim.items.CustomFood@5afef53
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4137 skrim:overwrite_bread avi.mod.skrim.items.CustomFood@3a19b933
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4138 skrim:overwrite_chicken avi.mod.skrim.items.CustomFood@d476a21
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4139 skrim:overwrite_fish avi.mod.skrim.items.CustomFood@186b5db
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4140 skrim:overwrite_mutton avi.mod.skrim.items.CustomFood@7ba907cf
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4141 skrim:overwrite_salmon avi.mod.skrim.items.CustomFood@c0ef9a8
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4142 skrim:overwrite_cookie avi.mod.skrim.items.CustomFood@3a2e8c6a
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4143 skrim:overwrite_mushroom_stew avi.mod.skrim.items.CustomFood@eb2ce99
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4144 skrim:overwrite_pumpkin_pie avi.mod.skrim.items.CustomFood@3d1637ff
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4145 skrim:overwrite_rabbit_stew avi.mod.skrim.items.CustomFood@46ae5a4c
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4146 skrim:overwrite_steak avi.mod.skrim.items.CustomFood@8add32f
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4147 skrim:overwrite_rabbit avi.mod.skrim.items.CustomFood@107302a5
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4148 skrim:canes_chicken avi.mod.skrim.items.CustomFood@1cd6769b
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4149 skrim:skrim_cake avi.mod.skrim.items.SkrimCake@281e2377
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4150 skrim:angel_cake avi.mod.skrim.items.AngelCake@4eccb9f0
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4133 skrim:hand_saw avi.mod.skrim.items.tools.HandSaw@37711f1a
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4134 skrim:overwrite_porkchop avi.mod.skrim.items.food.CustomFood@2182cd7c
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4135 skrim:overwrite_baked_potato avi.mod.skrim.items.food.CustomFood@10939bc1
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4136 skrim:overwrite_beetroot_soup avi.mod.skrim.items.food.CustomFood@5afef53
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4137 skrim:overwrite_bread avi.mod.skrim.items.food.CustomFood@3a19b933
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4138 skrim:overwrite_chicken avi.mod.skrim.items.food.CustomFood@d476a21
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4139 skrim:overwrite_fish avi.mod.skrim.items.food.CustomFood@186b5db
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4140 skrim:overwrite_mutton avi.mod.skrim.items.food.CustomFood@7ba907cf
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4141 skrim:overwrite_salmon avi.mod.skrim.items.food.CustomFood@c0ef9a8
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4142 skrim:overwrite_cookie avi.mod.skrim.items.food.CustomFood@3a2e8c6a
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4143 skrim:overwrite_mushroom_stew avi.mod.skrim.items.food.CustomFood@eb2ce99
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4144 skrim:overwrite_pumpkin_pie avi.mod.skrim.items.food.CustomFood@3d1637ff
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4145 skrim:overwrite_rabbit_stew avi.mod.skrim.items.food.CustomFood@46ae5a4c
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4146 skrim:overwrite_steak avi.mod.skrim.items.food.CustomFood@8add32f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4147 skrim:overwrite_rabbit avi.mod.skrim.items.food.CustomFood@107302a5
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4148 skrim:canes_chicken avi.mod.skrim.items.food.CustomFood@1cd6769b
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4149 skrim:skrim_cake avi.mod.skrim.items.food.SkrimCake@281e2377
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4150 skrim:angel_cake avi.mod.skrim.items.food.AngelCake@4eccb9f0
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4151 skrim:raising_canes_fry_sword avi.mod.skrim.items.artifacts.CanesSword@46a2eca6
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4152 skrim:powersuit_chestplate avi.mod.skrim.items.artifacts.PowerSuitChestplate@46756a5b
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4153 skrim:boots_of_springheel_jak avi.mod.skrim.items.artifacts.SpringheelBoots@156d47c5
@@ -1487,18 +1487,18 @@ Details:
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4160 skrim:horse_steroid_speed avi.mod.skrim.items.artifacts.HorseSteroidSpeed@1b9b8759
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4161 skrim:horse_steroid_health avi.mod.skrim.items.artifacts.HorseSteroidHealth@4a8d8f50
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4162 skrim:horse_steroid_jump avi.mod.skrim.items.artifacts.HorseSteroidJump@5a30ab46
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4163 skrim:aruarian_dance avi.mod.skrim.items.CustomRecord@7772549d
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4164 skrim:bubberducky avi.mod.skrim.items.CustomRecord@3094b465
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4165 skrim:cassandra avi.mod.skrim.items.CustomRecord@16454a28
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4166 skrim:lack_of_color avi.mod.skrim.items.CustomRecord@4970b93d
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4167 skrim:dogsong avi.mod.skrim.items.CustomRecord@2c43da32
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4168 skrim:gdawg avi.mod.skrim.items.CustomRecord@39e16443
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4169 skrim:heya avi.mod.skrim.items.CustomRecord@5c97d5d
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4170 skrim:money avi.mod.skrim.items.CustomRecord@49bc9588
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4171 skrim:north avi.mod.skrim.items.CustomRecord@7b9c54c7
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4172 skrim:number10 avi.mod.skrim.items.CustomRecord@496de48b
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4173 skrim:samurai avi.mod.skrim.items.CustomRecord@7005b6e
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4174 skrim:truck avi.mod.skrim.items.CustomRecord@2a3d9ed3
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4163 skrim:aruarian_dance avi.mod.skrim.items.tools.CustomRecord@7772549d
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4164 skrim:bubberducky avi.mod.skrim.items.tools.CustomRecord@3094b465
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4165 skrim:cassandra avi.mod.skrim.items.tools.CustomRecord@16454a28
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4166 skrim:lack_of_color avi.mod.skrim.items.tools.CustomRecord@4970b93d
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4167 skrim:dogsong avi.mod.skrim.items.tools.CustomRecord@2c43da32
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4168 skrim:gdawg avi.mod.skrim.items.tools.CustomRecord@39e16443
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4169 skrim:heya avi.mod.skrim.items.tools.CustomRecord@5c97d5d
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4170 skrim:money avi.mod.skrim.items.tools.CustomRecord@49bc9588
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4171 skrim:north avi.mod.skrim.items.tools.CustomRecord@7b9c54c7
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4172 skrim:number10 avi.mod.skrim.items.tools.CustomRecord@496de48b
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4173 skrim:samurai avi.mod.skrim.items.tools.CustomRecord@7005b6e
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4174 skrim:truck avi.mod.skrim.items.tools.CustomRecord@2a3d9ed3
 [09:01:24] [Server thread/TRACE] [FML]: Registry Name : minecraft:potions
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 1 minecraft:speed net.minecraft.potion.Potion@65753724
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 2 minecraft:slowness net.minecraft.potion.Potion@2bc16fe2
@@ -3571,49 +3571,49 @@ Details:
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4129 skrim:boots_of_blinding_speed avi.mod.skrim.items.artifacts.BlindingBoots@13acb4
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4130 skrim:cerulean_sandals avi.mod.skrim.items.artifacts.CeruleanSandals@16d52e51
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4131 skrim:horse_steroid_jump avi.mod.skrim.items.artifacts.HorseSteroidJump@5a30ab46
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4132 skrim:obsidian_hoe avi.mod.skrim.items.CustomHoe@66cdde2b
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4133 skrim:obsidian_pants avi.mod.skrim.items.CustomArmor@749aa36f
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4134 skrim:obsidian_boots avi.mod.skrim.items.CustomArmor@5f966dee
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4135 skrim:obsidian_spade avi.mod.skrim.items.CustomSpade@53ce41e7
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4136 skrim:obsidian_axe avi.mod.skrim.items.CustomAxe@11a3ffe6
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4137 skrim:obsidian_sword avi.mod.skrim.items.CustomSword@5d9cd8b7
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4138 skrim:obsidian_pickaxe avi.mod.skrim.items.CustomPickaxe@68321229
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4139 skrim:obsidian_chest avi.mod.skrim.items.CustomArmor@2006673c
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4140 skrim:obsidian_helmet avi.mod.skrim.items.CustomArmor@4d71deeb
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4141 skrim:aruarian_dance avi.mod.skrim.items.CustomRecord@7772549d
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4142 skrim:bubberducky avi.mod.skrim.items.CustomRecord@3094b465
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4143 skrim:cassandra avi.mod.skrim.items.CustomRecord@16454a28
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4144 skrim:lack_of_color avi.mod.skrim.items.CustomRecord@4970b93d
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4145 skrim:dogsong avi.mod.skrim.items.CustomRecord@2c43da32
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4146 skrim:gdawg avi.mod.skrim.items.CustomRecord@39e16443
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4147 skrim:heya avi.mod.skrim.items.CustomRecord@5c97d5d
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4148 skrim:money avi.mod.skrim.items.CustomRecord@49bc9588
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4149 skrim:north avi.mod.skrim.items.CustomRecord@7b9c54c7
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4150 skrim:number10 avi.mod.skrim.items.CustomRecord@496de48b
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4151 skrim:samurai avi.mod.skrim.items.CustomRecord@7005b6e
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4152 skrim:truck avi.mod.skrim.items.CustomRecord@2a3d9ed3
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4132 skrim:obsidian_hoe avi.mod.skrim.items.tools.CustomHoe@66cdde2b
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4133 skrim:obsidian_pants avi.mod.skrim.items.armor.CustomArmor@749aa36f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4134 skrim:obsidian_boots avi.mod.skrim.items.armor.CustomArmor@5f966dee
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4135 skrim:obsidian_spade avi.mod.skrim.items.tools.CustomSpade@53ce41e7
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4136 skrim:obsidian_axe avi.mod.skrim.items.tools.CustomAxe@11a3ffe6
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4137 skrim:obsidian_sword avi.mod.skrim.items.weapons.CustomSword@5d9cd8b7
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4138 skrim:obsidian_pickaxe avi.mod.skrim.items.tools.CustomPickaxe@68321229
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4139 skrim:obsidian_chest avi.mod.skrim.items.armor.CustomArmor@2006673c
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4140 skrim:obsidian_helmet avi.mod.skrim.items.armor.CustomArmor@4d71deeb
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4141 skrim:aruarian_dance avi.mod.skrim.items.tools.CustomRecord@7772549d
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4142 skrim:bubberducky avi.mod.skrim.items.tools.CustomRecord@3094b465
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4143 skrim:cassandra avi.mod.skrim.items.tools.CustomRecord@16454a28
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4144 skrim:lack_of_color avi.mod.skrim.items.tools.CustomRecord@4970b93d
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4145 skrim:dogsong avi.mod.skrim.items.tools.CustomRecord@2c43da32
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4146 skrim:gdawg avi.mod.skrim.items.tools.CustomRecord@39e16443
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4147 skrim:heya avi.mod.skrim.items.tools.CustomRecord@5c97d5d
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4148 skrim:money avi.mod.skrim.items.tools.CustomRecord@49bc9588
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4149 skrim:north avi.mod.skrim.items.tools.CustomRecord@7b9c54c7
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4150 skrim:number10 avi.mod.skrim.items.tools.CustomRecord@496de48b
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4151 skrim:samurai avi.mod.skrim.items.tools.CustomRecord@7005b6e
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4152 skrim:truck avi.mod.skrim.items.tools.CustomRecord@2a3d9ed3
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4153 skrim:weirwood_totem avi.mod.skrim.items.WeirwoodTotem@55a869a9
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4154 skrim:overwrite_baked_potato avi.mod.skrim.items.CustomFood@10939bc1
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4155 skrim:canes_chicken avi.mod.skrim.items.CustomFood@1cd6769b
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4156 skrim:overwrite_pumpkin_pie avi.mod.skrim.items.CustomFood@3d1637ff
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4157 skrim:overwrite_rabbit avi.mod.skrim.items.CustomFood@107302a5
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4158 skrim:overwrite_steak avi.mod.skrim.items.CustomFood@8add32f
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4159 skrim:overwrite_salmon avi.mod.skrim.items.CustomFood@c0ef9a8
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4160 skrim:overwrite_mushroom_stew avi.mod.skrim.items.CustomFood@eb2ce99
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4161 skrim:rocket_launcher avi.mod.skrim.items.RocketLauncher@2d739a6f
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4162 skrim:hand_saw avi.mod.skrim.items.HandSaw@37711f1a
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4154 skrim:overwrite_baked_potato avi.mod.skrim.items.food.CustomFood@10939bc1
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4155 skrim:canes_chicken avi.mod.skrim.items.food.CustomFood@1cd6769b
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4156 skrim:overwrite_pumpkin_pie avi.mod.skrim.items.food.CustomFood@3d1637ff
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4157 skrim:overwrite_rabbit avi.mod.skrim.items.food.CustomFood@107302a5
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4158 skrim:overwrite_steak avi.mod.skrim.items.food.CustomFood@8add32f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4159 skrim:overwrite_salmon avi.mod.skrim.items.food.CustomFood@c0ef9a8
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4160 skrim:overwrite_mushroom_stew avi.mod.skrim.items.food.CustomFood@eb2ce99
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4161 skrim:rocket_launcher avi.mod.skrim.items.weapons.RocketLauncher@2d739a6f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4162 skrim:hand_saw avi.mod.skrim.items.tools.HandSaw@37711f1a
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 4163 skrim:overalls avi.mod.skrim.items.armor.Overalls@295692fd
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4164 skrim:overwrite_bread avi.mod.skrim.items.CustomFood@3a19b933
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4165 skrim:overwrite_fish avi.mod.skrim.items.CustomFood@186b5db
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4166 skrim:angel_cake avi.mod.skrim.items.AngelCake@4eccb9f0
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4167 skrim:overwrite_chicken avi.mod.skrim.items.CustomFood@d476a21
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4168 skrim:overwrite_mutton avi.mod.skrim.items.CustomFood@7ba907cf
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4169 skrim:overwrite_porkchop avi.mod.skrim.items.CustomFood@2182cd7c
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4170 skrim:great_bow avi.mod.skrim.items.GreatBow@c93275f
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4171 skrim:overwrite_beetroot_soup avi.mod.skrim.items.CustomFood@5afef53
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4172 skrim:skrim_cake avi.mod.skrim.items.SkrimCake@281e2377
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4173 skrim:overwrite_cookie avi.mod.skrim.items.CustomFood@3a2e8c6a
-[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4174 skrim:overwrite_rabbit_stew avi.mod.skrim.items.CustomFood@46ae5a4c
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4164 skrim:overwrite_bread avi.mod.skrim.items.food.CustomFood@3a19b933
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4165 skrim:overwrite_fish avi.mod.skrim.items.food.CustomFood@186b5db
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4166 skrim:angel_cake avi.mod.skrim.items.food.AngelCake@4eccb9f0
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4167 skrim:overwrite_chicken avi.mod.skrim.items.food.CustomFood@d476a21
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4168 skrim:overwrite_mutton avi.mod.skrim.items.food.CustomFood@7ba907cf
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4169 skrim:overwrite_porkchop avi.mod.skrim.items.food.CustomFood@2182cd7c
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4170 skrim:great_bow avi.mod.skrim.items.weapons.GreatBow@c93275f
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4171 skrim:overwrite_beetroot_soup avi.mod.skrim.items.food.CustomFood@5afef53
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4172 skrim:skrim_cake avi.mod.skrim.items.food.SkrimCake@281e2377
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4173 skrim:overwrite_cookie avi.mod.skrim.items.food.CustomFood@3a2e8c6a
+[09:01:24] [Server thread/TRACE] [FML]:   Registry: 4174 skrim:overwrite_rabbit_stew avi.mod.skrim.items.food.CustomFood@46ae5a4c
 [09:01:24] [Server thread/TRACE] [FML]: Registry Name : minecraft:potions
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 1 minecraft:speed net.minecraft.potion.Potion@65753724
 [09:01:24] [Server thread/TRACE] [FML]:   Registry: 2 minecraft:slowness net.minecraft.potion.Potion@2bc16fe2

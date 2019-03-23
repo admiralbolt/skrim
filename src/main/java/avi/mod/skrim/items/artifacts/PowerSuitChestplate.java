@@ -6,9 +6,9 @@ import javax.annotation.Nullable;
 
 import avi.mod.skrim.client.audio.ShineSparkSound;
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.armor.ArtifactArmor;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import avi.mod.skrim.items.CustomSpade;
+import avi.mod.skrim.items.tools.CustomSpade;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.MetalDetectorPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import avi.mod.skrim.world.loot.CustomLootTables;

@@ -4,7 +4,7 @@
 Time: 3/22/19 3:34 PM
 Description: Initializing game
 
-java.lang.ClassCastException: avi.mod.skrim.items.CustomFood cannot be cast to avi.mod.skrim.items.ItemBase
+java.lang.ClassCastException: avi.mod.skrim.items.food.CustomFood cannot be cast to avi.mod.skrim.items.ItemBase
 	at avi.mod.skrim.items.ModItems$RegistrationHandler.registerItems(ModItems.java:304)
 	at net.minecraftforge.fml.common.eventhandler.ASMEventHandler_4_RegistrationHandler_registerItems_Register.invoke(.dynamic)
 	at net.minecraftforge.fml.common.eventhandler.ASMEventHandler.invoke(ASMEventHandler.java:90)

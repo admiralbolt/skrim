@@ -1,6 +1,6 @@
 package avi.mod.skrim.network.skillpackets;
 
-import avi.mod.skrim.items.HandSaw;
+import avi.mod.skrim.items.tools.HandSaw;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
 import io.netty.buffer.ByteBuf;

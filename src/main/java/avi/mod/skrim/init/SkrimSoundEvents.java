@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.items.CustomRecord;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class SkrimSoundEvents {
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.items.CustomHoe;
+import avi.mod.skrim.items.tools.CustomHoe;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
@@ -45,7 +45,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;

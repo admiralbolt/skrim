@@ -1,6 +1,6 @@
 package avi.mod.skrim.items.artifacts;
 
-import avi.mod.skrim.items.CustomSword;
+import avi.mod.skrim.items.weapons.CustomSword;
 import avi.mod.skrim.items.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;

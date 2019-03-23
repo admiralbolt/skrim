@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.items.CustomAxe;
-import avi.mod.skrim.items.HandSaw;
+import avi.mod.skrim.items.tools.CustomAxe;
+import avi.mod.skrim.items.tools.HandSaw;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.items.WeirwoodTotem;
 import avi.mod.skrim.items.armor.LeafArmor;
@@ -37,7 +37,6 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;

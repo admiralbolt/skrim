@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.armor.ArtifactArmor;
 import avi.mod.skrim.network.SetBlockPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.utils.Utils;

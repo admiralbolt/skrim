@@ -1,7 +1,0 @@
-{
-  "forge_marker": 1,
-  "parent": "item/handheld",
-  "textures": {
-    "layer0": "skrim:items/horse_steroid_speed"
-  }
-}

@@ -1,6 +1,5 @@
 package avi.mod.skrim.items.armor;
 
-import avi.mod.skrim.items.CustomArmor;
 import avi.mod.skrim.network.InvisibilityPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.utils.Utils;

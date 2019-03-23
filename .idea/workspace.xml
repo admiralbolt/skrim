@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d3ee1147-907a-48b6-b2b2-4b88fa917e11" name="Default Changelist" comment="" />
+    <list default="true" id="d3ee1147-907a-48b6-b2b2-4b88fa917e11" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mod.log" beforeDir="false" afterPath="$PROJECT_DIR$/mod.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.34.13-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.34.13-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.43.35-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.43.35-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.44.57-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.44.57-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.46.56-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.46.56-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.50.03-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/crash-reports/crash-2019-03-22_15.50.03-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/run/logs/latest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/CustomCakeBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/CustomCakeBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/init/SkrimSoundEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/init/SkrimSoundEvents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/AngelCake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/AngelCake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/CustomArmor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomAxe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomAxe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomCake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomCake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomFood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomFood.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomHoe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomHoe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomPickaxe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomPickaxe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomSpade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomSpade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/HandSaw.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/HandSaw.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/ModItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/ModItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/SkrimCake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/SkrimCake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/LeafArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/LeafArmor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/Overalls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/Overalls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/ArtifactArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/ArtifactArmor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/BlindingBoots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/BlindingBoots.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/CeruleanSandals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/CeruleanSandals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/FoxMask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/FoxMask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/GruesomeMask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/GruesomeMask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/PowerSuitChestplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/PowerSuitChestplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/SpringheelBoots.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/SpringheelBoots.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/network/skillpackets/WhirlingChopPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/network/skillpackets/WhirlingChopPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/cooking/SkillCooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/cooking/SkillCooking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/digging/SkillDigging.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/digging/SkillDigging.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/farming/SkillFarming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/farming/SkillFarming.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/woodcutting/SkillWoodcutting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/woodcutting/SkillWoodcutting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/loot/AddTreasure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/loot/AddTreasure.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -55,15 +96,102 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/LeafArmor.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomRecord.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="154" column="69" selection-end-line="207" />
+            <state relative-caret-position="120">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2958#2959#0" expanded="true" />
-                <element signature="e#2989#2990#0" expanded="true" />
+                <element signature="e#562#563#0" expanded="true" />
+                <element signature="e#588#589#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/ArtifactArmor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/AngelCake.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomCake.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomFood.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/SkrimCake.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomSpade.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomPickaxe.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/HandSaw.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/CustomArmor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,6 +212,9 @@
       <find>ModItems.create</find>
       <find>minecraft:leaves2</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -110,7 +241,6 @@
         <option value="$PROJECT_DIR$/build/sources/main/java/avi/mod/skrim/world/loot/AddTreasure.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/loot/AddTreasure.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomRecord.java" />
-        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/Overalls.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/HandSaw.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/GreatBow.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/WeirwoodTotem.java" />
@@ -120,6 +250,7 @@
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomCake.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/ModItems.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/LeafArmor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/Overalls.java" />
       </list>
     </option>
   </component>
@@ -128,6 +259,7 @@
     <option name="width" value="1680" />
     <option name="height" value="947" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -194,16 +326,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="skrim" type="462c0819:PsiDirectoryNode" />
               <item name="items" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="skrim" type="b2602c69:ProjectViewProjectNode" />
-              <item name="skrim" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="skrim" type="462c0819:PsiDirectoryNode" />
-              <item name="items" type="462c0819:PsiDirectoryNode" />
-              <item name="armor" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="skrim" type="b2602c69:ProjectViewProjectNode" />
@@ -279,7 +401,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553356708589" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553367307717" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunDashboard">
@@ -444,7 +566,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="947" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25274727" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -454,8 +575,8 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32982457" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20818713" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.14853801" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.20818713" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -477,13 +598,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/loot/CustomLootTables.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="43" column="62" selection-start-line="43" selection-start-column="62" selection-end-line="43" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/digging/SkillDigging.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-96">
@@ -604,22 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/ArtifactArmor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="51" column="3" selection-start-line="51" selection-start-column="3" selection-end-line="51" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1473#1474#0" expanded="true" />
-            <element signature="e#1500#1501#0" expanded="true" />
-            <element signature="e#1593#1594#0" expanded="true" />
-            <element signature="e#1640#1641#0" expanded="true" />
-            <element signature="e#1874#1875#0" expanded="true" />
-            <element signature="e#1898#1899#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/ArtifactItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -664,62 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomArmor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#885#886#0" expanded="true" />
-            <element signature="e#912#913#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomAxe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
-          <folding>
-            <element signature="e#4513#4514#0" expanded="true" />
-            <element signature="e#4530#4531#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomHoe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#510#511#0" expanded="true" />
-            <element signature="e#525#526#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomPickaxe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-          <folding>
-            <element signature="e#526#527#0" expanded="true" />
-            <element signature="e#541#542#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomSpade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-          <folding>
-            <element signature="e#518#519#0" expanded="true" />
-            <element signature="e#533#534#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -770,20 +812,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomRecord.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#925#926#0" expanded="true" />
-            <element signature="e#942#943#0" expanded="true" />
-            <element signature="e#705#706#0" expanded="true" />
-            <element signature="e#780#781#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814.jar!/assets/minecraft/recipes/diamond_axe.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -793,31 +821,6 @@
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814.jar!/assets/minecraft/recipes/diamond_hoe.json">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/Overalls.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#485#486#0" expanded="true" />
-            <element signature="e#558#559#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/HandSaw.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
-          <folding>
-            <element signature="e#208#209#0" expanded="true" />
-            <element signature="e#236#237#0" expanded="true" />
-            <element signature="e#257#258#0" expanded="true" />
-            <element signature="e#299#300#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814.jar!/assets/minecraft/recipes/bow.json">
       <provider selected="true" editor-type-id="text-editor" />
@@ -874,35 +877,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomFood.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="132" column="3" selection-start-line="132" selection-start-column="3" selection-end-line="132" selection-end-column="3" />
-          <folding>
-            <element signature="e#5447#5448#0" expanded="true" />
-            <element signature="e#5465#5466#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/SkrimCake.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/CustomCake.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="43" column="3" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
-          <folding>
-            <element signature="e#5950#5951#0" expanded="true" />
-            <element signature="e#5966#5967#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/ModItems.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
@@ -912,13 +886,120 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/LeafArmor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="154" column="69" selection-end-line="207" />
+        <state relative-caret-position="384">
+          <caret line="192" column="63" selection-start-line="192" selection-start-column="63" selection-end-line="192" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2958#2959#0" expanded="true" />
             <element signature="e#2989#2990#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/Overalls.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#485#486#0" expanded="true" />
+            <element signature="e#558#559#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomAxe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomHoe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#562#563#0" expanded="true" />
+            <element signature="e#588#589#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomSpade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/CustomPickaxe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/tools/HandSaw.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/CustomArmor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/armor/ArtifactArmor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/AngelCake.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomCake.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomFood.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/SkrimCake.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
     </entry>

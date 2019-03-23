@@ -1,12 +1,9 @@
 package avi.mod.skrim.world.loot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import avi.mod.skrim.items.CustomRecord;
+import avi.mod.skrim.items.tools.CustomRecord;
 import avi.mod.skrim.items.ModItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -18,7 +15,6 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraft.world.storage.loot.conditions.RandomChance;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.event.LootTableLoadEvent;
 
