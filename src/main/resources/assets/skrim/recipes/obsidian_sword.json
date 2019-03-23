@@ -1,0 +1,23 @@
+{
+  "_comment": [
+    "Can only be crafted with level 100 Blacksmithing."
+  ],
+  "group": "skrim:obsidian",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "skrim:obsidian_sword"
+  }
+}

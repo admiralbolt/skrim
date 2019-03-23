@@ -1,0 +1,20 @@
+{
+  "_comment": [
+    "Can only be crafted with level 100 Blacksmithing."
+  ],
+  "group": "skrim:obsidian",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "O O",
+    "O O"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "skrim:obsidian_pants"
+  }
+}

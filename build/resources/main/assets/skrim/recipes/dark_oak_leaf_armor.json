@@ -1,0 +1,21 @@
+{
+  "_comment": [
+    "Can only be crafted with level 75 woodcutting."
+  ],
+  "group": "skrim:dark_oak_leaf_armor",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "L L",
+    "LLL",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:leaves2",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "skrim:dark_oak_leaf_armor"
+  }
+}

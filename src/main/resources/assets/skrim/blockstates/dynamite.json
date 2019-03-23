@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "parent": "block/cube_bottom_top",
+    "textures": {
+      "bottom": "skrim:blocks/dynamite_bottom",
+      "top": "skrim:blocks/dynamite_top",
+      "side": "skrim:blocks/dynamite_side"
+    }
+  },
+  "variants": {
+    "normal": [{
+      "model": "minecraft:tnt"
+    }],
+    "inventory": [{
+      "model": "minecraft:tnt"
+    }],
+    "explode=true": [{
+      "model": "minecraft:tnt"
+    }],
+    "explode=false": [{
+      "model": "minecraft:tnt"
+    }]
+  }
+}

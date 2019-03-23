@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "skrim:blocks/weirwood_wood_topbottom",
+    "side": "skrim:blocks/weirwood_wood_side"
+  }
+}

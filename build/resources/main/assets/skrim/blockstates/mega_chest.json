@@ -1,0 +1,26 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "skrim:mega_chest"
+  },
+  "variants": {
+    "normal": [{
+      "model": "skrim:mega_chest"
+    }],
+    "inventory": [{
+      "model": "skrim:mega_chest"
+    }],
+    "facing=north": [{
+      "model": "skrim:mega_chest"
+    }],
+    "facing=south": [{
+      "model": "skrim:mega_chest"
+    }],
+    "facing=east": [{
+      "model": "skrim:mega_chest"
+    }],
+    "facing=west": [{
+      "model": "skrim:mega_chest"
+    }]
+  }
+}

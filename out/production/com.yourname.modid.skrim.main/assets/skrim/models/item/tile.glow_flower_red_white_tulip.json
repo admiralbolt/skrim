@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/cross",
+    "textures": {
+        "cross": "minecraft:blocks/flower_tulip_white"
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Can only be crafted with level 25 Woodcutting."
+  ],
+  "group": "skrim:hand_saw",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " IW",
+    "IIW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "skrim:hand_saw"
+  }
+}

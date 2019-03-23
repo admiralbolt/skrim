@@ -1,0 +1,335 @@
+{
+  "pools": [
+    {
+      "name": "treasure",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "minecraft:bowl",
+          "weight": 750,
+          "quality": -35
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_ingot",
+          "weight": 100,
+          "quality": 5
+        },
+        {
+          "type": "item",
+          "name": "minecraft:gold_ingot",
+          "weight": 50,
+          "quality": 11
+        },
+        {
+          "type": "item",
+          "name": "minecraft:iron_nugget",
+          "weight": 500,
+          "quality": -3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:golden_apple",
+          "weight": 75,
+          "quality": 6
+        },
+        {
+          "type": "item",
+          "name": "minecraft:arrow",
+          "weight": 800,
+          "quality": -30
+        },
+        {
+          "type": "item",
+          "name": "minecraft:string",
+          "weight": 800,
+          "quality": -30
+        },
+        {
+          "type": "item",
+          "name": "minecraft:clay_ball",
+          "weight": 250,
+          "quality": -2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:slime_ball",
+          "weight": 150,
+          "quality": -1
+        },
+        {
+          "type": "item",
+          "name": "minecraft:gold_nugget",
+          "weight": 100,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:saddle",
+          "weight": 100,
+          "quality": 4
+        },
+        {
+          "type": "item",
+          "name": "minecraft:name_tag",
+          "weight": 80,
+          "quality": 2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:feather",
+          "weight": 800,
+          "quality": -20
+        },
+        {
+          "type": "item",
+          "name": "minecraft:gunpowder",
+          "weight": 300,
+          "quality": 0
+        },
+        {
+          "type": "item",
+          "name": "minecraft:coal",
+          "weight": 250,
+          "quality": 0
+        },
+        {
+          "type": "item",
+          "name": "minecraft:emerald",
+          "weight": 20,
+          "quality": 12
+        },
+        {
+          "type": "item",
+          "name": "minecraft:experience_bottle",
+          "weight": 210,
+          "quality": 5
+        },
+        {
+          "type": "item",
+          "name": "minecraft:book",
+          "weight": 0,
+          "quality": 4,
+          "functions": [
+            {
+              "function": "enchant_with_levels",
+              "levels": 30,
+              "treasure": true
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "minecraft:spectral_arrow",
+          "weight": 100,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:diamond_horse_armor",
+          "weight": 50,
+          "quality": 5
+        },
+        {
+          "type": "item",
+          "name": "minecraft:diamond",
+          "weight": 25,
+          "quality": 10
+        },
+        {
+          "type": "item",
+          "name": "minecraft:potato",
+          "weight": 500,
+          "quality": -20
+        },
+        {
+          "type": "item",
+          "name": "minecraft:carrot",
+          "weight": 500,
+          "quality": -20
+        },
+        {
+          "type": "item",
+          "name": "minecraft:ender_pearl",
+          "weight": 300,
+          "quality": -1
+        },
+        {
+          "type": "item",
+          "name": "minecraft:bone",
+          "weight": 800,
+          "quality": -35
+        },
+        {
+          "type": "item",
+          "name": "minecraft:rotten_flesh",
+          "weight": 800,
+          "quality": -35
+        },
+        {
+          "type": "item",
+          "name": "minecraft:map",
+          "weight": 250,
+          "quality": -2
+        },
+        {
+          "type": "item",
+          "name": "minecraft:diamond_sword",
+          "weight": 80,
+          "quality": 5
+        },
+        {
+          "type": "item",
+          "name": "minecraft:compass",
+          "weight": 250,
+          "quality": -1
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_11",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_13",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_blocks",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_cat",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_chirp",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_far",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_mall",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_mellohi",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_stal",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_strad",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_wait",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "minecraft:record_ward",
+          "weight": 20,
+          "quality": 3
+        },
+        {
+          "type": "item",
+          "name": "skrim:aruarian_dance",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:bubberducky",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:cassandra",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:lack_of_color",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:dogsong",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:gdawg",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:heya",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:money",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:north",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:number10",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:samurai",
+          "weight": 0,
+          "quality": 1
+        },
+        {
+          "type": "item",
+          "name": "skrim:truck",
+          "weight": 0,
+          "quality": 1
+        }
+      ]
+    }
+  ]
+}

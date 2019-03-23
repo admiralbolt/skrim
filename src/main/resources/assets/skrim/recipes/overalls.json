@@ -1,0 +1,24 @@
+{
+  "_comment": [
+    "Can only be crafted with level 25 farming."
+  ],
+  "group": "skrim:overalls",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X X",
+    "XOX",
+    "OOO"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:dye",
+      "data": 4
+    },
+    "O": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "skrim:obsidian_chest"
+  }
+}

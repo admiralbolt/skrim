@@ -1,0 +1,23 @@
+{
+  "_comment": [
+    "Can only be crafted with level 100 Blacksmithing."
+  ],
+  "group": "skrim:rocket_launcher",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " XX",
+    "XXX",
+    " ##"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "skrim:rocket_launcher"
+  }
+}

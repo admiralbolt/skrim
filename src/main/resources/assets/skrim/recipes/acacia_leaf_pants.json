@@ -1,0 +1,21 @@
+{
+  "_comment": [
+    "Can only be crafted with level 75 woodcutting."
+  ],
+  "group": "skrim:acacia_leaf_armor",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LLL",
+    "L L",
+    "L L"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:leaves2",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "skrim:acacia_leaf_pants"
+  }
+}
