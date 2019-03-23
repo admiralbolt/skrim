@@ -10,9 +10,11 @@ import avi.mod.skrim.items.artifacts.*;
 import avi.mod.skrim.items.food.AngelCake;
 import avi.mod.skrim.items.food.CustomFood;
 import avi.mod.skrim.items.food.SkrimCake;
+import avi.mod.skrim.items.items.ArtifactItem;
 import avi.mod.skrim.items.items.CustomRecord;
 import avi.mod.skrim.items.items.WeirwoodTotem;
 import avi.mod.skrim.items.tools.*;
+import avi.mod.skrim.items.weapons.ArtifactSword;
 import avi.mod.skrim.items.weapons.CustomSword;
 import avi.mod.skrim.items.weapons.GreatBow;
 import avi.mod.skrim.items.weapons.RocketLauncher;
@@ -318,7 +320,6 @@ public class ModItems {
         registry.register(item);
         item.setCreativeTab(Skrim.creativeTab);
         ITEMS.add(item);
-        System.out.println("item: " + item + ", registryName: " + item.getRegistryName() + ", path: " + ((ItemBase) item).getTexturePath());
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),
             ((ItemBase) item).getTexturePath()));
 

@@ -1,4 +1,4 @@
-package avi.mod.skrim.items.artifacts;
+package avi.mod.skrim.items.weapons;
 
 import avi.mod.skrim.items.weapons.CustomSword;
 import avi.mod.skrim.items.ModItems;

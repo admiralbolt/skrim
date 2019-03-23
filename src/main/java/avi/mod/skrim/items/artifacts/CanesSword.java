@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.weapons.ArtifactSword;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;

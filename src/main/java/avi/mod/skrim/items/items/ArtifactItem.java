@@ -1,4 +1,4 @@
-package avi.mod.skrim.items.artifacts;
+package avi.mod.skrim.items.items;
 
 import avi.mod.skrim.items.ItemBase;
 import avi.mod.skrim.items.ModItems;

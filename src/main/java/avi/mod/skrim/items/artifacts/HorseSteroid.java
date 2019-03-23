@@ -1,16 +1,11 @@
 package avi.mod.skrim.items.artifacts;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
 
-import avi.mod.skrim.init.SkrimSoundEvents;
-import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.items.items.ArtifactItem;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.passive.EntityHorse;
