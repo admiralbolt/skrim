@@ -3,7 +3,7 @@ package avi.mod.skrim.world.loot;
 import java.util.ArrayList;
 import java.util.List;
 
-import avi.mod.skrim.items.tools.CustomRecord;
+import avi.mod.skrim.items.items.CustomRecord;
 import avi.mod.skrim.items.ModItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

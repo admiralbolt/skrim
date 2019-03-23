@@ -1,4 +1,4 @@
-package avi.mod.skrim.items;
+package avi.mod.skrim.items.items;
 
 import java.util.List;
 

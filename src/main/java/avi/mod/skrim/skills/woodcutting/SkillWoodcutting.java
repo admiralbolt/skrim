@@ -10,7 +10,7 @@ import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.items.tools.CustomAxe;
 import avi.mod.skrim.items.tools.HandSaw;
 import avi.mod.skrim.items.ModItems;
-import avi.mod.skrim.items.WeirwoodTotem;
+import avi.mod.skrim.items.items.WeirwoodTotem;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.WhirlingChopPacket;

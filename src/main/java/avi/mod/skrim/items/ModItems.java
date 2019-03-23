@@ -10,6 +10,8 @@ import avi.mod.skrim.items.artifacts.*;
 import avi.mod.skrim.items.food.AngelCake;
 import avi.mod.skrim.items.food.CustomFood;
 import avi.mod.skrim.items.food.SkrimCake;
+import avi.mod.skrim.items.items.CustomRecord;
+import avi.mod.skrim.items.items.WeirwoodTotem;
 import avi.mod.skrim.items.tools.*;
 import avi.mod.skrim.items.weapons.CustomSword;
 import avi.mod.skrim.items.weapons.GreatBow;

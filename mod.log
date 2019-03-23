@@ -15,7 +15,7 @@ This mapping 'snapshot_20171003' was designed for MC 1.12! Use at your own peril
 :compileApiJava UP-TO-DATE
 :processApiResources UP-TO-DATE
 :apiClasses UP-TO-DATE
-:sourceMainJava UP-TO-DATE
+:sourceMainJava
 :compileJavaNote: Some input files use or override a deprecated API.
 Note: Recompile with -Xlint:deprecation for details.
 Note: Some input files use unchecked or unsafe operations.
@@ -29,209 +29,211 @@ Note: Recompile with -Xlint:unchecked for details.
 :extractUserdev UP-TO-DATE
 :getAssetIndex UP-TO-DATE
 :getAssets
+Current status: 1277/1305   97%
 :makeStart SKIPPED
 :runClient
-[18:21:11] [main/INFO] [GradleStart]: Extra: []
-[18:21:11] [main/INFO] [GradleStart]: Running with arguments: [--userProperties, {}, --assetsDir, /Users/admiralbolt/.gradle/caches/minecraft/assets, --assetIndex, 1.12, --accessToken{REDACTED}, --version, 1.12.2, --tweakClass, net.minecraftforge.fml.common.launcher.FMLTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
-[18:21:11] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
-[18:21:11] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
-[18:21:11] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
-[18:21:11] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLTweaker
-[18:21:11] [main/INFO] [FML]: Forge Mod Loader version 14.23.5.2814 for Minecraft 1.12.2 loading
-[18:21:11] [main/INFO] [FML]: Java is Java HotSpot(TM) 64-Bit Server VM, version 1.8.0_181, running on Mac OS X:x86_64:10.13.6, installed at /Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre
-[18:21:11] [main/ERROR] [FML]: Apache Maven library folder was not in the format expected. Using default libraries directory.
-[18:21:11] [main/ERROR] [FML]: Full: /Users/admiralbolt/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/3.5.3/7dc72b6d6d8a6dced3d294ed54c2cc3515ade9f4/maven-artifact-3.5.3.jar
-[18:21:11] [main/ERROR] [FML]: Trimmed: /users/admiralbolt/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/3.5.3/
-[18:21:11] [main/INFO] [FML]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
-[18:21:11] [main/INFO] [FML]: Detected deobfuscated environment, loading log configs for colored console logs.
-2019-03-22 18:21:12,320 main WARN Disabling terminal, you're running in an unsupported environment.
-[18:21:12] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLCorePlugin (net.minecraftforge.fml.relauncher.FMLCorePlugin), we are in deobf and it's a forge core plugin
-[18:21:12] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLForgePlugin (net.minecraftforge.classloading.FMLForgePlugin), we are in deobf and it's a forge core plugin
-[18:21:12] [main/INFO] [FML]: Searching /Users/admiralbolt/git/skrim/run/./mods for mods
-[18:21:12] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweaker
-[18:21:12] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.fml.relauncher.FMLCorePlugin
-[18:21:12] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugin
-[18:21:12] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
-[18:21:12] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
-[18:21:12] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
-[18:21:12] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
-[18:21:12] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
-[18:21:12] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
-[18:21:13] [main/ERROR] [FML]: FML appears to be missing any signature data. This is not a good thing
-[18:21:13] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
-[18:21:13] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
-[18:21:13] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
-[18:21:13] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweaker
-[18:21:13] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweaker
-[18:21:13] [main/INFO] [LaunchWrapper]: Launching wrapped minecraft {net.minecraft.client.main.Main}
-[18:21:14] [Client thread/INFO] [minecraft/Minecraft]: Setting user: Player991
-[18:21:16] [Client thread/WARN] [minecraft/GameSettings]: Skipping bad option: lastServer:
-[18:21:16] [Client thread/INFO] [minecraft/Minecraft]: LWJGL Version: 2.9.2
-[18:21:17] [Client thread/INFO] [FML]: -- System Details --
+[12:07:03] [main/INFO] [GradleStart]: Extra: []
+[12:07:03] [main/INFO] [GradleStart]: Running with arguments: [--userProperties, {}, --assetsDir, /Users/admiralbolt/.gradle/caches/minecraft/assets, --assetIndex, 1.12, --accessToken{REDACTED}, --version, 1.12.2, --tweakClass, net.minecraftforge.fml.common.launcher.FMLTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[12:07:03] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
+[12:07:03] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLTweaker
+[12:07:03] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[12:07:03] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLTweaker
+[12:07:03] [main/INFO] [FML]: Forge Mod Loader version 14.23.5.2814 for Minecraft 1.12.2 loading
+[12:07:03] [main/INFO] [FML]: Java is Java HotSpot(TM) 64-Bit Server VM, version 1.8.0_181, running on Mac OS X:x86_64:10.13.6, installed at /Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre
+[12:07:03] [main/ERROR] [FML]: Apache Maven library folder was not in the format expected. Using default libraries directory.
+[12:07:03] [main/ERROR] [FML]: Full: /Users/admiralbolt/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/3.5.3/7dc72b6d6d8a6dced3d294ed54c2cc3515ade9f4/maven-artifact-3.5.3.jar
+[12:07:03] [main/ERROR] [FML]: Trimmed: /users/admiralbolt/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/3.5.3/
+[12:07:03] [main/INFO] [FML]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
+[12:07:03] [main/INFO] [FML]: Detected deobfuscated environment, loading log configs for colored console logs.
+2019-03-23 12:07:04,456 main WARN Disabling terminal, you're running in an unsupported environment.
+[12:07:04] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLCorePlugin (net.minecraftforge.fml.relauncher.FMLCorePlugin), we are in deobf and it's a forge core plugin
+[12:07:04] [main/INFO] [FML]: Ignoring missing certificate for coremod FMLForgePlugin (net.minecraftforge.classloading.FMLForgePlugin), we are in deobf and it's a forge core plugin
+[12:07:04] [main/INFO] [FML]: Searching /Users/admiralbolt/git/skrim/run/./mods for mods
+[12:07:04] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweaker
+[12:07:04] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.fml.relauncher.FMLCorePlugin
+[12:07:04] [main/INFO] [GradleStart]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugin
+[12:07:04] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[12:07:04] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[12:07:04] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[12:07:04] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[12:07:04] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[12:07:04] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[12:07:05] [main/ERROR] [FML]: FML appears to be missing any signature data. This is not a good thing
+[12:07:05] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[12:07:05] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[12:07:05] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[12:07:05] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweaker
+[12:07:05] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweaker
+[12:07:05] [main/INFO] [LaunchWrapper]: Launching wrapped minecraft {net.minecraft.client.main.Main}
+[12:07:06] [Client thread/INFO] [minecraft/Minecraft]: Setting user: Player124
+[12:07:08] [Client thread/INFO] [minecraft/Minecraft]: LWJGL Version: 2.9.2
+[12:07:10] [Client thread/INFO] [FML]: Could not load splash.properties, will create a default one
+[12:07:10] [Client thread/INFO] [FML]: -- System Details --
 Details:
 	Minecraft Version: 1.12.2
 	Operating System: Mac OS X (x86_64) version 10.13.6
 	Java Version: 1.8.0_181, Oracle Corporation
 	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
-	Memory: 260690320 bytes (248 MB) / 595066880 bytes (567 MB) up to 3817865216 bytes (3641 MB)
+	Memory: 251974184 bytes (240 MB) / 600309760 bytes (572 MB) up to 3817865216 bytes (3641 MB)
 	JVM Flags: 0 total; 
 	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
 	FML: 
 	Loaded coremods (and transformers): 
 	GL info: ' Vendor: 'ATI Technologies Inc.' Version: '2.1 ATI-1.68.20' Renderer: 'AMD Radeon Pro 450 OpenGL Engine'
-[18:21:17] [Client thread/INFO] [FML]: MinecraftForge v14.23.5.2814 Initialized
-[18:21:17] [Client thread/INFO] [FML]: Starts to replace vanilla recipe ingredients with ore ingredients.
-[18:21:17] [Client thread/INFO] [FML]: Replaced 1036 ore ingredients
-[18:21:18] [Client thread/INFO] [FML]: Searching /Users/admiralbolt/git/skrim/run/./mods for mods
-[18:21:19] [Client thread/INFO] [FML]: Forge Mod Loader has identified 5 mods to load
-[18:21:19] [Client thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, skrim] at CLIENT
-[18:21:19] [Client thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, skrim] at SERVER
-[18:21:19] [Client thread/INFO] [minecraft/SimpleReloadableResourceManager]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Skrim
-[18:21:19] [Client thread/INFO] [FML]: Processing ObjectHolder annotations
-[18:21:19] [Client thread/INFO] [FML]: Found 1168 ObjectHolder annotations
-[18:21:19] [Client thread/INFO] [FML]: Identifying ItemStackHolder annotations
-[18:21:19] [Client thread/INFO] [FML]: Found 0 ItemStackHolder annotations
-[18:21:19] [Client thread/INFO] [FML]: Configured a dormant chunk cache size of 0
-[18:21:19] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Starting version check at http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json
-[18:21:19] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.Skrim:preInit:52]: Skrim is in preInit.
-[18:21:20] [Thread-3/INFO] [FML]: Using sync timing. 200 frames of Display.update took 645800811 nanos
-[18:21:20] [Client thread/INFO] [FML]: Applying holder lookups
-[18:21:20] [Client thread/INFO] [FML]: Holder lookups applied
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:239]: Registering items...
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@109d3527, registryName: skrim:oak_leaf_boots, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@d418cb3, registryName: skrim:oak_leaf_pants, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@ff1d29, registryName: skrim:oak_leaf_armor, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@567dc7d7, registryName: skrim:oak_leaf_helmet, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@2fb0f432, registryName: skrim:spruce_leaf_boots, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@2e95d163, registryName: skrim:spruce_leaf_pants, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@56fb87cd, registryName: skrim:spruce_leaf_armor, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@6e00a1ba, registryName: skrim:spruce_leaf_helmet, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@4639d92c, registryName: skrim:birch_leaf_boots, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@46270641, registryName: skrim:birch_leaf_pants, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@4ce824a7, registryName: skrim:birch_leaf_armor, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@278e51f1, registryName: skrim:birch_leaf_helmet, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@2ff61c95, registryName: skrim:jungle_leaf_boots, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@519d1224, registryName: skrim:jungle_leaf_pants, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@5c5dd9ac, registryName: skrim:jungle_leaf_armor, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@9091a0f, registryName: skrim:jungle_leaf_helmet, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@1604ad0f, registryName: skrim:dark_oak_leaf_boots, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@2f3181d9, registryName: skrim:dark_oak_leaf_pants, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@1d93bd2a, registryName: skrim:dark_oak_leaf_armor, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@5c8b15f5, registryName: skrim:dark_oak_leaf_helmet, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@6f54a7be, registryName: skrim:acacia_leaf_boots, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@4c48ccc4, registryName: skrim:acacia_leaf_pants, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@4c32428a, registryName: skrim:acacia_leaf_armor, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.LeafArmor@4812c244, registryName: skrim:acacia_leaf_helmet, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.CustomArmor@6ca404b, registryName: skrim:obsidian_helmet, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.CustomArmor@6dd8dfe5, registryName: skrim:obsidian_chest, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.CustomArmor@4d71deeb, registryName: skrim:obsidian_pants, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.CustomArmor@2006673c, registryName: skrim:obsidian_boots, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomAxe@597ae16a, registryName: skrim:obsidian_axe, path: tools
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomHoe@734901c1, registryName: skrim:obsidian_hoe, path: tools
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomPickaxe@11a3ffe6, registryName: skrim:obsidian_pickaxe, path: tools
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomSpade@66cdde2b, registryName: skrim:obsidian_spade, path: tools
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.weapons.CustomSword@68321229, registryName: skrim:obsidian_sword, path: weapons
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.WeirwoodTotem@53ce41e7, registryName: skrim:weirwood_totem, path: items
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.weapons.RocketLauncher@5d9cd8b7, registryName: skrim:rocket_launcher, path: weapons
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.weapons.GreatBow@55a869a9, registryName: skrim:great_bow, path: weapons
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.armor.Overalls@1b404a21, registryName: skrim:overalls, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.HandSaw@2d739a6f, registryName: skrim:hand_saw, path: tools
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@c93275f, registryName: skrim:overwrite_porkchop, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@37711f1a, registryName: skrim:overwrite_baked_potato, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@2182cd7c, registryName: skrim:overwrite_beetroot_soup, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@10939bc1, registryName: skrim:overwrite_bread, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@5afef53, registryName: skrim:overwrite_chicken, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@3a19b933, registryName: skrim:overwrite_fish, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@d476a21, registryName: skrim:overwrite_mutton, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@186b5db, registryName: skrim:overwrite_salmon, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@7ba907cf, registryName: skrim:overwrite_cookie, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@c0ef9a8, registryName: skrim:overwrite_mushroom_stew, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@3a2e8c6a, registryName: skrim:overwrite_pumpkin_pie, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@eb2ce99, registryName: skrim:overwrite_rabbit_stew, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@3d1637ff, registryName: skrim:overwrite_steak, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@46ae5a4c, registryName: skrim:overwrite_rabbit, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.CustomFood@8add32f, registryName: skrim:canes_chicken, path: food
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.SkrimCake@107302a5, registryName: skrim:skrim_cake, path: blocks
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.food.AngelCake@1cd6769b, registryName: skrim:angel_cake, path: blocks
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.CanesSword@281e2377, registryName: skrim:raising_canes_fry_sword, path: weapons
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.PowerSuitChestplate@2aeffa55, registryName: skrim:powersuit_chestplate, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.SpringheelBoots@46756a5b, registryName: skrim:boots_of_springheel_jak, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.BlindingBoots@156d47c5, registryName: skrim:boots_of_blinding_speed, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.CeruleanSandals@13acb4, registryName: skrim:cerulean_sandals, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.GruesomeMask@16d52e51, registryName: skrim:gruesome_mask, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.FoxMask@2f643a10, registryName: skrim:fox_mask, path: armor
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.SheepFinder3000@4eccb9f0, registryName: skrim:sheep_finder_3000, path: items
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.IcarianScroll@46a2eca6, registryName: skrim:icarian_scroll, path: items
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.HorseSteroidSpeed@69ef3847, registryName: skrim:horse_steroid_speed, path: items
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.HorseSteroidHealth@3033bb96, registryName: skrim:horse_steroid_health, path: items
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.artifacts.HorseSteroidJump@1b9b8759, registryName: skrim:horse_steroid_jump, path: items
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@4a8d8f50, registryName: skrim:aruarian_dance, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@5a30ab46, registryName: skrim:bubberducky, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@7772549d, registryName: skrim:cassandra, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@3094b465, registryName: skrim:lack_of_color, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@16454a28, registryName: skrim:dogsong, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@4970b93d, registryName: skrim:gdawg, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@2c43da32, registryName: skrim:heya, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@39e16443, registryName: skrim:money, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@5c97d5d, registryName: skrim:north, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@49bc9588, registryName: skrim:number10, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@7b9c54c7, registryName: skrim:samurai, path: records
-[18:21:20] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:308]: item: avi.mod.skrim.items.tools.CustomRecord@496de48b, registryName: skrim:truck, path: records
-[18:21:20] [Client thread/INFO] [FML]: Applying holder lookups
-[18:21:20] [Client thread/INFO] [FML]: Holder lookups applied
-[18:21:20] [Client thread/INFO] [FML]: Applying holder lookups
-[18:21:20] [Client thread/INFO] [FML]: Holder lookups applied
-[18:21:20] [Client thread/INFO] [FML]: Applying holder lookups
-[18:21:20] [Client thread/INFO] [FML]: Holder lookups applied
-[18:21:20] [Client thread/INFO] [FML]: Injecting itemstacks
-[18:21:20] [Client thread/INFO] [FML]: Itemstack injection complete
-[18:21:21] [Sound Library Loader/INFO] [minecraft/SoundManager]: Starting up SoundSystem...
-[18:21:21] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Found status: AHEAD Target: null
-[18:21:21] [Thread-4/INFO] [minecraft/SoundManager]: Initializing LWJGL OpenAL
-[18:21:21] [Thread-4/INFO] [minecraft/SoundManager]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
-[18:21:21] [Thread-4/INFO] [minecraft/SoundManager]: OpenAL initialized.
-[18:21:22] [Sound Library Loader/INFO] [minecraft/SoundManager]: Sound engine started
-[18:21:24] [Client thread/INFO] [FML]: Max texture size: 16384
-[18:21:24] [Client thread/INFO] [minecraft/TextureMap]: Created: 2048x2048 textures-atlas
-[18:21:25] [Client thread/INFO] [FML]: Applying holder lookups
-[18:21:25] [Client thread/INFO] [FML]: Holder lookups applied
-[18:21:25] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.Skrim:init:58]: Skrim is in init.
-[18:21:26] [Client thread/INFO] [FML]: Injecting itemstacks
-[18:21:26] [Client thread/INFO] [FML]: Itemstack injection complete
-[18:21:26] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.Skrim:postInit:64]: Skrim is in postinit.
-[18:21:26] [Client thread/INFO] [FML]: Forge Mod Loader has successfully loaded 5 mods
-[18:21:26] [Client thread/WARN] [minecraft/GameSettings]: Skipping bad option: lastServer:
-[18:21:28] [Realms Notification Availability checker #1/INFO] [mojang/RealmsClient]: Could not authorize you against Realms server: Invalid session id
-[18:21:43] [Server thread/INFO] [minecraft/IntegratedServer]: Starting integrated minecraft server version 1.12.2
-[18:21:43] [Server thread/INFO] [minecraft/IntegratedServer]: Generating keypair
-[18:21:43] [Server thread/INFO] [FML]: Injecting existing registry data into this server instance
-[18:21:43] [Server thread/INFO] [FML]: Applying holder lookups
-[18:21:43] [Server thread/INFO] [FML]: Holder lookups applied
-[18:21:43] [Server thread/INFO] [FML]: Loading dimension 0 (New World) (net.minecraft.server.integrated.IntegratedServer@2f9903c4)
-[18:21:43] [Server thread/INFO] [minecraft/AdvancementList]: Loaded 488 advancements
-[18:21:43] [Server thread/INFO] [FML]: Loading dimension -1 (New World) (net.minecraft.server.integrated.IntegratedServer@2f9903c4)
-[18:21:43] [Server thread/INFO] [FML]: Loading dimension 1 (New World) (net.minecraft.server.integrated.IntegratedServer@2f9903c4)
-[18:21:43] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for level 0
-[18:21:44] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 67%
-[18:21:45] [Server thread/INFO] [FML]: Unloading dimension -1
-[18:21:45] [Server thread/INFO] [FML]: Unloading dimension 1
-[18:21:45] [Server thread/INFO] [minecraft/IntegratedServer]: Changing view distance to 12, from 10
-[18:21:46] [Netty Local Client IO #0/INFO] [FML]: Server protocol version 2
-[18:21:46] [Netty Server IO #1/INFO] [FML]: Client protocol version 2
-[18:21:46] [Netty Server IO #1/INFO] [FML]: Client attempting to join with 5 mods : minecraft@1.12.2,FML@8.0.99.99,forge@14.23.5.2814,skrim@1.1.9,mcp@9.42
-[18:21:46] [Netty Local Client IO #0/INFO] [FML]: [Netty Local Client IO #0] Client side modded connection established
-[18:21:46] [Server thread/INFO] [FML]: [Server thread] Server side modded connection established
-[18:21:46] [Server thread/INFO] [minecraft/PlayerList]: Player991[local:E:58941b18] logged in with entity id 264 at (-66.20241258718752, 72.0, 259.3080208883112)
-[18:21:46] [Server thread/INFO] [minecraft/MinecraftServer]: Player991 joined the game
-[18:21:46] [Server thread/INFO] [minecraft/MinecraftServer]: Player991 has made the advancement [Acquire Hardware]
-[18:21:48] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
-[18:21:48] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
-[18:21:48] [Client thread/INFO] [minecraft/GuiNewChat]: [CHAT] Player991 has made the advancement [Acquire Hardware]
-[18:21:48] [Client thread/INFO] [minecraft/AdvancementList]: Loaded 57 advancements
-[18:21:48] [Client thread/WARN] [minecraft/NetHandlerPlayClient]: Received passengers for unknown entity
-[18:21:48] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
-[18:21:48] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
-[18:21:57] [pool-2-thread-1/WARN] [mojang/YggdrasilMinecraftSessionService]: Couldn't look up profile properties for com.mojang.authlib.GameProfile@455b7fad[id=fe171829-6121-3106-a1a5-6a3600a4ef7d,name=Player991,properties={},legacy=false]
+[12:07:10] [Client thread/INFO] [FML]: MinecraftForge v14.23.5.2814 Initialized
+[12:07:10] [Client thread/INFO] [FML]: Starts to replace vanilla recipe ingredients with ore ingredients.
+[12:07:10] [Client thread/INFO] [FML]: Replaced 1036 ore ingredients
+[12:07:10] [Client thread/INFO] [FML]: Searching /Users/admiralbolt/git/skrim/run/./mods for mods
+[12:07:11] [Client thread/INFO] [FML]: Forge Mod Loader has identified 5 mods to load
+[12:07:11] [Client thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, skrim] at CLIENT
+[12:07:11] [Client thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge, skrim] at SERVER
+[12:07:12] [Client thread/INFO] [minecraft/SimpleReloadableResourceManager]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Skrim
+[12:07:12] [Client thread/INFO] [FML]: Processing ObjectHolder annotations
+[12:07:12] [Client thread/INFO] [FML]: Found 1168 ObjectHolder annotations
+[12:07:12] [Client thread/INFO] [FML]: Identifying ItemStackHolder annotations
+[12:07:12] [Client thread/INFO] [FML]: Found 0 ItemStackHolder annotations
+[12:07:12] [Client thread/INFO] [FML]: Configured a dormant chunk cache size of 0
+[12:07:12] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Starting version check at http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.Skrim:preInit:52]: Skrim is in preInit.
+[12:07:12] [Thread-3/INFO] [FML]: Using sync timing. 200 frames of Display.update took 843218557 nanos
+[12:07:12] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Found status: OUTDATED Target: 14.23.5.2823
+[12:07:12] [Client thread/INFO] [FML]: Applying holder lookups
+[12:07:12] [Client thread/INFO] [FML]: Holder lookups applied
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@613452e1, registryName: skrim:oak_leaf_boots, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@23639e5, registryName: skrim:oak_leaf_pants, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@2404ab3a, registryName: skrim:oak_leaf_armor, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@58a0b88e, registryName: skrim:oak_leaf_helmet, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@1b404a21, registryName: skrim:spruce_leaf_boots, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@280aa1bd, registryName: skrim:spruce_leaf_pants, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@295692fd, registryName: skrim:spruce_leaf_armor, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@746f2b91, registryName: skrim:spruce_leaf_helmet, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@6d67667f, registryName: skrim:birch_leaf_boots, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@109d3527, registryName: skrim:birch_leaf_pants, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@d418cb3, registryName: skrim:birch_leaf_armor, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@ff1d29, registryName: skrim:birch_leaf_helmet, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@567dc7d7, registryName: skrim:jungle_leaf_boots, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@2fb0f432, registryName: skrim:jungle_leaf_pants, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@2e95d163, registryName: skrim:jungle_leaf_armor, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@56fb87cd, registryName: skrim:jungle_leaf_helmet, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@6e00a1ba, registryName: skrim:dark_oak_leaf_boots, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@4639d92c, registryName: skrim:dark_oak_leaf_pants, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@46270641, registryName: skrim:dark_oak_leaf_armor, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@4ce824a7, registryName: skrim:dark_oak_leaf_helmet, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@278e51f1, registryName: skrim:acacia_leaf_boots, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@2ff61c95, registryName: skrim:acacia_leaf_pants, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@519d1224, registryName: skrim:acacia_leaf_armor, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.LeafArmor@5c5dd9ac, registryName: skrim:acacia_leaf_helmet, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.CustomArmor@59ea4ca5, registryName: skrim:obsidian_helmet, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.CustomArmor@3c6c7782, registryName: skrim:obsidian_chest, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.CustomArmor@7aaf260f, registryName: skrim:obsidian_pants, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.CustomArmor@739e76e6, registryName: skrim:obsidian_boots, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.tools.CustomAxe@6d487f2b, registryName: skrim:obsidian_axe, path: tools
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.tools.CustomHoe@2f23fdf1, registryName: skrim:obsidian_hoe, path: tools
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.tools.CustomPickaxe@1d546842, registryName: skrim:obsidian_pickaxe, path: tools
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.tools.CustomSpade@7c458ad3, registryName: skrim:obsidian_spade, path: tools
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.weapons.CustomSword@52da1357, registryName: skrim:obsidian_sword, path: weapons
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.WeirwoodTotem@6226a088, registryName: skrim:weirwood_totem, path: items
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.weapons.RocketLauncher@5c8ec2f6, registryName: skrim:rocket_launcher, path: weapons
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.weapons.GreatBow@ccdd8a6, registryName: skrim:great_bow, path: weapons
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.armor.Overalls@285d33f3, registryName: skrim:overalls, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.tools.HandSaw@e0f22c3, registryName: skrim:hand_saw, path: tools
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@597ae16a, registryName: skrim:overwrite_porkchop, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@734901c1, registryName: skrim:overwrite_baked_potato, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@11a3ffe6, registryName: skrim:overwrite_beetroot_soup, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@66cdde2b, registryName: skrim:overwrite_bread, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@68321229, registryName: skrim:overwrite_chicken, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@53ce41e7, registryName: skrim:overwrite_fish, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@5d9cd8b7, registryName: skrim:overwrite_mutton, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@55a869a9, registryName: skrim:overwrite_salmon, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@2d739a6f, registryName: skrim:overwrite_cookie, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@c93275f, registryName: skrim:overwrite_mushroom_stew, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@37711f1a, registryName: skrim:overwrite_pumpkin_pie, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@2182cd7c, registryName: skrim:overwrite_rabbit_stew, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@10939bc1, registryName: skrim:overwrite_steak, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@5afef53, registryName: skrim:overwrite_rabbit, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.CustomFood@3a19b933, registryName: skrim:canes_chicken, path: food
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.SkrimCake@d476a21, registryName: skrim:skrim_cake, path: blocks
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.food.AngelCake@186b5db, registryName: skrim:angel_cake, path: blocks
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.CanesSword@7ba907cf, registryName: skrim:raising_canes_fry_sword, path: weapons
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.PowerSuitChestplate@61736817, registryName: skrim:powersuit_chestplate, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.SpringheelBoots@71f01211, registryName: skrim:boots_of_springheel_jak, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.BlindingBoots@2591f310, registryName: skrim:boots_of_blinding_speed, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.CeruleanSandals@3aac3f34, registryName: skrim:cerulean_sandals, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.GruesomeMask@f912cf3, registryName: skrim:gruesome_mask, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.FoxMask@716125a3, registryName: skrim:fox_mask, path: armor
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.SheepFinder3000@c0ef9a8, registryName: skrim:sheep_finder_3000, path: items
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.IcarianScroll@3a2e8c6a, registryName: skrim:icarian_scroll, path: items
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.HorseSteroidSpeed@eb2ce99, registryName: skrim:horse_steroid_speed, path: items
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.HorseSteroidHealth@3d1637ff, registryName: skrim:horse_steroid_health, path: items
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.artifacts.HorseSteroidJump@46ae5a4c, registryName: skrim:horse_steroid_jump, path: items
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@8add32f, registryName: skrim:aruarian_dance, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@107302a5, registryName: skrim:bubberducky, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@1cd6769b, registryName: skrim:cassandra, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@281e2377, registryName: skrim:lack_of_color, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@4eccb9f0, registryName: skrim:dogsong, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@46a2eca6, registryName: skrim:gdawg, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@69ef3847, registryName: skrim:heya, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@3033bb96, registryName: skrim:money, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@1b9b8759, registryName: skrim:north, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@4a8d8f50, registryName: skrim:number10, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@5a30ab46, registryName: skrim:samurai, path: records
+[12:07:12] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.items.ModItems$RegistrationHandler:registerItems:321]: item: avi.mod.skrim.items.items.CustomRecord@7772549d, registryName: skrim:truck, path: records
+[12:07:12] [Client thread/INFO] [FML]: Applying holder lookups
+[12:07:12] [Client thread/INFO] [FML]: Holder lookups applied
+[12:07:12] [Client thread/INFO] [FML]: Applying holder lookups
+[12:07:12] [Client thread/INFO] [FML]: Holder lookups applied
+[12:07:12] [Client thread/INFO] [FML]: Applying holder lookups
+[12:07:12] [Client thread/INFO] [FML]: Holder lookups applied
+[12:07:12] [Client thread/INFO] [FML]: Injecting itemstacks
+[12:07:12] [Client thread/INFO] [FML]: Itemstack injection complete
+[12:07:14] [Sound Library Loader/INFO] [minecraft/SoundManager]: Starting up SoundSystem...
+[12:07:14] [Thread-4/INFO] [minecraft/SoundManager]: Initializing LWJGL OpenAL
+[12:07:14] [Thread-4/INFO] [minecraft/SoundManager]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[12:07:14] [Thread-4/INFO] [minecraft/SoundManager]: OpenAL initialized.
+[12:07:14] [Sound Library Loader/INFO] [minecraft/SoundManager]: Sound engine started
+[12:07:17] [Client thread/INFO] [FML]: Max texture size: 16384
+[12:07:17] [Client thread/INFO] [minecraft/TextureMap]: Created: 2048x2048 textures-atlas
+[12:07:18] [Client thread/INFO] [FML]: Applying holder lookups
+[12:07:18] [Client thread/INFO] [FML]: Holder lookups applied
+[12:07:18] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.Skrim:init:58]: Skrim is in init.
+[12:07:19] [Client thread/INFO] [FML]: Injecting itemstacks
+[12:07:19] [Client thread/INFO] [FML]: Itemstack injection complete
+[12:07:19] [Client thread/INFO] [STDOUT]: [avi.mod.skrim.Skrim:postInit:64]: Skrim is in postinit.
+[12:07:19] [Client thread/INFO] [FML]: Forge Mod Loader has successfully loaded 5 mods
+[12:07:21] [Realms Notification Availability checker #1/INFO] [mojang/RealmsClient]: Could not authorize you against Realms server: Invalid session id
+[12:08:22] [Server thread/INFO] [minecraft/IntegratedServer]: Starting integrated minecraft server version 1.12.2
+[12:08:22] [Server thread/INFO] [minecraft/IntegratedServer]: Generating keypair
+[12:08:22] [Server thread/INFO] [FML]: Injecting existing registry data into this server instance
+[12:08:22] [Server thread/INFO] [FML]: Applying holder lookups
+[12:08:22] [Server thread/INFO] [FML]: Holder lookups applied
+[12:08:22] [Server thread/INFO] [FML]: Loading dimension 0 (New World) (net.minecraft.server.integrated.IntegratedServer@5070349d)
+[12:08:23] [Server thread/INFO] [minecraft/AdvancementList]: Loaded 488 advancements
+[12:08:23] [Server thread/INFO] [FML]: Loading dimension -1 (New World) (net.minecraft.server.integrated.IntegratedServer@5070349d)
+[12:08:23] [Server thread/INFO] [FML]: Loading dimension 1 (New World) (net.minecraft.server.integrated.IntegratedServer@5070349d)
+[12:08:23] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for level 0
+[12:08:24] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 10%
+[12:08:25] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 20%
+[12:08:26] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 31%
+[12:08:27] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 41%
+[12:08:28] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 52%
+[12:08:29] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 65%
+[12:08:30] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 79%
+[12:08:31] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing spawn area: 91%
+[12:08:32] [Server thread/INFO] [FML]: Unloading dimension -1
+[12:08:32] [Server thread/INFO] [FML]: Unloading dimension 1
+[12:08:32] [Server thread/INFO] [minecraft/IntegratedServer]: Changing view distance to 12, from 10
+[12:08:33] [Netty Local Client IO #0/INFO] [FML]: Server protocol version 2
+[12:08:33] [Netty Server IO #1/INFO] [FML]: Client protocol version 2
+[12:08:33] [Netty Server IO #1/INFO] [FML]: Client attempting to join with 5 mods : minecraft@1.12.2,FML@8.0.99.99,forge@14.23.5.2814,skrim@1.1.9,mcp@9.42
+[12:08:33] [Netty Local Client IO #0/INFO] [FML]: [Netty Local Client IO #0] Client side modded connection established
+[12:08:33] [Server thread/INFO] [FML]: [Server thread] Server side modded connection established
+[12:08:33] [Server thread/INFO] [minecraft/PlayerList]: Player124[local:E:8d432950] logged in with entity id 1200 at (-171.5, 71.0, 255.5)
+[12:08:33] [Server thread/INFO] [minecraft/MinecraftServer]: Player124 joined the game
+[12:08:35] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
+[12:08:35] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
+[12:08:36] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
+[12:08:36] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
+[12:08:36] [pool-2-thread-1/WARN] [mojang/YggdrasilMinecraftSessionService]: Couldn't look up profile properties for com.mojang.authlib.GameProfile@789bedc3[id=05d3c308-6531-310d-988c-a6164eaf800d,name=Player124,properties={},legacy=false]
 com.mojang.authlib.exceptions.AuthenticationException: The client has sent too many requests within a certain amount of time
 	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:79) ~[YggdrasilAuthenticationService.class:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.fillGameProfile(YggdrasilMinecraftSessionService.java:180) [YggdrasilMinecraftSessionService.class:?]
@@ -253,22 +255,29 @@ com.mojang.authlib.exceptions.AuthenticationException: The client has sent too m
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [?:1.8.0_181]
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_181]
 	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181]
-[18:22:46] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
-[18:22:46] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
-[18:22:49] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
-[18:22:49] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
-[18:22:50] [Client thread/INFO] [minecraft/Minecraft]: Stopping!
-[18:22:51] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
-[18:22:51] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
-[18:22:51] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
-[18:22:51] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
-[18:22:51] [Server thread/INFO] [FML]: Unloading dimension 0
-[18:22:51] [Server thread/INFO] [FML]: Applying holder lookups
-[18:22:51] [Server thread/INFO] [FML]: Holder lookups applied
-[18:22:51] [Client thread/INFO] [minecraft/SoundManager]: SoundSystem shutting down...
-AL lib: (WW) FreeDevice: (0x7fa2753cf000) Deleting 6 Buffer(s)
-[18:22:51] [Client thread/WARN] [minecraft/SoundManager]: Author: Paul Lamb, www.paulscode.com
+[12:08:36] [Server thread/WARN] [minecraft/MinecraftServer]: Can't keep up! Did the system time change, or is the server overloaded? Running 2091ms behind, skipping 41 tick(s)
+[12:09:01] [Server thread/INFO] [minecraft/MinecraftServer]: [Player124: Set own game mode to Creative Mode]
+[12:09:01] [Client thread/INFO] [minecraft/GuiNewChat]: [CHAT] Your game mode has been updated to Creative Mode
+[12:09:12] [Server thread/INFO] [minecraft/MinecraftServer]: [Player124: Set own game mode to Creative Mode]
+[12:09:12] [Client thread/INFO] [minecraft/GuiNewChat]: [CHAT] Your game mode has been updated to Creative Mode
+[12:09:14] [Server thread/INFO] [minecraft/MinecraftServer]: [Player124: Set own game mode to Survival Mode]
+[12:09:14] [Client thread/INFO] [minecraft/GuiNewChat]: [CHAT] Your game mode has been updated to Survival Mode
+[12:09:44] [Client thread/INFO] [minecraft/AdvancementList]: Loaded 9 advancements
+[12:09:45] [Client thread/INFO] [minecraft/AdvancementList]: Loaded 9 advancements
+[12:09:48] [Server thread/INFO] [minecraft/IntegratedServer]: Saving and pausing game...
+[12:09:48] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
+[12:09:50] [Client thread/INFO] [minecraft/Minecraft]: Stopping!
+[12:09:50] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[12:09:50] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[12:09:50] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[12:09:50] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'New World'/overworld
+[12:09:50] [Server thread/INFO] [FML]: Unloading dimension 0
+[12:09:50] [Server thread/INFO] [FML]: Applying holder lookups
+[12:09:50] [Server thread/INFO] [FML]: Holder lookups applied
+[12:09:50] [Client thread/INFO] [minecraft/SoundManager]: SoundSystem shutting down...
+AL lib: (WW) FreeDevice: (0x7f99e4587200) Deleting 9 Buffer(s)
+[12:09:50] [Client thread/WARN] [minecraft/SoundManager]: Author: Paul Lamb, www.paulscode.com
 
 BUILD SUCCESSFUL
 
-Total time: 2 mins 6.043 secs
+Total time: 3 mins 10.236 secs
