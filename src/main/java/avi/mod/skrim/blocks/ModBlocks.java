@@ -40,10 +40,6 @@ public final class ModBlocks {
   public static GlowFlower GLOW_FLOWER_WHITE_TULIP = new GlowFlower("glow_flower_white_tulip");
   public static GlowFlower GLOW_FLOWER_PINK_TULIP = new GlowFlower("glow_flower_pink_tulip");
   public static GlowFlower GLOW_FLOWER_OXEYE_DAISY = new GlowFlower("glow_flower_oxeye_daisy");
-  public static GlowFlower GLOW_FLOWER_SUNFLOWER = new GlowFlower("glow_flower_sunflower");
-  public static GlowFlower GLOW_FLOWER_LILAC = new GlowFlower("glow_flower_lilac");
-  public static GlowFlower GLOW_FLOWER_ROSE_BUSH = new GlowFlower("glow_flower_rose_bush");
-  public static GlowFlower GLOW_FLOWER_PEONY = new GlowFlower("glow_flower_peony");
 
   public static EnchantedFlower ENCHANTED_FLOWER_POPPY = new EnchantedFlower("enchanted_flower_poppy");
   public static EnchantedFlower ENCHANTED_FLOWER_DANDELION = new EnchantedFlower("enchanted_flower_dandelion");
@@ -55,10 +51,6 @@ public final class ModBlocks {
   public static EnchantedFlower ENCHANTED_FLOWER_WHITE_TULIP = new EnchantedFlower("enchanted_flower_white_tulip");
   public static EnchantedFlower ENCHANTED_FLOWER_PINK_TULIP = new EnchantedFlower("enchanted_flower_pink_tulip");
   public static EnchantedFlower ENCHANTED_FLOWER_OXEYE_DAISY = new EnchantedFlower("enchanted_flower_oxeye_daisy");
-  public static EnchantedFlower ENCHANTED_FLOWER_SUNFLOWER = new EnchantedFlower("enchanted_flower_sunflower");
-  public static EnchantedFlower ENCHANTED_FLOWER_LILAC = new EnchantedFlower("enchanted_flower_lilac");
-  public static EnchantedFlower ENCHANTED_FLOWER_ROSE_BUSH = new EnchantedFlower("enchanted_flower_rose_bush");
-  public static EnchantedFlower ENCHANTED_FLOWER_PEONY = new EnchantedFlower("enchanted_flower_peony");
 
   public static Dynamite DYNAMITE = new Dynamite();
   public static BioBomb BIOBOMB = new BioBomb();
@@ -102,11 +94,7 @@ public final class ModBlocks {
         GLOW_FLOWER_ORANGE_TULIP,
         GLOW_FLOWER_WHITE_TULIP,
         GLOW_FLOWER_PINK_TULIP,
-        GLOW_FLOWER_OXEYE_DAISY,
-        GLOW_FLOWER_SUNFLOWER,
-        GLOW_FLOWER_LILAC,
-        GLOW_FLOWER_ROSE_BUSH,
-        GLOW_FLOWER_PEONY
+        GLOW_FLOWER_OXEYE_DAISY
     };
 
 
@@ -120,11 +108,7 @@ public final class ModBlocks {
         ENCHANTED_FLOWER_ORANGE_TULIP,
         ENCHANTED_FLOWER_WHITE_TULIP,
         ENCHANTED_FLOWER_PINK_TULIP,
-        ENCHANTED_FLOWER_OXEYE_DAISY,
-        ENCHANTED_FLOWER_SUNFLOWER,
-        ENCHANTED_FLOWER_LILAC,
-        ENCHANTED_FLOWER_ROSE_BUSH,
-        ENCHANTED_FLOWER_PEONY
+        ENCHANTED_FLOWER_OXEYE_DAISY
     };
 
     public static final Block[] ALL_BLOCKS =

@@ -2,58 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d3ee1147-907a-48b6-b2b2-4b88fa917e11" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/BlockRegistrationUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/CustomItemBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/model/ModelManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mod.log" beforeDir="false" afterPath="$PROJECT_DIR$/mod.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/AngelCakeBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/food/AngelCakeBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/BlockBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/BlockBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/BlockOre.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/CustomCakeBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/food/CustomCakeBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/MegaChest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/misc/MegaChest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/ModBlocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/ModBlocks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/SkrimCakeBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/food/SkrimCakeBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/VariantEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/VariantEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/WeirwoodLeaf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/plants/WeirwoodLeaf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/WeirwoodWood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/plants/WeirwoodWood.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/EnchantedFlower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/EnchantedFlower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/EnchantedFlowerRed.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/EnchantedFlowerVariants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/EnchantedFlowerYellow.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/FlowerBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/GlowFlower.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/GlowFlower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/GlowFlowerRed.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/GlowFlowerVariants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/flowers/GlowFlowerYellow.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/BioBomb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/BioBomb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/Dynamite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/Dynamite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/Napalm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/Napalm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/renderer/TileEntityEnchantedFlowerRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/renderer/TileEntityEnchantedFlowerRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimFishHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimFishHook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/CustomCreeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/CustomCreeper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/NapalmCreeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/NapalmCreeper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/LoadSkillsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/LoadSkillsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/HorseSteroidJump.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/artifacts/HorseSteroidJump.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomCake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomCake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/proxy/ClientProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/proxy/ClientProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/proxy/CommonProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/proxy/CommonProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/blacksmithing/SkillBlacksmithing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/blacksmithing/SkillBlacksmithing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/botany/SkillBotany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/botany/SkillBotany.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/defense/SkillDefense.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/defense/SkillDefense.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/demolition/SkillDemolition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/demolition/SkillDemolition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/EnchantedFlowerTileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/EnchantedFlowerTileEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/MegaChestTileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/MegaChestTileEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/ModTileEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/ModTileEntities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Reflection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/ReflectionUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/skrim/blockstates/enchanted_flower_red.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/skrim/blockstates/enchanted_flower_yellow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/skrim/blockstates/glow_flower_red.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/skrim/blockstates/glow_flower_yellow.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/skrim/lang/en_US.lang" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/skrim/lang/en_US.lang" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/skrim/textures/blocks/test_item.png" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -111,8 +60,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/ModBlocks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
+            <state relative-caret-position="607">
+              <caret line="110" column="36" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -359,7 +308,7 @@
               <item name="forgeSrc-1.12.2-14.23.5.2814.jar" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
               <item name="minecraft" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
+              <item name="textures" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="skrim" type="b2602c69:ProjectViewProjectNode" />
@@ -367,8 +316,8 @@
               <item name="forgeSrc-1.12.2-14.23.5.2814.jar" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
               <item name="minecraft" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-              <item name="block" type="462c0819:PsiDirectoryNode" />
+              <item name="textures" type="462c0819:PsiDirectoryNode" />
+              <item name="items" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -377,7 +326,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553478437931" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553479547534" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunDashboard">
@@ -977,8 +926,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/ModBlocks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
+        <state relative-caret-position="607">
+          <caret line="110" column="36" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
