@@ -3,7 +3,7 @@ package avi.mod.skrim.entities;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.utils.Obfuscation;
-import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.Entity;
@@ -60,18 +60,18 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
 			EntityPlayer player = this.getAngler();
 			if (player != null && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
 				SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
-				int ticksCaught = (int) Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
+				int ticksCaught = (int) ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
 				if (ticksCaught > 0) {
-					Reflection.hackSuperValueTo(this, (int) (ticksCaught - ticksCaught * fishing.getDelayReduction()),
+					ReflectionUtils.hackSuperValueTo(this, (int) (ticksCaught - ticksCaught * fishing.getDelayReduction()),
 							Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
 					this.hasAppliedCaught = true;
 				}
 			}
 		}
 		if (!this.hasAppliedCatchable) {
-			int ticksCatchable = (int) Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
+			int ticksCatchable = (int) ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
 			if (ticksCatchable > 0) {
-				Reflection.hackSuperValueTo(this, 50, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
+				ReflectionUtils.hackSuperValueTo(this, 50, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
 				this.hasAppliedCatchable = true;
 			}
 		}
@@ -79,9 +79,9 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
 
 	@Override
 	public int handleHookRetraction() {
-		int ticksCatchable = (int) Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
+		int ticksCatchable = (int) ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CATCHABLE.getFieldNames());
 		EntityPlayer angler = this.getAngler();
-		boolean inGround = (boolean) Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_IN_GROUND.getFieldNames());
+		boolean inGround = (boolean) ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_IN_GROUND.getFieldNames());
 
 		if (!this.world.isRemote && angler != null) {
 			int i = 0;
@@ -93,11 +93,11 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
 			} else if (ticksCatchable > 0) {
 				LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.world);
 				
-				Reflection.printSuperFields(this);
-				System.out.println("FISH_HOOK_LUCK: " + Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_LUCK.getFieldNames()));
+				ReflectionUtils.printSuperFields(this);
+				System.out.println("FISH_HOOK_LUCK: " + ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_LUCK.getFieldNames()));
 
 				// Please kill me
-				lootcontext$builder.withLuck(((float) (int) Reflection.getSuperPrivateField(this, Obfuscation.FISH_HOOK_LUCK.getFieldNames())) + angler.getLuck());
+				lootcontext$builder.withLuck(((float) (int) ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_LUCK.getFieldNames())) + angler.getLuck());
 
 				for (ItemStack itemstack : this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING)
 						.generateLootForPools(this.rand, lootcontext$builder.build())) {

@@ -1,0 +1,39 @@
+{
+  "_comment": [
+    "Can only be crafted with level 100 woodcutting."
+  ],
+  "group": "skrim:weirwood",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_eye"
+    },
+    {
+      "item": "minecraft:sapling",
+      "data": 0
+    },
+    {
+      "item": "minecraft:sapling",
+      "data": 1
+    },
+    {
+      "item": "minecraft:sapling",
+      "data": 2
+    },
+    {
+      "item": "minecraft:sapling",
+      "data": 3
+    },
+    {
+      "item": "minecraft:sapling",
+      "data": 4
+    },
+    {
+      "item": "minecraft:sapling",
+      "data": 5
+    }
+  ],
+  "result": {
+    "item": "skrim:weirwood_sapling"
+  }
+}

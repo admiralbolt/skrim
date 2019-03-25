@@ -148,7 +148,7 @@ public class Utils {
 	}
 
 	public static boolean isNegativeEffect(PotionEffect effect) {
-		Potion potion = (Potion) Reflection.getPrivateField(effect, "potion", "field_188420_b");
+		Potion potion = (Potion) ReflectionUtils.getPrivateField(effect, "potion", "field_188420_b");
 		return (potion != null && negativeEffects.contains(potion));
 	}
 

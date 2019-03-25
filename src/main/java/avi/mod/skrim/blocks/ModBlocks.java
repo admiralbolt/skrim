@@ -2,156 +2,173 @@ package avi.mod.skrim.blocks;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.flowers.EnchantedFlower;
-import avi.mod.skrim.blocks.flowers.EnchantedFlowerRed;
-import avi.mod.skrim.blocks.flowers.EnchantedFlowerVariants;
-import avi.mod.skrim.blocks.flowers.EnchantedFlowerYellow;
-import avi.mod.skrim.blocks.flowers.FlowerBase;
-import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
-import avi.mod.skrim.blocks.flowers.GlowFlowerRed;
-import avi.mod.skrim.blocks.flowers.GlowFlowerVariants;
-import avi.mod.skrim.blocks.flowers.GlowFlowerYellow;
-import avi.mod.skrim.blocks.plants.BeanstalkBlock;
-import avi.mod.skrim.blocks.plants.MagicBean;
-import avi.mod.skrim.blocks.plants.WeirwoodSapling;
+import avi.mod.skrim.blocks.food.AngelCakeBlock;
+import avi.mod.skrim.blocks.food.SkrimCakeBlock;
+import avi.mod.skrim.blocks.misc.MegaChest;
+import avi.mod.skrim.blocks.plants.*;
 import avi.mod.skrim.blocks.tnt.BioBomb;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.blocks.tnt.Dynamite;
 import avi.mod.skrim.blocks.tnt.Napalm;
-import avi.mod.skrim.items.ItemModelProvider;
+import com.google.common.base.Preconditions;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
+
+@GameRegistry.ObjectHolder(Skrim.modId)
 public final class ModBlocks {
 
-	public static Block CLONE_OLD_LOG;
+  public static GlowFlower GLOW_FLOWER_POPPY = new GlowFlower("glow_flower_poppy");
+  public static GlowFlower GLOW_FLOWER_DANDELION = new GlowFlower("glow_flower_dandelion");
+  public static GlowFlower GLOW_FLOWER_BLUE_ORCHID = new GlowFlower("glow_flower_blue_orchid");
+  public static GlowFlower GLOW_FLOWER_ALLIUM = new GlowFlower("glow_flower_allium");
+  public static GlowFlower GLOW_FLOWER_AZURE_BLUET = new GlowFlower("glow_flower_azure_bluet");
+  public static GlowFlower GLOW_FLOWER_RED_TULIP = new GlowFlower("glow_flower_red_tulip");
+  public static GlowFlower GLOW_FLOWER_ORANGE_TULIP = new GlowFlower("glow_flower_orange_tulip");
+  public static GlowFlower GLOW_FLOWER_WHITE_TULIP = new GlowFlower("glow_flower_white_tulip");
+  public static GlowFlower GLOW_FLOWER_PINK_TULIP = new GlowFlower("glow_flower_pink_tulip");
+  public static GlowFlower GLOW_FLOWER_OXEYE_DAISY = new GlowFlower("glow_flower_oxeye_daisy");
+  public static GlowFlower GLOW_FLOWER_SUNFLOWER = new GlowFlower("glow_flower_sunflower");
+  public static GlowFlower GLOW_FLOWER_LILAC = new GlowFlower("glow_flower_lilac");
+  public static GlowFlower GLOW_FLOWER_ROSE_BUSH = new GlowFlower("glow_flower_rose_bush");
+  public static GlowFlower GLOW_FLOWER_PEONY = new GlowFlower("glow_flower_peony");
 
-	public static GlowFlower GLOW_FLOWER_RED;
-	public static GlowFlowerVariants GLOW_FLOWER_RED_VARIANTS;
-	public static GlowFlower GLOW_FLOWER_YELLOW;
-	public static GlowFlowerVariants GLOW_FLOWER_YELLOW_VARIANTS;
+  public static EnchantedFlower ENCHANTED_FLOWER_POPPY = new EnchantedFlower("enchanted_flower_poppy");
+  public static EnchantedFlower ENCHANTED_FLOWER_DANDELION = new EnchantedFlower("enchanted_flower_dandelion");
+  public static EnchantedFlower ENCHANTED_FLOWER_BLUE_ORCHID = new EnchantedFlower("enchanted_flower_blue_orchid");
+  public static EnchantedFlower ENCHANTED_FLOWER_ALLIUM = new EnchantedFlower("enchanted_flower_allium");
+  public static EnchantedFlower ENCHANTED_FLOWER_AZURE_BLUET = new EnchantedFlower("enchanted_flower_azure_bluet");
+  public static EnchantedFlower ENCHANTED_FLOWER_RED_TULIP = new EnchantedFlower("enchanted_flower_red_tulip");
+  public static EnchantedFlower ENCHANTED_FLOWER_ORANGE_TULIP = new EnchantedFlower("enchanted_flower_orange_tulip");
+  public static EnchantedFlower ENCHANTED_FLOWER_WHITE_TULIP = new EnchantedFlower("enchanted_flower_white_tulip");
+  public static EnchantedFlower ENCHANTED_FLOWER_PINK_TULIP = new EnchantedFlower("enchanted_flower_pink_tulip");
+  public static EnchantedFlower ENCHANTED_FLOWER_OXEYE_DAISY = new EnchantedFlower("enchanted_flower_oxeye_daisy");
+  public static EnchantedFlower ENCHANTED_FLOWER_SUNFLOWER = new EnchantedFlower("enchanted_flower_sunflower");
+  public static EnchantedFlower ENCHANTED_FLOWER_LILAC = new EnchantedFlower("enchanted_flower_lilac");
+  public static EnchantedFlower ENCHANTED_FLOWER_ROSE_BUSH = new EnchantedFlower("enchanted_flower_rose_bush");
+  public static EnchantedFlower ENCHANTED_FLOWER_PEONY = new EnchantedFlower("enchanted_flower_peony");
 
-	public static EnchantedFlower ENCHANTED_FLOWER_RED;
-	public static EnchantedFlowerVariants ENCHANTED_FLOWER_RED_VARIANTS;
-	public static EnchantedFlower ENCHANTED_FLOWER_YELLOW;
-	public static EnchantedFlowerVariants ENCHANTED_FLOWER_YELLOW_VARIANTS;
+  public static Dynamite DYNAMITE = new Dynamite();
+  public static BioBomb BIOBOMB = new BioBomb();
+  public static Napalm NAPALM = new Napalm();
+  public static SkrimCakeBlock SKRIM_CAKE = new SkrimCakeBlock();
+  public static AngelCakeBlock ANGEL_CAKE = new AngelCakeBlock();
+  public static MagicBean MAGIC_BEAN = new MagicBean();
+  public static BeanstalkBlock BEANSTALK_BLOCK = new BeanstalkBlock();
+  public static WeirwoodSapling WEIRWOOD_SAPLING = new WeirwoodSapling();
+  public static WeirwoodWood WEIRWOOD_WOOD = new WeirwoodWood();
+  public static WeirwoodLeaf WEIRWOOD_LEAF = new WeirwoodLeaf();
+  public static MegaChest MEGA_CHEST = new MegaChest();
+  public static Set<Item> FLOWER_ITEMS = new HashSet<>();
 
-	public static Dynamite DYNAMITE;
-	public static BioBomb BIOBOMB;
-	public static Napalm NAPALM;
+  @Mod.EventBusSubscriber(modid = Skrim.modId)
+  public static class RegistrationHandler {
 
-	public static SkrimCakeBlock SKRIM_CAKE;
-	public static AngelCakeBlock ANGEL_CAKE;
+    public static final Block[] NORMAL_BLOCKS = {
+        MEGA_CHEST,
+        // BOOM
+        BIOBOMB,
+        DYNAMITE,
+        NAPALM,
+        // Skill blocks
+        SKRIM_CAKE,
+        ANGEL_CAKE,
+        MAGIC_BEAN,
+        BEANSTALK_BLOCK,
+        WEIRWOOD_LEAF,
+        WEIRWOOD_SAPLING,
+        WEIRWOOD_WOOD
+    };
 
-	public static MagicBean MAGIC_BEAN;
-	public static BeanstalkBlock BEANSTALK_BLOCK;
+    public static final Block[] GLOW_FLOWERS = {
+        GLOW_FLOWER_POPPY,
+        GLOW_FLOWER_DANDELION,
+        GLOW_FLOWER_BLUE_ORCHID,
+        GLOW_FLOWER_ALLIUM,
+        GLOW_FLOWER_AZURE_BLUET,
+        GLOW_FLOWER_RED_TULIP,
+        GLOW_FLOWER_ORANGE_TULIP,
+        GLOW_FLOWER_WHITE_TULIP,
+        GLOW_FLOWER_PINK_TULIP,
+        GLOW_FLOWER_OXEYE_DAISY,
+        GLOW_FLOWER_SUNFLOWER,
+        GLOW_FLOWER_LILAC,
+        GLOW_FLOWER_ROSE_BUSH,
+        GLOW_FLOWER_PEONY
+    };
 
-	public static WeirwoodSapling WEIRWOOD_SAPLING;
-	public static WeirwoodWood WEIRWOOD_WOOD;
-	public static WeirwoodLeaf WEIRWOOD_LEAF;
 
-	public static MegaChest MEGA_CHEST;
+    public static final Block[] ENCHANTED_FLOWERS = {
+        ENCHANTED_FLOWER_POPPY,
+        ENCHANTED_FLOWER_DANDELION,
+        ENCHANTED_FLOWER_BLUE_ORCHID,
+        ENCHANTED_FLOWER_ALLIUM,
+        ENCHANTED_FLOWER_AZURE_BLUET,
+        ENCHANTED_FLOWER_RED_TULIP,
+        ENCHANTED_FLOWER_ORANGE_TULIP,
+        ENCHANTED_FLOWER_WHITE_TULIP,
+        ENCHANTED_FLOWER_PINK_TULIP,
+        ENCHANTED_FLOWER_OXEYE_DAISY,
+        ENCHANTED_FLOWER_SUNFLOWER,
+        ENCHANTED_FLOWER_LILAC,
+        ENCHANTED_FLOWER_ROSE_BUSH,
+        ENCHANTED_FLOWER_PEONY
+    };
 
-	public static void createBlocks() {
-		GlowFlowerRed red = new GlowFlowerRed("glow_flower_red");
-		GLOW_FLOWER_RED_VARIANTS = new GlowFlowerVariants(red);
-		GLOW_FLOWER_RED = register(red, GLOW_FLOWER_RED_VARIANTS);
-		addGlowFlowerRecipes(red, GLOW_FLOWER_RED_VARIANTS);
+    public static final Block[] ALL_BLOCKS =
+        Stream.of(NORMAL_BLOCKS, GLOW_FLOWERS, ENCHANTED_FLOWERS).flatMap(Stream::of).toArray(Block[]::new);
 
-		GlowFlowerYellow yellow = new GlowFlowerYellow("glow_flower_yellow");
-		GLOW_FLOWER_YELLOW_VARIANTS = new GlowFlowerVariants(yellow);
-		GLOW_FLOWER_YELLOW = register(yellow, GLOW_FLOWER_YELLOW_VARIANTS);
-		addGlowFlowerRecipes(yellow, GLOW_FLOWER_YELLOW_VARIANTS);
+    @SubscribeEvent
+    public static void registerBlocks(final RegistryEvent.Register<Block> event) {
+      final IForgeRegistry<Block> registry = event.getRegistry();
+      EntityRegistry.registerModEntity(new ResourceLocation("skrim:custom_tnt_primed"), CustomTNTPrimed.class,
+          "CustomTNTPrimed", 17654, Skrim.instance, 20,
+          5, true);
+      for (final Block block : ALL_BLOCKS) {
+        block.setCreativeTab(Skrim.creativeTab);
+        registry.register(block);
+      }
+    }
 
-		EnchantedFlowerRed enchantedRed = new EnchantedFlowerRed("enchanted_flower_red");
-		ENCHANTED_FLOWER_RED_VARIANTS = new EnchantedFlowerVariants(enchantedRed);
-		ENCHANTED_FLOWER_RED = register(enchantedRed, ENCHANTED_FLOWER_RED_VARIANTS);
-		addEnchantedFlowerRecipes(enchantedRed, ENCHANTED_FLOWER_RED_VARIANTS);
+    @SubscribeEvent
+    public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
+      final IForgeRegistry<Item> registry = event.getRegistry();
 
-		EnchantedFlowerYellow enchantedYellow = new EnchantedFlowerYellow("enchanted_flower_yellow");
-		ENCHANTED_FLOWER_YELLOW_VARIANTS = new EnchantedFlowerVariants(enchantedYellow);
-		ENCHANTED_FLOWER_YELLOW = register(enchantedYellow, ENCHANTED_FLOWER_YELLOW_VARIANTS);
-		addEnchantedFlowerRecipes(enchantedYellow, ENCHANTED_FLOWER_YELLOW_VARIANTS);
+      for (Block block : NORMAL_BLOCKS) {
+        CustomItemBlock item = new CustomItemBlock(block);
+        final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
+            "registry name", block);
+        registry.register(item.setRegistryName(registryName));
+      }
 
-		DYNAMITE = register(new Dynamite("dynamite"));
-		BIOBOMB = register(new BioBomb("biobomb"));
-		NAPALM = register(new Napalm("napalm"));
-		EntityRegistry.registerModEntity(new ResourceLocation("skrim:custom_tnt_primed"), CustomTNTPrimed.class, "CustomTNTPrimed", 17654, Skrim.instance, 20,
-				5, true);
-		addExplosivesRecipes();
+      for (Block block : GLOW_FLOWERS) {
+        CustomItemBlock item = new CustomItemBlock(block, false, EnumRarity.UNCOMMON);
+        final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
+            "registry name", block);
+        registry.register(item.setRegistryName(registryName));
+      }
 
-		SKRIM_CAKE = register(new SkrimCakeBlock());
-		ANGEL_CAKE = register(new AngelCakeBlock());
+      for (Block block : ENCHANTED_FLOWERS) {
+        CustomItemBlock item = new CustomItemBlock(block, true, EnumRarity.RARE);
+        final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
+            "registry name", block);
+        registry.register(item.setRegistryName(registryName));
+      }
 
-		MAGIC_BEAN = register(new MagicBean());
-		addBeanRecipe();
-		BEANSTALK_BLOCK = register(new BeanstalkBlock());
+    }
 
-		WEIRWOOD_SAPLING = register(new WeirwoodSapling());
-		addWeirwoodRecipe();
-		WEIRWOOD_WOOD = register(new WeirwoodWood());
-		WEIRWOOD_LEAF = register(new WeirwoodLeaf());
-
-		MEGA_CHEST = register(new MegaChest());
-		// [RECIPE] GameRegistry.addShapedRecipe(new ItemStack(MEGA_CHEST), "AAA", "AAA", "AAA", 'A', new ItemStack(Blocks.CHEST));
-	}
-
-	private static <T extends Block> T register(T block, ItemBlock itemBlock) {
-		// [REGISTRY] GameRegistry.register(block);
-		if (itemBlock != null) {
-			// [REGISTRY] GameRegistry.register(itemBlock);
-		}
-
-		if (block instanceof ItemModelProvider) {
-			((ItemModelProvider) block).registerItemModel(itemBlock);
-		}
-
-		return block;
-	}
-
-	private static <T extends Block> T register(T block) {
-		ItemBlock itemBlock = new ItemBlock(block);
-		itemBlock.setRegistryName(block.getRegistryName());
-		return register(block, itemBlock);
-	}
-
-	private static void addGlowFlowerRecipes(GlowFlower flower, ItemBlock itemBlock) {
-		for (EnumFlowerType type : FlowerBase.EnumFlowerType.getTypes(flower.getBlockType())) {
-			ItemStack stack = new ItemStack(flower, 1, type.getMeta());
-			// [RECIPE] GameRegistry.addShapelessRecipe(stack, flower.getMinecraftFlower(stack.getMetadata()), Items.GLOWSTONE_DUST);
-		}
-	}
-
-	private static void addEnchantedFlowerRecipes(EnchantedFlower flower, ItemBlock itemBlock) {
-		for (EnumFlowerType type : FlowerBase.EnumFlowerType.getTypes(flower.getBlockType())) {
-			ItemStack stack = new ItemStack(flower, 1, type.getMeta());
-			// [RECIPE] GameRegistry.addRecipe(stack, "ABA", "CDC", "ABA", 'A', Items.DIAMOND, 'B', Blocks.OBSIDIAN, 'C', Blocks.GLASS, 'D', flower.getMinecraftFlower(stack.getMetadata()));
-		}
-	}
-
-	private static void addExplosivesRecipes() {
-		Item[] pics = { Items.WOODEN_PICKAXE, Items.STONE_PICKAXE };
-		for (Item pic : pics) {
-			// [RECIPE] GameRegistry.addShapelessRecipe(new ItemStack(DYNAMITE), Blocks.TNT, pic);
-		}
-
-		// [RECIPE] GameRegistry.addRecipe(new ItemStack(NAPALM), "AAA", "BCB", "AAA", 'A', Items.BLAZE_POWDER, 'B', Items.LAVA_BUCKET, 'C', Blocks.TNT);
-		// [RECIPE] GameRegistry.addRecipe(new ItemStack(BIOBOMB), "AAA", "ABA", "AAA", 'A', Items.ROTTEN_FLESH, 'B', Blocks.TNT);
-	}
-
-	private static void addBeanRecipe() {
-		// [RECIPE] GameRegistry.addShapelessRecipe(new ItemStack(MAGIC_BEAN), Items.CARROT, new ItemStack(Items.DYE, 1, 3), Items.NETHER_WART, Items.POTATO, Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS, Items.DIAMOND_HOE);
-	}
-
-	private static void addWeirwoodRecipe() {
-		// [RECIPE] GameRegistry.addShapelessRecipe(new ItemStack(WEIRWOOD_SAPLING), new ItemStack(Blocks.SAPLING, 1, 0), new ItemStack(Blocks.SAPLING, 1, 1), new ItemStack(Blocks.SAPLING, 1, 2), new ItemStack(Blocks.SAPLING, 1, 3), new ItemStack(Blocks.SAPLING, 1, 4), new ItemStack(Blocks.SAPLING, 1, 5), new ItemStack(Items.ENDER_EYE));
-	}
+  }
 
 }

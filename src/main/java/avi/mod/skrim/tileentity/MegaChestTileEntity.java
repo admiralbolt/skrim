@@ -3,7 +3,7 @@ package avi.mod.skrim.tileentity;
 import java.util.Collections;
 import java.util.Comparator;
 
-import avi.mod.skrim.blocks.MegaChest;
+import avi.mod.skrim.blocks.misc.MegaChest;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.inventory.MegaChestContainer;

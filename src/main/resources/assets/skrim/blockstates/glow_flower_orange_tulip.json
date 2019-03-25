@@ -1,0 +1,11 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "minecraft:orange_tulip"
+    },
+    "inventory": {
+      "model": "minecraft:orange_tulip"
+    }
+  }
+}

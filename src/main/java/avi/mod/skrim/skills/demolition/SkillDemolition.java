@@ -14,7 +14,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
@@ -28,7 +28,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -89,7 +88,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 					CustomExplosion customBoom = (CustomExplosion) boom;
 					customBoom.setExplosionSize((float) (customBoom.getExplosionSize() * (1 + demolition.getExtraPower())));
 				} else {
-					Reflection.hackValueTo(boom, (float) (4.0 * (1 + demolition.getExtraPower())), "explosionSize", "field_77280_f");
+					ReflectionUtils.hackValueTo(boom, (float) (4.0 * (1 + demolition.getExtraPower())), "explosionSize", "field_77280_f");
 				}
 			}
 		}

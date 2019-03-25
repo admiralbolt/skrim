@@ -1,0 +1,23 @@
+{
+  "_comment": [
+    "Can only be crafted with level 50 demolition."
+  ],
+  "group": "skrim:boom",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ACA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "C": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "item": "skrim:biobomb"
+  }
+}

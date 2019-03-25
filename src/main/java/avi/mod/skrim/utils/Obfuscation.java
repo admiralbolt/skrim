@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Really just an extended Utils/Reflection specifically for dealing with
+ * Really just an extended Utils/ReflectionUtils specifically for dealing with
  * obfuscation issues
  * 
  * @author aknecht
@@ -38,7 +38,7 @@ public class Obfuscation {
 	}
 
 	public static void setStackSize(ItemStack stack, int stackSize) {
-		Reflection.hackValueTo(stack, stackSize, STACK_SIZE.getFieldNames());
+		ReflectionUtils.hackValueTo(stack, stackSize, STACK_SIZE.getFieldNames());
 	}
 
 	public static boolean canBlockBePlaced(World world, Block block, BlockPos pos, boolean notsure, EnumFacing facing, @Nullable Entity entity) {

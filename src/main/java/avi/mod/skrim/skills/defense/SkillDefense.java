@@ -17,7 +17,7 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
-import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,7 +33,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -188,7 +187,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 							for (PotionEffect effect : effects) {
 								if (Utils.isNegativeEffect(effect)) {
 									Utils.logSkillEvent(event, defense, "Pre reduce effect: " + effect);
-									Reflection.hackValueTo(effect, effect.getDuration() - 1, Obfuscation.POTION_DURATION.getFieldNames());
+									ReflectionUtils.hackValueTo(effect, effect.getDuration() - 1, Obfuscation.POTION_DURATION.getFieldNames());
 									PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration() - 1, effect.getAmplifier(),
 											effect.getIsAmbient(), effect.doesShowParticles());
 									player.addPotionEffect(newEffect);

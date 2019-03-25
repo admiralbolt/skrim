@@ -5,7 +5,6 @@ import java.io.File;
 import avi.mod.skrim.Config;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.entities.ModEntities;
 import avi.mod.skrim.handlers.EventHandler;
@@ -37,10 +36,7 @@ public class CommonProxy {
 		Config.readConfig();
 		CustomLootTables.registerLootTables();
 		SkrimSoundEvents.register();
-		// ModItems.createItems();
-		ModBlocks.createBlocks();
 		ModCapabilities.registerCapabilities();
-		ModTileEntities.register();
 		ModEntities.register();
 		MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
@@ -68,10 +64,6 @@ public class CommonProxy {
 	}
 
 	public void registerMinecraftItemRenderer(Item item, int meta, String resource) {
-
-	}
-
-	public void registerBlockVariant(ItemBlock block, EnumFlowerType types[]) {
 
 	}
 

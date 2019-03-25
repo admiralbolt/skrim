@@ -8,9 +8,9 @@ import net.minecraft.item.ItemBlock;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ItemModelProvider;
 
-public class BlockBase extends Block implements ItemModelProvider {
+public class BlockBase extends Block {
 
-	protected String name;
+	public String name;
 
 	public BlockBase(Material materialIn, String name) {
 		super(materialIn);
@@ -20,16 +20,10 @@ public class BlockBase extends Block implements ItemModelProvider {
 		setCreativeTab(Skrim.creativeTab);
 	}
 
-	@Override
-	public void registerItemModel(Item itemBlock) {
-		Skrim.proxy.registerItemRenderer(itemBlock, 0, name);
-	}
-
-	 @Override
-	 public BlockBase setCreativeTab(CreativeTabs tab) {
-		 super.setCreativeTab(tab);
-		 return this;
-	 }
+//	@Override
+//	public void registerItemModel(Item itemBlock) {
+//		Skrim.proxy.registerItemRenderer(itemBlock, 0, name);
+//	}
 
 
 }

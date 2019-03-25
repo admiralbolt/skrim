@@ -1,0 +1,26 @@
+{
+  "_comment": [
+    "Can only be crafted with level 75 demolition."
+  ],
+  "group": "skrim:boom",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "BCB",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:blaze_powder"
+    },
+    "B": {
+      "item": "minecraft:lava_bucket"
+    },
+    "C": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "item": "skrim:napalm"
+  }
+}

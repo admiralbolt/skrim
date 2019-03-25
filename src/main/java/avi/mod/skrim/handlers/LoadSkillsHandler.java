@@ -5,8 +5,6 @@ import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.ISkill;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.skills.defense.SkillDefense;
-import avi.mod.skrim.utils.Reflection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -32,7 +30,7 @@ public class LoadSkillsHandler {
 					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
 					if (cap == Skills.DEFENSE) {
 						IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
-						// Reflection.hackAttributeTo(armor, 20.0 + ((SkillDefense) skill).getExtraArmor(), "maximumValue","field_111120_a" );
+						// ReflectionUtils.hackAttributeTo(armor, 20.0 + ((SkillDefense) skill).getExtraArmor(), "maximumValue","field_111120_a" );
 					}
 				}
 			}
@@ -51,7 +49,7 @@ public class LoadSkillsHandler {
 					SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
 					if (cap == Skills.DEFENSE) {
 						IAttributeInstance armor = player.getEntityAttribute(SharedMonsterAttributes.ARMOR);
-						// Reflection.hackAttributeTo(armor, 20.0 + ((SkillDefense) skill).getExtraArmor(), "field_111120_a", "maximumValue");
+						// ReflectionUtils.hackAttributeTo(armor, 20.0 + ((SkillDefense) skill).getExtraArmor(), "field_111120_a", "maximumValue");
 					}
 				}
 			}
@@ -71,7 +69,7 @@ public class LoadSkillsHandler {
 				newSkill.setXp(oldSkill.getXp());
 				if (newSkill == Skills.DEFENSE) {
 					IAttributeInstance armor = newPlayer.getEntityAttribute(SharedMonsterAttributes.ARMOR);
-					// Reflection.hackAttributeTo(armor, 20.0 + ((SkillDefense) newSkill).getExtraArmor(), "field_111120_a", "maximumValue");
+					// ReflectionUtils.hackAttributeTo(armor, 20.0 + ((SkillDefense) newSkill).getExtraArmor(), "field_111120_a", "maximumValue");
 				}
 				Skill skill = (Skill) newSkill;
 				//SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) newPlayer);

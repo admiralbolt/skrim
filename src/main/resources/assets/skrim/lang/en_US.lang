@@ -1,174 +1,148 @@
-item.overwrite_porkchop.name=Cooked Porkchop
+achievement.archaeology.desc=Find an artifact in a generated chest
+achievement.archaeology=Archaeology
+achievement.ding_apprentice.desc=Get any skill to level 25
+achievement.ding_apprentice=Ding! Apprentice
+achievement.ding_expert.desc=Get any skill to level 75
+achievement.ding_expert=Ding! Expert
+achievement.ding_journeyman.desc=Get any skill to level 50
+achievement.ding_journeyman=Ding! Journeyman
+achievement.ding_master.desc=Get any skill to level 100
+achievement.ding_master=Ding! Master
+achievement.found_skills.desc=Click the skills button on the inventory screen
+achievement.found_skills=Finding Skills
+entity.bio_creeper.name=Bio Creeper
+entity.fox.name=Fox
+entity.mega_chicken.name=Mega Chicken
+entity.napalm_creeper.name=Napalm Creeper
+item.acacia_leaf_armor.name=Acacia Chestplate
+item.acacia_leaf_boots.name=Acacia Boots
+item.acacia_leaf_helmet.name=Acacia Helmet
+item.acacia_leaf_pants.name=Acacia Leggings
+item.angel_cake.name=Angel Cake
+item.aruarian_dance.desc=Nujabes
+item.aruarian_dance.name=Aruarian Dance
+item.birch_leaf_armor.name=Birch Chestplate
+item.birch_leaf_boots.name=Birch Boots
+item.birch_leaf_helmet.name=Birch Helmet
+item.birch_leaf_pants.name=Birch Leggings
+item.boots_of_blinding_speed.name=Boots of Blinding Speed
+item.boots_of_springheel_jak.name=Boots of Springheel Jak
+item.bubberducky.desc=Dunkey
+item.bubberducky.name=Bubberducky 3
+item.canes_chicken.name=Raising Cane's® Chicken Strip
+item.cassandra.desc=Dave Brubeck
+item.cassandra.name=Cassandra
+item.cerulean_sandals.name=Cerulean Sandals
+item.dark_oak_leaf_armor.name=Dark_Oak Chestplate
+item.dark_oak_leaf_boots.name=Dark_Oak Boots
+item.dark_oak_leaf_helmet.name=Dark_Oak Helmet
+item.dark_oak_leaf_pants.name=Dark_Oak Leggings
+item.dogsong.desc=Toby Fox
+item.dogsong.name=Dogsong
+item.fishing_rod.name=Skrim Fishing Rod
+item.fox_mask.name=Fox Mask
+item.gdawg.desc=Avi Knecht
+item.gdawg.name=G-Dawg is Hawt
+item.great_bow.name=Great Bow
+item.gruesome_mask.name=Gruesome Mask
+item.hand_saw.name=Hand Saw
+item.heya.desc=He-Man
+item.heya.name=HEYYEYAAEYAAAEYAEYAA
+item.horse_steroid_health.name=Dr. Zed's Horse Methamphetamine® Watermelon
+item.horse_steroid_jump.name=Dr. Zed's Horse Methamphetamine® Sour Apple
+item.horse_steroid_speed.name=Dr. Zed's Horse Methamphetamine® Blue Raspberry
+item.icarian_scroll.name=Scroll of Icarian Flight
+item.jungle_leaf_armor.name=Jungle Chestplate
+item.jungle_leaf_boots.name=Jungle Boots
+item.jungle_leaf_helmet.name=Jungle Helmet
+item.jungle_leaf_pants.name=Jungle Leggings
+item.lack_of_color.desc=Death Cab for Cutie
+item.lack_of_color.name=A Lack of Color
+item.money.desc=Toby Fox / Hail Mary Mallon
+item.money.name=Temmie Get Money for College
+item.north.desc=Phoenix
+item.north.name=North
+item.number10.desc=Moon Hooch
+item.number10.name=Number 10
+item.oak_leaf_armor.name=Oak Chestplate
+item.oak_leaf_boots.name=Oak Boots
+item.oak_leaf_helmet.name=Oak Helmet
+item.oak_leaf_pants.name=Oak Leggings
+item.obsidian_axe.name=Obsidian Axe
+item.obsidian_boots.name=Obsidian Boots
+item.obsidian_chest.name=Obsidian Chestplate
+item.obsidian_helmet.name=Obsidian Helmet
+item.obsidian_hoe.name=Obsidian Hoe
+item.obsidian_pants.name=Obsidian Leggings
+item.obsidian_pickaxe.name=Obsidian Pickaxe
+item.obsidian_spade.name=Obsidian Shovel
+item.obsidian_sword.name=Obsidian Sword
+item.overalls.name=Overalls
 item.overwrite_baked_potato.name=Baked Potato
 item.overwrite_beetroot_soup.name=Beetroot Soup
 item.overwrite_bread.name=Bread
 item.overwrite_chicken.name=Cooked Chicken
-item.overwrite_fish.name=Cooked Fish
-item.overwrite_mutton.name=Cooked Mutton
-item.overwrite_salmon.name=Cooked Salmon
 item.overwrite_cookie.name=Cookie
+item.overwrite_fish.name=Cooked Fish
 item.overwrite_mushroom_stew.name=Mushroom Stew
+item.overwrite_mutton.name=Cooked Mutton
+item.overwrite_porkchop.name=Cooked Porkchop
 item.overwrite_pumpkin_pie.name=Pumpkin Pie
-item.overwrite_rabbit_stew.name=Rabbit Stew
-item.overwrite_steak.name=Steak
 item.overwrite_rabbit.name=Cooked Rabbit
-item.skrim_cake.name=Skrim Cake
-item.angel_cake.name=Angel Cake
-
-item.canes_chicken.name=Raising Cane's® Chicken Strip
-
-item.fishing_rod.name=Skrim Fishing Rod
-
-item.obsidian_sword.name=Obsidian Sword
-item.obsidian_hoe.name=Obsidian Hoe
-item.obsidian_axe.name=Obsidian Axe
-item.obsidian_pickaxe.name=Obsidian Pickaxe
-item.obsidian_spade.name=Obsidian Shovel
-item.obsidian_boots.name=Obsidian Boots
-item.obsidian_pants.name=Obsidian Leggings
-item.obsidian_chest.name=Obsidian Chestplate
-item.obsidian_helmet.name=Obsidian Helmet
-
-item.hand_saw.name=Hand Saw
-
-tile.glow_flower_yellow.name=Glow Flower
-tile.glow_flower_yellow.dandelion.name=Glow Dandelion
-tile.glow_flower_red.name=Glow Flower
-tile.glow_flower_red.poppy.name=Glow Poppy
-tile.glow_flower_red.blue_orchid.name=Glow Blue Orchid
-tile.glow_flower_red.allium.name=Glow Allium
-tile.glow_flower_red.houstonia.name=Glow Azure Bluet
-tile.glow_flower_red.red_tulip.name=Glow Red Tulip
-tile.glow_flower_red.orange_tulip.name=Glow Orange Tulip
-tile.glow_flower_red.white_tulip.name=Glow White Tulip
-tile.glow_flower_red.pink_tulip.name=Glow Pink Tulip
-tile.glow_flower_red.oxeye_daisy.name=Glow Oxeye Daisy
-
-tile.enchanted_flower_yellow.name=Enchanted Flower
-tile.enchanted_flower_yellow.dandelion.name=Enchanted Dandelion
-tile.enchanted_flower_red.name=Enchanted Flower
-tile.enchanted_flower_red.poppy.name=Enchanted Poppy
-tile.enchanted_flower_red.blue_orchid.name=Enchanted Blue Orchid
-tile.enchanted_flower_red.allium.name=Enchanted Allium
-tile.enchanted_flower_red.houstonia.name=Enchanted Azure Bluet
-tile.enchanted_flower_red.red_tulip.name=Enchanted Red Tulip
-tile.enchanted_flower_red.orange_tulip.name=Enchanted Orange Tulip
-tile.enchanted_flower_red.white_tulip.name=Enchanted White Tulip
-tile.enchanted_flower_red.pink_tulip.name=Enchanted Pink Tulip
-tile.enchanted_flower_red.oxeye_daisy.name=Enchanted Oxeye Daisy
-
-tile.dynamite.name=Dynamite
-tile.biobomb.name=Bio-Bomb
-tile.napalm.name=Napalm
-
-tile.magic_bean.name=Magic Bean
-tile.beanstalk_block.name=Beanstalk
-tile.weirwood_sapling.name=Weirwood Sapling
-
-item.overalls.name=Overalls
-item.great_bow.name=Great Bow
-
-item.aruarian_dance.name=Aruarian Dance
-item.aruarian_dance.desc=Nujabes
-item.bubberducky.name=Bubberducky 3
-item.bubberducky.desc=Dunkey
-item.cassandra.name=Cassandra
-item.cassandra.desc=Dave Brubeck
-item.lack_of_color.name=A Lack of Color
-item.lack_of_color.desc=Death Cab for Cutie
-item.dogsong.name=Dogsong
-item.dogsong.desc=Toby Fox
-item.gdawg.name=G-Dawg is Hawt
-item.gdawg.desc=Avi Knecht
-item.heya.name=HEYYEYAAEYAAAEYAEYAA
-item.heya.desc=He-Man
-item.money.name=Temmie Get Money for College
-item.money.desc=Toby Fox / Hail Mary Mallon
-item.north.name=North
-item.north.desc=Phoenix
-item.number10.name=Number 10
-item.number10.desc=Moon Hooch
-item.samurai.name=1st. Samurai
-item.samurai.desc=Nujabes
-item.truck.name=Truck
-item.truck.desc=The Octopus Project
-
-item.oak_leaf_boots.name=Oak Boots
-item.oak_leaf_pants.name=Oak Leggings
-item.oak_leaf_armor.name=Oak Chestplate
-item.oak_leaf_helmet.name=Oak Helmet
-item.spruce_leaf_boots.name=Spruce Boots
-item.spruce_leaf_pants.name=Spruce Leggings
-item.spruce_leaf_armor.name=Spruce Chestplate
-item.spruce_leaf_helmet.name=Spruce Helmet
-item.birch_leaf_boots.name=Birch Boots
-item.birch_leaf_pants.name=Birch Leggings
-item.birch_leaf_armor.name=Birch Chestplate
-item.birch_leaf_helmet.name=Birch Helmet
-item.jungle_leaf_boots.name=Jungle Boots
-item.jungle_leaf_pants.name=Jungle Leggings
-item.jungle_leaf_armor.name=Jungle Chestplate
-item.jungle_leaf_helmet.name=Jungle Helmet
-item.acacia_leaf_boots.name=Acacia Boots
-item.acacia_leaf_pants.name=Acacia Leggings
-item.acacia_leaf_armor.name=Acacia Chestplate
-item.acacia_leaf_helmet.name=Acacia Helmet
-item.dark_oak_leaf_boots.name=Dark_Oak Boots
-item.dark_oak_leaf_pants.name=Dark_Oak Leggings
-item.dark_oak_leaf_armor.name=Dark_Oak Chestplate
-item.dark_oak_leaf_helmet.name=Dark_Oak Helmet
-
-item.rocket_launcher.name=Rocket Launcher
-
-
-
-item.boots_of_springheel_jak.name=Boots of Springheel Jak
-item.boots_of_blinding_speed.name=Boots of Blinding Speed
-item.cerulean_sandals.name=Cerulean Sandals
-item.gruesome_mask.name=Gruesome Mask
-item.fox_mask.name=Fox Mask
+item.overwrite_rabbit_stew.name=Rabbit Stew
+item.overwrite_salmon.name=Cooked Salmon
+item.overwrite_steak.name=Steak
 item.powersuit_chestplate.name=Powersuit Chestplate
-
 item.raising_canes_fry_sword.name=Raising Cane's® Sword of Frying
-
+item.rocket_launcher.name=Rocket Launcher
+item.samurai.desc=Nujabes
+item.samurai.name=1st. Samurai
 item.sheep_finder_3000.name=Sheep Finder 3000
-item.icarian_scroll.name=Scroll of Icarian Flight
-item.horse_steroid_speed.name=Dr. Zed's Horse Methamphetamine® Blue Raspberry
-item.horse_steroid_jump.name=Dr. Zed's Horse Methamphetamine® Sour Apple
-item.horse_steroid_health.name=Dr. Zed's Horse Methamphetamine® Watermelon
-
+item.skrim_cake.name=Skrim Cake
+item.spruce_leaf_armor.name=Spruce Chestplate
+item.spruce_leaf_boots.name=Spruce Boots
+item.spruce_leaf_helmet.name=Spruce Helmet
+item.spruce_leaf_pants.name=Spruce Leggings
+item.truck.desc=The Octopus Project
+item.truck.name=Truck
 item.tux.name=Tux
-
-tile.weirwood_wood.name=Weirwood
 item.weirwood_totem.name=Weirwood Totem
-tile.weirwood_leaf.name=Weirwood Leaf
-
+tile.angel_cake_block.name=Angel Cake Block
+tile.beanstalk_block.name=Beanstalk
+tile.biobomb.name=Bio-Bomb
+tile.dynamite.name=Dynamite
+tile.enchanted_flower_allium.name=Enchanted Allium
+tile.enchanted_flower_azure_bluet.name=Enchanted Azure Bluet
+tile.enchanted_flower_blue_orchid.name=Enchanted Blue Orchid
+tile.enchanted_flower_dandelion.name=Enchanted Dandelion
+tile.enchanted_flower_lilac.name=Enchanted Lilac
+tile.enchanted_flower_orange_tulip.name=Enchanted Orange Tulip
+tile.enchanted_flower_oxeye_daisy.name=Enchanted Oxeye Daisy
+tile.enchanted_flower_peony.name=Enchanted Peony
+tile.enchanted_flower_pink_tulip.name=Enchanted Pink Tulip
+tile.enchanted_flower_poppy.name=Enchanted Poppy
+tile.enchanted_flower_red_tulip.name=Enchanted Red Tulip
+tile.enchanted_flower_rose_bush.name=Enchanted Rose Bush
+tile.enchanted_flower_sunflower.name=Enchanted Sunflower
+tile.enchanted_flower_white_tulip.name=Enchanted White Tulip
+tile.glow_flower_allium.name=Glow Allium
+tile.glow_flower_azure_bluet.name=Glow Azure Bluet
+tile.glow_flower_blue_orchid.name=Glow Blue Orchid
+tile.glow_flower_dandelion.name=Glow Dandelion
+tile.glow_flower_lilac.name=Glow Lilac
+tile.glow_flower_orange_tulip.name=Glow Orange Tulip
+tile.glow_flower_oxeye_daisy.name=Glow Oxeye Daisy
+tile.glow_flower_peony.name=Glow Peony
+tile.glow_flower_pink_tulip.name=Glow Pink Tulip
+tile.glow_flower_poppy.name=Glow Poppy
+tile.glow_flower_red_tulip.name=Glow Red Tulip
+tile.glow_flower_rose_bush.name=Glow Rose Bush
+tile.glow_flower_sunflower.name=Glow Sunflower
+tile.glow_flower_white_tulip.name=Glow White Tulip
+tile.magic_bean.name=Magic Bean
 tile.mega_chest.name=Mega Chest
-
-##### ENTITIES ######
-
-entity.napalm_creeper.name=Napalm Creeper
-entity.bio_creeper.name=Bio Creeper
-entity.mega_chicken.name=Mega Chicken
-entity.fox.name=Fox
-
-
-##### ACHIEVEMENTS ######
-
-achievement.found_skills=Finding Skills
-achievement.found_skills.desc=Click the skills button on the inventory screen
-
-achievement.ding_apprentice=Ding! Apprentice
-achievement.ding_apprentice.desc=Get any skill to level 25
-
-achievement.ding_journeyman=Ding! Journeyman
-achievement.ding_journeyman.desc=Get any skill to level 50
-
-achievement.ding_expert=Ding! Expert
-achievement.ding_expert.desc=Get any skill to level 75
-
-achievement.ding_master=Ding! Master
-achievement.ding_master.desc=Get any skill to level 100
-
-achievement.archaeology=Archaeology
-achievement.archaeology.desc=Find an artifact in a generated chest
+tile.napalm.name=Napalm
+tile.skrim_cake_block.name=Skrim Cake Block
+tile.weirwood_leaf.name=Weirwood Leaf
+tile.weirwood_sapling.name=Weirwood Sapling
+tile.weirwood_wood.name=Weirwood

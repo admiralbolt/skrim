@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.blocks.CustomCakeBlock;
+import avi.mod.skrim.blocks.food.CustomCakeBlock;
 import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.items.ItemBase;
 import avi.mod.skrim.items.ModItems;

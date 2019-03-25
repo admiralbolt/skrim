@@ -212,7 +212,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 						Utils.logSkillEvent(event, blacksmithing,
 								"applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
 						outputItem.setMaxDamage((int) (outputItem.getMaxDamage(output) * 1.5));
-						// Reflection.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),  "maxDamage", "field_77699_b");
+						// ReflectionUtils.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),  "maxDamage", "field_77699_b");
 					}
 				}
 			}

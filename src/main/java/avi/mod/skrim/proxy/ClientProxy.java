@@ -1,7 +1,6 @@
 package avi.mod.skrim.proxy;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.blocks.flowers.FlowerBase.EnumFlowerType;
 import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.client.renderer.tileentity.SkrimTileEntityItemRenderer;
 import avi.mod.skrim.handlers.GuiEventHandler;
@@ -39,18 +38,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerMinecraftItemRenderer(Item item, int meta, String resource) {
 		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(resource));
-	}
-
-	@Override
-	public void registerBlockVariant(ItemBlock itemBlock, EnumFlowerType types[]) {
-		Block block = itemBlock.getBlock();
-		String baseName = block.getUnlocalizedName();
-		Item item = itemBlock.getItemFromBlock(block);
-		for (EnumFlowerType type : types) {
-			ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(Skrim.modId + ":" + baseName + "_" + type.getName());
-			ModelLoader.setCustomModelResourceLocation(item, type.getMeta(), itemModelResourceLocation);
-			ModelBakery.registerItemVariants(item, itemModelResourceLocation);
-		}
 	}
 	
 	@Override

@@ -1,0 +1,20 @@
+{
+  "_comment": [
+    "M E G A C H E S T"
+  ],
+  "group": "skrim:chest",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "AAA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "skrim:mega_chest"
+  }
+}

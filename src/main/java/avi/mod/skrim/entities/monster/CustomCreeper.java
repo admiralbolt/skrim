@@ -1,6 +1,6 @@
 package avi.mod.skrim.entities.monster;
 
-import avi.mod.skrim.utils.Reflection;
+import avi.mod.skrim.utils.ReflectionUtils;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Explosion;
@@ -27,8 +27,8 @@ public class CustomCreeper extends EntityCreeper {
 	@Override
 	public void onUpdate() {
 		if (this.isEntityAlive()) {
-			Integer timeSinceIgnited = (Integer) Reflection.getSuperSuperPrivateField(this, "timeSinceIgnited", "field_70833_d");
-			Integer fuseTime = (Integer) Reflection.getSuperSuperPrivateField(this, "fuseTime", "field_82225_f");
+			Integer timeSinceIgnited = (Integer) ReflectionUtils.getSuperSuperPrivateField(this, "timeSinceIgnited", "field_70833_d");
+			Integer fuseTime = (Integer) ReflectionUtils.getSuperSuperPrivateField(this, "fuseTime", "field_82225_f");
 			int i = this.getCreeperState();
 			if ((timeSinceIgnited + i) >= fuseTime) {
 				this.explode();
