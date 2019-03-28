@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.EnumPlantType;
 
-public abstract class CustomPlant extends BlockBush implements ItemModelProvider, IGrowable {
+public abstract class CustomPlant extends BlockBush implements IGrowable {
 
 	private String name;
 	private int maxAge;
@@ -35,17 +35,11 @@ public abstract class CustomPlant extends BlockBush implements ItemModelProvider
 		this.setRegistryName(name);
 		setCreativeTab(Skrim.creativeTab);
 
-		this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), Integer.valueOf(0)));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), 0));
         this.setTickRandomly(true);
 	}
 
 	protected abstract PropertyInteger getAgeProperty();
-
-	@Override
-	public void registerItemModel(Item item) {
-		// ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Skrim.modId + ":" + name));
-		Skrim.instance.proxy.registerItemRenderer(item, 0, name);
-	}
 
 	@Override
 	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
@@ -81,7 +75,7 @@ public abstract class CustomPlant extends BlockBush implements ItemModelProvider
 	}
 
 	public int getAge(IBlockState state) {
-		return state.getValue(this.getAgeProperty()).intValue();
+		return state.getValue(this.getAgeProperty());
 	}
 
 	public int getMaxAge() {
@@ -89,7 +83,7 @@ public abstract class CustomPlant extends BlockBush implements ItemModelProvider
 	}
 
 	public IBlockState withAge(int age) {
-		return this.getDefaultState().withProperty(this.getAgeProperty(), Integer.valueOf(age));
+		return this.getDefaultState().withProperty(this.getAgeProperty(), age);
 	}
 
 	@Override
@@ -190,13 +184,6 @@ public abstract class CustomPlant extends BlockBush implements ItemModelProvider
 		}
 
 		return f;
-	}
-
-	/**
-	 * Convert the given metadata into a BlockState for this Block
-	 */
-	public IBlockState getStateFromMeta(int meta) {
-		return this.withAge(meta);
 	}
 
 	/**

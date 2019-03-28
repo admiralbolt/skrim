@@ -1,38 +1,31 @@
 package avi.mod.skrim.blocks.tnt;
 
-import avi.mod.skrim.utils.Utils;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BioBombExplosion extends CustomExplosion {
 
-	public static float DEFAULT_SIZE = 8.0F;
-	public static boolean flaming = false;
-	public static boolean smoking = true;
-	private World world;
+  public static float DEFAULT_SIZE = 8.0F;
+  private static boolean FLAMING = false;
+  private static boolean SMOKING = true;
 
-	public BioBombExplosion(World worldIn, Entity entityIn, double x, double y, double z) {
-		this(worldIn, entityIn, x, y, z, DEFAULT_SIZE);
-	}
-	
-	public BioBombExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size) {
-		super(worldIn, entityIn, x, y, z, size, flaming, smoking);
-		this.world = worldIn;
-	}
+  public BioBombExplosion(World worldIn, Entity entityIn, double x, double y, double z) {
+    this(worldIn, entityIn, x, y, z, DEFAULT_SIZE);
+  }
 
-	@Override
-	public void doExplosionA() {
-		super.doExplosionA();
-		this.clearAffectedBlockPositions();
-	}
+  public BioBombExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size) {
+    super(worldIn, entityIn, x, y, z, size, FLAMING, SMOKING);
+  }
 
-	@Override
-	public void doExplosionB(boolean particles) {
-		super.doExplosionB(particles);
-	}
+  @Override
+  public void doExplosionA() {
+    super.doExplosionA();
+    this.clearAffectedBlockPositions();
+  }
+
+  @Override
+  public void doExplosionB(boolean particles) {
+    super.doExplosionB(particles);
+  }
 
 }

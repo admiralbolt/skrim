@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class Napalm extends BlockTNT {
 
   public String name;
@@ -22,23 +24,23 @@ public class Napalm extends BlockTNT {
   }
 
   @Override
-  public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosionIn) {
+  public void onBlockDestroyedByExplosion(World worldIn, @Nonnull BlockPos pos, @Nonnull Explosion explosionIn) {
     if (worldIn.isRemote) return;
-    CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("napalm", worldIn, (double) ((float) pos.getX() + 0.5F),
-				(double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), explosionIn.getExplosivePlacedBy());
-    entitytntprimed.setFuse((short) (worldIn.rand.nextInt(entitytntprimed.getFuse() / 4) + entitytntprimed.getFuse() / 8));
-    worldIn.spawnEntity(entitytntprimed);
+    CustomTNTPrimed tntPrimed = new CustomTNTPrimed("napalm", worldIn, pos.getX() + 0.5,
+        pos.getY(), pos.getZ() + 0.5, explosionIn.getExplosivePlacedBy());
+    tntPrimed.setFuse(worldIn.rand.nextInt(tntPrimed.getFuse() / 4) + tntPrimed.getFuse() / 8);
+    worldIn.spawnEntity(tntPrimed);
   }
 
   @Override
-  public void explode(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase igniter) {
+  public void explode(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state,
+                      @Nonnull EntityLivingBase igniter) {
     if (worldIn.isRemote || !state.getValue(EXPLODE)) return;
-    CustomTNTPrimed entitytntprimed = new CustomTNTPrimed("napalm", worldIn, (double) ((float) pos.getX() + 0.5F),
-				(double) pos.getY(), (double) ((float) pos.getZ() + 0.5F), igniter);
-    worldIn.spawnEntity(entitytntprimed);
-    worldIn.playSound(null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ,
-				SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
+    CustomTNTPrimed tntPrimed = new CustomTNTPrimed("napalm", worldIn, pos.getX() + 0.5,
+        pos.getY(), pos.getZ() + 0.5, igniter);
+    worldIn.spawnEntity(tntPrimed);
+    worldIn.playSound(null, tntPrimed.posX, tntPrimed.posY, tntPrimed.posZ,
+        SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
   }
 
 }

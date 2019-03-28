@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 public class NapalmExplosion extends CustomExplosion {
 
 	public static float DEFAULT_SIZE = 12.0F;
-	public static boolean flaming = true;
-	public static boolean smoking = true;
+	private static boolean FLAMING = true;
+	private static boolean SMOKING = true;
 	private World world;
 
 	public NapalmExplosion(World worldIn, Entity entityIn, double x, double y, double z) {
@@ -20,7 +20,7 @@ public class NapalmExplosion extends CustomExplosion {
 	}
 	
 	public NapalmExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size) {
-		super(worldIn, entityIn, x, y, z, size, flaming, smoking);
+		super(worldIn, entityIn, x, y, z, size, FLAMING, SMOKING);
 		this.world = worldIn;
 	}
 
@@ -35,8 +35,8 @@ public class NapalmExplosion extends CustomExplosion {
 	public void doExplosionB(boolean particles) {
 		super.doExplosionB(particles);
 		for (BlockPos pos : this.affectedBlockPositions) {
-			IBlockState blockstate = world.getBlockState(pos);
-			if (blockstate.getMaterial() != Material.AIR) {
+			IBlockState blockState = world.getBlockState(pos);
+			if (blockState.getMaterial() != Material.AIR) {
 				if (Utils.rand.nextDouble() < 0.25) {
 					this.world.setBlockState(pos, Blocks.LAVA.getDefaultState());
 				}

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class WeirwoodSapling extends CustomPlant {
 
-	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
+	private static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
 
 	public WeirwoodSapling() {
 		super("weirwood_sapling", 15);

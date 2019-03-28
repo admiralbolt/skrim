@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {
+      "item": "skrim:icarian_scroll"
+    },
+    "title": {
+      "translate": "advancements.found_skills.title"
+    },
+    "description": {
+      "translate": "advancements.found_skills.description"
+    },
+    "background": "skrim:textures/guis/advancements/background.png"
+  },
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:found_skills"
+    }
+  }
+}

@@ -79,7 +79,7 @@ public class SkrimAchievements {
 	//	
 	//	public static Achievement getAchievmentById(String achievmentId) {
 	//		for (Achievement achievement : SKRIM_ACHIEVEMENTS.getAchievements()) {
-	//			if (achievement.statId.equals(achievmentId)) {
+	//			if (achievement.advancementName.equals(achievmentId)) {
 	//				return achievement;
 	//			}
 	//		}

@@ -31,15 +31,14 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SkillBotany extends Skill implements ISkillBotany {
 
   public static SkillStorage<ISkillBotany> skillStorage = new SkillStorage<ISkillBotany>();
   public static Map<String, Integer> xpMap;
+  public static Set<Item> GLOW_FLOWER_ITEMS;
+  public static Set<Item> ENCHANTED_FLOWER_ITEMS;
 
   public static SkillAbility SUN_FLOWER = new SkillAbility("botany", "Sun Flower", 25, "It was either this or " +
 			"mariglow, don't know which one is worse.",
@@ -116,6 +115,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   public static boolean validFlowerState(IBlockState state) {
     Block flower = state.getBlock();
     String name = getFlowerName(state);
+    System.out.println("flower: " + flower + ", name: " + name);
     return validFlowerBlock(flower) || (name.equals("sunflower") || name.equals("paeonia") || name.equals(
     		"double_rose") || name.equals("syringa"));
   }

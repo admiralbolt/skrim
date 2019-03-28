@@ -1,7 +1,7 @@
 package avi.mod.skrim.network;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.network.AchievementPacket.AchievementPacketHandler;
+import avi.mod.skrim.network.AdvancementPacket.AchievementPacketHandler;
 import avi.mod.skrim.network.ExplosionPacket.ExplosionPacketHandler;
 import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.InvisibilityPacket.InvisibilityPacketHandler;
@@ -47,7 +47,7 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(MetalDetectorPacketHandler.class, MetalDetectorPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(WhirlingChopPacketHandler.class, WhirlingChopPacket.class, PACKET_ID++, Side.SERVER);
-		INSTANCE.registerMessage(AchievementPacketHandler.class, AchievementPacket.class, PACKET_ID++, Side.SERVER);
+		INSTANCE.registerMessage(AchievementPacketHandler.class, AdvancementPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(InvisibilityPacketHandler.class, InvisibilityPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(CriticalAscensionPacketHandler.class, CriticalAscensionPacket.class, PACKET_ID++, Side.CLIENT);
 		INSTANCE.registerMessage(SpawnEntityPacketHandler.class, SpawnEntityPacket.class, PACKET_ID++, Side.SERVER);

@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {
+      "item": "skrim:icarian_scroll"
+    },
+    "title": {
+      "translate": "advancements.ding_expert.title"
+    },
+    "description": {
+      "translate": "advancements.ding_expert.description"
+    }
+  },
+  "parent": "skrim:ding_journeyman",
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:ding_expert"
+    }
+  }
+}

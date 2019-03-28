@@ -3,12 +3,9 @@ package avi.mod.skrim.client.gui;
 import java.io.IOException;
 
 import avi.mod.skrim.inventory.MegaChestContainer;
-import avi.mod.skrim.network.AchievementPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SortChestPacket;
-import avi.mod.skrim.stats.SkrimAchievements;
 import avi.mod.skrim.tileentity.MegaChestTileEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;

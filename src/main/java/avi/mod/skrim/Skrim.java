@@ -2,6 +2,7 @@ package avi.mod.skrim;
 
 import avi.mod.skrim.client.TestTab;
 import avi.mod.skrim.commands.CommandRegistry;
+import avi.mod.skrim.patches.TestPatch;
 import avi.mod.skrim.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -18,7 +19,7 @@ public class Skrim {
 
 	public static final String modId = "skrim";
 	public static final String name = "Skrim";
-	public static final String version = "1.1.9";
+	public static final String version = "1.1.12-1.0";
 
 	public static final TestTab creativeTab = new TestTab();
 
@@ -27,7 +28,7 @@ public class Skrim {
 	 * messages for debugging individual skills and abilities.
 	 * Should be FALSE for release.
 	 */
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	/**
 	 * Whether or not to enforce only giving xp / bonuses
@@ -50,19 +51,20 @@ public class Skrim {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		System.out.println(this.name + " is in preInit.");
-		this.proxy.preInit(event);
+		proxy.preInit(event);
+		TestPatch.go();
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		System.out.println(this.name + " is in init.");
-		this.proxy.init(event);
+		proxy.init(event);
 	}
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		System.out.println(this.name + " is in postinit.");
-		this.proxy.postInit(event);
+		proxy.postInit(event);
 	}
 
 	@Mod.EventHandler

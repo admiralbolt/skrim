@@ -19,11 +19,19 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
+/**
+ * This is pretty much a direct clone of EntityTNTPrimed.java used for custom explosions.
+ *
+ * It's a direct clone primarily because the explode() method needs
+ */
 public class CustomTNTPrimed extends Entity {
-	private static final DataParameter<Integer> FUSE = EntityDataManager.<Integer>createKey(CustomTNTPrimed.class, DataSerializers.VARINT);
-	private static final DataParameter<String> EXPLOSION_TYPE = EntityDataManager.<String>createKey(CustomTNTPrimed.class, DataSerializers.STRING);
+
+	private static final DataParameter<Integer> FUSE = EntityDataManager.createKey(CustomTNTPrimed.class, DataSerializers.VARINT);
+	private static final DataParameter<String> EXPLOSION_TYPE = EntityDataManager.createKey(CustomTNTPrimed.class, DataSerializers.STRING);
+
 	private EntityLivingBase tntPlacedBy;
-	/** How long the fuse is */
 	private int fuse;
 	private String explosionType;
 
@@ -31,6 +39,7 @@ public class CustomTNTPrimed extends Entity {
 		super(worldIn);
 		this.fuse = 80;
 		this.preventEntitySpawning = true;
+		this.isImmuneToFire = true;
 		this.setSize(0.98F, 0.98F);
 	}
 
@@ -125,6 +134,7 @@ public class CustomTNTPrimed extends Entity {
 	/**
 	 * returns null or the entityliving it was placed or ignited by
 	 */
+	@Nullable
 	public EntityLivingBase getTntPlacedBy() {
 		return this.tntPlacedBy;
 	}
@@ -134,7 +144,7 @@ public class CustomTNTPrimed extends Entity {
 	}
 
 	public void setFuse(int fuseIn) {
-		this.dataManager.set(FUSE, Integer.valueOf(fuseIn));
+		this.dataManager.set(FUSE, fuseIn);
 		this.fuse = fuseIn;
 	}
 
@@ -150,15 +160,12 @@ public class CustomTNTPrimed extends Entity {
 		}
 	}
 
-	/**
-	 * Gets the fuse from the data manager
-	 */
 	public int getFuseDataManager() {
-		return ((Integer) this.dataManager.get(FUSE)).intValue();
+	  return this.dataManager.get(FUSE);
 	}
 
 	public String getExplosionDataManager() {
-		return this.dataManager.get(EXPLOSION_TYPE).toString();
+		return this.dataManager.get(EXPLOSION_TYPE);
 	}
 
 	public int getFuse() {
@@ -169,19 +176,16 @@ public class CustomTNTPrimed extends Entity {
 		return this.explosionType;
 	}
 
-	public Explosion explode() {
+	public void explode() {
 		for (EntityPlayer entityplayer : this.world.playerEntities) {
 			if (entityplayer.getDistanceSq(this.posX, this.posY, this.posZ) < 4096.0D) {
 				SkrimPacketHandler.INSTANCE.sendTo(new ExplosionPacket(this.getExplosionType(), this.getEntityId(), this.posX, this.posY + (double) (this.height / 16.0F), this.posZ), (EntityPlayerMP) entityplayer);
 			}
 		}
 		Explosion explosion = createExplosion(this.explosionType, this.world, this, this.posX, this.posY + (double) (this.height / 16.0F), this.posZ);
-		if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.world, explosion)) {
-			return explosion;
-		}
+		if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.world, explosion)) return;
 		explosion.doExplosionA();
 		explosion.doExplosionB(true);
-		return explosion;
 	}
 
 	public static Explosion createExplosion(String explosionType, World worldIn, Entity entityIn, double x, double y, double z) {

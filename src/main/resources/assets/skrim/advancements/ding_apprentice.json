@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {
+      "item": "skrim:icarian_scroll"
+    },
+    "title": {
+      "translate": "advancements.ding_apprentice.title"
+    },
+    "description": {
+      "translate": "advancements.ding_apprentice.description"
+    }
+  },
+  "parent": "skrim:root",
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:ding_apprentice"
+    }
+  }
+}

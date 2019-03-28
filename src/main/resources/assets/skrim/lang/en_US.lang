@@ -10,6 +10,20 @@ achievement.ding_master.desc=Get any skill to level 100
 achievement.ding_master=Ding! Master
 achievement.found_skills.desc=Click the skills button on the inventory screen
 achievement.found_skills=Finding Skills
+advancements.found_skills.title=Skrim!
+advancements.found_skills.description=Hey, you. You're finally awake. You were trying to cross the border, right?
+advancements.ding_apprentice.title=Ding! Apprentice!
+advancements.ding_apprentice.desc=Get any skill to level 25.
+
+advancements.ding_journeyman.title=Ding! Journeyman!
+advancements.ding_journeyman.desc=Get any skill to level 50.
+
+advancements.ding_expert.title=Ding! Expert!
+advancements.ding_expert.desc=Get any skill to level 75.
+
+advancements.ding_master.title=Ding! Master!
+advancements.ding_master.desc=Get any skill to level 100.
+
 entity.bio_creeper.name=Bio Creeper
 entity.fox.name=Fox
 entity.mega_chicken.name=Mega Chicken

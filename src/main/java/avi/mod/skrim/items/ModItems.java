@@ -180,7 +180,7 @@ public class ModItems {
   public static CustomSword OBSIDIAN_SWORD = new CustomSword("obsidian_sword", OBSIDIAN_TOOL);
   public static CustomHoe OBSIDIAN_HOE = new CustomHoe("obsidian_hoe", OBSIDIAN_TOOL);
   public static CustomSpade OBSIDIAN_SHOVEL = new CustomSpade("obsidian_spade", OBSIDIAN_TOOL);
-  public static CustomAxe OBSIDIAN_AXE = new CustomAxe("obsidian_axe", OBSIDIAN_TOOL);
+  public static CustomAxe OBSIDIAN_AXE = new CustomAxe("obsidian_axe", OBSIDIAN_TOOL, 8F, -3F);
   public static CustomPickaxe OBSIDIAN_PICKAXE = new CustomPickaxe("obsidian_pickaxe", OBSIDIAN_TOOL);
 
 
