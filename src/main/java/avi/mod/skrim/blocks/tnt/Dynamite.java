@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class Dynamite extends BlockTNT implements ItemModelProvider {
+public class Dynamite extends BlockTNT {
 
   public String name;
 
@@ -25,12 +25,6 @@ public class Dynamite extends BlockTNT implements ItemModelProvider {
     this.name = "dynamite";
     this.setUnlocalizedName(name);
     this.setRegistryName(name);
-  }
-
-  @Override
-  public void registerItemModel(Item itemBlock) {
-    Skrim.proxy.registerItemRenderer(itemBlock, 0, name);
-    this.setCreativeTab(Skrim.creativeTab);
   }
 
   @Override

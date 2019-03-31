@@ -1,8 +1,7 @@
 package avi.mod.skrim;
 
-import avi.mod.skrim.proxy.CommonProxy;
+import avi.mod.skrim.proxy.ServerProxy;
 import net.minecraftforge.common.config.Configuration;
-import org.apache.logging.log4j.Level;
 
 public class Config {
 
@@ -14,7 +13,7 @@ public class Config {
   public static int dimensionId = 100;
 
   public static void readConfig() {
-    Configuration cfg = CommonProxy.config;
+    Configuration cfg = ServerProxy.config;
     try {
       cfg.load();
       initGeneralConfig(cfg);

@@ -44,7 +44,10 @@ public class WeirwoodCoords extends WorldSavedData {
 
   public static boolean validCoord(EntityPlayer player, BlockPos pos) {
     World world = player.getEntityWorld();
+    System.out.println("testing is valid Coord");
     for (int modHeight = 0; modHeight <= 2; modHeight++) {
+      BlockPos asdf = new BlockPos(pos.getX(), pos.getY() + modHeight, pos.getZ());
+      System.out.println(world.getBlockState(asdf));
       if (!PlayerPlacedBlocks.isNaturalBlock(world, new BlockPos(pos.getX(), pos.getY() + modHeight, pos.getZ())))
         return false;
     }

@@ -8,6 +8,12 @@ import javassist.bytecode.MethodInfo;
 
 import java.io.IOException;
 
+/**
+ * Hey future me, here's what you're looking for:
+ * https://web.archive.org/web/20141014195801/http://dhruba.name/2010/02/07/creation-dynamic-loading-and-instrumentation-with-javaagents/
+ * https://henning.kropponline.de/2015/08/02/a-java-agent-example-javaagent/
+ */
+
 public class TestPatch {
 
   public static void go() {

@@ -13,6 +13,12 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.MathHelper;
 
+/**
+ * Dear god. Not in the mood to deal with this pile of shit right now.
+ *
+ * Similar to the ArmorOverlay this code is mostly copied from the existing GuiIngame.java code, look for the health
+ * section, good luck future me.
+ */
 public class HealthOverlay extends Gui {
 	
 	private Minecraft mc;

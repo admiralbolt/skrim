@@ -9,7 +9,13 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import java.io.IOException;
 
+/**
+ * Add the Skills button to the players inventory!
+ */
 public class CustomGuiInventory extends GuiInventory {
+
+  private static final int SKILL_BUTTON_WIDTH = 176;
+  private static final int SKILL_BUTTON_HEIGHT = 20;
 
   private GuiButton skillTab;
   private EntityPlayer player;
@@ -22,10 +28,9 @@ public class CustomGuiInventory extends GuiInventory {
   @Override
   public void initGui() {
     super.initGui();
-    int buttonWidth = 176;
-    int buttonHeight = 20;
-    this.skillTab = new GuiButton(1337, this.guiLeft, this.guiTop - buttonHeight - 1, buttonWidth, buttonHeight,
-				"Skills");
+    this.skillTab = new GuiButton(1337, this.guiLeft, this.guiTop - SKILL_BUTTON_HEIGHT - 1, SKILL_BUTTON_WIDTH,
+        SKILL_BUTTON_HEIGHT,
+        "Skills");
     this.buttonList.add(this.skillTab);
   }
 
@@ -34,9 +39,7 @@ public class CustomGuiInventory extends GuiInventory {
     if (button == this.skillTab) {
       SkrimPacketHandler.INSTANCE.sendToServer(new AdvancementPacket(ModAdvancements.FOUND_SKILLS.name));
       this.mc.displayGuiScreen(new SkillScreen(this.guiLeft, this.guiTop));
-      if (this.mc.currentScreen == null) {
-        this.mc.setIngameFocus();
-      }
+      if (this.mc.currentScreen == null) this.mc.setIngameFocus();
     }
     super.actionPerformed(button);
   }

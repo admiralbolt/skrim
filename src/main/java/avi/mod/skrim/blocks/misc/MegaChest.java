@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MegaChest extends BlockContainer implements ItemModelProvider {
+public class MegaChest extends BlockContainer {
 
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
@@ -53,11 +53,6 @@ public class MegaChest extends BlockContainer implements ItemModelProvider {
 
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new MegaChestTileEntity();
-	}
-
-	@Override
-	public void registerItemModel(Item itemBlock) {
-		Skrim.proxy.registerItemRenderer(itemBlock, 0, this.name);
 	}
 
 	@SideOnly(Side.CLIENT)

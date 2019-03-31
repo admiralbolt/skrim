@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CustomItem extends Item implements ItemModelProvider {
+public class CustomItem extends Item {
 
 	protected String name;
 
@@ -38,11 +38,6 @@ public class CustomItem extends Item implements ItemModelProvider {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
-	}
-
-	@Override
-	public void registerItemModel(Item item) {
-		Skrim.proxy.registerItemRenderer(this, 0, this.name);
 	}
 
 	@Override

@@ -95,14 +95,28 @@ public class WeirwoodWood extends BlockBase {
     return 0;
   }
 
+  public static BlockPos getBottomOfTree(World worldIn, BlockPos pos) {
+    while (worldIn.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())) == ModBlocks.WEIRWOOD_WOOD.getDefaultState()) {
+      pos = pos.add(0, -1, 0);
+    }
+    return pos;
+  }
+
   @Override
   public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
                                   EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    System.out.println("\n\nIsRemote: " + worldIn.isRemote);
     ItemStack heldItem = playerIn.getHeldItem(hand);
+    // Normalize the activated position to the bottom of the tree.
+    pos = getBottomOfTree(worldIn, pos);
+    System.out.println("Normalized position: " + pos);
     if (!WeirwoodCoords.validCoord(playerIn, pos)) return false;
+    System.out.println("iiiiits valid");
     if (!playerIn.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) return false;
     SkillWoodcutting woodcutting = (SkillWoodcutting) playerIn.getCapability(Skills.WOODCUTTING, EnumFacing.NORTH);
     if (!woodcutting.hasAbility(4)) return false;
+
+    System.out.println("Highly suspicious.");
 
     // Set the home base tree if the player is holding a weirwood totem.
     if (heldItem.getItem() == ModItems.WEIRWOOD_TOTEM) {
@@ -112,6 +126,8 @@ public class WeirwoodWood extends BlockBase {
 
     // Otherwise teleport the player to their home base tree.
     if (worldIn.isRemote) return false;
+
+    System.out.println("Do some portin");
 
     BlockPos teleportLoc = WeirwoodCoords.getCoord(playerIn);
     // Make sure we don't teleport a player to the tree they are standing at.

@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITileEntityProvider {
+public class CustomCakeBlock extends BlockCake implements ITileEntityProvider {
 
   private String name;
 
@@ -111,11 +111,6 @@ public class CustomCakeBlock extends BlockCake implements ItemModelProvider, ITi
     if (newCake instanceof CakeTileEntity) {
       ((CakeTileEntity) newCake).setLevel(level);
     }
-  }
-
-  @Override
-  public void registerItemModel(Item itemBlock) {
-    Skrim.proxy.registerItemRenderer(itemBlock, 0, this.name);
   }
 
   @Override
