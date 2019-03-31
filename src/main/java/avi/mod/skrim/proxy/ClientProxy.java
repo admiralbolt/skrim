@@ -4,7 +4,6 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.advancements.ModAdvancements;
 import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.client.renderer.CustomRenderers;
-import avi.mod.skrim.client.renderer.tileentity.SkrimTileEntityItemRenderer;
 import avi.mod.skrim.entities.ModEntities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
@@ -16,7 +15,6 @@ import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
@@ -27,6 +25,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import javax.annotation.Nullable;
 
+/**
+ * Most of the interesting registration stuff goes here. Not entirely sure what the point of ServerProxy is yet, but
+ * I'll keep it around just in case.
+ */
 public class ClientProxy implements IProxy {
 
 
