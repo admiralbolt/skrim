@@ -98,38 +98,4 @@ public class ClientProxy implements IProxy {
     return null;
   }
 
-//	@Override
-//	public void init(FMLInitializationEvent event) {
-//		super.init(event);
-//		MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
-//		CustomRenderers.register();
-//		TileEntityItemStackRenderer.instance = new SkrimTileEntityItemRenderer();
-//		SkrimEntitySpawnHandler.init();
-//	}
-//	@Override
-//	public void registerItemRenderer(Item item, int meta, String id) {
-//		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Skrim.modId + ":" + id,
-//		"inventory"));
-//	}
-//
-//	@Override
-//	public void registerMinecraftItemRenderer(Item item, int meta, String resource) {
-//		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(resource));
-//	}
-//
-//	@Override
-//	public void registerBowVariants(CustomBow customBow) {
-//		String[] bowNames = {"standby", "pulling_0", "pulling_1", "pulling_2"};
-//		for (String resourceName : bowNames) {
-//			ModelResourceLocation resource = new ModelResourceLocation(Skrim.modId + ":" + customBow.getUnlocalizedName()
-//			+ "_" + resourceName);
-//			ModelBakery.registerItemVariants(customBow, resource);
-//		}
-//	}
-//
-//	@Override
-//	public EntityPlayer getPlayerEntity(MessageContext context) {
-//		return (context.side.isClient()) ? Minecraft.getMinecraft().player : super.getPlayerEntity(context);
-//	}
-
 }
