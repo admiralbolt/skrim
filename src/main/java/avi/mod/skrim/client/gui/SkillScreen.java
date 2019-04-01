@@ -6,7 +6,6 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,56 +22,53 @@ import java.util.List;
  */
 public class SkillScreen extends GuiScreen {
 
-  private static final double SCROLL_MULTIPLIER = 0.03;
+  //======== Scroll Bar ========//
+  private static final int MAX_SCROLL = 490;
+  private static final int SCROLL_BAR_WIDTH = 6;
+  private static final int SCROLL_BAR_HEIGHT = 40;
+  private static final int SCROLL_PADDING_LEFT = 5;
+  private static final double SCROLL_SPEED = 0.03;
+
+  //======== Global ========//
+  private static final int HEADER_COLOR = 0xFF333333;
+  private static final int PADDING_TOP = 5;
+  private static final int PADDING_BOTTOM = 5;
+  private static final int PADDING_RIGHT = 5;
+
+  //======== Skills ========//
+  private static final int TITLE_HEIGHT = 30;
+  private static final int TITLE_PADDING_LEFT = 5;
+  private static final int DIVIDER_PADDING = 2;
+  private static final int DIVIDER_COLOR = 0xFFAAAAAA;
+  private static final int SKILL_PADDING_LEFT = 5;
+  private static final int SKILL_HEIGHT = 39;
+  private static final int SKILL_ICON_SIZE = 32;
+  private static final int SKILL_PADDING_DESC = 5;
+  private static final int SKILL_PADDING_TOP = 10 + DIVIDER_PADDING;
+  private static final int SKILL_HEADER_HEIGHT = 11;
+
+  //======== Abilities ========//
+  private static final int ABILITY_ICON_SIZE = 16;
+  private static final int ABILITY_ICON_PADDING = 10;
+
+  //========Level Up Bar========//
+  private static final int LEVEL_BAR_HEIGHT = 9;
+  private static final int LEVEL_BAR_WIDTH =
+      176 - PADDING_RIGHT - SCROLL_BAR_WIDTH - SCROLL_PADDING_LEFT - SKILL_PADDING_LEFT;
+  private static final int LEVEL_BAR_COLOR = 0x8055dd55;
+  private static final int LEVEL_BAR_TEXT_COLOR = 0xFFFFFFFF;
 
   private GuiButton inventoryTab;
   private int left;
   private int top;
-  /**
-   * Current scroll position
-   */
   private int scrollY = 0;
-  /**
-   * Max scroll position.
-   */
-  private int maxScroll = 490;
-  private int scrollBarWidth = 6;
-  private int scrollBarHeight = 40;
-  private int scrollPaddingLeft = 5;
-  private int paddingTop = 5;
-  private int paddingBottom = 5;
-  private int paddingRight = 5;
-
-  private int titleHeight = 30;
-  private int titlePaddingLeft = 5;
-
-  private int dividerPadding = 2;
-  private int skillPaddingLeft = 5;
-  private int skillHeight = 39;
-  private int skillIconSize = 32;
-  private int skillPaddingDesc = 5;
-  private int skillPaddingTop = 10 + this.dividerPadding;
-  private int skillHeaderHeight = 11;
   private int levelTextLeft;
-
-  private int abilityIconSize = 16;
-  private int abilityIconPadding = 10;
-
-  private int levelBarHeight = 9;
-  private int levelBarWidth =
-			176 - this.paddingRight - this.scrollBarWidth - this.scrollPaddingLeft - this.skillPaddingLeft;
-
-  private int headerColor = 0xFF333333;
-  private int levelBarColor = 0x8055dd55;
-  private int levelBarTextColor = 0xFFFFFFFF;
-  private int dividerColor = 0xFFAAAAAA;
-
   private int boundTop;
   private int boundBottom;
 
   private EntityPlayer player;
 
-  public SkillScreen(int left, int top) {
+  private SkillScreen(int left, int top) {
     super();
     this.left = left;
     this.top = top;
@@ -86,63 +82,57 @@ public class SkillScreen extends GuiScreen {
     this.drawDefaultBackground();
     this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim", "textures/guis/skills/background.png"));
     this.drawTexturedModalRect(this.left, this.top, 0, 0, 176, 176);
+    super.drawScreen(mouseX, mouseY, partialTicks);
     this.drawScrollBar();
     this.drawTitleBar();
     this.drawSkills(mouseX, mouseY);
-    super.drawScreen(mouseX, mouseY, partialTicks);
   }
 
-  public void drawScrollBar() {
+  private void drawScrollBar() {
+    // How far down the scroll bar is actually scrolled.
     int adjust =
-				(int) Math.floor(((double) this.scrollY / this.maxScroll) * (176 - this.scrollBarHeight - this.paddingTop - this.paddingBottom - 10));
-    int left = this.left + this.scrollPaddingLeft;
-    int top = this.top + this.paddingTop + adjust;
-    int right = left + this.scrollBarWidth;
-    int bottom = top + this.scrollBarHeight;
+        (int) Math.floor(((double) this.scrollY / MAX_SCROLL) * (176 - SCROLL_BAR_HEIGHT - PADDING_TOP - PADDING_BOTTOM - 10));
+    int left = this.left + SCROLL_PADDING_LEFT;
+    int top = this.top + PADDING_TOP + adjust;
+    int right = left + SCROLL_BAR_WIDTH;
+    int bottom = top + SCROLL_BAR_HEIGHT;
     drawRect(left, top, right, bottom, 0xAAAAAAAA);
   }
 
-  public void drawTitleBar() {
-    int textLeft = this.left + this.scrollPaddingLeft + this.scrollBarWidth + this.titlePaddingLeft;
-    int titleTop = this.top + this.paddingTop - this.scrollY;
+  private void drawTitleBar() {
+    int textLeft = this.left + SCROLL_PADDING_LEFT + SCROLL_BAR_WIDTH + TITLE_PADDING_LEFT;
+    int titleTop = this.top + PADDING_TOP - this.scrollY;
     if (shouldRender(titleTop, titleTop + 7)) {
       this.mc.fontRenderer.drawString("Total Skill Level: " + Skills.getTotalSkillLevels(this.player), textLeft,
-					titleTop, this.headerColor);
+          titleTop, HEADER_COLOR);
     }
     if (shouldRender(titleTop + 12, titleTop + 19)) {
       this.mc.fontRenderer.drawString("Total Experience Boost: " + Utils.formatPercent(Skills.getTotalXpBonus(this.player)) + "%", textLeft,
-          titleTop + 12, this.headerColor);
+          titleTop + 12, HEADER_COLOR);
     }
     if (shouldRender(titleTop + 23, titleTop + 25)) {
-      this.drawHorizontalLine(textLeft, textLeft + this.levelBarWidth, titleTop + 24, this.dividerColor);
+      this.drawHorizontalLine(textLeft, textLeft + LEVEL_BAR_WIDTH, titleTop + 24, DIVIDER_COLOR);
     }
   }
 
-  public void drawSkills(int mouseX, int mouseY) {
-    List<Integer> leftValues = new ArrayList<Integer>();
-    List<Integer> topValues = new ArrayList<Integer>();
-    List<Skill> skills = new ArrayList<Skill>();
+  private void drawSkills(int mouseX, int mouseY) {
+    List<Integer> topValues = new ArrayList<>();
+    List<Skill> skills = new ArrayList<>();
     for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
       skills.add((Skill) this.player.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH));
-      leftValues.add(this.left + this.scrollPaddingLeft + this.scrollBarWidth + this.skillPaddingLeft);
-      int top = this.top + this.titleHeight + this.paddingTop - this.scrollY + i * this.skillHeight;
+      int top = this.top + TITLE_HEIGHT + PADDING_TOP - this.scrollY + i * SKILL_HEIGHT;
       if (i > 0) {
-        top += this.skillPaddingTop * i;
+        top += SKILL_PADDING_TOP * i;
       }
       topValues.add(top);
     }
-    /**
-     * I really wish I could just control the goddamn z-index of any gui
-     * element. Since we can't, we have to control the order we draw things
-     * in. IE loop over the skills first THEN the functions.
-     *
-     * Hello again, time to make this worse. We want to draw ability icons
-     * AND hover text which means two more in the right places!
-     */
+    int left = this.left + SCROLL_PADDING_LEFT + SCROLL_BAR_WIDTH + SKILL_PADDING_LEFT;
+
+    // The z-index of gui elements can't be controlled, instead the order in which they are written determines the
+    // z-index. Priority is given to later elements, so things like hover text need to be drawn last.
     for (int q = 0; q <= 5; q++) {
       for (int i = 0; i < skills.size(); i++) {
         Skill skill = skills.get(i);
-        int left = leftValues.get(i);
         int top = topValues.get(i);
         if (q == 0) {
           this.drawSkillHeader(skill, left, top);
@@ -154,72 +144,86 @@ public class SkillScreen extends GuiScreen {
           this.drawAbilityIcons(skill, left, top);
         } else if (q == 4) {
           this.drawAbilityHoverText(skill, left, top, mouseX, mouseY);
-        } else if (q == 5) {
+        } else {
           this.drawSkillHoverText(skill, left, top, mouseX, mouseY);
         }
       }
     }
   }
 
-  public void drawSkillHeader(Skill skill, int left, int top) {
-    int textLeft = left + this.skillPaddingDesc + this.skillIconSize;
-    if (this.shouldRender(top, top + 7)) {
-      this.mc.fontRenderer.drawString(skill.name, textLeft, top, this.headerColor);
-      this.mc.fontRenderer.drawString("Level " + skill.level, this.levelTextLeft, top, this.headerColor);
-    }
+  /**
+   * Draws the title of the skill!
+   */
+  private void drawSkillHeader(Skill skill, int left, int top) {
+    int textLeft = left + SKILL_PADDING_DESC + SKILL_ICON_SIZE;
+
+    if (!this.shouldRender(top, top + 7)) return;
+    this.mc.fontRenderer.drawString(skill.name, textLeft, top, HEADER_COLOR);
+    this.mc.fontRenderer.drawString("Level " + skill.level, this.levelTextLeft, top, HEADER_COLOR);
   }
 
-  public void drawSkillLevelUp(Skill skill, int left, int top) {
-    int levelLeft = left;
-    int levelTop = top + this.skillIconSize + this.dividerPadding;
-    int levelRight = levelLeft + (int) Math.floor(this.levelBarWidth * skill.getPercentToNext());
-    int levelBottom = levelTop + this.levelBarHeight;
-    if (shouldRender(levelTop, levelBottom)) {
-      drawRect(levelLeft, levelTop, levelRight, levelBottom, this.levelBarColor);
-      String levelText = skill.getIntXp() + " / " + skill.getNextLevelTotal();
-      int levelTextWidth = this.mc.fontRenderer.getStringWidth(levelText);
-      int levelTextLeft = levelLeft + (this.levelBarWidth / 2) - (int) ((double) levelTextWidth / 2);
-      this.mc.fontRenderer.drawString(levelText, levelTextLeft, levelTop + 1, this.levelBarTextColor);
-    }
+  /**
+   * Draw the experience / level up bar beneath each skill.
+   */
+  private void drawSkillLevelUp(Skill skill, int left, int top) {
+    int levelTop = top + SKILL_ICON_SIZE + DIVIDER_PADDING;
+    int levelRight = left + (int) Math.floor(LEVEL_BAR_WIDTH * skill.getPercentToNext());
+    int levelBottom = levelTop + LEVEL_BAR_HEIGHT;
+
+    if (!shouldRender(levelTop, levelBottom)) return;
+    drawRect(left, levelTop, levelRight, levelBottom, LEVEL_BAR_COLOR);
+    String levelText = skill.getIntXp() + " / " + skill.getNextLevelTotal();
+    int levelTextWidth = this.mc.fontRenderer.getStringWidth(levelText);
+    int levelTextLeft = left + (LEVEL_BAR_WIDTH / 2) - (int) ((double) levelTextWidth / 2);
+    this.mc.fontRenderer.drawString(levelText, levelTextLeft, levelTop + 1, LEVEL_BAR_TEXT_COLOR);
   }
 
-  public void drawSkillIcon(Skill skill, int left, int top) {
+  /**
+   * Draw a skill at the target spot. Respects the bound of the skills window so no overflowing will occur.
+   */
+  private void drawSkillIcon(Skill skill, int left, int top) {
     this.mc.getTextureManager().bindTexture(GuiUtils.SKILL_ICONS);
     GuiUtils.drawIconWithBounds(this, left, top, skill.getIcon(), this.boundTop, this.boundBottom);
   }
 
-  public void drawSkillHoverText(Skill skill, int left, int top, int mouseX, int mouseY) {
-    if (shouldRender(top, top + this.skillIconSize)) {
-      if (Utils.isPointInRegion(left, top, left + this.skillIconSize, top + this.skillIconSize, mouseX, mouseY)) {
-        this.drawHoveringText(skill.getToolTip(), mouseX, mouseY);
-      }
-    }
+  /**
+   * Draw the skill description text if the skill is hovered.
+   */
+  private void drawSkillHoverText(Skill skill, int left, int top, int mouseX, int mouseY) {
+    if (!Utils.isPointInRegion(left, top, left + SKILL_ICON_SIZE, top + SKILL_ICON_SIZE, mouseX, mouseY)) return;
+    this.drawHoveringText(skill.getToolTip(), mouseX, mouseY);
   }
 
+  /**
+   * Draw the ability icons for a given skill.
+   */
   private void drawAbilityIcons(Skill skill, int left, int top) {
-    int startLeft = left + this.skillPaddingDesc + this.skillIconSize;
-    int abilityTop = top + this.skillHeaderHeight;
+    int startLeft = left + SKILL_PADDING_DESC + SKILL_ICON_SIZE;
+    int abilityTop = top + SKILL_HEADER_HEIGHT;
     this.mc.getTextureManager().bindTexture(GuiUtils.ABILITY_ICONS);
+
     for (int i = 1; i <= 4; i++) {
-      int abilityLeft = startLeft + (i - 1) * (this.abilityIconSize + this.abilityIconPadding);
+      int abilityLeft = startLeft + (i - 1) * (ABILITY_ICON_SIZE + ABILITY_ICON_PADDING);
       Icon icon = skill.getAbilityIcon(i);
       GuiUtils.drawIconWithBounds(this, abilityLeft, abilityTop, icon, this.boundTop, this.boundBottom);
     }
   }
 
+  /**
+   * Draw the ability description text if the ability is hovered.
+   * <p>
+   * The bounding box for each ability is created and tested individually for the given skill.
+   */
   private void drawAbilityHoverText(Skill skill, int left, int top, int mouseX, int mouseY) {
-    int startLeft = left + this.skillPaddingDesc + this.skillIconSize;
-    int abilityTop = top + this.skillHeaderHeight;
-    int abilityBottom = abilityTop + this.abilityIconSize;
-    if (shouldRender(abilityTop, abilityBottom)) {
-      for (int i = 1; i <= 4; i++) {
-        int abilityLeft = startLeft + (i - 1) * (this.abilityIconSize + this.abilityIconPadding);
-        int abilityRight = abilityLeft + this.abilityIconSize;
-        if (Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) {
-          this.drawHoveringText(SkillAbility.getAbilityTooltip(skill.getAbility(i), skill.hasAbility(i)), mouseX,
-							mouseY);
-        }
-      }
+    int startLeft = left + SKILL_PADDING_DESC + SKILL_ICON_SIZE;
+    int abilityTop = top + SKILL_HEADER_HEIGHT;
+    int abilityBottom = abilityTop + ABILITY_ICON_SIZE;
+
+    for (int i = 1; i <= 4; i++) {
+      int abilityLeft = startLeft + (i - 1) * (ABILITY_ICON_SIZE + ABILITY_ICON_PADDING);
+      int abilityRight = abilityLeft + ABILITY_ICON_SIZE;
+      if (!Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) continue;
+      this.drawHoveringText(SkillAbility.getAbilityTooltip(skill.getAbility(i), skill.hasAbility(i)), mouseX, mouseY);
     }
   }
 
@@ -265,13 +269,10 @@ public class SkillScreen extends GuiScreen {
   public void handleMouseInput() throws IOException {
     int i = Mouse.getEventDWheel();
     if (i != 0) {
-      /**
-       * Scrolling DOWN is a negative number. Scrolling UP is a positive
-       * number. However, 0 is our lowest scroll y, so we can always
-       * subtract.
-       */
-      this.scrollY -= (int) Math.floor(SCROLL_MULTIPLIER * i);
-      this.scrollY = Math.max(Math.min(this.scrollY, this.maxScroll), 0);
+      // Scrolling DOWN is a negative number. Scrolling UP is a positive number. We scroll based on the scroll speed,
+      // and then keep the resulting scroll position in bounds.
+      this.scrollY -= (int) Math.floor(SCROLL_SPEED * i);
+      this.scrollY = Math.max(Math.min(this.scrollY, MAX_SCROLL), 0);
     }
     super.handleMouseInput();
   }
