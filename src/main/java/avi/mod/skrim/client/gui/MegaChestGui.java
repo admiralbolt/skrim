@@ -4,6 +4,7 @@ import avi.mod.skrim.inventory.MegaChestContainer;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SortChestPacket;
 import avi.mod.skrim.tileentity.MegaChestTileEntity;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The UI for the MegaChest!
@@ -27,10 +29,24 @@ public class MegaChestGui extends GuiContainer {
   private static final int NE_X = 172;
   private static final int NE_Y = 256;
 
+  private static final int PANEL_WIDTH = 120;
+
   private IInventory playerInventory;
   private MegaChestTileEntity entity;
   private String title;
   private GuiButton sortButton;
+
+  private static String[] CHEST_TITLES = {
+      "Mo chest mo problems",
+      "Mega Chest",
+      "Chest O'Mega",
+      "Slightly larger than average chest",
+      "Why do you keep feeding me garbage?",
+      "Cobblestone Hotel",
+      "Big Ass-Chest",
+      "Just a normal chest, move along",
+      "M E G A C H E S T"
+  };
 
   public MegaChestGui(IInventory playerInventory, MegaChestTileEntity entity) {
     super(new MegaChestContainer(playerInventory, entity));
@@ -40,13 +56,13 @@ public class MegaChestGui extends GuiContainer {
 
     this.xSize = 428;
     this.ySize = 256;
-    this.title = GuiUtils.getRandomChestText();
+    this.title = CHEST_TITLES[Utils.rand.nextInt(CHEST_TITLES.length)];
   }
 
   @Override
   public void initGui() {
     super.initGui();
-    sortButton = new GuiButton(1501, this.guiLeft + 7, this.guiTop + 9 * 19 + 14, 120, 20, "Sort");
+    sortButton = new GuiButton(1501, this.guiLeft + 7, this.guiTop + 9 * 19 + 28, PANEL_WIDTH, 20, "Sort");
     this.buttonList.add(sortButton);
   }
 
@@ -76,7 +92,11 @@ public class MegaChestGui extends GuiContainer {
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.fontRenderer.drawString(this.title, 69 - this.fontRenderer.getStringWidth(this.title) / 2, 9 * 19 + 1, 4210752);
+    int i = 0;
+    for (String line : this.fontRenderer.listFormattedStringToWidth(this.title, PANEL_WIDTH)) {
+      this.fontRenderer.drawString(line, 69 - this.fontRenderer.getStringWidth(line) / 2, 9 * 19 + 1 + i * 9, 4210752);
+      i++;
+    }
   }
 
 }

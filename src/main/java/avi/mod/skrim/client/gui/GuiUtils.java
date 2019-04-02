@@ -18,17 +18,7 @@ public class GuiUtils {
   public static Icon EXTRA_ARMOR_FULL = new Icon("extra_armo_full", 9, 0, 9, 9);
   public static Icon ACCURACY = new Icon("accuracy", 108, 0, 16, 16);
 
-  private static String[] RANDOM_CHEST_TITLES = {
-      "Mo chest mo problems",
-      "Mega Chest",
-      "Chest O'Mega",
-      "Slightly larger than average chest",
-      "Why do you keep feeding me garbage?",
-      "Cobblestone Hotel",
-      "Big Ass-Chest",
-      "Just a normal chest, move along",
-      "M E G A C H E S T"
-  };
+
 
   // Tracks the location of skill & ability icons in their respective textures.
   private static Map<String, Integer> SKILL_ABILITY_X = new HashMap<>();
@@ -100,10 +90,6 @@ public class GuiUtils {
     }
   }
 
-  public static String getRandomChestText() {
-    int aynRandom = Utils.rand.nextInt(RANDOM_CHEST_TITLES.length);
-    return RANDOM_CHEST_TITLES[aynRandom];
-  }
 
   /**
    * Helper class to keep track of ~10 billion icons.
