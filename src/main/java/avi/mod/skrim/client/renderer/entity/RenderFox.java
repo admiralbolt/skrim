@@ -9,6 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * Nearly identical copy of RenderWolf.java, look there for help.
+ */
 @SideOnly(Side.CLIENT)
 public class RenderFox extends RenderLiving<EntityFox> {
 	private static final ResourceLocation FOX_TEXTURES = new ResourceLocation("skrim:textures/entities/fox.png");

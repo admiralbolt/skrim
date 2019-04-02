@@ -4,23 +4,23 @@
     "model": "skrim:mega_chest"
   },
   "variants": {
-    "normal": [{
+    "normal": {
       "model": "skrim:mega_chest"
-    }],
-    "inventory": [{
-      "model": "minecraft:chest"
-    }],
-    "facing=north": [{
+    },
+    "inventory": {
       "model": "skrim:mega_chest"
-    }],
-    "facing=south": [{
+    },
+    "facing=north": {
       "model": "skrim:mega_chest"
-    }],
-    "facing=east": [{
+    },
+    "facing=south": {
       "model": "skrim:mega_chest"
-    }],
-    "facing=west": [{
+    },
+    "facing=east": {
       "model": "skrim:mega_chest"
-    }]
+    },
+    "facing=west": {
+      "model": "skrim:mega_chest"
+    }
   }
 }
