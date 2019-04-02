@@ -12,10 +12,8 @@ public class NapalmCreeper extends CustomCreeper {
 	
 	@Override
 	public Explosion getExplosion() {
-		boolean flag = this.world.getGameRules().getBoolean("mobGriefing");
 		float f = this.getPowered() ? 2.0F : 1.0F;
-		NapalmExplosion explosion = new NapalmExplosion(this.world, this, this.posX, this.posY, this.posZ, NapalmExplosion.DEFAULT_SIZE * f);
-		return explosion;
+		return new NapalmExplosion(this.world, this, this.posX, this.posY, this.posZ, NapalmExplosion.DEFAULT_SIZE * f, this.world.getGameRules().getBoolean("mobGriefing"));
 	}
 
 }

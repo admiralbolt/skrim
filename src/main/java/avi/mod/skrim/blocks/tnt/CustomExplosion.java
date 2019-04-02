@@ -34,8 +34,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class CustomExplosion extends Explosion {
 	/** whether or not the explosion sets fire to blocks around it */
 	private final boolean isFlaming;
-	/** whether or not this explosion spawns smoke particles */
-	private final boolean isSmoking;
+	/** Whether or not to damage terrain. */
+	public final boolean damagesTerrain;
 	private final Random explosionRNG;
 	private final World worldObj;
 	private final double explosionX;
@@ -55,13 +55,13 @@ public class CustomExplosion extends Explosion {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public CustomExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean smoking, List<BlockPos> affectedPositions) {
-		this(worldIn, entityIn, x, y, z, size, flaming, smoking);
+	public CustomExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean damagesTerrain, List<BlockPos> affectedPositions) {
+		this(worldIn, entityIn, x, y, z, size, flaming, damagesTerrain);
 		this.affectedBlockPositions.addAll(affectedPositions);
 	}
 
-	public CustomExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean smoking) {
-		super(worldIn, entityIn, x, y, z, size, flaming, smoking);
+	public CustomExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean flaming, boolean damagesTerrain) {
+		super(worldIn, entityIn, x, y, z, size, flaming, damagesTerrain);
 		this.explosionRNG = new Random();
 		this.affectedBlockPositions = Lists.<BlockPos>newArrayList();
 		this.playerKnockbackMap = Maps.<EntityPlayer, Vec3d>newHashMap();
@@ -72,7 +72,7 @@ public class CustomExplosion extends Explosion {
 		this.explosionY = y;
 		this.explosionZ = z;
 		this.isFlaming = flaming;
-		this.isSmoking = smoking;
+		this.damagesTerrain = damagesTerrain;
 		this.position = new Vec3d(explosionX, explosionY, explosionZ);
 		this.dropChance = 1.0F / this.explosionSize;
 	}
@@ -182,15 +182,15 @@ public class CustomExplosion extends Explosion {
 	 */
 	@Override
 	public void doExplosionB(boolean spawnParticles) {
-		this.worldObj.playSound((EntityPlayer) null, this.explosionX, this.explosionY, this.explosionZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+		this.worldObj.playSound(null, this.explosionX, this.explosionY, this.explosionZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
 
-		if (this.explosionSize >= 2.0F && this.isSmoking) {
+		if (this.explosionSize >= 2.0F && this.damagesTerrain) {
 			this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, this.explosionX, this.explosionY, this.explosionZ, 1.0D, 0.0D, 0.0D, new int[0]);
 		} else {
 			this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, this.explosionX, this.explosionY, this.explosionZ, 1.0D, 0.0D, 0.0D, new int[0]);
 		}
 
-		if (this.isSmoking) {
+		if (this.damagesTerrain) {
 			for (BlockPos blockpos : this.affectedBlockPositions) {
 				IBlockState iblockstate = this.worldObj.getBlockState(blockpos);
 				Block block = iblockstate.getBlock();
