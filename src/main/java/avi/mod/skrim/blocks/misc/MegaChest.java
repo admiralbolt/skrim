@@ -41,7 +41,6 @@ public class MegaChest extends BlockContainer {
 		this.setUnlocalizedName(this.name);
 		this.setRegistryName(this.name);
 		this.setHardness(2.0F);
-		setCreativeTab(Skrim.creativeTab);
 
 		// Doesn't exist anymore, not sure if it's relevant or not.
 		// this.isBlockContainer = true;

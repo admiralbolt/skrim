@@ -63,7 +63,6 @@ public final class ModBlocks {
   public static WeirwoodWood WEIRWOOD_WOOD = new WeirwoodWood();
   public static WeirwoodLeaf WEIRWOOD_LEAF = new WeirwoodLeaf();
   public static MegaChest MEGA_CHEST = new MegaChest();
-  public static Set<Item> FLOWER_ITEMS = new HashSet<>();
 
   @Mod.EventBusSubscriber(modid = Skrim.modId)
   public static class RegistrationHandler {
@@ -121,6 +120,8 @@ public final class ModBlocks {
           "CustomTNTPrimed", 17654, Skrim.instance, 20,
           5, true);
       for (final Block block : ALL_BLOCKS) {
+        System.out.println("registering block: " + block);
+        System.out.println("unlocalizedName: " + block.getUnlocalizedName() + ", registryName: " + block.getRegistryName());
         block.setCreativeTab(Skrim.creativeTab);
         registry.register(block);
       }

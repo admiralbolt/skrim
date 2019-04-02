@@ -8,7 +8,7 @@
       "model": "skrim:mega_chest"
     }],
     "inventory": [{
-      "model": "skrim:mega_chest"
+      "model": "minecraft:chest"
     }],
     "facing=north": [{
       "model": "skrim:mega_chest"
