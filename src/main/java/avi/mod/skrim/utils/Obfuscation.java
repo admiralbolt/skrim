@@ -47,7 +47,7 @@ public class Obfuscation {
 
   /**
    * A helper class for managing obfuscated fields. We preserve a mapping between
-   * the real name and the obfuscated name, that way using reflection and setting
+   * the real NAME and the obfuscated NAME, that way using reflection and setting
    * values works on both the dev environment (de-obfuscated) and the prod
    * environment (obfuscated).
    */

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
  * Registers all models for skrim blocks. Interesting logic is located in BlockRegistrationUtils, list of blocks is
  * located in ModBlocks.
  */
-@Mod.EventBusSubscriber(value = Side.CLIENT, modid = Skrim.modId)
+@Mod.EventBusSubscriber(value = Side.CLIENT, modid = Skrim.MOD_ID)
 public class ModelManager {
 
   @SubscribeEvent

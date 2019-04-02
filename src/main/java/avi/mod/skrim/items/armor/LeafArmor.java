@@ -57,7 +57,7 @@ public class LeafArmor extends CustomArmor {
   }
 
   /**
-   * Maps the plank enum -> material. All the materials defined above are identical in stats, but differ based on name
+   * Maps the plank enum -> material. All the materials defined above are identical in stats, but differ based on NAME
    * to have a slightly altered appearance.
    *
    * @param plankType The plank type of the tree where the leaf armor came from.

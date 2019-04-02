@@ -31,7 +31,7 @@ public class BlockRegistrationUtils {
   /**
    * Register a single model for an {@link Item}.
    * <p>
-   * Uses the registry name as the domain/path and {@code "inventory"} as the variant.
+   * Uses the registry NAME as the domain/path and {@code "inventory"} as the variant.
    *
    * @param item The Item
    */
@@ -70,7 +70,7 @@ public class BlockRegistrationUtils {
    * {@link IProperty}.
    * <p>
    * For each value:
-   * <li>The domain/path is the registry name</li>
+   * <li>The domain/path is the registry NAME</li>
    * <li>The variant is {@code baseState} with the {@link IProperty} set to the value</li>
    * <p>
    * The {@code getMeta} function is used to get the metadata of each value.
@@ -90,7 +90,7 @@ public class BlockRegistrationUtils {
   /**
    * Register a single model for the {@link Block}'s {@link Item}.
    * <p>
-   * Uses the registry name as the domain/path and the {@link IBlockState} as the variant.
+   * Uses the registry NAME as the domain/path and the {@link IBlockState} as the variant.
    *
    * @param state The state to use as the variant
    */
@@ -111,7 +111,7 @@ public class BlockRegistrationUtils {
   /**
    * Register a model for a metadata value of the {@link Block}'s {@link Item}.
    * <p>
-   * Uses the registry name as the domain/path and the {@link IBlockState} as the variant.
+   * Uses the registry NAME as the domain/path and the {@link IBlockState} as the variant.
    *
    * @param state    The state to use as the variant
    * @param metadata The item metadata to register the model for
@@ -127,7 +127,7 @@ public class BlockRegistrationUtils {
   /**
    * Register a model for a metadata value an {@link Item}.
    * <p>
-   * Uses the registry name as the domain/path and {@code variant} as the variant.
+   * Uses the registry NAME as the domain/path and {@code variant} as the variant.
    *
    * @param item     The Item
    * @param metadata The metadata

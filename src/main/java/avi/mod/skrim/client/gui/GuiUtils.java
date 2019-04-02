@@ -60,7 +60,7 @@ public class GuiUtils {
    * Gets the correct location of an ability icon based on skill & level.
    * <p>
    * textures/guis/skills/skill_abilities.png contains all the icons for the skill abilities. Texture file is a grid
-   * of 16x16 icons with the grayscale versions being 3 rows (48 pixels) lower than the full color version.
+   * of 16x16 icons with the grayscale versions being 3 rows (48 pixels) lower than the full color VERSION.
    */
   public static Icon getAbilityIcon(String skillName, int level, boolean unlocked) {
     return new Icon(skillName + "_" + level, SKILL_ABILITY_X.get(skillName) + (level - 1) * 16,

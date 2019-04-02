@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * All custom advancements will be registered here. The advancements that don't need a custom trigger can be done purely
  * in json. Look at the advancements/ folder under resources. Even advancements that need a custom trigger will still
- * need a json file defined there. Make sure the name matches exactly what you register the advancement as.
+ * need a json file defined there. Make sure the NAME matches exactly what you register the advancement as.
  * <p>
  * Also take a look at: https://github.com/skylinerw/guides/blob/master/java/advancements.md, great guide with a bunch
  * of info about advancements.
@@ -45,7 +45,7 @@ public class ModAdvancements {
 
     private CustomAdvancement(String name) {
       this.name = name;
-      this.trigger = new CustomTrigger(new ResourceLocation(Skrim.modId, name));
+      this.trigger = new CustomTrigger(new ResourceLocation(Skrim.MOD_ID, name));
     }
 
     public void grant(EntityPlayerMP player) {

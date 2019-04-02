@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class SkrimPacketHandler {
 
-	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Skrim.modId);
+	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Skrim.MOD_ID);
 	public static int PACKET_ID = 0;
 
 	public static void registerPackets() {

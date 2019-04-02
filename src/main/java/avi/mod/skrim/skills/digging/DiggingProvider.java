@@ -18,7 +18,7 @@ public class DiggingProvider {
     @CapabilityInject(ISkillDigging.class)
     public static final Capability<ISkillDigging> DIGGING = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillDigging");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillDigging");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillDigging.class, SkillDigging.skillStorage, SkillDigging.class);

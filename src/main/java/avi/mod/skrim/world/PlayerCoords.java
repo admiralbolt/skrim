@@ -26,7 +26,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 public class PlayerCoords extends WorldSavedData {
 
-	private static final String DATA_NAME = Skrim.modId + "-playerCoords";
+	private static final String DATA_NAME = Skrim.MOD_ID + "-playerCoords";
 	private static final int coordsPerPage = 5;
 
 	public Map<String, Entry<UUID, BlockPos>> coords = new HashMap<String, Entry<UUID, BlockPos>>();
@@ -58,7 +58,7 @@ public class PlayerCoords extends WorldSavedData {
 			for (int i = 0; i < listSize; i++) {
 				NBTTagCompound subTag = coordList.getCompoundTagAt(i);
 				BlockPos pos = new BlockPos(subTag.getInteger("x"), subTag.getInteger("y"), subTag.getInteger("z"));
-				String locName = subTag.getString("name");
+				String locName = subTag.getString("NAME");
 				Entry<UUID, BlockPos> entry = new SimpleEntry<UUID, BlockPos>(UUID.fromString(subTag.getString("uuid")), pos);
 				this.locs.add(pos);
 				this.coords.put(locName, entry);
@@ -100,7 +100,7 @@ public class PlayerCoords extends WorldSavedData {
 			playerCoord.setInteger("y", pos.getY());
 			playerCoord.setInteger("z", pos.getZ());
 			playerCoord.setString("uuid", uuid.toString());
-			playerCoord.setString("name", locName);
+			playerCoord.setString("NAME", locName);
 			savedCoords.appendTag(playerCoord);
 		}
 		NBTTagList deathCoords = new NBTTagList();
@@ -199,12 +199,12 @@ public class PlayerCoords extends WorldSavedData {
 				playerCoords.coords.put(locName, entry);
 				playerCoords.usernames.put(uuid, username);
 				playerCoords.markDirty();
-				msg = "Successfully added coordinates under name: " + locName;
+				msg = "Successfully added coordinates under NAME: " + locName;
 			} else {
-				msg = "Specified coordinates are already logged under a different name!";
+				msg = "Specified coordinates are already logged under a different NAME!";
 			}
 		} else {
-			msg = "Coordinates already saved under name '" + locName + "'.";
+			msg = "Coordinates already saved under NAME '" + locName + "'.";
 		}
 		return msg;
 	}
@@ -215,7 +215,7 @@ public class PlayerCoords extends WorldSavedData {
 		if (playerCoords.coords.containsKey(locName)) {
 			msg = playerCoords.formatLocation(server, locName);
 		} else {
-			msg = "No coordinates saved under name '" + locName + "'.";
+			msg = "No coordinates saved under NAME '" + locName + "'.";
 		}
 		return msg;
 	}
@@ -243,12 +243,12 @@ public class PlayerCoords extends WorldSavedData {
 				playerCoords.locs.remove(pos);
 				playerCoords.coords.remove(locName);
 				playerCoords.markDirty();
-				msg = "Delete coordinates saved under name '" + locName + "'.";
+				msg = "Delete coordinates saved under NAME '" + locName + "'.";
 			} else {
 				msg = "You cannot delete other players saved coordinates.";
 			}
 		} else {
-			msg = "No coordinates saved under name '" + locName + "'.";
+			msg = "No coordinates saved under NAME '" + locName + "'.";
 		}
 		return msg;
 	}

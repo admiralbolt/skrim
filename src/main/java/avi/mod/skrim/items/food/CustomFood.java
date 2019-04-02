@@ -28,7 +28,7 @@ public class CustomFood extends ItemFood implements ItemBase {
 		this.name = name;
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
-		this.setCreativeTab(Skrim.creativeTab);
+		this.setCreativeTab(Skrim.CREATIVE_TAB);
 	}
 
 	@Override

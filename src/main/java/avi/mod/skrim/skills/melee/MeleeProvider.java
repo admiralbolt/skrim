@@ -18,7 +18,7 @@ public class MeleeProvider {
     @CapabilityInject(ISkillMelee.class)
     public static final Capability<ISkillMelee> MELEE = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillMelee");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillMelee");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillMelee.class, SkillMelee.skillStorage, SkillMelee.class);

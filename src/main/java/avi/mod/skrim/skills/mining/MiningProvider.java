@@ -12,14 +12,13 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.skills.SkillProvider;
-import avi.mod.skrim.skills.Skills;
 
 public class MiningProvider {
 
     @CapabilityInject(ISkillMining.class)
     public static final Capability<ISkillMining> MINING = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillMining");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillMining");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillMining.class, SkillMining.skillStorage, SkillMining.class);

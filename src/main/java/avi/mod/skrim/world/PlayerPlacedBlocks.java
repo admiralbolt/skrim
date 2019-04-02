@@ -17,7 +17,7 @@ import net.minecraft.world.storage.MapStorage;
 
 public class PlayerPlacedBlocks extends WorldSavedData {
 
-	private static final String DATA_NAME = Skrim.modId + "-playerBlockPos";
+	private static final String DATA_NAME = Skrim.MOD_ID + "-playerBlockPos";
 	/**
 	 * Each instance is saved per world i.e. dimension. We store placed positions in a hash set for fast access.
 	 */

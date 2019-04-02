@@ -18,7 +18,7 @@ public class BlacksmithingProvider {
     @CapabilityInject(ISkillBlacksmithing.class)
     public static final Capability<ISkillBlacksmithing> BLACKSMITHING = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillBlacksmithing");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillBlacksmithing");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillBlacksmithing.class, SkillBlacksmithing.skillStorage, SkillBlacksmithing.class);

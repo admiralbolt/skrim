@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class WeirwoodCoords extends WorldSavedData {
 
-  private static final String DATA_NAME = Skrim.modId + "-WeirwoodCoords";
+  private static final String DATA_NAME = Skrim.MOD_ID + "-WeirwoodCoords";
 
   public Map<UUID, BlockPos> weirwood = new HashMap<UUID, BlockPos>();
   public int dimension;

@@ -18,7 +18,7 @@ public class FishingProvider {
     @CapabilityInject(ISkillFishing.class)
     public static final Capability<ISkillFishing> FISHING = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillFishing");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillFishing");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillFishing.class, SkillFishing.skillStorage, SkillFishing.class);

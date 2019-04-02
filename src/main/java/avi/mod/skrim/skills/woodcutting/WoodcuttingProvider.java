@@ -18,7 +18,7 @@ public class WoodcuttingProvider {
     @CapabilityInject(ISkillWoodcutting.class)
     public static final Capability<ISkillWoodcutting> WOODCUTTING = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillWoodcutting");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillWoodcutting");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillWoodcutting.class, SkillWoodcutting.skillStorage, SkillWoodcutting.class);

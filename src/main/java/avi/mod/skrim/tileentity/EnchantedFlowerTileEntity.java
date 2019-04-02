@@ -324,7 +324,7 @@ public class EnchantedFlowerTileEntity extends TileEntityBeacon {
   }
 
   /**
-   * Get the name of this object. For players this returns their username
+   * Get the NAME of this object. For players this returns their username
    */
   public String getName() {
     return this.hasCustomName() ? this.customName : "container.beacon";
@@ -350,7 +350,7 @@ public class EnchantedFlowerTileEntity extends TileEntityBeacon {
   }
 
   /**
-   * Do not make give this method the name canInteractWith because it clashes
+   * Do not make give this method the NAME canInteractWith because it clashes
    * with Container
    */
   public boolean isUseableByPlayer(EntityPlayer player) {

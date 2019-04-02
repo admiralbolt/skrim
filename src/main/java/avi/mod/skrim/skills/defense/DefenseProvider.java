@@ -18,7 +18,7 @@ public class DefenseProvider {
     @CapabilityInject(ISkillDefense.class)
     public static final Capability<ISkillDefense> DEFENSE = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillDefense");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillDefense");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillDefense.class, SkillDefense.skillStorage, SkillDefense.class);

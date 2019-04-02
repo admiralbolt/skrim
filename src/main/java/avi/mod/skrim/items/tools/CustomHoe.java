@@ -13,7 +13,7 @@ public class CustomHoe extends ItemHoe implements ItemBase {
     this.name = name;
     this.setUnlocalizedName(name);
     this.setRegistryName(name);
-    setCreativeTab(Skrim.creativeTab);
+    setCreativeTab(Skrim.CREATIVE_TAB);
   }
 
   @Override

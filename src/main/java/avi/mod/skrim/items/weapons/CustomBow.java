@@ -29,7 +29,7 @@ public class CustomBow extends ItemBow implements ItemBase {
     this.maxVelocity = maxVelocity;
     this.setRegistryName(name);
     this.setUnlocalizedName(name);
-    this.setCreativeTab(Skrim.creativeTab);
+    this.setCreativeTab(Skrim.CREATIVE_TAB);
     this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter() {
       @SideOnly(Side.CLIENT)
       public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
@@ -52,7 +52,7 @@ public class CustomBow extends ItemBow implements ItemBase {
 //
 //	@Override
 //	public void registerItemModel(Item item) {
-//		Skrim.proxy.registerItemRenderer(this, 0, this.name);
+//		Skrim.proxy.registerItemRenderer(this, 0, this.NAME);
 //		Skrim.proxy.registerBowVariants(this);
 //	}
 

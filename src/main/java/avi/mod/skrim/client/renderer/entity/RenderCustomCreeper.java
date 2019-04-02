@@ -7,9 +7,6 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderCustomCreeper extends RenderCreeper {
-	
-	private static final ResourceLocation NAPALM_CREEPER = new ResourceLocation("skrim:textures/entities/napalm_creeper.png");
-	private static final ResourceLocation BIO_CREEPER = new ResourceLocation("skrim:textures/entities/bio_creeper.png");
 
 	public RenderCustomCreeper(RenderManager renderManagerIn) {
 		super(renderManagerIn);
@@ -17,12 +14,8 @@ public class RenderCustomCreeper extends RenderCreeper {
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntityCreeper entity) {
-		if (entity instanceof CustomCreeper) {
-			CustomCreeper creeper = (CustomCreeper) entity;
-			return creeper.getResourceLocation();
-		} else {
-			return null;
-		}
+		if (!(entity instanceof CustomCreeper)) return null;
+		return ((CustomCreeper) entity).getResourceLocation();
 	}
 
 }

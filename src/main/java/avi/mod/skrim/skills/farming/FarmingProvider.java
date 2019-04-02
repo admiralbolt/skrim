@@ -18,7 +18,7 @@ public class FarmingProvider {
     @CapabilityInject(ISkillFarming.class)
     public static final Capability<ISkillFarming> FARMING = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillFarming");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillFarming");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillFarming.class, SkillFarming.skillStorage, SkillFarming.class);

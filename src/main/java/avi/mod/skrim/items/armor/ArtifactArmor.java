@@ -29,7 +29,7 @@ public class ArtifactArmor extends CustomArmor {
 
   /**
    * A separate material is created for each artifact armor piece to render a separate model for each armor piece.
-   * Model rendering is done based on the armor material name, so a separate material is created.
+   * Model rendering is done based on the armor material NAME, so a separate material is created.
    */
   private static ArmorMaterial getAndCreateMaterial(String name) {
     return EnumHelper.addArmorMaterial(name, "skrim:" + name, 50, new int[]{3, 8, 6, 3}, 0, null, 0.0F);

@@ -18,7 +18,7 @@ public class RangedProvider {
     @CapabilityInject(ISkillRanged.class)
     public static final Capability<ISkillRanged> RANGED = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillRanged");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillRanged");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillRanged.class, SkillRanged.skillStorage, SkillRanged.class);

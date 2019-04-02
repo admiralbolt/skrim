@@ -51,7 +51,7 @@ public class SkrimSoundEvents {
 	}
 
 	public static SoundEvent registerSoundEvent(String path) {
-		ResourceLocation location = new ResourceLocation(Skrim.modId, path);
+		ResourceLocation location = new ResourceLocation(Skrim.MOD_ID, path);
 		SoundEvent event = new SoundEvent(location);
 		// Don't actually need to call // [REGISTRY] GameRegistry.register() anymore
 		// // [REGISTRY] GameRegistry.register(event, location);

@@ -68,7 +68,7 @@ public class SkillScreen extends GuiScreen {
 
   private EntityPlayer player;
 
-  private SkillScreen(int left, int top) {
+  public SkillScreen(int left, int top) {
     super();
     this.left = left;
     this.top = top;

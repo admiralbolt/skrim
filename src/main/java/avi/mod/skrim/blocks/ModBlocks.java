@@ -23,11 +23,9 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Stream;
 
-@GameRegistry.ObjectHolder(Skrim.modId)
+@GameRegistry.ObjectHolder(Skrim.MOD_ID)
 public final class ModBlocks {
 
   public static GlowFlower GLOW_FLOWER_POPPY = new GlowFlower("glow_flower_poppy");
@@ -64,7 +62,7 @@ public final class ModBlocks {
   public static WeirwoodLeaf WEIRWOOD_LEAF = new WeirwoodLeaf();
   public static MegaChest MEGA_CHEST = new MegaChest();
 
-  @Mod.EventBusSubscriber(modid = Skrim.modId)
+  @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
   public static class RegistrationHandler {
 
     public static final Block[] NORMAL_BLOCKS = {
@@ -122,7 +120,7 @@ public final class ModBlocks {
       for (final Block block : ALL_BLOCKS) {
         System.out.println("registering block: " + block);
         System.out.println("unlocalizedName: " + block.getUnlocalizedName() + ", registryName: " + block.getRegistryName());
-        block.setCreativeTab(Skrim.creativeTab);
+        block.setCreativeTab(Skrim.CREATIVE_TAB);
         registry.register(block);
       }
     }
@@ -134,21 +132,21 @@ public final class ModBlocks {
       for (Block block : NORMAL_BLOCKS) {
         CustomItemBlock item = new CustomItemBlock(block);
         final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
-            "registry name", block);
+            "registry NAME", block);
         registry.register(item.setRegistryName(registryName));
       }
 
       for (Block block : GLOW_FLOWERS) {
         CustomItemBlock item = new CustomItemBlock(block, false, EnumRarity.UNCOMMON);
         final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
-            "registry name", block);
+            "registry NAME", block);
         registry.register(item.setRegistryName(registryName));
       }
 
       for (Block block : ENCHANTED_FLOWERS) {
         CustomItemBlock item = new CustomItemBlock(block, true, EnumRarity.RARE);
         final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
-            "registry name", block);
+            "registry NAME", block);
         registry.register(item.setRegistryName(registryName));
       }
 

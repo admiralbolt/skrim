@@ -18,7 +18,7 @@ public class CookingProvider {
     @CapabilityInject(ISkillCooking.class)
     public static final Capability<ISkillCooking> COOKING = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillCooking");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillCooking");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillCooking.class, SkillCooking.skillStorage, SkillCooking.class);

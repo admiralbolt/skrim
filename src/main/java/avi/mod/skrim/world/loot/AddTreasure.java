@@ -58,7 +58,7 @@ public class AddTreasure {
 
 	/**
 	 *
-	 * LootEntry(Item, baseWeight, quality, functions, conditions, name)
+	 * LootEntry(Item, baseWeight, quality, functions, conditions, NAME)
 	 */
 
 	public static void generateSkrimPool() {

@@ -1,18 +1,20 @@
 package avi.mod.skrim.client;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ModItems;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 
-public class TestTab extends CreativeTabs {
+import javax.annotation.Nonnull;
 
-  public TestTab() {
-    super(Skrim.modId);
+public class SkrimTab extends CreativeTabs {
+
+  public SkrimTab() {
+    super(Skrim.MOD_ID);
   }
 
   @Override
+  @Nonnull
   public ItemStack getTabIconItem() {
     return new ItemStack(ModItems.POWER_SUIT_CHESTPLATE);
   }

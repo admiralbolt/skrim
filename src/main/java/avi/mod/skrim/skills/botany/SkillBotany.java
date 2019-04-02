@@ -115,7 +115,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   public static boolean validFlowerState(IBlockState state) {
     Block flower = state.getBlock();
     String name = getFlowerName(state);
-    System.out.println("flower: " + flower + ", name: " + name);
+    System.out.println("flower: " + flower + ", NAME: " + name);
     return validFlowerBlock(flower) || (name.equals("sunflower") || name.equals("paeonia") || name.equals(
     		"double_rose") || name.equals("syringa"));
   }
@@ -161,7 +161,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
     if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
       SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
       Utils.logSkillEvent(event, botany,
-          "state: " + state + ", name: " + SkillBotany.getFlowerName(state) + ", valid: " + SkillBotany.validFlowerState(state));
+          "state: " + state + ", NAME: " + SkillBotany.getFlowerName(state) + ", valid: " + SkillBotany.validFlowerState(state));
       if (validFlowerState(state)) {
         Block block = state.getBlock();
         double random = Utils.rand.nextDouble();

@@ -33,7 +33,7 @@ public class RocketLauncher extends ItemBow implements ItemBase {
 		super();
 		this.setRegistryName(name);
 		this.setUnlocalizedName(name);
-		this.setCreativeTab(Skrim.creativeTab);
+		this.setCreativeTab(Skrim.CREATIVE_TAB);
 		this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
 			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {

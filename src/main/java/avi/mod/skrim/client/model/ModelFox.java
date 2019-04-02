@@ -10,6 +10,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * This is basically just copied from the ModelWolf.java class.
+ * So I'm not really gonna touch this.
+ */
 @SideOnly(Side.CLIENT)
 public class ModelFox extends ModelBase {
 	/** main box for the fox head */

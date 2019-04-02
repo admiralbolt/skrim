@@ -85,7 +85,7 @@ public class Utils {
 
 	public static void logBlockState(IBlockState state) {
 		Block block = state.getBlock();
-		System.out.println("harvestTool: " + block.getHarvestTool(state) + ", name: " + getBlockName(block) + ", class: " + block.getClass());
+		System.out.println("harvestTool: " + block.getHarvestTool(state) + ", NAME: " + getBlockName(block) + ", class: " + block.getClass());
 	}
 
 	public static void logHurtEvent(LivingHurtEvent event) {

@@ -18,7 +18,7 @@ public class DemolitionProvider {
     @CapabilityInject(ISkillDemolition.class)
     public static final Capability<ISkillDemolition> DEMOLITION = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillDemolition");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillDemolition");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillDemolition.class, SkillDemolition.skillStorage, SkillDemolition.class);

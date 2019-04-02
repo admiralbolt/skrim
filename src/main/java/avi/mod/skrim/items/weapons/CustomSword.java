@@ -2,8 +2,6 @@ package avi.mod.skrim.items.weapons;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ItemBase;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemSword;
 
 public class CustomSword extends ItemSword implements ItemBase {
@@ -15,7 +13,7 @@ public class CustomSword extends ItemSword implements ItemBase {
     this.name = name;
     this.setUnlocalizedName(name);
     this.setRegistryName(name);
-    setCreativeTab(Skrim.creativeTab);
+    setCreativeTab(Skrim.CREATIVE_TAB);
 	}
 
 	@Override

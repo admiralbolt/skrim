@@ -39,7 +39,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@GameRegistry.ObjectHolder(Skrim.modId)
+@GameRegistry.ObjectHolder(Skrim.MOD_ID)
 public class ModItems {
 
   public static EnumRarity ARTIFACT_RARITY = EnumHelper.addRarity("artifact", TextFormatting.GOLD, "Artifact");
@@ -135,35 +135,35 @@ public class ModItems {
 
   // Food!
   public static CustomFood OVERWRITE_PORKCHOP =
-      new CustomFood("overwrite_porkchop", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_porkchop", 8, 1.6F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_BAKED_POTATO =
-      new CustomFood("overwrite_baked_potato", 5, 1.2F, false).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_baked_potato", 5, 1.2F, false).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_BEETROOT_SOUP =
-      new CustomFood("overwrite_beetroot_soup", 6, 1.2F, false).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_beetroot_soup", 6, 1.2F, false).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_BREAD =
-      new CustomFood("overwrite_bread", 5, 1.2F, false).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_bread", 5, 1.2F, false).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_CHICKEN =
-      new CustomFood("overwrite_chicken", 6, 1.2F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_chicken", 6, 1.2F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_FISH =
-      new CustomFood("overwrite_fish", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_fish", 5, 1.2F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_MUTTON =
-      new CustomFood("overwrite_mutton", 6, 1.6F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_mutton", 6, 1.6F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_SALMON =
-      new CustomFood("overwrite_salmon", 6, 1.6F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_salmon", 6, 1.6F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_COOKIE =
-      new CustomFood("overwrite_cookie", 2, 0.2F, false).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_cookie", 2, 0.2F, false).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_MUSHROOM_STEW =
-      new CustomFood("overwrite_mushroom_stew", 6, 1.2F, false).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_mushroom_stew", 6, 1.2F, false).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_PUMPKIN_STEW =
-      new CustomFood("overwrite_pumpkin_pie", 8, 0.6F, false).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_pumpkin_pie", 8, 0.6F, false).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_RABBIT_STEW =
-      new CustomFood("overwrite_rabbit_stew", 10, 1.2F, false).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_rabbit_stew", 10, 1.2F, false).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_STEAK =
-      new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_steak", 8, 1.6F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood OVERWRITE_RABBIT =
-      new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("overwrite_rabbit", 5, 1.2F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static CustomFood CANES_CHICKEN =
-      new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.creativeTab);
+      new CustomFood("canes_chicken", 20, 1.5F, true).setCreativeTab(Skrim.CREATIVE_TAB);
   public static SkrimCake SKRIM_CAKE = new SkrimCake();
   public static AngelCake ANGEL_CAKE = new AngelCake();
 
@@ -246,7 +246,7 @@ public class ModItems {
   public static LeafArmor ACACIA_LEAF_HELMET = new LeafArmor(BlockPlanks.EnumType.ACACIA, "leaf_helmet", 1,
       EntityEquipmentSlot.HEAD);
 
-  @Mod.EventBusSubscriber(modid = Skrim.modId)
+  @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
   public static class RegistrationHandler {
     public static final Set<Item> ITEMS = new HashSet<>();
 
@@ -318,7 +318,7 @@ public class ModItems {
       final IForgeRegistry<Item> registry = event.getRegistry();
       for (final Item item : items) {
         registry.register(item);
-        item.setCreativeTab(Skrim.creativeTab);
+        item.setCreativeTab(Skrim.CREATIVE_TAB);
         ITEMS.add(item);
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),
             ((ItemBase) item).getTexturePath()));

@@ -18,7 +18,7 @@ public class BotanyProvider {
     @CapabilityInject(ISkillBotany.class)
     public static final Capability<ISkillBotany> BOTANY = null;
     public static final EnumFacing DEFAULT_FACING = null;
-    public static final ResourceLocation ID = new ResourceLocation(Skrim.modId, "SkillBotany");
+    public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillBotany");
 
     public static void register() {
       CapabilityManager.INSTANCE.register(ISkillBotany.class, SkillBotany.skillStorage, SkillBotany.class);

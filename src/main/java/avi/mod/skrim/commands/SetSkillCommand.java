@@ -44,7 +44,7 @@ public class SetSkillCommand extends CommandBase implements ICommand {
 
     @Override
     public String getUsage(ICommandSender var1) {
-        return "setskill <name> <level> [player]";
+        return "setskill <NAME> <level> [player]";
     }
 
     @Override

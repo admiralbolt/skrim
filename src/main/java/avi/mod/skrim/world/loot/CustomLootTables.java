@@ -5,7 +5,6 @@ import java.util.List;
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -23,7 +22,7 @@ public class CustomLootTables {
 	public static LootTable BEANSTALK_TABLE = null;
 	
 	private static ResourceLocation register(String name) {
-		return LootTableList.register(new ResourceLocation(Skrim.modId, name));
+		return LootTableList.register(new ResourceLocation(Skrim.MOD_ID, name));
 	}
 	
 	public static void registerLootTables() {

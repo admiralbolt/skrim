@@ -72,7 +72,7 @@ public class LoadSkillsHandler {
 					// ReflectionUtils.hackAttributeTo(armor, 20.0 + ((SkillDefense) newSkill).getExtraArmor(), "field_111120_a", "maximumValue");
 				}
 				Skill skill = (Skill) newSkill;
-				//SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), (EntityPlayerMP) newPlayer);
+				//SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.NAME, skill.level, skill.xp), (EntityPlayerMP) newPlayer);
 			}
 		}
 	}
