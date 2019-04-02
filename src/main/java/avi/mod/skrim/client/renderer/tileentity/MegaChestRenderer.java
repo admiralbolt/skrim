@@ -8,6 +8,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * Nearly identical copy of TileEntityChestRenderer.java
+ * <p>
+ * Because of the opening / closing animation, chests are rendered via a special renderer instead of normally.
+ */
 @SideOnly(Side.CLIENT)
 public class MegaChestRenderer extends TileEntitySpecialRenderer<MegaChestTileEntity> {
 
@@ -19,7 +24,8 @@ public class MegaChestRenderer extends TileEntitySpecialRenderer<MegaChestTileEn
   }
 
   @Override
-  public void render(MegaChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+  public void render(MegaChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage,
+                     float alpha) {
     GlStateManager.enableDepth();
     GlStateManager.depthFunc(515);
     GlStateManager.depthMask(true);
