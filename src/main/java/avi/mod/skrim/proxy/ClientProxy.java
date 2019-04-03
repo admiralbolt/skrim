@@ -36,7 +36,7 @@ public class ClientProxy implements IProxy {
 
   @Override
   public void preInit() {
-
+    CustomRenderers.register();
   }
 
   /**
@@ -55,8 +55,6 @@ public class ClientProxy implements IProxy {
     for (ModAdvancements.CustomAdvancement advancement : ModAdvancements.ADVANCEMENTS_BY_NAME.values()) {
       CriteriaTriggers.register(advancement.trigger);
     }
-
-    CustomRenderers.register();
 
     // Hook up all event handlers, this allows them to use Subscribe to Events
     MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
