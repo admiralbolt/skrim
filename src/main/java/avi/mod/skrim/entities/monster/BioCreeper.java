@@ -4,6 +4,9 @@ import avi.mod.skrim.blocks.tnt.BioBombExplosion;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+/**
+ * It's like a creeper, except its explosion doesn't affect blocks.
+ */
 public class BioCreeper extends CustomCreeper {
 
 	public BioCreeper(World worldIn) {

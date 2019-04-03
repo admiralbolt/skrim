@@ -6,6 +6,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+/**
+ * Helper class for custom creepers.
+ */
 public class CustomCreeper extends EntityCreeper {
 
 	private ResourceLocation customResource;
@@ -48,7 +51,7 @@ public class CustomCreeper extends EntityCreeper {
 		}
 	}
 
-	// Override this
+	// Override this in the subclasses.
 	public Explosion getExplosion() {
 		return null;
 	}

@@ -90,7 +90,7 @@ public class EventHandler {
 			SkillCooking.fireCook(event);
 		} else if (event.getEntity() instanceof EntityPlayer) {
 			PlayerCoords.saveDeathLocation(event);
-		} else if (event.getEntity() instanceof EntityChicken && !(event.getEntity() instanceof MegaChicken)) {
+		} else if (event.getEntity() instanceof EntityChicken) {
 			MegaChicken.onChickenDeath(event);
 		}
 	}

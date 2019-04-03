@@ -6,6 +6,7 @@ import avi.mod.skrim.client.renderer.entity.RenderFox;
 import avi.mod.skrim.client.renderer.entity.RenderMegaChicken;
 import avi.mod.skrim.client.renderer.tileentity.MegaChestRenderer;
 import avi.mod.skrim.entities.monster.BioCreeper;
+import avi.mod.skrim.entities.monster.GigaChicken;
 import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
 import avi.mod.skrim.entities.passive.EntityFox;
@@ -30,6 +31,7 @@ public class CustomRenderers {
     RenderingRegistry.registerEntityRenderingHandler(BioCreeper.class, RenderCustomCreeper::new);
     RenderingRegistry.registerEntityRenderingHandler(Rocket.class, RenderRocket::new);
     RenderingRegistry.registerEntityRenderingHandler(MegaChicken.class, RenderMegaChicken::new);
+    RenderingRegistry.registerEntityRenderingHandler(GigaChicken.class, RenderMegaChicken::new);
     RenderingRegistry.registerEntityRenderingHandler(EntityFox.class, RenderFox::new);
   }
 

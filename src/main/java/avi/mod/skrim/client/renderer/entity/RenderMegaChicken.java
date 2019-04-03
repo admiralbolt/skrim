@@ -28,7 +28,8 @@ public class RenderMegaChicken extends RenderLiving<MegaChicken> {
 
   @Override
   protected void preRenderCallback(MegaChicken entitylivingbaseIn, float partialTickTime) {
-    GlStateManager.scale(MegaChicken.SIZE_MULT, MegaChicken.SIZE_MULT, MegaChicken.SIZE_MULT);
+    float size = entitylivingbaseIn.getSizeMult();
+    GlStateManager.scale(size, size, size);
   }
 
   @Override

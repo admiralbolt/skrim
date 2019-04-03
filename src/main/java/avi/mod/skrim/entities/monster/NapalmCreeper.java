@@ -4,6 +4,9 @@ import avi.mod.skrim.blocks.tnt.NapalmExplosion;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+/**
+ * It's like a creeper, just much much worse.
+ */
 public class NapalmCreeper extends CustomCreeper {
 
 	public NapalmCreeper(World worldIn) {
