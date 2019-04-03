@@ -64,4 +64,9 @@ public class Skrim {
     proxy.postInit();
   }
 
+  @Mod.EventHandler
+  public void serverStarting(FMLServerStartingEvent event) {
+    CommandRegistry.registerCommands(event);
+  }
+
 }

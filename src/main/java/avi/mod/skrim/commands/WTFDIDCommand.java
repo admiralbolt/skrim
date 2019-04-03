@@ -1,8 +1,5 @@
 package avi.mod.skrim.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import avi.mod.skrim.world.PlayerCoords;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -13,63 +10,69 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Where The Fuck Did I Die?
+ *
+ * Spits out the last location of player death!
+ */
 public class WTFDIDCommand extends CommandBase implements ICommand {
 
-	private final List aliases;
-	protected String fullEntityName;
+  private final List<String> aliases = new ArrayList<>();
 
-	public WTFDIDCommand() {
-		aliases = new ArrayList();
-		aliases.add("wtfdid");
-	}
+  public WTFDIDCommand() {
+    aliases.add("wtfdid");
+  }
 
-	@Override
-	public String getName() {
-		return "wtfdid";
-	}
+  @Override
+  @Nonnull
+  public String getName() {
+    return "wtfdid";
+  }
 
-	@Override
-	public String getUsage(ICommandSender var1) {
-		return "wtfdid";
-	}
+  @Override
+  @Nonnull
+  public String getUsage(@Nonnull ICommandSender var1) {
+    return "wtfdid";
+  }
 
-	@Override
-	public List<String> getAliases() {
-		return this.aliases;
-	}
+  @Override
+  @Nonnull
+  public List<String> getAliases() {
+    return this.aliases;
+  }
 
-	@Override
-	public boolean isUsernameIndex(String[] var1, int var2) {
-		return false;
-	}
+  @Override
+  public boolean isUsernameIndex(@Nonnull String[] var1, int var2) {
+    return false;
+  }
 
-	@Override
-	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+  @Override
+  public int compareTo(@Nonnull ICommand o) {
+    return 0;
+  }
 
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		World world = sender.getEntityWorld();
-		if (world.isRemote) {
-			System.out.println("Not processing on Client side WTFDID");
-		} else {
-			EntityPlayer player = getCommandSenderAsPlayer(sender);
-			sender.sendMessage(new TextComponentString(PlayerCoords.getLastDeath(player)));
-		}
-	}
+  @Override
+  public void execute(@Nonnull MinecraftServer server, ICommandSender sender, @Nonnull String[] args) throws CommandException {
+    World world = sender.getEntityWorld();
+    if (world.isRemote) return;
 
-	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		return true;
-	}
+    EntityPlayer player = getCommandSenderAsPlayer(sender);
+    sender.sendMessage(new TextComponentString(PlayerCoords.getLastDeath(player)));
+  }
 
-	@Override
-	public int getRequiredPermissionLevel() {
-		return 0;
-	}
-	
-	
+  @Override
+  public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    return true;
+  }
+
+  @Override
+  public int getRequiredPermissionLevel() {
+    return 0;
+  }
+
 
 }

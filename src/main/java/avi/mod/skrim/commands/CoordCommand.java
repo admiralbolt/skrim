@@ -16,14 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Command using for storing coordinate locations.
+ * Command used for storing coordinate locations.
  */
 public class CoordCommand extends CommandBase implements ICommand {
 
-  private final List<String> aliases;
+  private final List<String> aliases = new ArrayList<>();
 
   public CoordCommand() {
-    aliases = new ArrayList<>();
     aliases.add("coord");
   }
 
