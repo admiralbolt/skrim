@@ -14,6 +14,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
@@ -77,7 +78,6 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
 	public static void beforeGoBoom(final ExplosionEvent.Start event) {
 		Explosion boom = event.getExplosion();
-		Entity source = boom.getExplosivePlacedBy();
 		final BlockPos location = new BlockPos(boom.getPosition());
 		if (validGoBoom.containsKey(location)) {
 			EntityPlayer player = validGoBoom.get(location);
@@ -88,15 +88,13 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 					CustomExplosion customBoom = (CustomExplosion) boom;
 					customBoom.setExplosionSize((float) (customBoom.getExplosionSize() * (1 + demolition.getExtraPower())));
 				} else {
-					ReflectionUtils.hackValueTo(boom, (float) (4.0 * (1 + demolition.getExtraPower())), "explosionSize", "field_77280_f");
+					Obfuscation.EXPLOSION_SIZE.hackValueTo(boom, 4.0 * 1 + demolition.getExtraPower());
 				}
 			}
 		}
 	}
 
 	public static void onGoBoom(final ExplosionEvent.Detonate event) {
-		Explosion explosion = event.getExplosion();
-		List<BlockPos> blocks = event.getAffectedBlocks();
 		Explosion boom = event.getExplosion();
 		final BlockPos location = new BlockPos(boom.getPosition());
 		if (validGoBoom.containsKey(location)) {
@@ -105,7 +103,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			if (player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
 				SkillDemolition demolition = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
 				Utils.logSkillEvent(event, demolition, "explosive placed by: " + event.getExplosion().getExplosivePlacedBy());
-				demolition.addXp((EntityPlayerMP) player, 7500);
+				demolition.addXp((EntityPlayerMP) player, 7000);
 			}
 		}
 	}

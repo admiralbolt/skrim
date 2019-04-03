@@ -26,8 +26,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RocketLauncher extends ItemBow implements ItemBase {
 
 	private String name = "rocket_launcher";
-	private float maxChargeTime = 20.0F;
-	private float maxVelocity = 1.2F;
+	private float maxChargeTime = 2.0F;
+	private float maxVelocity = 2.0F;
 
 	public RocketLauncher() {
 		super();

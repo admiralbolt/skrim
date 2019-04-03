@@ -32,6 +32,8 @@ public class Obfuscation {
 
   public static ObfuscatedField CRITERA_TRIGGERS_REGISTER = new ObfuscatedField("register", "func_192118_a");
 
+  public static ObfuscatedField EXPLOSION_SIZE = new ObfuscatedField("explosionSize", "field_77280_f");
+
   public static int getStackSize(ItemStack stack) {
     return stack.getCount();
   }
@@ -56,9 +58,9 @@ public class Obfuscation {
     public String obName;
     public String deobName;
 
-    private ObfuscatedField(String obName, String deobName) {
-      this.obName = obName;
+    private ObfuscatedField(String deobName, String obName) {
       this.deobName = deobName;
+      this.obName = obName;
     }
 
     public String[] getFieldNames() {
