@@ -1,7 +1,7 @@
 package avi.mod.skrim.blocks.plants;
 
 import avi.mod.skrim.blocks.BlockBase;
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -33,6 +33,6 @@ public class WeirwoodLeaf extends BlockBase implements IShearable {
   @Nonnull
   @Override
   public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
-    return NonNullList.withSize(1, new ItemStack(ModBlocks.WEIRWOOD_LEAF, 1));
+    return NonNullList.withSize(1, new ItemStack(SkrimBlocks.WEIRWOOD_LEAF, 1));
   }
 }

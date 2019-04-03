@@ -12,7 +12,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-public class ModEntities {
+public class SkrimEntities {
 
   private static int ENTITY_ID = 0;
 

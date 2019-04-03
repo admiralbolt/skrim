@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.blocks.tnt.CustomExplosion;
 import avi.mod.skrim.entities.monster.BioCreeper;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
@@ -15,7 +15,6 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
-import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
@@ -157,9 +156,9 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
 	public static void verifyExplosives(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		Item dynamite = new ItemStack(ModBlocks.DYNAMITE).getItem();
-		Item biobomb = new ItemStack(ModBlocks.BIOBOMB).getItem();
-		Item napalm = new ItemStack(ModBlocks.NAPALM).getItem();
+		Item dynamite = new ItemStack(SkrimBlocks.DYNAMITE).getItem();
+		Item biobomb = new ItemStack(SkrimBlocks.BIOBOMB).getItem();
+		Item napalm = new ItemStack(SkrimBlocks.NAPALM).getItem();
 		if (targetItem != null && targetItem == dynamite) {
 			if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
 				Skills.replaceWithComponents(event);
@@ -199,9 +198,9 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 			Item targetItem = stack.getItem();
 			if (targetItem != null) {
 				Item tnt = new ItemStack(Blocks.TNT).getItem();
-				Item dynamite = new ItemStack(ModBlocks.DYNAMITE).getItem();
-				Item biobomb = new ItemStack(ModBlocks.BIOBOMB).getItem();
-				Item napalm = new ItemStack(ModBlocks.NAPALM).getItem();
+				Item dynamite = new ItemStack(SkrimBlocks.DYNAMITE).getItem();
+				Item biobomb = new ItemStack(SkrimBlocks.BIOBOMB).getItem();
+				Item napalm = new ItemStack(SkrimBlocks.NAPALM).getItem();
 				return (targetItem == tnt || targetItem == dynamite || targetItem == biobomb || targetItem == napalm);
 			}
 		}

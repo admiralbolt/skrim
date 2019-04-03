@@ -1,7 +1,7 @@
 package avi.mod.skrim.blocks.plants;
 
 import avi.mod.skrim.blocks.BlockBase;
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
@@ -62,13 +62,13 @@ public class WeirwoodWood extends BlockBase {
       // run out of weirwood-wood blocks.
       A:
       for (int q = 1; q <= 4; q++) {
-        if (!(worldIn.getBlockState(new BlockPos(pos.getX(), posY + 1, pos.getZ())) == ModBlocks.WEIRWOOD_WOOD.getDefaultState()))
+        if (!(worldIn.getBlockState(new BlockPos(pos.getX(), posY + 1, pos.getZ())) == SkrimBlocks.WEIRWOOD_WOOD.getDefaultState()))
           break;
 
         // Check around the trunk for leaves, and break if we find any.
         for (int i = -1; i <= 1; i++) {
           for (int j = -1; j <= 1; j++) {
-            if (worldIn.getBlockState(new BlockPos(pos.getX() + i, posY + 1, pos.getZ() + j)) == ModBlocks.WEIRWOOD_LEAF.getDefaultState()) {
+            if (worldIn.getBlockState(new BlockPos(pos.getX() + i, posY + 1, pos.getZ() + j)) == SkrimBlocks.WEIRWOOD_LEAF.getDefaultState()) {
               break A;
             }
           }
@@ -96,7 +96,7 @@ public class WeirwoodWood extends BlockBase {
   }
 
   public static BlockPos getBottomOfTree(World worldIn, BlockPos pos) {
-    while (worldIn.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())) == ModBlocks.WEIRWOOD_WOOD.getDefaultState()) {
+    while (worldIn.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())) == SkrimBlocks.WEIRWOOD_WOOD.getDefaultState()) {
       pos = pos.add(0, -1, 0);
     }
     return pos;

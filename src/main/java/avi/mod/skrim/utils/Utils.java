@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import avi.mod.skrim.blocks.SkrimBlocks;
 import com.google.common.collect.Maps;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.blocks.ModBlocks;
 import avi.mod.skrim.skills.Skill;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
@@ -137,7 +137,7 @@ public class Utils {
 				|| block instanceof BlockGrass || block instanceof BlockSoulSand || block instanceof BlockPumpkin || block instanceof BlockMelon
 				|| block instanceof BlockDoublePlant || block == Blocks.IRON_ORE || block == Blocks.GOLD_ORE || block == Blocks.DIAMOND_ORE
 				|| block == Blocks.LAPIS_ORE || block == Blocks.REDSTONE_ORE || block == Blocks.COAL_ORE || block == Blocks.EMERALD_ORE
-				|| block == ModBlocks.WEIRWOOD_WOOD);
+				|| block == SkrimBlocks.WEIRWOOD_WOOD);
 	}
 
 	public static boolean isSilkTouching(BlockEvent.BreakEvent event) {

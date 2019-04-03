@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockVine;
@@ -129,7 +129,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 			}
 
 			// We can generate! Do the thing!
-			IBlockState beanState = ModBlocks.BEANSTALK_BLOCK.getDefaultState();
+			IBlockState beanState = SkrimBlocks.BEANSTALK_BLOCK.getDefaultState();
 			IBlockState vineState = Blocks.VINE.getDefaultState();
 
 			// Generate the stalk

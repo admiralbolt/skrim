@@ -4,16 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.world.loot.CustomLootTables;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockVine;
-import net.minecraft.block.properties.PropertyBool;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -23,8 +15,8 @@ public class WorldGenWeirwood extends WorldGenerator {
 	private int minHeight;
 	private int maxHeight;
 
-	private static final IBlockState TRUNK = ModBlocks.WEIRWOOD_WOOD.getDefaultState();
-	private static final IBlockState LEAF = ModBlocks.WEIRWOOD_LEAF.getDefaultState();
+	private static final IBlockState TRUNK = SkrimBlocks.WEIRWOOD_WOOD.getDefaultState();
+	private static final IBlockState LEAF = SkrimBlocks.WEIRWOOD_LEAF.getDefaultState();
 	private static final int MAX_RADIUS = 4;
 
 	public WorldGenWeirwood() {

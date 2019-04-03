@@ -4,7 +4,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.advancements.ModAdvancements;
 import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.client.renderer.CustomRenderers;
-import avi.mod.skrim.entities.ModEntities;
+import avi.mod.skrim.entities.SkrimEntities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
@@ -48,7 +48,7 @@ public class ClientProxy implements IProxy {
     CustomLootTables.registerLootTables();
     SkrimSoundEvents.register();
     ModCapabilities.registerCapabilities();
-    ModEntities.register();
+    SkrimEntities.register();
     SkrimEntitySpawnHandler.init();
     SkrimPacketHandler.registerPackets();
 

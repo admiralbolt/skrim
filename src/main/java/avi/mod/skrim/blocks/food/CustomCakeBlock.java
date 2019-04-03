@@ -1,8 +1,6 @@
 package avi.mod.skrim.blocks.food;
 
-import avi.mod.skrim.Skrim;
-import avi.mod.skrim.blocks.ModBlocks;
-import avi.mod.skrim.items.ItemModelProvider;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.food.CustomCake;
 import avi.mod.skrim.tileentity.CakeTileEntity;
 import avi.mod.skrim.utils.Utils;
@@ -11,7 +9,6 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
@@ -49,7 +46,7 @@ public class CustomCakeBlock extends BlockCake implements ITileEntityProvider {
   }
 
   private void eatCustomCake(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-    if (!(world.getTileEntity(pos) instanceof CakeTileEntity) && !player.canEat(false) && !(state.getBlock() == ModBlocks.ANGEL_CAKE))
+    if (!(world.getTileEntity(pos) instanceof CakeTileEntity) && !player.canEat(false) && !(state.getBlock() == SkrimBlocks.ANGEL_CAKE))
       return;
     CakeTileEntity cakeEntity = (CakeTileEntity) world.getTileEntity(pos);
     int level = cakeEntity.getLevel();

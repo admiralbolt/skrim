@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.tools.CustomHoe;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -238,7 +238,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		Item magicBean = new ItemStack(ModBlocks.MAGIC_BEAN).getItem();
+		Item magicBean = new ItemStack(SkrimBlocks.MAGIC_BEAN).getItem();
 
 		if (targetItem != null && targetItem == ModItems.OVERALLS) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {

@@ -1,6 +1,6 @@
 package avi.mod.skrim.blocks.tnt;
 
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.network.ExplosionPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import net.minecraft.block.Block;
@@ -201,9 +201,9 @@ public class CustomTNTPrimed extends Entity {
 	
 	public static String getExplosionType(ItemStack stack) {
 		Item targetItem = stack.getItem();
-		Item dynamite = new ItemStack(ModBlocks.DYNAMITE).getItem();
-		Item biobomb = new ItemStack(ModBlocks.BIOBOMB).getItem();
-		Item napalm = new ItemStack(ModBlocks.NAPALM).getItem();
+		Item dynamite = new ItemStack(SkrimBlocks.DYNAMITE).getItem();
+		Item biobomb = new ItemStack(SkrimBlocks.BIOBOMB).getItem();
+		Item napalm = new ItemStack(SkrimBlocks.NAPALM).getItem();
 		if (targetItem == dynamite) {
 			return "dynamite";
 		} else if (targetItem == biobomb) {
@@ -218,11 +218,11 @@ public class CustomTNTPrimed extends Entity {
 	public static Block getBlock(CustomTNTPrimed entity) {
 		String explosionType = entity.getExplosionType();
 		if (explosionType.equals("dynamite")) {
-			return ModBlocks.DYNAMITE;
+			return SkrimBlocks.DYNAMITE;
 		} else if (explosionType.equals("biobomb")) {
-			return ModBlocks.BIOBOMB;
+			return SkrimBlocks.BIOBOMB;
 		} else if (explosionType.equals("napalm")) {
-			return ModBlocks.NAPALM;
+			return SkrimBlocks.NAPALM;
 		}
 		return null;
 	}

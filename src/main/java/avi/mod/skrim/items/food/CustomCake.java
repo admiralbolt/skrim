@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.food.CustomCakeBlock;
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.ItemBase;
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.skills.cooking.SkillCooking;
@@ -162,9 +162,9 @@ public class CustomCake extends ItemBlockSpecial implements ItemBase {
 	}
 
 	public static CustomCake getItemFromBlock(CustomCakeBlock block) {
-		if (block == ModBlocks.SKRIM_CAKE) {
+		if (block == SkrimBlocks.SKRIM_CAKE) {
 			return ModItems.SKRIM_CAKE;
-		} else if (block == ModBlocks.ANGEL_CAKE) {
+		} else if (block == SkrimBlocks.ANGEL_CAKE) {
 			return ModItems.ANGEL_CAKE;
 		} else {
 			return null;

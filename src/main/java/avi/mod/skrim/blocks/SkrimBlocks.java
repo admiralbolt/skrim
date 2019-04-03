@@ -26,7 +26,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.stream.Stream;
 
 @GameRegistry.ObjectHolder(Skrim.MOD_ID)
-public final class ModBlocks {
+public final class SkrimBlocks {
 
   public static GlowFlower GLOW_FLOWER_POPPY = new GlowFlower("glow_flower_poppy");
   public static GlowFlower GLOW_FLOWER_DANDELION = new GlowFlower("glow_flower_dandelion");

@@ -27,6 +27,8 @@ advancements.ding_master.desc=Get any skill to level 100.
 entity.bio_creeper.name=Bio Creeper
 entity.fox.name=Fox
 entity.mega_chicken.name=Mega Chicken
+entity.giga_chicken.name=Giga Chicken
+
 entity.napalm_creeper.name=Napalm Creeper
 item.acacia_leaf_armor.name=Acacia Chestplate
 item.acacia_leaf_boots.name=Acacia Boots

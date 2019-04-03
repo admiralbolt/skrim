@@ -1,6 +1,6 @@
 package avi.mod.skrim.skills.botany;
 
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket;
@@ -295,7 +295,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
   public static void verifyFlowers(ItemCraftedEvent event) {
     Item targetItem = event.crafting.getItem();
-    Item glowFlowerPoppy = new ItemStack(ModBlocks.GLOW_FLOWER_POPPY).getItem();
+    Item glowFlowerPoppy = new ItemStack(SkrimBlocks.GLOW_FLOWER_POPPY).getItem();
     if (targetItem == glowFlowerPoppy) {
       if (!Skills.canCraft(event.player, Skills.BOTANY, 25)) {
         Skills.replaceWithComponents(event);

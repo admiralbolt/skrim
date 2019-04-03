@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import avi.mod.skrim.blocks.misc.MegaChest;
-import avi.mod.skrim.blocks.ModBlocks;
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.inventory.MegaChestContainer;
 import avi.mod.skrim.utils.Utils;
@@ -340,7 +340,7 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
 				}
 	
 				this.numPlayersUsing++;
-				this.world.addBlockEvent(this.pos, ModBlocks.MEGA_CHEST, 1, this.numPlayersUsing);
+				this.world.addBlockEvent(this.pos, SkrimBlocks.MEGA_CHEST, 1, this.numPlayersUsing);
 			}
 		}
 	}
@@ -350,7 +350,7 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
 		if (!this.world.isRemote) {
 			if (!player.isSpectator() && this.getBlockType() instanceof MegaChest) {
 				this.numPlayersUsing--;
-				this.world.addBlockEvent(this.pos, ModBlocks.MEGA_CHEST, 1, this.numPlayersUsing);
+				this.world.addBlockEvent(this.pos, SkrimBlocks.MEGA_CHEST, 1, this.numPlayersUsing);
 			}
 		}
 	}
