@@ -3,25 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b6f83794-5ef7-40a9-bcd4-51f1c62c5aea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/ModBlocks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/SkrimBlocks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/food/CustomCakeBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/food/CustomCakeBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/plants/WeirwoodLeaf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/plants/WeirwoodLeaf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/plants/WeirwoodWood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/plants/WeirwoodWood.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/CustomTNTPrimed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/CustomTNTPrimed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/model/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/model/ModelManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/ModEntities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimEntities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/AngelCake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/AngelCake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomCake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/CustomCake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/SkrimCake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/food/SkrimCake.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/proxy/ClientProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/proxy/ClientProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/botany/SkillBotany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/botany/SkillBotany.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/demolition/SkillDemolition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/demolition/SkillDemolition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/farming/SkillFarming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/farming/SkillFarming.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/woodcutting/SkillWoodcutting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/woodcutting/SkillWoodcutting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/MegaChestTileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/tileentity/MegaChestTileEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/gen/WorldGenBeanstalk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/gen/WorldGenBeanstalk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/gen/WorldGenWeirwood.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/world/gen/WorldGenWeirwood.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimFishHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimFishHook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/CustomKeyHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/EventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/GuiEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/GuiEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/SkrimEntitySpawnHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/SkrimEntitySpawnHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -74,51 +62,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/CustomCreeper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/MegaChicken.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1146">
-              <caret line="104" column="38" selection-start-line="104" selection-start-column="38" selection-end-line="104" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/renderer/entity/RenderMegaChicken.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="31" column="43" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/entity/EntityLivingBase.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="51" column="60" selection-start-line="51" selection-start-column="60" selection-end-line="51" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/GigaChicken.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="51" column="84" selection-start-line="51" selection-start-column="84" selection-end-line="51" selection-end-column="84" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/passive/EntityFox.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="197">
@@ -128,36 +71,81 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/renderer/CustomRenderers.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimEntities.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="96" selection-start-line="33" selection-start-column="96" selection-end-line="33" selection-end-column="96" />
+            <state relative-caret-position="527">
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimEntities.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimFishHook.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="27" lean-forward="true" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+            <state relative-caret-position="638">
+              <caret line="104" column="73" lean-forward="true" selection-start-line="104" selection-start-column="73" selection-end-line="104" selection-end-column="73" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/entity/monster/EntitySkeleton.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+            <state relative-caret-position="476">
+              <caret line="28" column="74" selection-start-line="28" selection-start-column="74" selection-end-line="28" selection-end-column="74" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/entity/monster/AbstractSkeleton.java">
+        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/entity/projectile/EntityFishHook.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-153" />
+            <state relative-caret-position="-238">
+              <caret line="40" column="32" lean-forward="true" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/EventHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="31" lean-forward="true" selection-start-column="31" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/LoadSkillsHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/SkrimEntitySpawnHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/ReflectionUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-306" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/GuiEventHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1054">
+              <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -183,6 +171,8 @@
       <find>AiMeleeAttack</find>
       <find>attackEntityAsMob</find>
       <find>getAttackReachSqr</find>
+      <find>EntitySpawnMessage</find>
+      <find>FISH_HOOK_RAY</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -208,7 +198,6 @@
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/commands/CommandRegistry.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/Skrim.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/proxy/ClientProxy.java" />
-        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/items/weapons/RocketLauncher.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/skills/demolition/SkillDemolition.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/projectile/Rocket.java" />
@@ -224,6 +213,11 @@
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/MegaChicken.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/monster/GigaChicken.java" />
         <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimEntities.java" />
+        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/GuiEventHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/EventHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/SkrimEntitySpawnHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimFishHook.java" />
+        <option value="$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java" />
       </list>
     </option>
   </component>
@@ -289,28 +283,7 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="skrim" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="skrim" type="b2602c69:ProjectViewProjectNode" />
-              <item name="skrim" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="skrim" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="skrim" type="b2602c69:ProjectViewProjectNode" />
-              <item name="skrim" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="skrim" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="handlers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="skrim" type="b2602c69:ProjectViewProjectNode" />
@@ -379,7 +352,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -461,7 +434,7 @@
     <frame x="1953" y="27" width="1887" height="2133" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1857686" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1857686" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -491,95 +464,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/gui/SkillScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="71" column="12" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#9256#9257#0" expanded="true" />
-            <element signature="e#9323#9324#0" expanded="true" />
-            <element signature="e#9374#9375#0" expanded="true" />
-            <element signature="e#9396#9397#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/SkrimTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="3" lean-forward="true" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/world/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="2498" column="80" lean-forward="true" selection-start-line="2498" selection-start-column="80" selection-end-line="2498" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/BioBombExplosion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/blocks/tnt/CustomExplosion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/world/Explosion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2340" />
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/entity/monster/EntityCreeper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="951">
-          <caret line="293" column="13" selection-start-line="293" selection-start-column="13" selection-end-line="293" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/renderer/tileentity/SkrimTileEntityItemRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/client/renderer/entity/RenderChicken.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/renderer/entity/RenderFox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="65" selection-start-line="12" selection-start-column="65" selection-end-line="12" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/client/renderer/entity/RenderCustomCreeper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/advancements/ModAdvancements.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="64" selection-start-line="31" selection-start-column="64" selection-end-line="31" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/Config.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -681,13 +565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1197">
           <caret line="192" column="63" selection-start-line="192" selection-start-column="63" selection-end-line="192" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="11" selection-start-column="11" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -836,10 +713,97 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimEntities.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="27" lean-forward="true" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+        <state relative-caret-position="527">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/CustomKeyHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/GuiEventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1054">
+          <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraftforge/fml/common/registry/EntityRegistry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="83" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraftforge/fml/common/network/internal/FMLMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="126" column="42" selection-start-line="126" selection-start-column="24" selection-end-line="126" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraftforge/fml/relauncher/ReflectionHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4005" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/ReflectionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-306" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/LoadSkillsHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/EventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="31" lean-forward="true" selection-start-column="31" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2814/snapshot/20171003/forgeSrc-1.12.2-14.23.5.2814-sources.jar!/net/minecraft/entity/projectile/EntityFishHook.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-238">
+          <caret line="40" column="32" lean-forward="true" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/handlers/SkrimEntitySpawnHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/utils/Obfuscation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="74" selection-start-line="28" selection-start-column="74" selection-end-line="28" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/avi/mod/skrim/entities/SkrimFishHook.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="104" column="73" lean-forward="true" selection-start-line="104" selection-start-column="73" selection-end-line="104" selection-end-column="73" />
         </state>
       </provider>
     </entry>

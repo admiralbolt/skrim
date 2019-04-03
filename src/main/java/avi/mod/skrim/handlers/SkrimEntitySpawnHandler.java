@@ -1,6 +1,7 @@
 package avi.mod.skrim.handlers;
 
 import avi.mod.skrim.entities.SkrimFishHook;
+import avi.mod.skrim.utils.ReflectionUtils;
 import com.google.common.base.Function;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.Entity;
@@ -9,7 +10,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.internal.FMLMessage.EntitySpawnMessage;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,18 +28,18 @@ public class SkrimEntitySpawnHandler {
     Function<EntitySpawnMessage, Entity> fishHookSpawnHandler = (EntitySpawnMessage input) -> {
       try {
         // Duplicate the "angler" aka the player who cast the line, as well as the x/y/z coordinate of the hook.
-        int anglerId = ReflectionHelper.findField(EntitySpawnMessage.class, "throwerId").getInt(input);
-        double posX = ReflectionHelper.findField(EntitySpawnMessage.class, "rawX").getDouble(input);
-        double posY = ReflectionHelper.findField(EntitySpawnMessage.class, "rawY").getDouble(input);
-        double posZ = ReflectionHelper.findField(EntitySpawnMessage.class, "rawZ").getDouble(input);
+        int anglerId = (int) ReflectionUtils.getPrivateField(input, "throwerId");
+        double posX = (double) ReflectionUtils.getPrivateField(input, "rawX");
+        double posY = (double) ReflectionUtils.getPrivateField(input, "rawY");
+        double posZ = (double) ReflectionUtils.getPrivateField(input, "rawZ");
 
         WorldClient world = FMLClientHandler.instance().getWorldClient();
         Entity angler = world.getEntityByID(anglerId);
         if (!(angler instanceof EntityPlayer)) return null;
 
         return new SkrimFishHook(world, (EntityPlayer) angler, posX, posY, posZ);
-      } catch (IllegalArgumentException | IllegalAccessException e) {
-        System.out.println("Illegal Arguent");
+      } catch (IllegalArgumentException e) {
+        System.out.println("Illegal Argument");
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
