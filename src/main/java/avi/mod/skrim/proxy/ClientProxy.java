@@ -9,7 +9,6 @@ import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
-import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.network.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.world.loot.CustomLootTables;
@@ -46,7 +45,6 @@ public class ClientProxy implements IProxy {
   @Override
   public void init() {
     CustomLootTables.registerLootTables();
-    SkrimSoundEvents.register();
     ModCapabilities.registerCapabilities();
     SkrimEntities.register();
     SkrimEntitySpawnHandler.init();
