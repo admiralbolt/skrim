@@ -21,12 +21,14 @@ public class Obfuscation {
   public static ObfuscatedField FISH_HOOK_CATCHABLE = new ObfuscatedField("ticksCatchable", "field_146045_ax");
   public static ObfuscatedField FISH_HOOK_CAUGHT_DELAY = new ObfuscatedField("ticksCaughtDelay", "field_146040_ay");
   public static ObfuscatedField FISH_HOOK_IN_GROUND = new ObfuscatedField("inGround", "field_146051_au");
+  public static ObfuscatedField FISH_HOOK_LUCK = new ObfuscatedField("luck", "field_191518_aw");
+  public static ObfuscatedField FISH_HOOK_LURE_SPEED = new ObfuscatedField("lureSpeed", "field_191519_ax");
+
   public static ObfuscatedField FISH_HOOK_ANGLER = new ObfuscatedField("angler", "field_146042_b");
   public static ObfuscatedField FISH_HOOK_TICKS_IN_GROUND = new ObfuscatedField("ticksInGround", "field_146049_av");
   public static ObfuscatedField FISH_HOOK_STATE = new ObfuscatedField("state", "this.field_190627_av");
   public static ObfuscatedField FISH_HOOK_RAYTRACE = new ObfuscatedField("func_190624_r", "func_190624_r");
 
-  public static ObfuscatedField FISH_HOOK_LUCK = new ObfuscatedField("luck", "field_191518_aw");
 
   public static ObfuscatedField HORSE_JUMP_ATTRIBUTE = new ObfuscatedField("JUMP_STRENGTH", "field_110271_bv");
 

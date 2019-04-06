@@ -17,6 +17,8 @@ import avi.mod.skrim.skills.melee.SkillMelee;
 import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
+import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerCoords;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
@@ -271,21 +273,7 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onEntitySpawn(EntityJoinWorldEvent event) {
-    Entity entity = event.getEntity();
-    World world = event.getWorld();
-    // Don't want to infinitely spawn fish hooks.
-    if (entity instanceof EntityFishHook && !(entity instanceof SkrimFishHook)) {
-      EntityFishHook oldHook = (EntityFishHook) entity;
-      SkrimFishHook newHook = null;
-      if (world.isRemote) {
-        newHook = new SkrimFishHook(event.getWorld(), oldHook.getAngler(), oldHook.posX, oldHook.posY, oldHook.posZ);
-        newHook.setVelocity(oldHook.motionX, oldHook.motionY, oldHook.motionZ);
-      } else {
-        newHook = new SkrimFishHook(event.getWorld(), oldHook.getAngler());
-      }
-      event.setCanceled(true);
-      world.spawnEntity(newHook);
-    }
+    SkrimFishHook.overrideDefaultHook(event);
   }
 
   @SubscribeEvent

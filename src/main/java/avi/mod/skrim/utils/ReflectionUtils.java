@@ -30,14 +30,11 @@ public class ReflectionUtils {
       try {
         field = instance.getClass().getDeclaredField(fieldName);
         return getFieldValue(instance, field);
-      } catch (NoSuchFieldException e) {
-        // TODO Auto-generated catch block
+      } catch (NoSuchFieldException | SecurityException e) {
         // e.printStackTrace();
-      } catch (SecurityException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
       }
     }
+    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with names: [" + fieldNames + "]");
     return null;
   }
 
@@ -129,46 +126,35 @@ public class ReflectionUtils {
     return null;
   }
 
-  public static Object getFieldValue(Object instance, Field field) {
+  private static Object getFieldValue(Object instance, Field field) {
     field.setAccessible(true);
     try {
       return field.get(instance);
-    } catch (IllegalArgumentException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
+    } catch (IllegalArgumentException | IllegalAccessException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return null;
   }
 
-  public static void setFieldValue(Object instance, Field field, Object value) {
+  private static void setFieldValue(Object instance, Field field, Object value) {
     field.setAccessible(true);
     try {
       field.set(instance, value);
-    } catch (IllegalArgumentException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      // TODO Auto-generated catch block
+    } catch (IllegalArgumentException | IllegalAccessException e) {
       e.printStackTrace();
     }
   }
 
   public static void hackSuperValueTo(Object instance, Object value, String... fieldNames) {
     Field field;
-    try {
-      for (String fieldName : fieldNames) {
+    for (String fieldName : fieldNames) {
+      try {
         field = instance.getClass().getSuperclass().getDeclaredField(fieldName);
         setFieldValue(instance, field, value);
+      } catch (NoSuchFieldException | SecurityException e) {
+        // e.printStackTrace();
       }
-    } catch (NoSuchFieldException e) {
-      // TODO Auto-generated catch block
-      // e.printStackTrace();
-    } catch (SecurityException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
     }
   }
 

@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -55,14 +56,34 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
     super(worldIn, null);
   }
 
+  public static void overrideDefaultHook(EntityJoinWorldEvent event) {
+    Entity entity = event.getEntity();
+    World world = event.getWorld();
+    // Don't want to infinitely spawn fish hooks.
+    if (entity instanceof EntityFishHook && !(entity instanceof SkrimFishHook)) {
+      EntityFishHook oldHook = (EntityFishHook) entity;
+      SkrimFishHook newHook = null;
+      if (world.isRemote) {
+        newHook = new SkrimFishHook(event.getWorld(), oldHook.getAngler(), oldHook.posX, oldHook.posY, oldHook.posZ);
+        newHook.setVelocity(oldHook.motionX, oldHook.motionY, oldHook.motionZ);
+      } else {
+        newHook = new SkrimFishHook(event.getWorld(), oldHook.getAngler());
+      }
+      newHook.setLuck((int) ReflectionUtils.getPrivateField(oldHook, Obfuscation.FISH_HOOK_LUCK.getFieldNames()));
+      newHook.setLureSpeed((int) ReflectionUtils.getPrivateField(oldHook, Obfuscation.FISH_HOOK_LURE_SPEED.getFieldNames()));
+
+      event.setCanceled(true);
+      world.spawnEntity(newHook);
+    }
+  }
+
 
   @Override
   public void onUpdate() {
     super.onUpdate();
-    super.onUpdate();
     if (!this.hasAppliedCaught) {
       EntityPlayer player = this.getAngler();
-      if (player != null && player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
+      if (player.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
         SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
         int ticksCaught = (int) ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
         if (ticksCaught > 0) {
@@ -95,10 +116,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
         this.world.setEntityState(this, (byte) 31);
         i = this.caughtEntity instanceof EntityItem ? 3 : 5;
       } else if (ticksCatchable > 0) {
-        LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.world);
-
-        ReflectionUtils.printSuperFields(this);
-        System.out.println("FISH_HOOK_LUCK: " + ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_LUCK.getFieldNames()));
+        LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.world); 
 
         // Please kill me
         lootcontext$builder.withLuck(((float) (int) ReflectionUtils.getSuperPrivateField(this,
