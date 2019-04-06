@@ -116,7 +116,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
         this.world.setEntityState(this, (byte) 31);
         i = this.caughtEntity instanceof EntityItem ? 3 : 5;
       } else if (ticksCatchable > 0) {
-        LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.world); 
+        LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.world);
 
         // Please kill me
         lootcontext$builder.withLuck(((float) (int) ReflectionUtils.getSuperPrivateField(this,
