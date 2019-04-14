@@ -1,6 +1,6 @@
 package avi.mod.skrim.items.weapons;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public class ArtifactSword extends CustomSword {
   @Override
   @SideOnly(Side.CLIENT)
   public EnumRarity getRarity(ItemStack stack) {
-    return ModItems.ARTIFACT_RARITY;
+    return SkrimItems.ARTIFACT_RARITY;
   }
 
   @Override

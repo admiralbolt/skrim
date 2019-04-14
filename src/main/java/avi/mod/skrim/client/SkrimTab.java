@@ -1,7 +1,7 @@
 package avi.mod.skrim.client;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -16,7 +16,7 @@ public class SkrimTab extends CreativeTabs {
   @Override
   @Nonnull
   public ItemStack getTabIconItem() {
-    return new ItemStack(ModItems.POWER_SUIT_CHESTPLATE);
+    return new ItemStack(SkrimItems.POWER_SUIT_CHESTPLATE);
   }
 
   @Override

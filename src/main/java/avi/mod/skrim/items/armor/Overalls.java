@@ -1,6 +1,6 @@
 package avi.mod.skrim.items.armor;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
 import avi.mod.skrim.skills.farming.SkillFarming;
@@ -37,7 +37,7 @@ public class Overalls extends CustomArmor {
     InventoryPlayer inventory = player.inventory;
     if (inventory == null) return;
     Item armor = inventory.armorInventory.get(2).getItem();
-    if (armor != ModItems.OVERALLS) return;
+    if (armor != SkrimItems.OVERALLS) return;
 
     // Make sure they got themselves a hoe.
     Item mainItem = player.getHeldItemMainhand().getItem();

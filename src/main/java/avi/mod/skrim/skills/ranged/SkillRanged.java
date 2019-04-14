@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import avi.mod.skrim.init.SkrimSoundEvents;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket;
 import avi.mod.skrim.skills.Skill;
@@ -20,12 +20,10 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -175,7 +173,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		if (targetItem != null && targetItem == ModItems.GREAT_BOW) {
+		if (targetItem != null && targetItem == SkrimItems.GREAT_BOW) {
 			if (!Skills.canCraft(event.player, Skills.RANGED, 75)) {
 				Skills.replaceWithComponents(event);
 			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) {

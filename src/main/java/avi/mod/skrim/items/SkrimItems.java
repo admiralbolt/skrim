@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @GameRegistry.ObjectHolder(Skrim.MOD_ID)
-public class ModItems {
+public class SkrimItems {
 
   public static EnumRarity ARTIFACT_RARITY = EnumHelper.addRarity("artifact", TextFormatting.GOLD, "Artifact");
 

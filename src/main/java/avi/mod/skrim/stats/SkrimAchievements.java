@@ -11,7 +11,7 @@ public class SkrimAchievements {
 	//		"found_skills",
 	//		0,
 	//		0,
-	//		ModItems.ARUARIAN_DANCE,
+	//		SkrimItems.ARUARIAN_DANCE,
 	//		(Achievement) null
 	//	);
 	//	
@@ -20,7 +20,7 @@ public class SkrimAchievements {
 	//		"archaeology",
 	//		2,
 	//		1,
-	//		ModItems.BLINDING_BOOTS,
+	//		SkrimItems.BLINDING_BOOTS,
 	//		FOUND_SKILLS
 	//	);
 	//	
@@ -29,7 +29,7 @@ public class SkrimAchievements {
 	//			"ding_apprentice",
 	//			-2,
 	//			0,
-	//			ModItems.TUX,
+	//			SkrimItems.TUX,
 	//			FOUND_SKILLS
 	//		);
 	//	
@@ -38,7 +38,7 @@ public class SkrimAchievements {
 	//			"ding_journeyman",
 	//			-4,
 	//			0,
-	//			ModItems.TUX,
+	//			SkrimItems.TUX,
 	//			DING_APPRENTICE
 	//		);
 	//	
@@ -47,7 +47,7 @@ public class SkrimAchievements {
 	//			"ding_expert",
 	//			-6,
 	//			0,
-	//			ModItems.TUX,
+	//			SkrimItems.TUX,
 	//			DING_JOURNEYMAN
 	//		);
 	//	
@@ -56,7 +56,7 @@ public class SkrimAchievements {
 	//			"ding_master",
 	//			-8,
 	//			0,
-	//			ModItems.TUX,
+	//			SkrimItems.TUX,
 	//			DING_EXPERT
 	//		);
 	//	

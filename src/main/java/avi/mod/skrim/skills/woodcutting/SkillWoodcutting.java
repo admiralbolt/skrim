@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import avi.mod.skrim.blocks.SkrimBlocks;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.tools.CustomAxe;
 import avi.mod.skrim.items.tools.HandSaw;
-import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.items.items.WeirwoodTotem;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -207,7 +207,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 	public static void verifyItems(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
 		Item weirwoodSapling = new ItemStack(SkrimBlocks.WEIRWOOD_SAPLING).getItem();
-		if (targetItem != null && targetItem == ModItems.HAND_SAW) {
+		if (targetItem != null && targetItem == SkrimItems.HAND_SAW) {
 			if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 25)) {
 				Skills.replaceWithComponents(event);
 			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.WOODCUTTING, EnumFacing.NORTH)) {

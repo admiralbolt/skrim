@@ -4,7 +4,7 @@ import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.blocks.tnt.CustomExplosion;
 import avi.mod.skrim.entities.monster.BioCreeper;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -189,7 +189,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
         SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
         demolition.addXp((EntityPlayerMP) event.player, 1000);
       }
-    } else if (targetItem != null && targetItem == ModItems.ROCKET_LAUNCHER) {
+    } else if (targetItem != null && targetItem == SkrimItems.ROCKET_LAUNCHER) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 100)) {
         Skills.replaceWithComponents(event);
       } else if (!event.player.world.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {

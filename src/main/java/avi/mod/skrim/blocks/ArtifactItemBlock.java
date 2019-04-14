@@ -1,6 +1,6 @@
 package avi.mod.skrim.blocks;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -15,7 +15,7 @@ public class ArtifactItemBlock extends CustomItemBlock {
   protected String name;
 
   public ArtifactItemBlock(Block block) {
-    super(block, true, ModItems.ARTIFACT_RARITY);
+    super(block, true, SkrimItems.ARTIFACT_RARITY);
   }
 
   @Override

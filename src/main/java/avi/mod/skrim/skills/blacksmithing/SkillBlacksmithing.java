@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -23,7 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
@@ -49,15 +48,15 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 	public int lastItemNumber;
 	public static List<Item> obsidianItems = new ArrayList<Item>();
 	static {
-		obsidianItems.add(ModItems.OBSIDIAN_AXE);
-		obsidianItems.add(ModItems.OBSIDIAN_BOOTS);
-		obsidianItems.add(ModItems.OBSIDIAN_CHEST);
-		obsidianItems.add(ModItems.OBSIDIAN_HELMET);
-		obsidianItems.add(ModItems.OBSIDIAN_HOE);
-		obsidianItems.add(ModItems.OBSIDIAN_PANTS);
-		obsidianItems.add(ModItems.OBSIDIAN_PICKAXE);
-		obsidianItems.add(ModItems.OBSIDIAN_SHOVEL);
-		obsidianItems.add(ModItems.OBSIDIAN_SWORD);
+		obsidianItems.add(SkrimItems.OBSIDIAN_AXE);
+		obsidianItems.add(SkrimItems.OBSIDIAN_BOOTS);
+		obsidianItems.add(SkrimItems.OBSIDIAN_CHEST);
+		obsidianItems.add(SkrimItems.OBSIDIAN_HELMET);
+		obsidianItems.add(SkrimItems.OBSIDIAN_HOE);
+		obsidianItems.add(SkrimItems.OBSIDIAN_PANTS);
+		obsidianItems.add(SkrimItems.OBSIDIAN_PICKAXE);
+		obsidianItems.add(SkrimItems.OBSIDIAN_SHOVEL);
+		obsidianItems.add(SkrimItems.OBSIDIAN_SWORD);
 	}
 
 	public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("blacksmithing", "Master Craftsperson", 25,

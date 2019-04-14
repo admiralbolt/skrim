@@ -1,7 +1,7 @@
 package avi.mod.skrim.world.loot;
 
 import avi.mod.skrim.blocks.SkrimBlocks;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -22,10 +22,10 @@ import java.util.stream.Stream;
 public class DynamicLootPool {
 
   public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 10000, 10, 25, 3, 2,
-      Stream.concat(Arrays.stream(ModItems.ARTIFACTS), SkrimBlocks.RegistrationHandler.ARTIFACT_ITEM_BLOCK_MAP.values().stream())).toLootPool();
+      Stream.concat(Arrays.stream(SkrimItems.ARTIFACTS), SkrimBlocks.RegistrationHandler.ARTIFACT_ITEM_BLOCK_MAP.values().stream())).toLootPool();
 
   public static LootPool RECORD_POOL = new DynamicLootPool("record_pool", 10000, 50, 10, 2, 2,
-      Stream.of(ModItems.SONGS)).toLootPool();
+      Stream.of(SkrimItems.SONGS)).toLootPool();
 
 
   private String name;

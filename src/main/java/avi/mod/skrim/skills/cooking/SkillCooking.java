@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.food.CustomCake;
 import avi.mod.skrim.items.food.CustomFood;
-import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.AngelFlyingSoundPacket;
 import avi.mod.skrim.skills.Skill;
@@ -71,30 +71,30 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		foodMap = new HashMap<String, CustomFood>();
 		xpMap = new HashMap<String, Integer>();
 		entityFoodMap = new HashMap<Class, String>();
-		addFood("bread", ModItems.OVERWRITE_BREAD, 200);
-		addFood("cookie", ModItems.OVERWRITE_COOKIE, 25);
+		addFood("bread", SkrimItems.OVERWRITE_BREAD, 200);
+		addFood("cookie", SkrimItems.OVERWRITE_COOKIE, 25);
 
-		addFood("potatobaked", ModItems.OVERWRITE_BAKED_POTATO, 200);
+		addFood("potatobaked", SkrimItems.OVERWRITE_BAKED_POTATO, 200);
 
-		addFood("beetroot_soup", ModItems.OVERWRITE_BEETROOT_SOUP, 250);
-		addFood("mushroomstew", ModItems.OVERWRITE_MUSHROOM_STEW, 250);
+		addFood("beetroot_soup", SkrimItems.OVERWRITE_BEETROOT_SOUP, 250);
+		addFood("mushroomstew", SkrimItems.OVERWRITE_MUSHROOM_STEW, 250);
 
-		addFood("muttoncooked", ModItems.OVERWRITE_MUTTON, 500);
+		addFood("muttoncooked", SkrimItems.OVERWRITE_MUTTON, 500);
 		entityFoodMap.put(EntitySheep.class, "muttoncooked");
-		addFood("beefcooked", ModItems.OVERWRITE_STEAK, 500);
+		addFood("beefcooked", SkrimItems.OVERWRITE_STEAK, 500);
 		entityFoodMap.put(EntityCow.class, "beefcooked");
-		addFood("porkchopcooked", ModItems.OVERWRITE_PORKCHOP, 500);
+		addFood("porkchopcooked", SkrimItems.OVERWRITE_PORKCHOP, 500);
 		entityFoodMap.put(EntityPig.class, "porkchopcooked");
-		addFood("chickencooked", ModItems.OVERWRITE_CHICKEN, 500);
+		addFood("chickencooked", SkrimItems.OVERWRITE_CHICKEN, 500);
 		entityFoodMap.put(EntityChicken.class, "chickencooked");
 
-		addFood("cooked_fish", ModItems.OVERWRITE_FISH, 800);
-		addFood("pumpkinpie", ModItems.OVERWRITE_PUMPKIN_STEW, 1500);
-		addFood("cooked_salmon", ModItems.OVERWRITE_SALMON, 1000);
+		addFood("cooked_fish", SkrimItems.OVERWRITE_FISH, 800);
+		addFood("pumpkinpie", SkrimItems.OVERWRITE_PUMPKIN_STEW, 1500);
+		addFood("cooked_salmon", SkrimItems.OVERWRITE_SALMON, 1000);
 
-		addFood("rabbitcooked", ModItems.OVERWRITE_RABBIT, 2500);
+		addFood("rabbitcooked", SkrimItems.OVERWRITE_RABBIT, 2500);
 		entityFoodMap.put(EntityRabbit.class, "rabbitcooked");
-		addFood("rabbitstew", ModItems.OVERWRITE_RABBIT_STEW, 3000);
+		addFood("rabbitstew", SkrimItems.OVERWRITE_RABBIT_STEW, 3000);
 
 		xpMap.put("item.cake", 7500);
 		xpMap.put("angel_cake", 10000);
@@ -183,7 +183,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 				String foodName = getFoodName(stack);
 				Utils.logSkillEvent(event, cooking, "crafting food: " + foodName);
 				Item replaceFood;
-				if (stack.getItem() == Items.CAKE || stack.getItem() == ModItems.ANGEL_CAKE) {
+				if (stack.getItem() == Items.CAKE || stack.getItem() == SkrimItems.ANGEL_CAKE) {
 					replaceFood = getOverwriteCake(stack.getItem());
 				} else {
 					replaceFood = cooking.getOverwriteFood(cooking.getFoodName(stack));
@@ -214,10 +214,10 @@ public class SkillCooking extends Skill implements ISkillCooking {
 	}
 
 	public static CustomCake getOverwriteCake(Item item) {
-		if (item == ModItems.ANGEL_CAKE) {
-			return ModItems.ANGEL_CAKE;
+		if (item == SkrimItems.ANGEL_CAKE) {
+			return SkrimItems.ANGEL_CAKE;
 		} else if (item == Items.CAKE) {
-			return ModItems.SKRIM_CAKE;
+			return SkrimItems.SKRIM_CAKE;
 		} else {
 			return null;
 		}
@@ -229,7 +229,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
 	public static void injectCraftedFood(ItemCraftedEvent event) {
 		Item targetItem = event.crafting.getItem();
-		if (targetItem != null && targetItem == ModItems.ANGEL_CAKE) {
+		if (targetItem != null && targetItem == SkrimItems.ANGEL_CAKE) {
 			if (Skills.canCraft(event.player, Skills.COOKING, 100)) {
 				if (event.player != null && event.player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
 					SkillCooking cooking = (SkillCooking) event.player.getCapability(Skills.COOKING, EnumFacing.NORTH);

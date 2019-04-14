@@ -1,10 +1,9 @@
 package avi.mod.skrim.items.food;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.blocks.food.CustomCakeBlock;
 import avi.mod.skrim.items.ItemBase;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.tileentity.CakeTileEntity;
 import avi.mod.skrim.utils.Obfuscation;
@@ -165,9 +164,9 @@ public class CustomCake extends ItemBlockSpecial implements ItemBase {
 
   private static CustomCake getItemFromBlock(CustomCakeBlock block) {
     if (block == SkrimBlocks.SKRIM_CAKE) {
-      return ModItems.SKRIM_CAKE;
+      return SkrimItems.SKRIM_CAKE;
     } else if (block == SkrimBlocks.ANGEL_CAKE) {
-      return ModItems.ANGEL_CAKE;
+      return SkrimItems.ANGEL_CAKE;
     } else {
       return null;
     }

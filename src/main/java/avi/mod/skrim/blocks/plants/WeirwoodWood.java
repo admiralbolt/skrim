@@ -2,7 +2,7 @@ package avi.mod.skrim.blocks.plants;
 
 import avi.mod.skrim.blocks.BlockBase;
 import avi.mod.skrim.blocks.SkrimBlocks;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
 import avi.mod.skrim.utils.Obfuscation;
@@ -119,7 +119,7 @@ public class WeirwoodWood extends BlockBase {
     System.out.println("Highly suspicious.");
 
     // Set the home base tree if the player is holding a weirwood totem.
-    if (heldItem.getItem() == ModItems.WEIRWOOD_TOTEM) {
+    if (heldItem.getItem() == SkrimItems.WEIRWOOD_TOTEM) {
       setTeleportLocation(worldIn, pos, playerIn, heldItem, hitX, hitZ);
       return true;
     }

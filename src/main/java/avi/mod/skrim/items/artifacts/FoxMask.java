@@ -1,6 +1,6 @@
 package avi.mod.skrim.items.artifacts;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.armor.ArtifactArmor;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
@@ -60,7 +60,7 @@ public class FoxMask extends ArtifactArmor {
       if (!(entity instanceof EntityPlayer)) return;
       EntityPlayer player = (EntityPlayer) entity;
 
-      if (player.world.isRemote || !Utils.isWearingArmor(player, ModItems.FOX_MASK) || player.world.getTotalWorldTime() % 60L != 0L) return;
+      if (player.world.isRemote || !Utils.isWearingArmor(player, SkrimItems.FOX_MASK) || player.world.getTotalWorldTime() % 60L != 0L) return;
       for (Potion potion : effects) {
         PotionEffect newEffect = new PotionEffect(potion, (potion == MobEffects.NIGHT_VISION) ? 300 : 80, effectStrength.get(potion), true,
             false);

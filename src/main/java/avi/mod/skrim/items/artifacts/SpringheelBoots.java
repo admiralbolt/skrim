@@ -1,6 +1,6 @@
 package avi.mod.skrim.items.artifacts;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.armor.ArtifactArmor;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
@@ -40,7 +40,7 @@ public class SpringheelBoots extends ArtifactArmor {
 
       EntityPlayer player = (EntityPlayer) entity;
       if (!player.world.isRemote) return;
-      if (!Utils.isWearingArmor(player, ModItems.SPRINGHEEL_BOOTS)) return;
+      if (!Utils.isWearingArmor(player, SkrimItems.SPRINGHEEL_BOOTS)) return;
 
       player.motionY *= 3;
       player.setVelocity(player.motionX, player.motionY, player.motionZ);
@@ -50,7 +50,7 @@ public class SpringheelBoots extends ArtifactArmor {
       Entity entity = event.getEntity();
       if (!(entity instanceof EntityPlayer)) return;
       EntityPlayer player = (EntityPlayer) entity;
-      if (!Utils.isWearingArmor(player, ModItems.SPRINGHEEL_BOOTS)) return;
+      if (!Utils.isWearingArmor(player, SkrimItems.SPRINGHEEL_BOOTS)) return;
       event.setDistance(0);
       event.setCanceled(true);
     }

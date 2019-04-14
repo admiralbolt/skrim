@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.armor.ArtifactArmor;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
@@ -42,13 +42,13 @@ public class GruesomeMask extends ArtifactArmor {
 			// leave each one explicit.
 			if (receiving instanceof EntityPlayer) {
 				EntityPlayer playerReceiving = (EntityPlayer) receiving;
-				if (Utils.isWearingArmor(playerReceiving, ModItems.GRUESOME_MASK)) {
+				if (Utils.isWearingArmor(playerReceiving, SkrimItems.GRUESOME_MASK)) {
 					event.setAmount(event.getAmount() * 2);
 				}
 			}
 			if (dealing instanceof EntityPlayer) {
 				EntityPlayer playerDealing = (EntityPlayer) dealing;
-				if (Utils.isWearingArmor(playerDealing, ModItems.GRUESOME_MASK)) {
+				if (Utils.isWearingArmor(playerDealing, SkrimItems.GRUESOME_MASK)) {
 					event.setAmount(event.getAmount() * 2);
 				}
 			}

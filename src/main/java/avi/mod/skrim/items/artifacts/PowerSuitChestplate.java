@@ -1,7 +1,7 @@
 package avi.mod.skrim.items.artifacts;
 
 import avi.mod.skrim.client.audio.ShineSparkSound;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.armor.ArtifactArmor;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -56,7 +56,7 @@ public class PowerSuitChestplate extends ArtifactArmor {
     if (!(entity instanceof EntityPlayer)) return;
 
     EntityPlayer player = (EntityPlayer) entity;
-    if (!player.world.isRemote || !Utils.isWearingArmor(player, ModItems.POWER_SUIT_CHESTPLATE)) return;
+    if (!player.world.isRemote || !Utils.isWearingArmor(player, SkrimItems.POWER_SUIT_CHESTPLATE)) return;
 
     PowerSuitChestplate chozoChest = (PowerSuitChestplate) Utils.getArmor(player, EntityEquipmentSlot.CHEST).getItem();
     if (chozoChest.spark) {

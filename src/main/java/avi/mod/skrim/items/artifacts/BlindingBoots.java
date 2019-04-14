@@ -1,6 +1,6 @@
 package avi.mod.skrim.items.artifacts;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.armor.ArtifactArmor;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
@@ -56,7 +56,7 @@ public class BlindingBoots extends ArtifactArmor {
       Entity entity = event.getEntity();
       if (!(entity instanceof EntityPlayer)) return;
       EntityPlayer player = (EntityPlayer) entity;
-      if (player.world.isRemote || !Utils.isWearingArmor(player, ModItems.BLINDING_BOOTS) || player.world.getTotalWorldTime() % 40L != 0L)
+      if (player.world.isRemote || !Utils.isWearingArmor(player, SkrimItems.BLINDING_BOOTS) || player.world.getTotalWorldTime() % 40L != 0L)
         return;
       for (Potion potion : effects) {
         PotionEffect newEffect = new PotionEffect(potion, 100, effectStrength.get(potion), false, false);

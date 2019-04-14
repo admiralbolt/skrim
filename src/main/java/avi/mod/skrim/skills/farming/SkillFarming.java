@@ -7,9 +7,7 @@ import java.util.Map;
 
 import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.tools.CustomHoe;
-import avi.mod.skrim.items.ModItems;
-import avi.mod.skrim.network.SkrimPacketHandler;
-import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -36,7 +34,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
@@ -46,11 +43,9 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -240,7 +235,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		Item targetItem = event.crafting.getItem();
 		Item magicBean = new ItemStack(SkrimBlocks.MAGIC_BEAN).getItem();
 
-		if (targetItem != null && targetItem == ModItems.OVERALLS) {
+		if (targetItem != null && targetItem == SkrimItems.OVERALLS) {
 			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
 				Skills.replaceWithComponents(event);
 			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {

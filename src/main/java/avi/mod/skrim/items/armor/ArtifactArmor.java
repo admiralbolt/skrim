@@ -1,7 +1,6 @@
 package avi.mod.skrim.items.armor;
 
-import avi.mod.skrim.items.armor.CustomArmor;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
@@ -48,7 +47,7 @@ public class ArtifactArmor extends CustomArmor {
   @SideOnly(Side.CLIENT)
   @Nonnull
   public EnumRarity getRarity(ItemStack stack) {
-    return ModItems.ARTIFACT_RARITY;
+    return SkrimItems.ARTIFACT_RARITY;
   }
 
   /**

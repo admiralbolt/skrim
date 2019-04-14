@@ -1,7 +1,7 @@
 package avi.mod.skrim.items.items;
 
 import avi.mod.skrim.items.ItemBase;
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +44,7 @@ public class ArtifactItem extends Item implements ItemBase {
   @Nonnull
   @SideOnly(Side.CLIENT)
   public EnumRarity getRarity(ItemStack stack) {
-    return ModItems.ARTIFACT_RARITY;
+    return SkrimItems.ARTIFACT_RARITY;
   }
 
   @Override

@@ -1,6 +1,6 @@
 package avi.mod.skrim.items.artifacts;
 
-import avi.mod.skrim.items.ModItems;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.weapons.ArtifactSword;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -32,7 +32,7 @@ public class CanesSword extends ArtifactSword {
   private static double SWEEP_RANGE = 2.0D;
 
   public CanesSword() {
-    super("raising_canes_fry_sword", ModItems.ARTIFACT_DEFAULT);
+    super("raising_canes_fry_sword", SkrimItems.ARTIFACT_DEFAULT);
   }
 
   @Override
@@ -44,7 +44,7 @@ public class CanesSword extends ArtifactSword {
 
   @Override
   public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> subItems) {
-    ItemStack caneStack = new ItemStack(ModItems.CANES_SWORD);
+    ItemStack caneStack = new ItemStack(SkrimItems.CANES_SWORD);
     caneStack.addEnchantment(Enchantments.FIRE_ASPECT, 2);
     subItems.add(caneStack);
   }
@@ -53,7 +53,7 @@ public class CanesSword extends ArtifactSword {
   public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
     if (!(attacker instanceof EntityPlayer)) return true;
     EntityPlayer player = (EntityPlayer) attacker;
-    if (stack.getItem() != ModItems.CANES_SWORD || !canSweep(player, target)) return true;
+    if (stack.getItem() != SkrimItems.CANES_SWORD || !canSweep(player, target)) return true;
     doFireSweep(player, target);
     return true;
   }
@@ -98,7 +98,7 @@ public class CanesSword extends ArtifactSword {
 
       EntityPlayer player = (EntityPlayer) entity;
       Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
-      if (sword != ModItems.CANES_SWORD) return;
+      if (sword != SkrimItems.CANES_SWORD) return;
 
       event.setAmount(event.getAmount() * 10);
     }
@@ -113,12 +113,12 @@ public class CanesSword extends ArtifactSword {
         if (!(sourceEntity instanceof EntityPlayer)) return;
         EntityPlayer player = (EntityPlayer) sourceEntity;
         Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
-        if (sword != ModItems.CANES_SWORD) return;
+        if (sword != SkrimItems.CANES_SWORD) return;
         List<EntityItem> drops = event.getDrops();
         for (int i = 0; i < drops.size(); i++) {
           EntityItem item = drops.get(i);
           if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
-            drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
+            drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, new ItemStack(SkrimItems.CANES_CHICKEN)));
           }
         }
       }
