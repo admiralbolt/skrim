@@ -11,7 +11,9 @@ import avi.mod.skrim.blocks.tnt.BioBomb;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.blocks.tnt.Dynamite;
 import avi.mod.skrim.blocks.tnt.Napalm;
+import avi.mod.skrim.items.artifacts.FatBoy;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -23,6 +25,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.Map;
 import java.util.stream.Stream;
 
 @GameRegistry.ObjectHolder(Skrim.MOD_ID)
@@ -61,6 +64,9 @@ public final class SkrimBlocks {
   public static WeirwoodWood WEIRWOOD_WOOD = new WeirwoodWood();
   public static WeirwoodLeaf WEIRWOOD_LEAF = new WeirwoodLeaf();
   public static MegaChest MEGA_CHEST = new MegaChest();
+
+  // Artifact blocks.
+  public static FatBoy FAT_BOY = new FatBoy();
 
   @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
   public static class RegistrationHandler {
@@ -108,8 +114,17 @@ public final class SkrimBlocks {
         ENCHANTED_FLOWER_OXEYE_DAISY
     };
 
+    public static final Block[] ARTIFACT_BLOCKS = {
+        FAT_BOY
+    };
+
+
+    public static final Map<Block, ArtifactItemBlock> ARTIFACT_ITEM_BLOCK_MAP = ImmutableMap.of(
+        SkrimBlocks.FAT_BOY, new FatBoy.ItemBlock()
+    );
+
     public static final Block[] ALL_BLOCKS =
-        Stream.of(NORMAL_BLOCKS, GLOW_FLOWERS, ENCHANTED_FLOWERS).flatMap(Stream::of).toArray(Block[]::new);
+        Stream.of(NORMAL_BLOCKS, GLOW_FLOWERS, ENCHANTED_FLOWERS, ARTIFACT_BLOCKS).flatMap(Stream::of).toArray(Block[]::new);
 
     @SubscribeEvent
     public static void registerBlocks(final RegistryEvent.Register<Block> event) {
@@ -145,6 +160,13 @@ public final class SkrimBlocks {
 
       for (Block block : ENCHANTED_FLOWERS) {
         CustomItemBlock item = new CustomItemBlock(block, true, EnumRarity.RARE);
+        final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
+            "registry NAME", block);
+        registry.register(item.setRegistryName(registryName));
+      }
+
+      for (Block block : ARTIFACT_BLOCKS) {
+        CustomItemBlock item = ARTIFACT_ITEM_BLOCK_MAP.get(block);
         final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
             "registry NAME", block);
         registry.register(item.setRegistryName(registryName));

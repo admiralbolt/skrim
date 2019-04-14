@@ -257,36 +257,6 @@ public class SkillFarming extends Skill implements ISkillFarming {
 		}
 	}
 
-	public static void applyOveralls(PlayerInteractEvent.RightClickBlock event) {
-		EntityPlayer player = event.getEntityPlayer();
-		if (player.world.isRemote) {
-			RayTraceResult result = player.rayTrace(5.0D, 1.0F);
-			if (result != null) {
-				if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
-					BlockPos targetPos = result.getBlockPos();
-					IBlockState targetState = player.world.getBlockState(targetPos);
-					Block targetBlock = targetState.getBlock();
-					if (validCrop(targetState)) {
-						InventoryPlayer inventory = player.inventory;
-						if (inventory != null) {
-							ItemStack stack = inventory.armorInventory.get(2);
-							if (stack != null) {
-								Item chest = stack.getItem();
-								if (chest == ModItems.OVERALLS) {
-									ItemStack mainStack = player.getHeldItemMainhand();
-									Item mainItem = mainStack.getItem();
-									if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe) {
-										SkrimPacketHandler.INSTANCE.sendToServer(new ApplyBonemealPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ()));
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	public static void createFarmland(UseHoeEvent event) {
 		EntityPlayer player = event.getEntityPlayer();
 		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {

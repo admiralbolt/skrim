@@ -16,6 +16,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
+/**
+ * Double damage and double damage received.
+ */
 public class GruesomeMask extends ArtifactArmor {
 	
 	public GruesomeMask() {
@@ -28,10 +31,7 @@ public class GruesomeMask extends ArtifactArmor {
 		tooltip.add("§4Recieve double damage while worn.§r");
 		tooltip.add("§e\"Blood begets blood.\"");
 	}
-	
-	/**
-	 * Handlers for boots of springheel jack
-	 */
+
 	public static class GruesomeHandler {
 		
 		public static void doubleAllDamage(LivingHurtEvent event) {

@@ -12,9 +12,13 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+/**
+ * Artifact Armor!
+ */
 public class ArtifactArmor extends CustomArmor {
 
   protected String name;
@@ -23,7 +27,7 @@ public class ArtifactArmor extends CustomArmor {
     this(name, getAndCreateMaterial(name), armorType);
   }
 
-  public ArtifactArmor(String name, ItemArmor.ArmorMaterial material, EntityEquipmentSlot armorType) {
+  private ArtifactArmor(String name, ItemArmor.ArmorMaterial material, EntityEquipmentSlot armorType) {
     super(name, material, 1, armorType);
   }
 
@@ -42,15 +46,22 @@ public class ArtifactArmor extends CustomArmor {
 
   @Override
   @SideOnly(Side.CLIENT)
+  @Nonnull
   public EnumRarity getRarity(ItemStack stack) {
     return ModItems.ARTIFACT_RARITY;
   }
 
+  /**
+   * This should be overriden in the actual artifact class itself.
+   */
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add("Custom tooltip");
   }
 
+  /**
+   * Artifacts can't be enchanted, they're already pretty cool.
+   */
   @Override
   public int getItemEnchantability() {
     return 0;

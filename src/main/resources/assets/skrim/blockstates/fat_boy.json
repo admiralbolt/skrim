@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "parent": "block/cube_bottom_top",
+    "textures": {
+      "bottom": "skrim:blocks/fat_boy",
+      "top": "skrim:blocks/fat_boy",
+      "side": "skrim:blocks/fat_boy"
+    }
+  },
+  "variants": {
+    "normal": [{
+      "model": "minecraft:tnt"
+    }],
+    "inventory": [{
+      "model": "minecraft:tnt"
+    }],
+    "explode=true": [{
+      "model": "minecraft:tnt"
+    }],
+    "explode=false": [{
+      "model": "minecraft:tnt"
+    }]
+  }
+}

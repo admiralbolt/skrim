@@ -4,6 +4,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.entities.SkrimFishHook;
 import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
+import avi.mod.skrim.items.armor.Overalls;
 import avi.mod.skrim.items.artifacts.*;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
@@ -17,8 +18,6 @@ import avi.mod.skrim.skills.melee.SkillMelee;
 import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
-import avi.mod.skrim.utils.Obfuscation;
-import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerCoords;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
@@ -26,10 +25,8 @@ import avi.mod.skrim.world.loot.AddTreasure;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -99,7 +96,7 @@ public class EventHandler {
   public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
     System.out.println("onRightClickBlock fired");
     SkillMining.drill(event);
-    SkillFarming.applyOveralls(event);
+    Overalls.applyOveralls(event);
     SkillDigging.castles(event);
     LeafArmor.LeafArmorHandler.plantTree(event);
   }
@@ -144,8 +141,7 @@ public class EventHandler {
 
       // Artifact handlers
       PowerSuitChestplate.applyChozoTech(event);
-      BlindingBoots.Handler.goFast(event);
-      CeruleanSandals.Handler.walkOnWater(event);
+      BlindingBoots.BlindingBootsHandler.goFast(event);
       FoxMask.FoxHandler.beAFox(event);
     }
   }
@@ -265,9 +261,6 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onLoadLoot(LootTableLoadEvent event) {
-    if (AddTreasure.skrimPool == null) {
-      AddTreasure.generateSkrimPool();
-    }
     AddTreasure.addTreasure(event);
   }
 
@@ -280,13 +273,14 @@ public class EventHandler {
   public void onPreBrew(PotionBrewEvent.Pre event) {
     // System.out.println("onPreBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
     // System.out.println("onPreBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ",
-		// item3: " + event.getItem(3));
+    // item3: " + event.getItem(3));
   }
 
   @SubscribeEvent
   public void onBrew(PotionBrewEvent.Post event) {
     // System.out.println("onPostBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
-    // System.out.println("onPostBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", item3: " + event.getItem(3));
+    // System.out.println("onPostBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ",
+    // item3: " + event.getItem(3));
   }
 
   @SubscribeEvent

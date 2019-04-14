@@ -8,20 +8,22 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class NapalmExplosion extends CustomExplosion {
 
-	public static float DEFAULT_SIZE = 12.0F;
-	private static boolean FLAMING = true;
-	private static boolean DAMAGES_TERRAIN = true;
+	public static final float DEFAULT_SIZE = 12.0F;
+	private static final boolean FLAMING = true;
+	private static final boolean DAMAGES_TERRAIN = true;
 
 	private World world;
 
-	public NapalmExplosion(World worldIn, Entity entityIn, double x, double y, double z) {
-		this(worldIn, entityIn, x, y, z, DEFAULT_SIZE, DAMAGES_TERRAIN);
+	public NapalmExplosion(World worldIn, Entity entityIn, double x, double y, double z, @Nullable Float size) {
+		this(worldIn, entityIn, x, y, z, (size == null) ? DEFAULT_SIZE : size, DAMAGES_TERRAIN);
 	}
-	
-	public NapalmExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size, boolean damagesTerrain) {
-		super(worldIn, entityIn, x, y, z, size, FLAMING, damagesTerrain);
+
+	public NapalmExplosion(World worldIn, Entity entityIn, double x, double y, double z, @Nullable Float size, boolean damagesTerrain) {
+		super(worldIn, entityIn, x, y, z, (size == null) ? DEFAULT_SIZE : size, FLAMING, damagesTerrain);
 		this.world = worldIn;
 	}
 

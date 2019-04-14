@@ -78,7 +78,6 @@ public class ModItems {
 
   public static ArtifactArmor SPRINGHEEL_BOOTS = new SpringheelBoots();
   public static ArtifactArmor BLINDING_BOOTS = new BlindingBoots();
-  public static ArtifactArmor CERULEAN_SANDALS = new CeruleanSandals();
 
   public static ArtifactArmor GRUESOME_MASK = new GruesomeMask();
   public static ArtifactArmor FOX_MASK = new FoxMask();
@@ -94,7 +93,6 @@ public class ModItems {
       POWER_SUIT_CHESTPLATE,
       SPRINGHEEL_BOOTS,
       BLINDING_BOOTS,
-      CERULEAN_SANDALS,
       GRUESOME_MASK,
       FOX_MASK,
       SHEEP_FINDER,

@@ -26,18 +26,15 @@ import java.util.List;
 public class PowerSuitChestplate extends ArtifactArmor {
 
   // This is pretty fucking fast.
-  private static double MAX_SPEED = 3;
-  private static float YAW_BOUND = 10.0F;
+  private static double SPARK_SPEED = 2.5;
 
   private int sprintingTicks = 0;
   public boolean spark = false;
 
   // Saves the current speed for when jumps activate.
-  private double savedMotionX;
-  private double savedMotionZ;
-
-  // Saves the initial direction for sparking purposes.
   private Float initialDirection = null;
+  private Double savedMotionX = null;
+  private Double savedMotionZ = null;
 
   public PowerSuitChestplate() {
     super("powersuit_chestplate", EntityEquipmentSlot.CHEST);
@@ -63,44 +60,34 @@ public class PowerSuitChestplate extends ArtifactArmor {
 
     PowerSuitChestplate chozoChest = (PowerSuitChestplate) Utils.getArmor(player, EntityEquipmentSlot.CHEST).getItem();
     if (chozoChest.spark) {
-      // Store the initial motion direction.
-      if (chozoChest.initialDirection == null) {
-        chozoChest.initialDirection = player.rotationYaw % 360;
-      }
-      player.rotationYaw = chozoChest.initialDirection;
-
-      if (player.onGround) {
-        // Run faster.
-        player.motionX *= 1.75;
-        player.motionZ *= 1.75;
-
-        // Scale down speed to max speed if over it.
-        double speed = Math.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
-        if (speed > MAX_SPEED) {
-          double scale = speed / MAX_SPEED;
-          player.motionX /= scale;
-          player.motionY /= scale;
-        }
-        chozoChest.savedMotionX = player.motionX;
-        chozoChest.savedMotionZ = player.motionZ;
-      } else {
-        // Maintain air speed.
-        player.motionX = chozoChest.savedMotionX;
-        player.motionZ = chozoChest.savedMotionZ;
-      }
-
-      // If the player slows down OR changes direction significantly.
-      if (Math.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ) < 0.25) {
+      if (!player.isSprinting()) {
         chozoChest.sprintingTicks = 0;
         chozoChest.spark = false;
         chozoChest.initialDirection = null;
+        chozoChest.savedMotionX = null;
+        chozoChest.savedMotionZ = null;
+        return;
       }
+      // Store the initial motion direction.
+      if (chozoChest.initialDirection == null || chozoChest.savedMotionX == null || chozoChest.savedMotionZ == null) {
+        chozoChest.initialDirection = player.rotationYaw;
+        double speed = Math.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
+        double scale = SPARK_SPEED / speed;
+        chozoChest.savedMotionX = scale * player.motionX;
+        chozoChest.savedMotionZ = scale * player.motionZ;
+        System.out.println("SPARK! X: " + chozoChest.savedMotionX + ", Z: " + chozoChest.savedMotionZ);
+      }
+
+      player.rotationYaw = chozoChest.initialDirection;
+      player.motionX = chozoChest.savedMotionX;
+      player.motionZ = chozoChest.savedMotionZ;
     } else if (player.isSprinting() && player.onGround) {
       chozoChest.sprintingTicks++;
       if (chozoChest.sprintingTicks >= 100) {
         chozoChest.spark = true;
         chozoChest.playShineSpark(player);
       }
+      System.out.println("motionX: " + player.motionX + ", motionZ: " + player.motionZ);
     }
   }
 

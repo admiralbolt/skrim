@@ -1,9 +1,5 @@
 package avi.mod.skrim.items.artifacts;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import avi.mod.skrim.items.ModItems;
 import avi.mod.skrim.items.weapons.ArtifactSword;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,102 +20,110 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
+/**
+ * Chicken chicken chicken, which combo you pickin'?
+ */
 public class CanesSword extends ArtifactSword {
 
-	public CanesSword() {
-		super("raising_canes_fry_sword", ModItems.ARTIFACT_DEFAULT);
-	}
+  private static double SWEEP_RANGE = 2.0D;
 
-	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("§4Sweep attack ignites enemies.");
-		tooltip.add("§4Deals 20x damage to chickens & fries them.§r");
-		tooltip.add("§e\"Chicken chicken chicken, which combo you pickin'?\"");
-	}
+  public CanesSword() {
+    super("raising_canes_fry_sword", ModItems.ARTIFACT_DEFAULT);
+  }
 
-	/**
-	 * Handlers for the raisin cane's sword of frying
-	 */
-	public static class CanesHandler {
+  @Override
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add("§4Sweep attack ignites enemies.");
+    tooltip.add("§4Deals 20x damage to chickens & fries them.§r");
+    tooltip.add("§e\"Chicken chicken chicken, which combo you pickin'?\"");
+  }
 
-		public static void slayChicken(LivingHurtEvent event) {
-			DamageSource source = event.getSource();
-			Entity entity = source.getTrueSource();
-			if (entity instanceof EntityPlayer) {
-				if (event.getEntity() instanceof EntityChicken) {
-					EntityPlayer player = (EntityPlayer) entity;
-					ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-					if (stack != null) {
-						Item sword = stack.getItem();
-						if (sword == ModItems.CANES_SWORD) {
-							event.setAmount(event.getAmount() * 10);
-						}
-					}
-				}
-			}
-		}
+  @Override
+  public void getSubItems(@Nonnull CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    ItemStack caneStack = new ItemStack(ModItems.CANES_SWORD);
+    caneStack.addEnchantment(Enchantments.FIRE_ASPECT, 2);
+    subItems.add(caneStack);
+  }
 
-		public static void fryChicken(LivingDropsEvent event) {
-			if (event.getEntity() instanceof EntityChicken) {
-				DamageSource source = event.getSource();
-				Entity sourceEntity = source.getTrueSource();
-				if (sourceEntity instanceof EntityPlayer) {
-					EntityPlayer player = (EntityPlayer) sourceEntity;
-					ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-					if (stack != null) {
-						Item sword = stack.getItem();
-						if (sword == ModItems.CANES_SWORD) {
-							List<EntityItem> drops = event.getDrops();
-							for (int i = 0; i < drops.size(); i++) {
-								EntityItem item = drops.get(i);
-								if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
-									drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  @Override
+  public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    if (!(attacker instanceof EntityPlayer)) return true;
+    EntityPlayer player = (EntityPlayer) attacker;
+    if (stack.getItem() != ModItems.CANES_SWORD || !canSweep(player, target)) return true;
+    doFireSweep(player, target);
+    return true;
+  }
 
-	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
-		ItemStack caneStack = new ItemStack(ModItems.CANES_SWORD);
-		caneStack.addEnchantment(Enchantments.FIRE_ASPECT, 2);
-		subItems.add(caneStack);
-	}
+  /**
+   * This is definitely stolen from some base game code, not sure where good luck future me.
+   */
+  private static boolean canSweep(EntityPlayer player, EntityLivingBase targetEntity) {
+    boolean flag1 = player.isSprinting();
+    boolean flag2 = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater()
+        && !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && targetEntity != null;
 
-	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-		if (attacker instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) attacker;
-			Item sword = stack.getItem();
-			if (sword == ModItems.CANES_SWORD) {
-				if (canSweep(player, target)) {
-					doFireSweep(player, target);
-				}
-			}
-		}
-		return true;
-	}
+    double d0 = (double) (player.distanceWalkedModified - player.prevDistanceWalkedModified);
 
-	public static boolean canSweep(EntityPlayer player, EntityLivingBase targetEntity) {
-		boolean flag1 = player.isSprinting();
-		boolean flag2 = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater()
-				&& !player.isPotionActive(MobEffects.BLINDNESS) && !player.isRiding() && targetEntity instanceof EntityLivingBase;
-		double d0 = (double) (player.distanceWalkedModified - player.prevDistanceWalkedModified);
-		return (!flag2 && !flag1 && player.onGround && d0 < (double) player.getAIMoveSpeed());
-	}
+    return (!flag2 && !flag1 && player.onGround && d0 < (double) player.getAIMoveSpeed());
+  }
 
-	public static void doFireSweep(EntityPlayer player, EntityLivingBase targetEntity) {
-		for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
-				targetEntity.getEntityBoundingBox().expand(1.0D, 0.25D, 1.0D))) {
-			if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)
-					&& player.getDistanceSq(entitylivingbase) < 9.0D) {
-				entitylivingbase.setFire(4);
-			}
-		}
-	}
+  /**
+   * Set everything in an aoe on fire!
+   */
+  private static void doFireSweep(EntityPlayer player, EntityLivingBase targetEntity) {
+    for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
+        targetEntity.getEntityBoundingBox().expand(SWEEP_RANGE, SWEEP_RANGE, SWEEP_RANGE).expand(-1 * SWEEP_RANGE, -1* SWEEP_RANGE, -1 * SWEEP_RANGE))) {
+      System.out.println("checkingEnityt:" + entitylivingbase);
+
+      if (entitylivingbase == player || entitylivingbase == targetEntity || player.isOnSameTeam(entitylivingbase))
+        continue;
+      System.out.println("setting: " + entitylivingbase + " on Fire.");
+      entitylivingbase.setFire(4);
+    }
+  }
+
+  public static class CanesHandler {
+
+    /**
+     * Deal 10x damage to chickens, because fuck chickens.
+     */
+    public static void slayChicken(LivingHurtEvent event) {
+      DamageSource source = event.getSource();
+      Entity entity = source.getTrueSource();
+      if (!(entity instanceof EntityPlayer) || !(event.getEntity() instanceof EntityChicken)) return;
+
+      EntityPlayer player = (EntityPlayer) entity;
+      Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
+      if (sword != ModItems.CANES_SWORD) return;
+
+      event.setAmount(event.getAmount() * 10);
+    }
+
+    /**
+     * Deep fries every chicken into a delicious golden treat every time.
+     */
+    public static void fryChicken(LivingDropsEvent event) {
+      if (event.getEntity() instanceof EntityChicken) {
+        DamageSource source = event.getSource();
+        Entity sourceEntity = source.getTrueSource();
+        if (!(sourceEntity instanceof EntityPlayer)) return;
+        EntityPlayer player = (EntityPlayer) sourceEntity;
+        Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
+        if (sword != ModItems.CANES_SWORD) return;
+        List<EntityItem> drops = event.getDrops();
+        for (int i = 0; i < drops.size(); i++) {
+          EntityItem item = drops.get(i);
+          if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
+            drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, new ItemStack(ModItems.CANES_CHICKEN)));
+          }
+        }
+      }
+    }
+
+  }
 
 }

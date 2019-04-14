@@ -5,6 +5,9 @@ import avi.mod.skrim.items.ItemBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 
+/**
+ * Helper class for custom armors. Little base functionality besides correct names in the registry and overriding the default texture path.
+ */
 public class CustomArmor extends ItemArmor implements ItemBase {
 
   protected String name;

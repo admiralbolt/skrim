@@ -18,6 +18,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * It finds sheep. What else could you want in an artifact?
+ */
 public class SheepFinder3000 extends ArtifactItem {
 	
 	private static final int RANGE = 200;
@@ -42,12 +45,13 @@ public class SheepFinder3000 extends ArtifactItem {
 		int y = pos.getY();
 		int z = pos.getZ();
 		AxisAlignedBB bound = new AxisAlignedBB(x - RANGE, y - RANGE, z - RANGE, x + RANGE, y + RANGE, z + RANGE);
+		// Nice variable name past me.
 		List<EntitySheep> sheepies = worldIn.getEntitiesWithinAABB(EntitySheep.class, bound);
 		for (EntitySheep sheep : sheepies) {
 			sheep.addPotionEffect(new PotionEffect(MobEffects.GLOWING, GLOW_DURATION, 0, false, true));
 		}
 		itemStackIn.damageItem(1, playerIn);
-		return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+		return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 	}
 	
 

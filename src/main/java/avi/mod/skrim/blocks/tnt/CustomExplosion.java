@@ -37,16 +37,17 @@ public class CustomExplosion extends Explosion {
 	/** Whether or not to damage terrain. */
 	public final boolean damagesTerrain;
 	private final Random explosionRNG;
-	private final World worldObj;
-	private final double explosionX;
-	private final double explosionY;
-	private final double explosionZ;
-	private final Entity exploder;
-	private float explosionSize;
+	public final World worldObj;
+	public final double explosionY;
+  public final double explosionX;
+	public final double explosionZ;
+	public final Entity exploder;
+	public float explosionSize;
 	public final List<BlockPos> affectedBlockPositions;
-	private final Map<EntityPlayer, Vec3d> playerKnockbackMap;
+	public final Map<EntityPlayer, Vec3d> playerKnockbackMap;
 	private final Vec3d position;
 
+	public float size;
 	public float dropChance;
 
 	@SideOnly(Side.CLIENT)
@@ -191,6 +192,7 @@ public class CustomExplosion extends Explosion {
 		}
 
 		if (this.damagesTerrain) {
+			System.out.println("affectedBlockPositionsSize: " + this.affectedBlockPositions.size());
 			for (BlockPos blockpos : this.affectedBlockPositions) {
 				IBlockState iblockstate = this.worldObj.getBlockState(blockpos);
 				Block block = iblockstate.getBlock();
@@ -277,11 +279,11 @@ public class CustomExplosion extends Explosion {
 	public BlockPos getPos() {
 		return new BlockPos(this.explosionX, this.explosionY, this.explosionZ);
 	}
-	
+
 	public float getExplosionSize() {
 		return this.explosionSize;
 	}
-	
+
 	public void setExplosionSize(float newSize) {
 		this.explosionSize = newSize;
 	}
