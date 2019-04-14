@@ -12,16 +12,18 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
 public class FatBoyExplosion extends CustomExplosion {
 
+  public static final float DEFAULT_SIZE = 25.0F;
   private static final boolean FLAMING = false;
   private static final boolean DAMAGES_TERRAIN = true;
 
-  FatBoyExplosion(World worldIn, Entity entityIn, double x, double y, double z, float size) {
-    super(worldIn, entityIn, x, y, z, size, FLAMING, DAMAGES_TERRAIN);
+  FatBoyExplosion(World worldIn, Entity entityIn, double x, double y, double z, @Nullable Float size) {
+    super(worldIn, entityIn, x, y, z, (size == null) ? DEFAULT_SIZE : size, FLAMING, DAMAGES_TERRAIN);
     this.dropChance = 0;
   }
 

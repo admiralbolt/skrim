@@ -5,6 +5,11 @@ import net.minecraft.item.ItemRecord;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.translation.I18n;
 
+import javax.annotation.Nonnull;
+
+/**
+ * Songs I added into the game. :)
+ */
 public class CustomRecord extends ItemRecord implements ItemBase {
 
   protected String name;
@@ -22,6 +27,7 @@ public class CustomRecord extends ItemRecord implements ItemBase {
   }
 
   @Override
+  @Nonnull
   public String getRecordNameLocal() {
     return I18n.translateToLocal(this.getUnlocalizedName() + ".desc");
   }

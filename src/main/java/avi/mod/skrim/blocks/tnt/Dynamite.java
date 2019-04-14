@@ -1,14 +1,9 @@
 package avi.mod.skrim.blocks.tnt;
 
-import avi.mod.skrim.Skrim;
-import avi.mod.skrim.items.ItemModelProvider;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;

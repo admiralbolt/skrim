@@ -1,6 +1,5 @@
 package avi.mod.skrim.items.weapons;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ItemBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,17 +18,16 @@ import javax.annotation.Nullable;
 public class CustomBow extends ItemBow implements ItemBase {
 
   private String name;
-  private float maxChargeTime = 20.0F;
-  private float maxVelocity = 1.0F;
+  private float maxChargeTime;
+  private float maxVelocity;
 
   public CustomBow(String name, float maxChargeTime, float maxVelocity) {
     super();
     this.name = name;
-    this.maxChargeTime = maxChargeTime;
-    this.maxVelocity = maxVelocity;
     this.setRegistryName(name);
     this.setUnlocalizedName(name);
-    this.setCreativeTab(Skrim.CREATIVE_TAB);
+    this.maxChargeTime = maxChargeTime;
+    this.maxVelocity = maxVelocity;
     this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter() {
       @SideOnly(Side.CLIENT)
       public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
@@ -37,24 +35,17 @@ public class CustomBow extends ItemBow implements ItemBase {
           return 0.0F;
         } else {
           ItemStack itemstack = entityIn.getActiveItemStack();
-          if (itemstack != null) {
-            Item item = itemstack.getItem();
-            if (item instanceof CustomBow) {
-              CustomBow bow = (CustomBow) item;
-              return (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / bow.maxChargeTime;
-            }
+          Item item = itemstack.getItem();
+          if (item instanceof CustomBow) {
+            CustomBow bow = (CustomBow) item;
+            return (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / bow.maxChargeTime;
           }
           return 0.0F;
         }
       }
     });
   }
-//
-//	@Override
-//	public void registerItemModel(Item item) {
-//		Skrim.proxy.registerItemRenderer(this, 0, this.NAME);
-//		Skrim.proxy.registerBowVariants(this);
-//	}
+
 
   public float getArrowVelocityOverride(int charge) {
     float f = (float) charge / this.maxChargeTime;

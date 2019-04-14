@@ -13,11 +13,11 @@ public class CustomHoe extends ItemHoe implements ItemBase {
     this.name = name;
     this.setUnlocalizedName(name);
     this.setRegistryName(name);
-    setCreativeTab(Skrim.CREATIVE_TAB);
   }
 
   @Override
   public String getTexturePath() {
     return "tools";
   }
+
 }

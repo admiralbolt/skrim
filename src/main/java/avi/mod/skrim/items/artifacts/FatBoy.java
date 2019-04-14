@@ -24,8 +24,6 @@ import java.util.List;
  */
 public class FatBoy extends BlockTNT {
 
-  private static final Float EXPLOSION_SIZE = 25.0F;
-
   public String name;
 
   public FatBoy() {
@@ -33,13 +31,12 @@ public class FatBoy extends BlockTNT {
     this.name = "fat_boy";
     this.setUnlocalizedName(name);
     this.setRegistryName(name);
-    this.setCreativeTab(Skrim.CREATIVE_TAB);
   }
 
   @Override
   public void onBlockDestroyedByExplosion(World worldIn, @Nonnull BlockPos pos, @Nonnull Explosion explosionIn) {
     if (worldIn.isRemote) return;
-    CustomTNTPrimed tntPrimed = new CustomTNTPrimed("fat_boy", EXPLOSION_SIZE, worldIn, pos.getX() + 0.5,
+    CustomTNTPrimed tntPrimed = new CustomTNTPrimed("fat_boy", worldIn, pos.getX() + 0.5,
         pos.getY(), pos.getZ() + 0.5, explosionIn.getExplosivePlacedBy());
     tntPrimed.setFuse(worldIn.rand.nextInt(tntPrimed.getFuse() / 4) + tntPrimed.getFuse() / 8);
     worldIn.spawnEntity(tntPrimed);
@@ -49,7 +46,7 @@ public class FatBoy extends BlockTNT {
   public void explode(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state,
                       @Nonnull EntityLivingBase igniter) {
     if (worldIn.isRemote || !state.getValue(EXPLODE)) return;
-    CustomTNTPrimed tntPrimed = new CustomTNTPrimed("fat_boy", EXPLOSION_SIZE, worldIn, pos.getX() + 0.5,
+    CustomTNTPrimed tntPrimed = new CustomTNTPrimed("fat_boy", worldIn, pos.getX() + 0.5,
         pos.getY(), pos.getZ() + 0.5, igniter);
     worldIn.spawnEntity(tntPrimed);
     worldIn.playSound(null, tntPrimed.posX, tntPrimed.posY, tntPrimed.posZ,

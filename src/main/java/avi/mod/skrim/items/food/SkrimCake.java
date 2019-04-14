@@ -5,13 +5,13 @@ import net.minecraft.block.Block;
 
 public class SkrimCake extends CustomCake {
 
-	public SkrimCake() {
-		super(SkrimBlocks.SKRIM_CAKE, "skrim_cake");
-	}
+  public SkrimCake() {
+    super(SkrimBlocks.SKRIM_CAKE, "skrim_cake");
+  }
 
-	@Override
-	public Block getBlock() {
-		return SkrimBlocks.SKRIM_CAKE;
-	}
+  @Override
+  public Block getBlock() {
+    return SkrimBlocks.SKRIM_CAKE;
+  }
 
 }

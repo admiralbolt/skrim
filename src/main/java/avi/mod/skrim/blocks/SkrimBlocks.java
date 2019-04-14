@@ -133,8 +133,6 @@ public final class SkrimBlocks {
           "CustomTNTPrimed", 17654, Skrim.instance, 20,
           5, true);
       for (final Block block : ALL_BLOCKS) {
-        System.out.println("registering block: " + block);
-        System.out.println("unlocalizedName: " + block.getUnlocalizedName() + ", registryName: " + block.getRegistryName());
         block.setCreativeTab(Skrim.CREATIVE_TAB);
         registry.register(block);
       }

@@ -7,26 +7,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+
 public class AngelCake extends CustomCake {
 
-	public AngelCake() {
-		super(SkrimBlocks.ANGEL_CAKE, "angel_cake");
-	}
-	
-	@Override
-	public Block getBlock() {
-		return SkrimBlocks.ANGEL_CAKE;
-	}
-	
-	@Override
-	public boolean hasEffect(ItemStack stack) {
-		return true;
-	}
+  public AngelCake() {
+    super(SkrimBlocks.ANGEL_CAKE, "angel_cake");
+  }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public EnumRarity getRarity(ItemStack stack) {
-		return EnumRarity.EPIC;
-	}
+  @Override
+  public Block getBlock() {
+    return SkrimBlocks.ANGEL_CAKE;
+  }
+
+  @Override
+  public boolean hasEffect(ItemStack stack) {
+    return true;
+  }
+
+  @Override
+  @Nonnull
+  @SideOnly(Side.CLIENT)
+  public EnumRarity getRarity(ItemStack stack) {
+    return EnumRarity.EPIC;
+  }
 
 }

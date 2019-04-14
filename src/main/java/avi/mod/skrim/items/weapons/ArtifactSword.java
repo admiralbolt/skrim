@@ -1,6 +1,5 @@
 package avi.mod.skrim.items.weapons;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.EnumRarity;
@@ -18,7 +17,6 @@ public class ArtifactSword extends CustomSword {
 
   public ArtifactSword(String name, ToolMaterial material) {
     super(name, material);
-    this.setCreativeTab(Skrim.CREATIVE_TAB);
   }
 
   @Override

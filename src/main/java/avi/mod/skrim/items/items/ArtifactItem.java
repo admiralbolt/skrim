@@ -16,9 +16,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+/**
+ * Artifacts that are activated items.
+ */
 public class ArtifactItem extends Item implements ItemBase {
 
   protected String name;
@@ -37,6 +41,7 @@ public class ArtifactItem extends Item implements ItemBase {
   }
 
   @Override
+  @Nonnull
   @SideOnly(Side.CLIENT)
   public EnumRarity getRarity(ItemStack stack) {
     return ModItems.ARTIFACT_RARITY;
@@ -48,12 +53,14 @@ public class ArtifactItem extends Item implements ItemBase {
   }
 
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    return new ActionResult(EnumActionResult.SUCCESS, playerIn.getHeldItem(hand));
+  @Nonnull
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, @Nonnull EnumHand hand) {
+    return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(hand));
   }
 
   @Override
-  public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+  @Nonnull
+  public ItemStack onItemUseFinish(@Nonnull ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
     return stack;
   }
 
@@ -63,6 +70,7 @@ public class ArtifactItem extends Item implements ItemBase {
   }
 
   @Override
+  @Nonnull
   public EnumAction getItemUseAction(ItemStack stack) {
     return EnumAction.NONE;
   }

@@ -30,7 +30,6 @@ public abstract class CustomPlant extends BlockBush implements IGrowable {
 
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
-		setCreativeTab(Skrim.CREATIVE_TAB);
 
 		this.setDefaultState(this.blockState.getBaseState().withProperty(this.getAgeProperty(), 0));
         this.setTickRandomly(true);
