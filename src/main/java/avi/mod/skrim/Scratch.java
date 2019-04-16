@@ -1,5 +1,7 @@
 package avi.mod.skrim;
 
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import net.minecraft.client.util.RecipeBookClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;

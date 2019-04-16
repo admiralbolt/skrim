@@ -65,7 +65,7 @@ public class SkillDefense extends Skill implements ISkillDefense {
 			"It's a reference to a magic card, so you probably missed it.", "Falling below 30% health activates a period of regeneration.",
 			"You must fully heal before regeneration will activate again.");
 	public static SkillAbility CAPTAIN = new SkillAbility("defense", "Captain", 50, "Leader of the pack.  Vroom.",
-			"Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r" + SkillAbility.descColor + " radius.");
+			"Provide protection to allies in a §a" + CAPTAIN_RANGE + "§r" + SkillAbility.DESC_COLOR + " radius.");
 	public static SkillAbility GOLEMS_ASPECT = new SkillAbility("defense", "Aspect of the Golem", 75, "The new spell resistance.",
 			"Negative status effects last for half as long.");
 	public static SkillAbility STALWART_STANCE = new SkillAbility("defense", "Stalwart Stance", 100, "That tickles.",

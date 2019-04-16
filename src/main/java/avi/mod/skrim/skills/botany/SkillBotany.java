@@ -45,10 +45,10 @@ public class SkillBotany extends Skill implements ISkillBotany {
       "Enables you to craft glowing flowers with a flower & glowstone dust.");
   public static SkillAbility THORN_STYLE = new SkillAbility("botany", "Thorn Style", 50, "I'll let you try my thorn " +
 			"style.",
-      "While holding a flower return §a25%" + SkillAbility.descColor + " of melee damage.");
+      "While holding a flower return §a25%" + SkillAbility.DESC_COLOR + " of melee damage.");
   public static SkillAbility SEDUCE_VILLAGER = new SkillAbility("botany", "Seduce Villager", 75, "[Tongue waggling " +
 			"intensifies]",
-      "Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.descColor + ".");
+      "Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.DESC_COLOR + ".");
   public static SkillAbility ENCHANTED_FLOWER = new SkillAbility("botany", "Enchanted Flower", 100, "It shares a " +
 			"giant friendliness beam! :D",
       "Enables you to craft enchanted flowers that function like speed beacons.");

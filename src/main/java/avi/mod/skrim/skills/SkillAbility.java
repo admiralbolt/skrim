@@ -1,58 +1,52 @@
 package avi.mod.skrim.skills;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import avi.mod.skrim.client.gui.GuiUtils;
 import avi.mod.skrim.client.gui.GuiUtils.Icon;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SkillAbility {
 
-	private static String notUnlockedColor = "§7";
-	private static String nameColor = "§6";
-	public static String descColor = "§4";
-	private static String flavorColor = "§e";
-	private static String reset = "§r";
+  private static final String NOT_UNLOCKED_COLOR = "§7";
+  private static final String NAME_COLOR = "§6";
+  private static final String FLAVOR_COLOR = "§e";
+  private static final String RESET = "§r";
+  public static final String DESC_COLOR = "§4";
 
-	public String name;
-	public int level;
-	public List<String> description = new ArrayList<String>();
-	public String flavor;
-	public Icon locked;
-	public Icon unlocked;
-	
-	public SkillAbility(String skillName, String name, int level, String flavor, String... descLines) {
-		this.name = name;
-		this.level = level;
-		for (String line : descLines) {
-			this.description.add(line);
-		}
-		this.flavor = "\"" + flavor + "\"";
-		int abilityNumber = getAbilityNumber(level);
-		this.locked = GuiUtils.getAbilityIcon(skillName, (level / 25), false);
-		this.unlocked = GuiUtils.getAbilityIcon(skillName, (level / 25), true);
-	}
+  public String name;
+  public int level;
+  private List<String> description = new ArrayList<>();
+  private String flavor;
+  private Icon locked;
+  private Icon unlocked;
 
-	public static List<String> getAbilityTooltip(SkillAbility ability, boolean hasAbility) {
-		List<String> tooltip = new ArrayList<String>();
-		if (hasAbility) {
-			tooltip.add(nameColor + ability.name + reset);
-			for (String descLine : ability.description) {
-				tooltip.add(descColor + descLine + reset);
-			}
-			tooltip.add(flavorColor + ability.flavor + reset);
-		} else {
-			tooltip.add(notUnlockedColor + ability.name + reset);
-		}
-		return tooltip;
-	}
+  public SkillAbility(String skillName, String name, int level, String flavor, String... descLines) {
+    this.name = name;
+    this.level = level;
+    this.description.addAll(Arrays.asList(descLines));
+    this.flavor = "\"" + flavor + "\"";
+    this.locked = GuiUtils.getAbilityIcon(skillName, (level / 25), false);
+    this.unlocked = GuiUtils.getAbilityIcon(skillName, (level / 25), true);
+  }
 
-	public static int getAbilityNumber(int level) {
-		return level / 25;
-	}
+  public static List<String> getAbilityTooltip(SkillAbility ability, boolean hasAbility) {
+    List<String> tooltip = new ArrayList<>();
+    if (hasAbility) {
+      tooltip.add(NAME_COLOR + ability.name + RESET);
+      for (String descLine : ability.description) {
+        tooltip.add(DESC_COLOR + descLine + RESET);
+      }
+      tooltip.add(FLAVOR_COLOR + ability.flavor + RESET);
+    } else {
+      tooltip.add(NOT_UNLOCKED_COLOR + ability.name + RESET);
+    }
+    return tooltip;
+  }
 
-	public static Icon getAbilityIcon(SkillAbility ability, boolean hasAbility) {
-		return (hasAbility) ? ability.unlocked : ability.locked;
-	}
+  public static Icon getAbilityIcon(SkillAbility ability, boolean hasAbility) {
+    return (hasAbility) ? ability.unlocked : ability.locked;
+  }
 
 }

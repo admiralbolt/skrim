@@ -49,7 +49,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
 	public static SkillAbility CRITICAL_ASCENSION = new SkillAbility("ranged", "Critical Ascension", 100, "Boom, Headshot.",
 			"Getting a head shot grants a stack of accuracy.", "Missing a head shot removes 2 stacks of accuracy.", "Dying removes all stacks of accuracy.",
-			"Each stack of accuracy grants §a+0.5%" + SkillAbility.descColor + " ranged damage AND headshot damage.");
+			"Each stack of accuracy grants §a+0.5%" + SkillAbility.DESC_COLOR + " ranged damage AND headshot damage.");
 
 	private int accuracyStacks = 0;
 

@@ -14,15 +14,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Skill implements ISkill {
+public abstract class Skill implements ISkill {
 
-  public static int xpFactor = 10000;
-  // private Minecraft mc;
+  public static final int XP_FACTOR = 10000;
+
+
   public String name;
   public int level;
   public double xp;
-  public List<String> tooltip = new ArrayList<String>();
-  public Map<Integer, SkillAbility> abilities = new HashMap<Integer, SkillAbility>();
+  public List<String> tooltip = new ArrayList<>();
+  private Map<Integer, SkillAbility> abilities = new HashMap<>();
   private Icon icon;
 
   /**
@@ -36,16 +37,17 @@ public class Skill implements ISkill {
   }
 
   /**
-   * When a player initial gets skills set them to level 1.
+   * When a player initially gets skills set them to level 1.
    */
   public Skill(String name) {
     this(name, 1, 0);
   }
 
+  public abstract List<String> getToolTip();
+
+
   public void addXp(EntityPlayerMP player, int xp) {
     if (xp > 0) {
-      Utils.log(
-          "Giving player " + player + ": " + Skills.getTotalXp(player, xp) + " " + this.name + " xp (Boost: " + Skills.getTotalXpBonus(player) + ")");
       this.xp += Skills.getTotalXp(player, xp);
       this.levelUp(player);
     }
@@ -55,7 +57,7 @@ public class Skill implements ISkill {
    * D&D 3.5 XP. Ahhhh fuck yeah.
    */
   public int getNextLevelTotal() {
-    return xpFactor * ((this.level * this.level + this.level) / 2);
+    return XP_FACTOR * ((this.level * this.level + this.level) / 2);
   }
 
   public double getXpNeeded() {
@@ -69,7 +71,7 @@ public class Skill implements ISkill {
    * return 1.0 in those cases to prevent rendering bugs.
    */
   public double getPercentToNext() {
-    int prevLevelXp = Utils.gaussianSum(this.level - 1) * xpFactor;
+    int prevLevelXp = Utils.gaussianSum(this.level - 1) * XP_FACTOR;
     return Math.min(1.0, (this.xp - prevLevelXp) / (this.getNextLevelTotal() - prevLevelXp));
   }
 
@@ -84,7 +86,7 @@ public class Skill implements ISkill {
   }
 
   public SkillAbility getAbility(int abilityLevel) {
-    return (this.abilities.containsKey(abilityLevel)) ? this.abilities.get(abilityLevel) : null;
+    return this.abilities.getOrDefault(abilityLevel, null);
   }
 
   public boolean hasAbility(int abilityLevel) {
@@ -95,9 +97,6 @@ public class Skill implements ISkill {
     return SkillAbility.getAbilityIcon(this.getAbility(abilityLevel), this.hasAbility(abilityLevel));
   }
 
-  public List<String> getAbilityTooltip(int abilityLevel) {
-    return null;
-  }
 
   public void levelUp(EntityPlayerMP player) {
     if (this.canLevelUp()) {
@@ -115,11 +114,6 @@ public class Skill implements ISkill {
     if (this.level >= 100) SkrimAdvancements.DING_MASTER.grant(player);
   }
 
-  public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
-    tooltip.add("Tooltip for " + this.name);
-    return tooltip;
-  }
 
   public Icon getIcon() {
     return this.icon;

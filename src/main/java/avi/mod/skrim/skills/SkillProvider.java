@@ -1,27 +1,26 @@
 package avi.mod.skrim.skills;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class SkillProvider<T> implements ICapabilitySerializable<NBTTagCompound> {
 
-	private final T skill;
-	private final EnumFacing facing;
-	private final Capability<T> cap;
-	
-	public SkillProvider(Capability<T> cap, @Nullable EnumFacing facing) {
-		this(cap, facing, cap.getDefaultInstance());
-	}
-	
-	public SkillProvider(Capability<T> cap, @Nullable EnumFacing facing, T skill) {
-		this.cap = cap;
-		this.facing = facing;
-		this.skill = skill;
-	}
+  private final T skill;
+  private final Capability<T> cap;
+
+  public SkillProvider(Capability<T> cap, @Nullable EnumFacing facing) {
+    this(cap, facing, cap.getDefaultInstance());
+  }
+
+  public SkillProvider(Capability<T> cap, @Nullable EnumFacing facing, T skill) {
+    this.cap = cap;
+    this.skill = skill;
+  }
 
   @Override
   public NBTTagCompound serializeNBT() {
@@ -34,35 +33,24 @@ public class SkillProvider<T> implements ICapabilitySerializable<NBTTagCompound>
   }
 
   @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-    if (capability == this.cap) {
-      return true;
-    } else {
-      return false;
-    }
+  public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    return capability == this.cap;
   }
 
-  @SuppressWarnings("hiding")
-	@Override
-  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+  @Override
+  public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
     if (capability == this.cap) {
       return this.cap.cast(skill);
-    } else {
-  	  return null;
     }
+    return null;
   }
-  
+
   public final Capability<T> getCapability() {
-  	return cap;
+    return cap;
   }
-  
-  @Nullable
-  public final EnumFacing getFacing() {
-  	return facing;
-  }
-  
+
   public final T getSkill() {
-  	return skill;
+    return skill;
   }
 
 }

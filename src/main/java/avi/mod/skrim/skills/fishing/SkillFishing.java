@@ -7,7 +7,6 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.utils.Utils;
-import net.minecraft.util.ResourceLocation;
 
 public class SkillFishing extends Skill implements ISkillFishing {
 
@@ -17,10 +16,10 @@ public class SkillFishing extends Skill implements ISkillFishing {
 			"Your fishing rod can now be used as a grappling hook.");
 
 	public static SkillAbility TRIPLE_HOOK = new SkillAbility("fishing", "Triple Hook", 50, "Triple the hooks, triple the pleasure.",
-			"You now catch §a3x" + SkillAbility.descColor + " as many items.");
+			"You now catch §a3x" + SkillAbility.DESC_COLOR + " as many items.");
 
 	public static SkillAbility BOUNTIFUL_CATCH = new SkillAbility("fishing", "Bountiful Catch", 75, "On that E-X-P grind.",
-			"Catching a fish provides an additional§a 9-24" + SkillAbility.descColor + " xp.");
+			"Catching a fish provides an additional§a 9-24" + SkillAbility.DESC_COLOR + " xp.");
 
 	public static SkillAbility FLING = new SkillAbility("fishing", "Fling", 100, "Sometimes I don't know my own strength.",
 			"Launch hooked entities into the air.");

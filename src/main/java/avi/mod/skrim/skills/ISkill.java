@@ -9,8 +9,6 @@ public interface ISkill {
 
 	int getNextLevelTotal();
 
-	double getXpNeeded();
-
 	boolean canLevelUp();
 
 	void levelUp(EntityPlayerMP player);
@@ -22,8 +20,6 @@ public interface ISkill {
 	Icon getAbilityIcon(int abilityLevel);
 
 	boolean hasAbility(int abilityLevel);
-
-	List<String> getAbilityTooltip(int abilityLevel);
 
 	void setXp(double xp);
 

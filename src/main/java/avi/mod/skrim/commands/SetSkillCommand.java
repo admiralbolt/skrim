@@ -86,7 +86,7 @@ public class SetSkillCommand extends CommandBase implements ICommand {
         Skill skill = (Skill) player.getCapability(iskill, EnumFacing.NORTH);
         if (skill == null) return;
         skill.setLevel(level);
-        skill.setXp(Skill.xpFactor * Utils.gaussianSum(level) - 1);
+        skill.setXp(Skill.XP_FACTOR * Utils.gaussianSum(level) - 1);
         SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
         sender.sendMessage(new TextComponentString("Set skill: " + args[0] + " to level: " + level));
     }

@@ -42,7 +42,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -86,7 +85,7 @@ public class SkillMining extends Skill implements ISkillMining {
 			"While close to the bottom of the world you have a constant night vision effect.");
 
 	public static SkillAbility LAVA_SWIMMER = new SkillAbility("mining", "Lava Swimmer", 50, "Reducing the number of 'oh shit' moments.",
-			"While close to the bottom of the world you take §a50%" + SkillAbility.descColor + " damage from lava, and don't get set on fire by it.");
+			"While close to the bottom of the world you take §a50%" + SkillAbility.DESC_COLOR + " damage from lava, and don't get set on fire by it.");
 
 	public static SkillAbility SPELUNKER = new SkillAbility("mining", "Spelunker", 75, "Spelunkey?  More like Spedunkey.  AHAHAHAHA.",
 			"Allows you to climb walls while holding jump.");

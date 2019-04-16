@@ -83,6 +83,7 @@ public class SkrimItems {
   public static ArtifactArmor FOX_MASK = new FoxMask();
 
   public static ArtifactItem SHEEP_FINDER = new SheepFinder3000();
+  public static ArtifactItem ETHER_MEDALLION = new EtherMedallion();
   public static ArtifactItem ICARIAN_SCROLL = new IcarianScroll();
   public static ArtifactItem HORSE_STEROID_SPEED = new HorseSteroidSpeed();
   public static ArtifactItem HORSE_STEROID_HEALTH = new HorseSteroidHealth();
@@ -99,7 +100,8 @@ public class SkrimItems {
       ICARIAN_SCROLL,
       HORSE_STEROID_SPEED,
       HORSE_STEROID_HEALTH,
-      HORSE_STEROID_JUMP
+      HORSE_STEROID_JUMP,
+      ETHER_MEDALLION
   };
 
   // La musica

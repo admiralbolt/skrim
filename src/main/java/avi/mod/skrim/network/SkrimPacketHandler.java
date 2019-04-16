@@ -51,7 +51,6 @@ public class SkrimPacketHandler {
 		INSTANCE.registerMessage(CriticalAscensionPacketHandler.class, CriticalAscensionPacket.class, PACKET_ID++, Side.CLIENT);
 		INSTANCE.registerMessage(SpawnEntityPacketHandler.class, SpawnEntityPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(SortChestPacketHandler.class, SortChestPacket.class, PACKET_ID++, Side.SERVER);
-		INSTANCE.registerMessage(SetBlockPacketHandler.class, SetBlockPacket.class, PACKET_ID++, Side.SERVER);
 		INSTANCE.registerMessage(AngelFlyingSoundPacketHandler.class, AngelFlyingSoundPacket.class, PACKET_ID++, Side.CLIENT);
 	}
 

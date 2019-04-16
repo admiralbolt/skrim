@@ -60,7 +60,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 	public int ticksSinceLastLeft = 0;
 
 	public static SkillAbility VAMPIRISM = new SkillAbility("melee", "Vampirism", 25, "What I need is your blood. What I don't need is your permission.",
-			"Killing an enemy restores §a1" + SkillAbility.descColor + " heart.");
+			"Killing an enemy restores §a1" + SkillAbility.DESC_COLOR + " heart.");
 
 	public static SkillAbility SPIN_SLASH = new SkillAbility("melee", "Spin Slash", 50, "Spin to win.", "Critting an enemy deals massive AOE damage.");
 
@@ -138,7 +138,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 							if (mainItem != null && mainItem instanceof ItemSword) {
 								EntityLightningBolt smite = new EntityLightningBolt(player.world, targetEntity.posX, targetEntity.posY, targetEntity.posZ,
 										true);
-								targetEntity.attackEntityFrom(source.LIGHTNING_BOLT, 100.0F);
+								targetEntity.attackEntityFrom(source.LIGHTNING_BOLT, 20.0F);
 								player.world.addWeatherEffect(smite);
 								if (!player.world.isRemote) {
 									BlockPos blockpos = new BlockPos(targetEntity);
