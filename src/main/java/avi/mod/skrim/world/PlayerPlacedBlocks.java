@@ -96,7 +96,7 @@ public class PlayerPlacedBlocks extends WorldSavedData {
 		}
 	}
 
-	public static PlayerPlacedBlocks getData(World world) {
+	private static PlayerPlacedBlocks getData(World world) {
 		MapStorage storage = world.getPerWorldStorage();
 		PlayerPlacedBlocks instance = (PlayerPlacedBlocks) storage.getOrLoadData(PlayerPlacedBlocks.class, DATA_NAME);
 		if (instance == null) {

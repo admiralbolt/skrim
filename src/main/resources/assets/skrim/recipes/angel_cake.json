@@ -1,0 +1,32 @@
+{
+  "_comment": [
+    "Can only be crafted with level 100 cooking."
+  ],
+  "group": "skrim:angel_cake",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FMF",
+    "SES",
+    "WWW"
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "M": {
+      "item": "minecraft:milk_bucket"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "result": {
+    "item": "skrim:angel_cake"
+  }
+}

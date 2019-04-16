@@ -94,7 +94,6 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-    System.out.println("onRightClickBlock fired");
     SkillMining.drill(event);
     Overalls.applyOveralls(event);
     SkillDigging.castles(event);
