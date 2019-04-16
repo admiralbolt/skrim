@@ -6,7 +6,6 @@ import avi.mod.skrim.network.ExplosionPacket.ExplosionPacketHandler;
 import avi.mod.skrim.network.FallDistancePacket.FallDistancePacketHandler;
 import avi.mod.skrim.network.InvisibilityPacket.InvisibilityPacketHandler;
 import avi.mod.skrim.network.LevelUpPacket.LevelUpPacketHandler;
-import avi.mod.skrim.network.SetBlockPacket.SetBlockPacketHandler;
 import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
 import avi.mod.skrim.network.SortChestPacket.SortChestPacketHandler;
 import avi.mod.skrim.network.SpawnEntityPacket.SpawnEntityPacketHandler;

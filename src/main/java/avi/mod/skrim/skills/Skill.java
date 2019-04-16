@@ -1,6 +1,6 @@
 package avi.mod.skrim.skills;
 
-import avi.mod.skrim.advancements.ModAdvancements;
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.client.gui.GuiUtils;
 import avi.mod.skrim.client.gui.GuiUtils.Icon;
 import avi.mod.skrim.network.LevelUpPacket;
@@ -109,10 +109,10 @@ public class Skill implements ISkill {
   }
 
   public void ding(EntityPlayerMP player) {
-    if (this.level >= 25) ModAdvancements.DING_APPRENTICE.grant(player);
-    if (this.level >= 50) ModAdvancements.DING_JOURNEYMAN.grant(player);
-    if (this.level >= 75) ModAdvancements.DING_EXPERT.grant(player);
-    if (this.level >= 100) ModAdvancements.DING_MASTER.grant(player);
+    if (this.level >= 25) SkrimAdvancements.DING_APPRENTICE.grant(player);
+    if (this.level >= 50) SkrimAdvancements.DING_JOURNEYMAN.grant(player);
+    if (this.level >= 75) SkrimAdvancements.DING_EXPERT.grant(player);
+    if (this.level >= 100) SkrimAdvancements.DING_MASTER.grant(player);
   }
 
   public List<String> getToolTip() {

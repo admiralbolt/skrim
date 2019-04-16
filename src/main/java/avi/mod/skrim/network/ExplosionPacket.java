@@ -12,6 +12,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/**
+ * Make boom.
+ */
 public class ExplosionPacket implements IMessage {
 
   private String explosionType;
@@ -22,7 +25,6 @@ public class ExplosionPacket implements IMessage {
   public double posZ;
 
   public ExplosionPacket() {
-
   }
 
   public ExplosionPacket(String explosionType, float explosionSize, int entityId, double posX, double posY, double posZ) {
@@ -58,24 +60,19 @@ public class ExplosionPacket implements IMessage {
 
     @Override
     public IMessage onMessage(final ExplosionPacket message, MessageContext ctx) {
-      if (ctx.side.isClient()) {
-        final IThreadListener mainThread = Minecraft.getMinecraft();
-        final EntityPlayerSP player = Minecraft.getMinecraft().player;
-        mainThread.addScheduledTask(new Runnable() {
-          @Override
-          public void run() {
-            Entity entity = player.world.getEntityByID(message.entityId);
-            Explosion explosion = CustomTNTPrimed.createExplosion(message.explosionType, message.explosionSize, player.world, entity,
-								message.posX, message.posY,
-                message.posZ);
-            explosion.doExplosionA();
-            explosion.doExplosionB(true);
-          }
-        });
-      }
+      if (ctx.side.isServer()) return null;
+
+      final IThreadListener mainThread = Minecraft.getMinecraft();
+      final EntityPlayerSP player = Minecraft.getMinecraft().player;
+      mainThread.addScheduledTask(() -> {
+        Entity entity = player.world.getEntityByID(message.entityId);
+        Explosion explosion = CustomTNTPrimed.createExplosion(message.explosionType, message.explosionSize, player.world, entity,
+            message.posX, message.posY,
+            message.posZ);
+        explosion.doExplosionA();
+        explosion.doExplosionB(true);
+      });
       return null;
     }
-
   }
-
 }

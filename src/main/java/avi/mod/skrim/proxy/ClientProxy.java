@@ -1,7 +1,7 @@
 package avi.mod.skrim.proxy;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.advancements.ModAdvancements;
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.capabilities.ModCapabilities;
 import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.entities.SkrimEntities;
@@ -9,7 +9,7 @@ import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
-import avi.mod.skrim.network.GuiHandler;
+import avi.mod.skrim.handlers.GuiHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -50,7 +50,7 @@ public class ClientProxy implements IProxy {
     SkrimEntitySpawnHandler.init();
     SkrimPacketHandler.registerPackets();
 
-    for (ModAdvancements.CustomAdvancement advancement : ModAdvancements.ADVANCEMENTS_BY_NAME.values()) {
+    for (SkrimAdvancements.CustomAdvancement advancement : SkrimAdvancements.ADVANCEMENTS_BY_NAME.values()) {
       CriteriaTriggers.register(advancement.trigger);
     }
 

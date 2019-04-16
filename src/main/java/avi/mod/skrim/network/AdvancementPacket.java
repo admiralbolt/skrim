@@ -1,6 +1,6 @@
 package avi.mod.skrim.network;
 
-import avi.mod.skrim.advancements.ModAdvancements;
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.IThreadListener;
@@ -9,9 +9,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/**
+ * Helper packet to give an advancement to a target player.
+ */
 public class AdvancementPacket implements IMessage {
 
-  public String advancementName;
+  private String advancementName;
 
   public AdvancementPacket() {
 
@@ -34,16 +37,14 @@ public class AdvancementPacket implements IMessage {
   public static class AchievementPacketHandler implements IMessageHandler<AdvancementPacket, IMessage> {
 
     public IMessage onMessage(final AdvancementPacket message, MessageContext ctx) {
-      if (ctx.side.isServer()) {
-        final EntityPlayerMP player = ctx.getServerHandler().player;
-        if (player != null) {
-          IThreadListener mainThread = player.getServerWorld();
-          mainThread.addScheduledTask(() -> {
-            System.out.println("Advancement packet recieved, executing.");
-            ModAdvancements.ADVANCEMENTS_BY_NAME.get(message.advancementName).grant(player);
-          });
-        }
-      }
+      if (ctx.side.isClient()) return null;
+
+      final EntityPlayerMP player = ctx.getServerHandler().player;
+      if (player == null) return null;
+      IThreadListener mainThread = player.getServerWorld();
+      mainThread.addScheduledTask(() -> {
+        SkrimAdvancements.ADVANCEMENTS_BY_NAME.get(message.advancementName).grant(player);
+      });
       return null;
     }
 

@@ -13,16 +13,16 @@ achievement.found_skills=Finding Skills
 advancements.found_skills.title=Skrim!
 advancements.found_skills.description=Hey, you. You're finally awake. You were trying to cross the border, right?
 advancements.ding_apprentice.title=Ding! Apprentice!
-advancements.ding_apprentice.desc=Get any skill to level 25.
+advancements.ding_apprentice.description=Sucking is the first step to being kind of good.
 
 advancements.ding_journeyman.title=Ding! Journeyman!
-advancements.ding_journeyman.desc=Get any skill to level 50.
+advancements.ding_journeyman.description=Halfway there.
 
 advancements.ding_expert.title=Ding! Expert!
-advancements.ding_expert.desc=Get any skill to level 75.
+advancements.ding_expert.description=Whoa, you're getting pretty good at this.
 
 advancements.ding_master.title=Ding! Master!
-advancements.ding_master.desc=Get any skill to level 100.
+advancements.ding_master.description=Maybe you should go outside.
 
 entity.bio_creeper.name=Bio Creeper
 entity.fox.name=Fox

@@ -1,7 +1,7 @@
 package avi.mod.skrim.blocks.misc;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.network.GuiHandler;
+import avi.mod.skrim.handlers.GuiHandler;
 import avi.mod.skrim.tileentity.MegaChestTileEntity;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;

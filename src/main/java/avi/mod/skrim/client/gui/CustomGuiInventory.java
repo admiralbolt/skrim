@@ -1,6 +1,6 @@
 package avi.mod.skrim.client.gui;
 
-import avi.mod.skrim.advancements.ModAdvancements;
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.network.AdvancementPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import net.minecraft.client.gui.GuiButton;
@@ -37,7 +37,7 @@ public class CustomGuiInventory extends GuiInventory {
   @Override
   public void actionPerformed(GuiButton button) throws IOException {
     if (button == this.skillTab) {
-      SkrimPacketHandler.INSTANCE.sendToServer(new AdvancementPacket(ModAdvancements.FOUND_SKILLS.name));
+      SkrimPacketHandler.INSTANCE.sendToServer(new AdvancementPacket(SkrimAdvancements.FOUND_SKILLS.name));
       this.mc.displayGuiScreen(new SkillScreen(this.guiLeft, this.guiTop));
       if (this.mc.currentScreen == null) this.mc.setIngameFocus();
     }

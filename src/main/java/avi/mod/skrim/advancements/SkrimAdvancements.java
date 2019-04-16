@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Also take a look at: https://github.com/skylinerw/guides/blob/master/java/advancements.md, great guide with a bunch
  * of info about advancements.
  */
-public class ModAdvancements {
+public class SkrimAdvancements {
 
   public static final HashMap<String, CustomAdvancement> ADVANCEMENTS_BY_NAME = new HashMap<>();
 
