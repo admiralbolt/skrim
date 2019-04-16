@@ -73,6 +73,7 @@ public class SkrimItems {
 
   // Artifacts!
   public static ArtifactSword CANES_SWORD = new CanesSword();
+  public static ArtifactItem FIRE_STAFF = new FireStaff();
 
   public static ArtifactArmor POWER_SUIT_CHESTPLATE = new PowerSuitChestplate();
 
@@ -101,7 +102,8 @@ public class SkrimItems {
       HORSE_STEROID_SPEED,
       HORSE_STEROID_HEALTH,
       HORSE_STEROID_JUMP,
-      ETHER_MEDALLION
+      ETHER_MEDALLION,
+      FIRE_STAFF
   };
 
   // La musica

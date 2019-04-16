@@ -62,6 +62,7 @@ public class EventHandler {
       SkillBlacksmithing.ironHeart(event);
       SkillBotany.thornStyle(event);
       GruesomeMask.GruesomeHandler.doubleAllDamage(event);
+      FireStaff.FireStaffHandler.fireImmunity(event);
     }
   }
 
