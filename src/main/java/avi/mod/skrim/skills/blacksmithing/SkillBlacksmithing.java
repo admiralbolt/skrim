@@ -33,7 +33,6 @@ import java.util.Set;
 
 public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
-  public static SkillStorage<ISkillBlacksmithing> skillStorage = new SkillStorage<ISkillBlacksmithing>();
   private static final Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
       .put("tile.stone", 50)
       .put("tile.stonebricksmooth", 50)
@@ -57,22 +56,26 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       SkrimItems.OBSIDIAN_SWORD
   );
 
-  public int lastItemNumber;
+  public static SkillStorage<ISkillBlacksmithing> STORAGE = new SkillStorage<>();
 
-  public static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("blacksmithing", "Master Craftsperson", 25,
+  private static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("blacksmithing", "Master Craftsperson", 25,
       "Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
       "No longer risk breaking the anvil when repairing items.",
-      "Repairing an item with an undamaged equivalent provides a one time §a+50%" + SkillAbility.DESC_COLOR + " durability bonus.");
+      "Repairing an item with an undamaged equivalent provides a one time §a+50%" + SkillAbility.DESC_COLOR + " " +
+          "durability bonus.");
 
-  public static SkillAbility PERSISTENCE = new SkillAbility("blacksmithing", "Persistence", 50, "3 days later...",
+  private static SkillAbility PERSISTENCE = new SkillAbility("blacksmithing", "Persistence", 50, "3 days later...",
       "Significantly reduce prior work cost when repairing items.");
 
-  public static SkillAbility IRON_HEART = new SkillAbility("blacksmithing", "Iron Heart", 75, "Can still pump blood.",
+  private static SkillAbility IRON_HEART = new SkillAbility("blacksmithing", "Iron Heart", 75, "Can still pump blood.",
       "Passively gain §a25%" + SkillAbility.DESC_COLOR + " fire resistance.");
 
-  public static SkillAbility OBSIDIAN_SMITH = new SkillAbility("blacksmithing", "Obsidian Smith", 100, "How can obsidian be real if our " +
+  private static SkillAbility OBSIDIAN_SMITH = new SkillAbility("blacksmithing", "Obsidian Smith", 100, "How can " +
+      "obsidian be real if our " +
       "eyes aren't real?",
       "Allows you to craft obsidian armor, weapons, and tools.");
+
+  private int lastItemNumber;
 
   public SkillBlacksmithing() {
     this(1, 0);
@@ -83,42 +86,15 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     this.addAbilities(MASTER_CRAFTS_PERSON, PERSISTENCE, IRON_HEART, OBSIDIAN_SMITH);
   }
 
-  public int getXp(String blockName) {
-    return (XP_MAP.containsKey(blockName)) ? XP_MAP.get(blockName) : 0;
-  }
-
-  public double extraIngot() {
-    return 0.015 * this.level;
-  }
-
-  public double extraRepair() {
-    return 0.02 * this.level;
-  }
-
-  public String getBlacksmithingName(ItemStack stack) {
-    return Utils.snakeCase(stack.getItem().getUnlocalizedName());
-  }
-
-  @Override
-  public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
-    tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
-    tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
-    tooltip.add("Shift clicking crafted items provides §amostly accurate extra items§r.");
-    tooltip.add("§eWe swear this is a bug and not a feature...§r");
-    return tooltip;
-  }
-
-  public boolean validBlacksmithingTarget(ItemStack stack) {
-    Item item = stack.getItem();
-    return XP_MAP.containsKey(Utils.snakeCase(item.getUnlocalizedName()));
-  }
-
   public static void giveMoreIngots(ItemSmeltedEvent event) {
-    if (event.player != null && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-      SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+    if (event.player == null || !Skills.hasSkill(event.player, Skills.BLACKSMITHING)) return;
+    SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING);
+      SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING,
+          EnumFacing.NORTH);
+      if (blacksmithing == null) return;
       if (blacksmithing.validBlacksmithingTarget(event.smelting)) {
-        int stackSize = (event.smelting.getCount() == 0) ? blacksmithing.lastItemNumber : Obfuscation.getStackSize(event.smelting);
+        int stackSize = (event.smelting.getCount() == 0) ? blacksmithing.lastItemNumber :
+            Obfuscation.getStackSize(event.smelting);
         int addItemSize = (int) (blacksmithing.extraIngot() * stackSize); // OOO
         if (addItemSize > 0) {
           ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
@@ -148,7 +124,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       if (yas != null) {
         EntityPlayer player = event.getEntityPlayer();
         if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-          SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+          SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING,
+              EnumFacing.NORTH);
           blacksmithing.lastItemNumber = Obfuscation.getStackSize(yas);
         }
       }
@@ -166,7 +143,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       if (source.isFireDamage()) {
         EntityPlayer player = (EntityPlayer) entity;
         if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-          SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+          SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING,
+              EnumFacing.NORTH);
           if (blacksmithing.hasAbility(3)) {
             Utils.logSkillEvent(event, blacksmithing, "Applying iron heart.");
             event.setAmount((float) (event.getAmount() * 0.75));
@@ -183,8 +161,10 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
    */
   public static void enhanceRepair(AnvilRepairEvent event) {
     Entity player = event.getEntityPlayer();
-    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-      SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BLACKSMITHING,
+        EnumFacing.NORTH)) {
+      SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING,
+          EnumFacing.NORTH);
       ItemStack left = event.getItemInput();
       ItemStack middle = event.getIngredientInput();
       ItemStack output = event.getItemResult();
@@ -202,7 +182,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
           if (!compound.hasKey("enhanced_durability")) {
             compound.setBoolean("enhanced_durability", false);
           }
-          if (middle.getItemDamage() == 0 && middle.getItem() == output.getItem() && !compound.getBoolean("enhanced_durability")) {
+          if (middle.getItemDamage() == 0 && middle.getItem() == output.getItem() && !compound.getBoolean(
+              "enhanced_durability")) {
             /**
              * Yo dawg I heard you capped the max damage for items,
              * but you see, I want to make the cap go higher. So uh,
@@ -212,7 +193,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
             Utils.logSkillEvent(event, blacksmithing,
                 "applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
             outputItem.setMaxDamage((int) (outputItem.getMaxDamage(output) * 1.5));
-            // ReflectionUtils.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),  "maxDamage", "field_77699_b");
+            // ReflectionUtils.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),
+            // "maxDamage", "field_77699_b");
           }
         }
       }
@@ -225,10 +207,41 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
         Skills.replaceWithComponents(event);
       } else if (!event.player.world.isRemote && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-        SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING, EnumFacing.NORTH);
+        SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING,
+            EnumFacing.NORTH);
         blacksmithing.addXp((EntityPlayerMP) event.player, 5000);
       }
     }
+  }
+
+  public int getXp(String blockName) {
+    return (XP_MAP.containsKey(blockName)) ? XP_MAP.get(blockName) : 0;
+  }
+
+  public double extraIngot() {
+    return 0.015 * this.level;
+  }
+
+  public double extraRepair() {
+    return 0.02 * this.level;
+  }
+
+  public String getBlacksmithingName(ItemStack stack) {
+    return Utils.snakeCase(stack.getItem().getUnlocalizedName());
+  }
+
+  @Override
+  public List<String> getToolTip() {
+    List<String> tooltip = new ArrayList<String>();
+    tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
+    tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
+    tooltip.add("Shift clicking crafted items provides §amostly accurate extra items§r.");
+    tooltip.add("§eWe swear this is a bug and not a feature...§r");
+    return tooltip;
+  }
+
+  private boolean validBlacksmithingTarget(ItemStack stack) {
+    return XP_MAP.containsKey(Utils.snakeCase(stack.getItem().getUnlocalizedName()));
   }
 
 }

@@ -21,8 +21,17 @@ public class BlacksmithingProvider {
   public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillBlacksmithing");
 
   public static void register() {
-    CapabilityManager.INSTANCE.register(ISkillBlacksmithing.class, SkillBlacksmithing.skillStorage, SkillBlacksmithing::new);
+    CapabilityManager.INSTANCE.register(ISkillBlacksmithing.class, SkillBlacksmithing.STORAGE,
+        SkillBlacksmithing::new);
     MinecraftForge.EVENT_BUS.register(new EventHandler());
+  }
+
+  public static SkillProvider<ISkillBlacksmithing> createProvider() {
+    return new SkillProvider<>(BLACKSMITHING, EnumFacing.NORTH);
+  }
+
+  public static SkillProvider<ISkillBlacksmithing> createProvider(ISkillBlacksmithing blacksmithing) {
+    return new SkillProvider<>(BLACKSMITHING, EnumFacing.NORTH, blacksmithing);
   }
 
   public static class EventHandler {
@@ -37,14 +46,6 @@ public class BlacksmithingProvider {
       }
     }
 
-  }
-
-  public static SkillProvider<ISkillBlacksmithing> createProvider() {
-    return new SkillProvider<>(BLACKSMITHING, EnumFacing.NORTH);
-  }
-
-  public static SkillProvider<ISkillBlacksmithing> createProvider(ISkillBlacksmithing blacksmithing) {
-    return new SkillProvider<>(BLACKSMITHING, EnumFacing.NORTH, blacksmithing);
   }
 
 }

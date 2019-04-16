@@ -137,6 +137,16 @@ public class Skills {
     return false;
   }
 
+  public static boolean hasSkill(EntityPlayer player, Capability<? extends ISkill> skill) {
+    return player.hasCapability(skill, EnumFacing.NORTH);
+  }
+
+  public static <T extends Skill> T getSkill(EntityPlayer player, Capability<? extends ISkill> skill) {
+    ISkill a = player.getCapability(skill, EnumFacing.NORTH);
+    return (T) a;
+  }
+
+
   public static void destroyComponents(ItemCraftedEvent event) {
     if (event.player.inventory != null) {
       event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
@@ -238,10 +248,7 @@ public class Skills {
   public static Map<Class, Integer> killXp = new HashMap<Class, Integer>();
 
   static {
-    /**
-     * Handle variants
-     */
-
+    //
     killXp.put(EntityZombie.class, 750);
     killXp.put(EntityZombieVillager.class, 850);
     killXp.put(EntityHusk.class, 1000);
@@ -252,9 +259,7 @@ public class Skills {
 
     killXp.put(EntityPlayer.class, 100);
 
-    /**
-     * Slimes are weird since they have so many babies
-     */
+    // Slimes are weird because they have babies.
     killXp.put(EntitySlime.class, 100);
     killXp.put(EntityMagmaCube.class, 125);
 
