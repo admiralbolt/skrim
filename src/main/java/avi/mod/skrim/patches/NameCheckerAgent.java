@@ -3,6 +3,7 @@ package avi.mod.skrim.patches;
 import java.lang.instrument.Instrumentation;
 
 public class NameCheckerAgent {
+
   public static final String AUTHORIZATION_AGENT_PARAM = "testagent";
 
   public static void premain(String agentArgs, Instrumentation inst) {

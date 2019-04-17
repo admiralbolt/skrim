@@ -75,8 +75,6 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       "eyes aren't real?",
       "Allows you to craft obsidian armor, weapons, and tools.");
 
-  private int lastItemNumber;
-
   public SkillBlacksmithing() {
     this(1, 0);
   }
@@ -88,47 +86,18 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
   public static void giveMoreIngots(ItemSmeltedEvent event) {
     if (event.player == null || !Skills.hasSkill(event.player, Skills.BLACKSMITHING)) return;
-    SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING);
-      SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING,
-          EnumFacing.NORTH);
-      if (blacksmithing == null) return;
-      if (blacksmithing.validBlacksmithingTarget(event.smelting)) {
-        int stackSize = (event.smelting.getCount() == 0) ? blacksmithing.lastItemNumber :
-            Obfuscation.getStackSize(event.smelting);
-        int addItemSize = (int) (blacksmithing.extraIngot() * stackSize); // OOO
-        if (addItemSize > 0) {
-          ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
-          event.player.inventory.addItemStackToInventory(newStack);
-        }
-        Utils.logSkillEvent(event, blacksmithing, " stackSize: " + stackSize + ", addItemSize: " + addItemSize);
-        if (event.player instanceof EntityPlayerMP) {
-          // Give xp for bonus items too!
-          blacksmithing.addXp((EntityPlayerMP) event.player,
-              (stackSize + addItemSize) * blacksmithing.getXp(blacksmithing.getBlacksmithingName(event.smelting)));
-        }
-      }
-    }
-  }
+    SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
+    if (!blacksmithing.validBlacksmithingTarget(event.smelting)) return;
 
-  /**
-   * The hackiest of hacks. Why does this always happen. Basically, shift
-   * clicking is really FUCK and does not correctly report the number of
-   * smelted items. When we open the furnace we log the number of items
-   * currently in it, and use that instead when shift clicking.
-   */
-  public static void saveItemNumber(PlayerContainerEvent.Open event) {
-    Container please = event.getContainer();
-    if (please instanceof ContainerFurnace) {
-      Slot output = please.getSlot(2);
-      ItemStack yas = output.getStack();
-      if (yas != null) {
-        EntityPlayer player = event.getEntityPlayer();
-        if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-          SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING,
-              EnumFacing.NORTH);
-          blacksmithing.lastItemNumber = Obfuscation.getStackSize(yas);
-        }
-      }
+    int stackSize = event.smelting.getCount();
+    int addItemSize = (int) (blacksmithing.extraIngot() * stackSize); // OOO
+    if (addItemSize > 0) {
+      ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
+      event.player.inventory.addItemStackToInventory(newStack);
+    }
+    if (event.player instanceof EntityPlayerMP) {
+      blacksmithing.addXp((EntityPlayerMP) event.player,
+          stackSize * blacksmithing.getXp(blacksmithing.getBlacksmithingName(event.smelting)));
     }
   }
 

@@ -15,6 +15,7 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -181,7 +182,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
 			if (cooking.validCookingTarget(stack)) {
 				String foodName = getFoodName(stack);
-				Utils.logSkillEvent(event, cooking, "crafting food: " + foodName);
 				Item replaceFood;
 				if (stack.getItem() == Items.CAKE || stack.getItem() == SkrimItems.ANGEL_CAKE) {
 					replaceFood = getOverwriteCake(stack.getItem());
@@ -193,10 +193,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 					NBTTagCompound customName = new NBTTagCompound();
 					compound.setInteger("level", cooking.level);
 					ItemStack addStack = new ItemStack(replaceFood, 1);
-					/**
-					 * Custom names come from the Name property in the subtag
-					 * display.
-					 */
+					// Set a custom name based on who cooked it.
 					customName.setString("Name", player.getName() + "'s " + addStack.getDisplayName());
 					compound.setTag("display", customName);
 					addStack.setTagCompound(compound);
@@ -223,11 +220,38 @@ public class SkillCooking extends Skill implements ISkillCooking {
 		}
 	}
 
+	private static ItemStack getReplaceFood(EntityPlayer player, ItemStack stack) {
+		if (player == null || !Skills.hasSkill(player, Skills.COOKING)) return null;
+		SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+		String foodName = getFoodName(stack);
+		Item replaceFood = cooking.getOverwriteFood(getFoodName(stack));
+		if (replaceFood == null) return null;
+		NBTTagCompound compound = new NBTTagCompound();
+		NBTTagCompound customName = new NBTTagCompound();
+		compound.setInteger("level", cooking.level);
+		ItemStack newStack = new ItemStack(replaceFood, 1);
+		// Set a custom name based on who cooked it.
+		customName.setString("Name", player.getName() + "'s " + newStack.getDisplayName());
+		compound.setTag("display", customName);
+		newStack.setTagCompound(compound);
+		return newStack;
+	}
+
 	public static void injectSmeltedFood(ItemSmeltedEvent event) {
-		injectFakeFood(event, event.smelting, event.player);
+		if (event.player.world.isRemote) return;
+		ItemStack newStack = getReplaceFood(event.player, event.smelting);
+		System.out.println("attempting to inject: " + newStack);
+		ReflectionUtils.printFields(event);
+		System.out.println("event.smelting: " + event.smelting);
+		// ReflectionUtils.hackValueTo(event, newStack, "smelting");
+		System.out.println("event.smelting: " + event.smelting + "\n\n");
+		System.out.println("event.smelting.item: " + event.smelting.getItem());
+		event.smelting.getItem().onCreated(event.smelting, event.player.world, event.player);
+		// injectFakeFood(event, event.smelting, event.player);
 	}
 
 	public static void injectCraftedFood(ItemCraftedEvent event) {
+		System.out.println("item crafted....?");
 		Item targetItem = event.crafting.getItem();
 		if (targetItem != null && targetItem == SkrimItems.ANGEL_CAKE) {
 			if (Skills.canCraft(event.player, Skills.COOKING, 100)) {
@@ -252,24 +276,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
 			}
 		} else {
 			injectFakeFood(event, event.crafting, event.player);
-		}
-	}
-
-	/**
-	 * The hackiest of hacks. Why does this always happen.
-	 */
-	public static void saveItemNumber(PlayerContainerEvent.Open event) {
-		Container please = event.getContainer();
-		if (please instanceof ContainerFurnace) {
-			Slot output = please.getSlot(2);
-			ItemStack yas = output.getStack();
-			if (yas != null) {
-				EntityPlayer player = event.getEntityPlayer();
-				if (player != null && player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
-					SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-					cooking.lastItemNumber = Obfuscation.getStackSize(yas);
-				}
-			}
 		}
 	}
 

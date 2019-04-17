@@ -141,9 +141,10 @@ public class Skills {
     return player.hasCapability(skill, EnumFacing.NORTH);
   }
 
-  public static <T extends Skill> T getSkill(EntityPlayer player, Capability<? extends ISkill> skill) {
-    ISkill a = player.getCapability(skill, EnumFacing.NORTH);
-    return (T) a;
+  public static <T extends Skill> T getSkill(EntityPlayer player, Capability<? extends ISkill> skillCap, Class<T> skillClass) {
+    T skill = skillClass.cast(player.getCapability(skillCap, EnumFacing.NORTH));
+    if (skill == null) throw new NullPointerException("No such skill: " + skillCap + " exists.");
+    return skill;
   }
 
 

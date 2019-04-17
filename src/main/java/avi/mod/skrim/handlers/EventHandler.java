@@ -249,12 +249,6 @@ public class EventHandler {
   }
 
   @SubscribeEvent
-  public void onContainerOpen(PlayerContainerEvent.Open event) {
-    SkillBlacksmithing.saveItemNumber(event);
-    SkillCooking.saveItemNumber(event);
-  }
-
-  @SubscribeEvent
   public void onUseHoe(UseHoeEvent event) {
     SkillFarming.createFarmland(event);
   }

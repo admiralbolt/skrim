@@ -2,6 +2,7 @@ package avi.mod.skrim;
 
 import avi.mod.skrim.client.SkrimTab;
 import avi.mod.skrim.commands.CommandRegistry;
+import avi.mod.skrim.patches.CookingPatch;
 import avi.mod.skrim.proxy.IProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -49,7 +50,6 @@ public class Skrim {
   public void preInit(FMLPreInitializationEvent event) {
     System.out.println(NAME + " is in preInit.");
     proxy.preInit();
-    // TestPatch.go();
   }
 
   @Mod.EventHandler
@@ -62,10 +62,12 @@ public class Skrim {
   public void postInit(FMLPostInitializationEvent event) {
     System.out.println(NAME + " is in postinit.");
     proxy.postInit();
+    CookingPatch.apply();
   }
 
   @Mod.EventHandler
   public void serverStarting(FMLServerStartingEvent event) {
+    System.out.println("server starting...");
     CommandRegistry.registerCommands(event);
   }
 
