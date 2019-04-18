@@ -38,7 +38,7 @@ import java.util.Random;
 public class Utils {
 
   public static String[] tuplets = {"zero-adsf", "one-asdf", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple",
-			"octople", "nontople",
+      "octople", "nontople",
       "decuple"};
   public static Random rand = new Random();
   public static DecimalFormat oneDigit = new DecimalFormat("0.0");
@@ -103,7 +103,7 @@ public class Utils {
   private final Map<IAttribute, AttributeModifier> attributeModifierMap = Maps.<IAttribute, AttributeModifier>newHashMap();
 
   public static void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn,
-																											Map<IAttribute, AttributeModifier> attributeMap, int amplifier) {
+                                                      Map<IAttribute, AttributeModifier> attributeMap, int amplifier) {
     AbstractAttributeMap entityAttributes = entityLivingBaseIn.getAttributeMap();
     for (Entry<IAttribute, AttributeModifier> entry : attributeMap.entrySet()) {
       IAttributeInstance iattributeinstance = entityAttributes.getAttributeInstance((IAttribute) entry.getKey());
@@ -179,6 +179,26 @@ public class Utils {
       activeEffect = effect;
     }
     player.addPotionEffect(activeEffect);
+  }
+
+  public static void removeFromInventory(InventoryPlayer inventory, Item removeItem, int amount) {
+    int totalRemoved = 0;
+    int remove;
+    ItemStack stack;
+    for (int i = 0; i < inventory.getSizeInventory(); i++) {
+      stack = inventory.getStackInSlot(i);
+      if (stack.getItem() != removeItem) continue;
+      remove = Math.min(stack.getCount(), (amount - totalRemoved));
+      System.out.println("rmeove: " + remove);
+      if (remove == stack.getCount()) {
+        inventory.removeStackFromSlot(i);
+      } else {
+        inventory.decrStackSize(i, remove);
+      }
+      totalRemoved += remove;
+      System.out.println("totalRemoved: " + totalRemoved);
+      if (totalRemoved >= amount) return;
+    }
   }
 
   public static int getNumberOfItems(NonNullList<ItemStack> inventory) {

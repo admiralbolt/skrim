@@ -15,6 +15,8 @@ import avi.mod.skrim.items.artifacts.FatBoy;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -66,6 +68,8 @@ public final class SkrimBlocks {
   public static WeirwoodWood WEIRWOOD_WOOD = new WeirwoodWood();
   public static WeirwoodLeaf WEIRWOOD_LEAF = new WeirwoodLeaf();
   public static MegaChest MEGA_CHEST = new MegaChest();
+
+  public static Dynamite DDDD = new Dynamite();
 
   // Artifact blocks.
   public static FatBoy FAT_BOY = new FatBoy();

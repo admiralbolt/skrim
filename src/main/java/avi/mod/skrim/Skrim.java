@@ -62,7 +62,7 @@ public class Skrim {
   public void postInit(FMLPostInitializationEvent event) {
     System.out.println(NAME + " is in postinit.");
     proxy.postInit();
-    CookingPatch.apply();
+    // CookingPatch.apply();
   }
 
   @Mod.EventHandler

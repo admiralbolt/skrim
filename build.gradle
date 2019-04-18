@@ -8,8 +8,12 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+
+plugins {
+  id 'com.github.johnrengelman.shadow' version '1.2.4'
+}
+
 apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
 version = "1.9"
@@ -63,6 +67,19 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+}
+
+shadowJar {
+  dependencies {
+    include(dependency('org.javassist:.*'))
+    include(dependency('com.ea.agentloader:.*'))
+  }
+
+  classifier ''
+}
+
+reobf {
+  shadowJar {}
 }
 
 processResources {

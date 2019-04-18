@@ -27,8 +27,8 @@ public class CookingPatch {
     if (SimpleAgent.class.getClassLoader() != ClassLoader.getSystemClassLoader()) {
       System.out.println("SSSSSSSSSSSSSSSSSSSSSS");
       ClassPathUtils.appendToSystemPath(ClassPathUtils.getClassPathFor(SimpleAgent.class));
-      ClassPathUtils.appendToSystemPath(ClassPathUtils.getClassPathFor(ItemFood.class));
-      ClassPathUtils.appendToSystemPath(ClassPathUtils.getClassPathFor(EntityCreeper.class));
+//      ClassPathUtils.appendToSystemPath(ClassPathUtils.getClassPathFor(ItemFood.class));
+//      ClassPathUtils.appendToSystemPath(ClassPathUtils.getClassPathFor(EntityCreeper.class));
       ClassPathUtils.appendToSystemPath(ClassPathUtils.getClassPathFor(FireStaff.class));
     }
     AgentLoader.loadAgentClass(SimpleAgent.class.getName(), "hello!");
