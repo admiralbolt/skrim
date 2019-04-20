@@ -2,7 +2,6 @@ package avi.mod.skrim;
 
 import avi.mod.skrim.client.SkrimTab;
 import avi.mod.skrim.commands.CommandRegistry;
-import avi.mod.skrim.patches.CookingPatch;
 import avi.mod.skrim.proxy.IProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -33,7 +32,7 @@ public class Skrim {
    * player placed blocks.
    * Should be TRUE for release.
    */
-  public static final boolean ENFORCE_NATURAL = true;
+  public static final boolean ENFORCE_NATURAL = false;
 
   /**
    * Pretty straight forward, every hit is a critical hit.

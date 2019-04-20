@@ -21,7 +21,7 @@ public class BotanyProvider {
   public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillBotany");
 
   public static void register() {
-    CapabilityManager.INSTANCE.register(ISkillBotany.class, SkillBotany.skillStorage, SkillBotany.class);
+    CapabilityManager.INSTANCE.register(ISkillBotany.class, SkillBotany.skillStorage, SkillBotany::new);
     MinecraftForge.EVENT_BUS.register(new EventHandler());
   }
 
@@ -40,11 +40,11 @@ public class BotanyProvider {
   }
 
   public static SkillProvider<ISkillBotany> createProvider() {
-    return new SkillProvider<ISkillBotany>(BOTANY, EnumFacing.NORTH);
+    return new SkillProvider<>(BOTANY, EnumFacing.NORTH);
   }
 
   public static SkillProvider<ISkillBotany> createProvider(ISkillBotany botany) {
-    return new SkillProvider<ISkillBotany>(BOTANY, EnumFacing.NORTH, botany);
+    return new SkillProvider<>(BOTANY, EnumFacing.NORTH, botany);
   }
 
 }

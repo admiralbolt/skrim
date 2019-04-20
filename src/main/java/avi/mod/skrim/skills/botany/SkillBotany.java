@@ -15,7 +15,6 @@ import avi.mod.skrim.world.PlayerPlacedBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -35,45 +34,46 @@ import java.util.*;
 
 public class SkillBotany extends Skill implements ISkillBotany {
 
-  public static SkillStorage<ISkillBotany> skillStorage = new SkillStorage<ISkillBotany>();
-  public static Map<String, Integer> xpMap;
+  public static SkillStorage<ISkillBotany> skillStorage = new SkillStorage<>();
+
+  private static Map<String, Integer> XP_MAP;
   public static Set<Item> GLOW_FLOWER_ITEMS;
   public static Set<Item> ENCHANTED_FLOWER_ITEMS;
 
-  public static SkillAbility SUN_FLOWER = new SkillAbility("botany", "Sun Flower", 25, "It was either this or " +
-			"mariglow, don't know which one is worse.",
+  private static SkillAbility SUN_FLOWER = new SkillAbility("botany", "Sun Flower", 25, "It was either this or " +
+      "mariglow, don't know which one is worse.",
       "Enables you to craft glowing flowers with a flower & glowstone dust.");
-  public static SkillAbility THORN_STYLE = new SkillAbility("botany", "Thorn Style", 50, "I'll let you try my thorn " +
-			"style.",
+  private static SkillAbility THORN_STYLE = new SkillAbility("botany", "Thorn Style", 50, "I'll let you try my thorn " +
+      "style.",
       "While holding a flower return §a25%" + SkillAbility.DESC_COLOR + " of melee damage.");
-  public static SkillAbility SEDUCE_VILLAGER = new SkillAbility("botany", "Seduce Villager", 75, "[Tongue waggling " +
-			"intensifies]",
+  private static SkillAbility SEDUCE_VILLAGER = new SkillAbility("botany", "Seduce Villager", 75, "[Tongue waggling " +
+      "intensifies]",
       "Using a flower on a villager consumes it and reduces the cost of all trades by §a1" + SkillAbility.DESC_COLOR + ".");
-  public static SkillAbility ENCHANTED_FLOWER = new SkillAbility("botany", "Enchanted Flower", 100, "It shares a " +
-			"giant friendliness beam! :D",
+  private static SkillAbility ENCHANTED_FLOWER = new SkillAbility("botany", "Enchanted Flower", 100, "It shares a " +
+      "giant friendliness beam! :D",
       "Enables you to craft enchanted flowers that function like speed beacons.");
 
   static {
-    xpMap = new HashMap<>();
+    XP_MAP = new HashMap<>();
     // The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
-    xpMap.put("dandelion", 300);
-    xpMap.put("poppy", 300);
+    XP_MAP.put("dandelion", 300);
+    XP_MAP.put("poppy", 300);
     // 3 Biomes
-    xpMap.put("houstonia", 600); // azure_bluet
-    xpMap.put("red_tulip", 600);
-    xpMap.put("orange_tulip", 600);
-    xpMap.put("white_tulip", 600);
-    xpMap.put("pink_tulip", 600);
-    xpMap.put("oxeye_daisy", 600);
+    XP_MAP.put("houstonia", 600); // azure_bluet
+    XP_MAP.put("red_tulip", 600);
+    XP_MAP.put("orange_tulip", 600);
+    XP_MAP.put("white_tulip", 600);
+    XP_MAP.put("pink_tulip", 600);
+    XP_MAP.put("oxeye_daisy", 600);
     // Only swamp, can respawn
-    xpMap.put("blue_orchid", 1200);
-    xpMap.put("allium", 1200);
+    XP_MAP.put("blue_orchid", 1200);
+    XP_MAP.put("allium", 1200);
     // Only forest & flower forest on generation
-    xpMap.put("syringa", 3000); // lilac
-    xpMap.put("double_rose", 3000);
-    xpMap.put("paeonia", 3000); // peony
+    XP_MAP.put("syringa", 3000); // lilac
+    XP_MAP.put("double_rose", 3000);
+    XP_MAP.put("paeonia", 3000); // peony
     // Only sunflower plains on generation
-    xpMap.put("sunflower", 5000);
+    XP_MAP.put("sunflower", 5000);
   }
 
   public SkillBotany() {
@@ -85,18 +85,18 @@ public class SkillBotany extends Skill implements ISkillBotany {
     this.addAbilities(SUN_FLOWER, THORN_STYLE, SEDUCE_VILLAGER, ENCHANTED_FLOWER);
   }
 
-  public static boolean validFlowerStack(ItemStack stack) {
+  private static boolean validFlowerStack(ItemStack stack) {
     if (stack != null) {
       Item item = stack.getItem();
       Block block = Block.getBlockFromItem(stack.getItem());
       String name = Utils.snakeCase(item.getItemStackDisplayName(stack));
-      return (item != null && (xpMap.containsKey(name) || name.equals("azure_bluet") || name.equals("lilac") || name.equals("peony")))
-          || (block != null && validFlowerBlock(block));
+      return (XP_MAP.containsKey(name) || name.equals("azure_bluet") || name.equals("lilac") || name.equals("peony"))
+          || validFlowerBlock(block);
     }
     return false;
   }
 
-  public static String getFlowerName(IBlockState state) {
+  private static String getFlowerName(IBlockState state) {
     Block block = state.getBlock();
     if (block instanceof BlockFlower) {
       BlockFlower flower = (BlockFlower) block;
@@ -108,51 +108,28 @@ public class SkillBotany extends Skill implements ISkillBotany {
     }
   }
 
-  public static boolean validFlowerBlock(Block block) {
+  private static boolean validFlowerBlock(Block block) {
     return (block instanceof BlockFlower || block instanceof GlowFlower);
   }
 
-  public static boolean validFlowerState(IBlockState state) {
+  private static boolean validFlowerState(IBlockState state) {
     Block flower = state.getBlock();
     String name = getFlowerName(state);
-    System.out.println("flower: " + flower + ", NAME: " + name);
     return validFlowerBlock(flower) || (name.equals("sunflower") || name.equals("paeonia") || name.equals(
-    		"double_rose") || name.equals("syringa"));
+        "double_rose") || name.equals("syringa"));
   }
 
   public static void addBotanyXp(BlockEvent.BreakEvent event) {
     EntityPlayer player = event.getPlayer();
-    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BOTANY, EnumFacing.NORTH)) {
-      SkillBotany botany = (SkillBotany) player.getCapability(Skills.BOTANY, EnumFacing.NORTH);
-      IBlockState state = event.getState();
-      String flowerName = getFlowerName(state);
-      int addXp = 0;
-      if (state.getBlock() instanceof BlockDoublePlant) {
-        Item droppedItem = state.getBlock().getItemDropped(state, Utils.rand, 0);
-        int meta = state.getBlock().damageDropped(state);
-        IBlockState targetState = event.getWorld().getBlockState(event.getPos().down());
-        if (targetState.getBlock() instanceof BlockDoublePlant) {
-          droppedItem = targetState.getBlock().getItemDropped(targetState, Utils.rand, 0);
-          meta = targetState.getBlock().damageDropped(targetState);
-          flowerName = getFlowerName(targetState);
-        }
-        if (xpMap.containsKey(flowerName) && Utils.rand.nextDouble() < botany.getFortuneChance()) {
-          ItemStack flowerStack = new ItemStack(droppedItem, botany.getFortuneAmount() - 1, meta);
-          EntityItem entityItem = new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY(),
-							event.getPos().getZ(), flowerStack);
-          event.getWorld().spawnEntity(entityItem);
-          Skills.playFortuneSound(player);
-          addXp += 200;
-        }
-      }
-
-      Utils.logSkillEvent(event, botany, "state: " + event.getState() + ", flowerName: " + flowerName);
-
-      addXp += botany.getXp(flowerName);
-      if (addXp > 0) {
-        botany.addXp((EntityPlayerMP) player, botany.getXp(getFlowerName(state)));
-      }
+    SkillBotany botany = Skills.getSkill(player, Skills.BOTANY, SkillBotany.class);
+    IBlockState state = event.getState();
+    String flowerName = getFlowerName(state);
+    System.out.println("flowerName: " + flowerName);
+    int addXp = botany.getXp(flowerName);
+    if (addXp > 0) {
+      botany.addXp((EntityPlayerMP) player, botany.getXp(getFlowerName(state)));
     }
+
   }
 
   public static void soManyFlowers(BlockEvent.HarvestDropsEvent event) {
@@ -263,7 +240,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
           if (validFlowerStack(mainStack)) {
             villager.setIsWillingToMate(true);
             MerchantRecipeList buyingList = (MerchantRecipeList) ReflectionUtils.getPrivateField(villager, "buyingList",
-								"field_70963_i");
+                "field_70963_i");
             for (MerchantRecipe recipe : buyingList) {
               ItemStack first = recipe.getItemToBuy();
               if (Obfuscation.getStackSize(first) > 4) {
@@ -278,7 +255,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
             }
             SkrimPacketHandler.INSTANCE.sendTo(
                 new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height,
-										villager.width),
+                    villager.width),
                 (EntityPlayerMP) player);
             Obfuscation.setStackSize(mainStack, Obfuscation.getStackSize(mainStack) - 1);
             if (Obfuscation.getStackSize(mainStack) == 0) {
@@ -315,7 +292,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   }
 
   public int getXp(String blockName) {
-    return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
+    return (XP_MAP.containsKey(blockName)) ? XP_MAP.get(blockName) : 0;
   }
 
   public double getSplosionChance() {
@@ -340,7 +317,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
     tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
         + "§r flower drops.");
     tooltip.add("§a" + Utils.formatPercent(this.getSplosionChance()) + "%§r chance to cause a flowersplosion with " +
-				"radius §a" + this.getSplosionRadius()
+        "radius §a" + this.getSplosionRadius()
         + "§r.");
     return tooltip;
   }

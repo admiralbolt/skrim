@@ -38,8 +38,7 @@ import java.util.Random;
 public class Utils {
 
   public static String[] tuplets = {"zero-adsf", "one-asdf", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple",
-      "octople", "nontople",
-      "decuple"};
+      "octople", "nontople", "decuple"};
   public static Random rand = new Random();
   public static DecimalFormat oneDigit = new DecimalFormat("0.0");
   public static DecimalFormat twoDigit = new DecimalFormat("0.00");
