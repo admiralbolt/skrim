@@ -5,25 +5,18 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerFurnace;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
 import java.util.ArrayList;
@@ -58,11 +51,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
   public static SkillStorage<ISkillBlacksmithing> STORAGE = new SkillStorage<>();
 
-  private static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("blacksmithing", "Master Craftsperson", 25,
-      "Due to legal action against Skrim® modding industries we have renamed the skill to be more inclusive.",
-      "No longer risk breaking the anvil when repairing items.",
-      "Repairing an item with an undamaged equivalent provides a one time §a+50%" + SkillAbility.DESC_COLOR + " " +
-          "durability bonus.");
+  private static SkillAbility MASTER_CRAFTS_PERSON = new SkillAbility("blacksmithing", "Master Crafter", 25,
+      "This one had a hilarious game affecting bug so I had to nerf it.",
+      "No longer risk breaking the anvil when repairing items.");
 
   private static SkillAbility PERSISTENCE = new SkillAbility("blacksmithing", "Persistence", 50, "3 days later...",
       "Significantly reduce prior work cost when repairing items.");
@@ -84,44 +75,67 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     this.addAbilities(MASTER_CRAFTS_PERSON, PERSISTENCE, IRON_HEART, OBSIDIAN_SMITH);
   }
 
+  @Override
+  public List<String> getToolTip() {
+    List<String> tooltip = new ArrayList<String>();
+    tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
+    tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
+    return tooltip;
+  }
+
+  private static String getBlacksmithingName(ItemStack stack) {
+    return Utils.snakeCase(stack.getItem().getUnlocalizedName());
+  }
+
+  private static boolean validBlacksmithingTarget(ItemStack stack) {
+    return XP_MAP.containsKey(Utils.snakeCase(stack.getItem().getUnlocalizedName()));
+  }
+
+  public static int getXp(String blockName) {
+    return XP_MAP.getOrDefault(blockName, 0);
+  }
+
+  private double extraIngot() {
+    return 0.015 * this.level;
+  }
+
+  private double extraRepair() {
+    return 0.02 * this.level;
+  }
+
   public static void giveMoreIngots(ItemSmeltedEvent event) {
     if (event.player == null || !Skills.hasSkill(event.player, Skills.BLACKSMITHING)) return;
     SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
-    if (!blacksmithing.validBlacksmithingTarget(event.smelting)) return;
+    if (!validBlacksmithingTarget(event.smelting)) return;
 
     int stackSize = event.smelting.getCount();
-    int addItemSize = (int) (blacksmithing.extraIngot() * stackSize); // OOO
+    int addItemSize = (int) (blacksmithing.extraIngot() * stackSize);
     if (addItemSize > 0) {
       ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
       event.player.inventory.addItemStackToInventory(newStack);
     }
     if (event.player instanceof EntityPlayerMP) {
-      blacksmithing.addXp((EntityPlayerMP) event.player,
-          stackSize * blacksmithing.getXp(blacksmithing.getBlacksmithingName(event.smelting)));
+      blacksmithing.addXp((EntityPlayerMP) event.player, stackSize * getXp(getBlacksmithingName(event.smelting)));
     }
   }
 
   /**
-   * Reduce fire damage by half! Pretty straightforward, just lots of if
-   * checking.
+   * Reduce fire damage by half if blacksmithing level is 75.
    */
   public static void ironHeart(LivingHurtEvent event) {
     Entity entity = event.getEntity();
-    if (entity instanceof EntityPlayer) {
-      DamageSource source = event.getSource();
-      if (source.isFireDamage()) {
-        EntityPlayer player = (EntityPlayer) entity;
-        if (player != null && player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-          SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING,
-              EnumFacing.NORTH);
-          if (blacksmithing.hasAbility(3)) {
-            Utils.logSkillEvent(event, blacksmithing, "Applying iron heart.");
-            event.setAmount((float) (event.getAmount() * 0.75));
-          }
-        }
-      }
-    }
+    if (!(entity instanceof EntityPlayer)) return;
+
+    DamageSource source = event.getSource();
+    if (!source.isFireDamage()) return;
+
+    EntityPlayer player = (EntityPlayer) entity;
+    SkillBlacksmithing blacksmithing = Skills.getSkill(player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
+    if (!blacksmithing.hasAbility(3)) return;
+
+    event.setAmount((float) (event.getAmount() * 0.75));
   }
+
 
   /**
    * A few things here: 1. We want to apply the base blacksmithing bonus when
@@ -129,88 +143,39 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
    * special repair skills that blacksmithing has.
    */
   public static void enhanceRepair(AnvilRepairEvent event) {
-    Entity player = event.getEntityPlayer();
-    if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.BLACKSMITHING,
-        EnumFacing.NORTH)) {
-      SkillBlacksmithing blacksmithing = (SkillBlacksmithing) player.getCapability(Skills.BLACKSMITHING,
-          EnumFacing.NORTH);
-      ItemStack left = event.getItemInput();
-      ItemStack middle = event.getIngredientInput();
-      ItemStack output = event.getItemResult();
+    EntityPlayer player = event.getEntityPlayer();
+    if (player.world.isRemote) return;
+    SkillBlacksmithing blacksmithing = Skills.getSkill(player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
 
-      int baseRepair = left.getItemDamage() - output.getItemDamage();
-      blacksmithing.addXp((EntityPlayerMP) player, (int) (baseRepair * (1 + blacksmithing.extraRepair())));
-      int finalRepair = output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair());
-      Utils.logSkillEvent(event, blacksmithing, "baseRepair: " + baseRepair + ", finalRepair: " + finalRepair);
-      if (blacksmithing.hasAbility(1)) {
-        event.setBreakChance(0);
-        if (blacksmithing.hasAbility(2)) {
-          output.setRepairCost(1 + (output.getRepairCost() - 1) / 2);
-          // Ensure +25% durability hasn't already been applied
-          NBTTagCompound compound = output.getTagCompound();
-          if (!compound.hasKey("enhanced_durability")) {
-            compound.setBoolean("enhanced_durability", false);
-          }
-          if (middle.getItemDamage() == 0 && middle.getItem() == output.getItem() && !compound.getBoolean(
-              "enhanced_durability")) {
-            /**
-             * Yo dawg I heard you capped the max damage for items,
-             * but you see, I want to make the cap go higher. So uh,
-             * I'm gonna break your shit.
-             */
-            Item outputItem = (Item) output.getItem();
-            Utils.logSkillEvent(event, blacksmithing,
-                "applying durability bonus, setting max to: " + (int) (outputItem.getMaxDamage(output) * 1.5));
-            outputItem.setMaxDamage((int) (outputItem.getMaxDamage(output) * 1.5));
-            // ReflectionUtils.hackSuperValueTo(outputItem, (int) (outputItem.getMaxDamage(output) * 1.5),
-            // "maxDamage", "field_77699_b");
-          }
-        }
-      }
+    ItemStack left = event.getItemInput();
+    ItemStack middle = event.getIngredientInput();
+    ItemStack output = event.getItemResult();
+
+    // If the two input are items are the same we want to calculate the repair based on the healthiest item.
+    int baseDamage = left.getItem() == middle.getItem() ? Math.min(left.getItemDamage(), middle.getItemDamage()) : left.getItemDamage();
+    int baseRepair = baseDamage - output.getItemDamage();
+    int finalItemDamage = Math.max(output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair()), 0);
+    output.setItemDamage(finalItemDamage);
+    blacksmithing.addXp((EntityPlayerMP) player, baseDamage - finalItemDamage);
+
+    if (!blacksmithing.hasAbility(1)) return;
+    event.setBreakChance(0);
+
+    if (!blacksmithing.hasAbility(2)) return;
+    output.setRepairCost(1 + (output.getRepairCost() - 1) / 2);
+  }
+
+
+  public static void verifyObsidian(PlayerEvent.ItemCraftedEvent event) {
+    if (event.player.world.isRemote || !OBSIDIAN_ITEMS.contains(event.crafting.getItem())) return;
+
+    if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
+      Skills.replaceWithComponents(event);
+      return;
     }
-  }
 
-  public static void verifyObsidian(ItemCraftedEvent event) {
-    Item targetItem = event.crafting.getItem();
-    if (targetItem != null && OBSIDIAN_ITEMS.contains(targetItem)) {
-      if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
-        Skills.replaceWithComponents(event);
-      } else if (!event.player.world.isRemote && event.player.hasCapability(Skills.BLACKSMITHING, EnumFacing.NORTH)) {
-        SkillBlacksmithing blacksmithing = (SkillBlacksmithing) event.player.getCapability(Skills.BLACKSMITHING,
-            EnumFacing.NORTH);
-        blacksmithing.addXp((EntityPlayerMP) event.player, 5000);
-      }
-    }
-  }
-
-  public int getXp(String blockName) {
-    return (XP_MAP.containsKey(blockName)) ? XP_MAP.get(blockName) : 0;
-  }
-
-  public double extraIngot() {
-    return 0.015 * this.level;
-  }
-
-  public double extraRepair() {
-    return 0.02 * this.level;
-  }
-
-  public String getBlacksmithingName(ItemStack stack) {
-    return Utils.snakeCase(stack.getItem().getUnlocalizedName());
-  }
-
-  @Override
-  public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
-    tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
-    tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
-    tooltip.add("Shift clicking crafted items provides §amostly accurate extra items§r.");
-    tooltip.add("§eWe swear this is a bug and not a feature...§r");
-    return tooltip;
-  }
-
-  private boolean validBlacksmithingTarget(ItemStack stack) {
-    return XP_MAP.containsKey(Utils.snakeCase(stack.getItem().getUnlocalizedName()));
+    SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
+    blacksmithing.addXp((EntityPlayerMP) event.player, 5000);
   }
 
 }
