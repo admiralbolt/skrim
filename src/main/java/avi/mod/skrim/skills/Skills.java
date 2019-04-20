@@ -7,9 +7,6 @@ import avi.mod.skrim.skills.botany.BotanyProvider;
 import avi.mod.skrim.skills.botany.ISkillBotany;
 import avi.mod.skrim.skills.cooking.CookingProvider;
 import avi.mod.skrim.skills.cooking.ISkillCooking;
-import avi.mod.skrim.skills.defense.DefenseProvider;
-import avi.mod.skrim.skills.defense.ISkillDefense;
-import avi.mod.skrim.skills.defense.SkillDefense;
 import avi.mod.skrim.skills.demolition.DemolitionProvider;
 import avi.mod.skrim.skills.demolition.ISkillDemolition;
 import avi.mod.skrim.skills.digging.DiggingProvider;
@@ -27,10 +24,7 @@ import avi.mod.skrim.skills.ranged.RangedProvider;
 import avi.mod.skrim.skills.woodcutting.ISkillWoodcutting;
 import avi.mod.skrim.skills.woodcutting.WoodcuttingProvider;
 import avi.mod.skrim.utils.Obfuscation;
-import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
@@ -40,18 +34,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 import java.util.*;
-import java.util.Map.Entry;
 
 public class Skills {
 
   public static Capability<ISkillBlacksmithing> BLACKSMITHING = BlacksmithingProvider.BLACKSMITHING;
   public static Capability<ISkillBotany> BOTANY = BotanyProvider.BOTANY;
   public static Capability<ISkillCooking> COOKING = CookingProvider.COOKING;
-  public static Capability<ISkillDefense> DEFENSE = DefenseProvider.DEFENSE;
   public static Capability<ISkillDemolition> DEMOLITION = DemolitionProvider.DEMOLITION;
   public static Capability<ISkillDigging> DIGGING = DiggingProvider.DIGGING;
   public static Capability<ISkillFarming> FARMING = FarmingProvider.FARMING;
@@ -64,8 +55,8 @@ public class Skills {
   public static Map<String, Capability<? extends ISkill>> skillMap = new HashMap<>();
   public static List<Capability<? extends ISkill>> ALL_SKILLS = new ArrayList<>();
 
-  public static String[] ALPHABETICAL_SKILLS = {"blacksmithing", "botany", "cooking", "defense", "demolition", "digging", "farming",
-			"fishing", "melee",
+  public static String[] ALPHABETICAL_SKILLS = {"blacksmithing", "botany", "cooking", "demolition", "digging", "farming",
+      "fishing", "melee",
       "mining", "ranged", "woodcutting"};
 
   public static void register() {
@@ -80,7 +71,6 @@ public class Skills {
     DemolitionProvider.register();
     MeleeProvider.register();
     RangedProvider.register();
-    DefenseProvider.register();
 
     /**
      * This functionality should really be handled in the providers
@@ -90,7 +80,6 @@ public class Skills {
     BLACKSMITHING = BlacksmithingProvider.BLACKSMITHING;
     BOTANY = BotanyProvider.BOTANY;
     COOKING = CookingProvider.COOKING;
-    DEFENSE = DefenseProvider.DEFENSE;
     DEMOLITION = DemolitionProvider.DEMOLITION;
     DIGGING = DiggingProvider.DIGGING;
     FARMING = FarmingProvider.FARMING;
@@ -103,7 +92,6 @@ public class Skills {
     ALL_SKILLS.add(BLACKSMITHING);
     ALL_SKILLS.add(BOTANY);
     ALL_SKILLS.add(COOKING);
-    ALL_SKILLS.add(DEFENSE);
     ALL_SKILLS.add(DEMOLITION);
     ALL_SKILLS.add(DIGGING);
     ALL_SKILLS.add(FARMING);
@@ -116,7 +104,6 @@ public class Skills {
     skillMap.put("blacksmithing", BLACKSMITHING);
     skillMap.put("botany", BOTANY);
     skillMap.put("cooking", COOKING);
-    skillMap.put("defense", DEFENSE);
     skillMap.put("demolition", DEMOLITION);
     skillMap.put("digging", DIGGING);
     skillMap.put("farming", FARMING);
@@ -224,26 +211,7 @@ public class Skills {
 
   public static void playRandomTreasureSound(EntityPlayer player) {
     player.world.playSound((EntityPlayer) null, player.getPosition(), SkrimSoundEvents.RANDOM_TREASURE, player.getSoundCategory(), 0.2F,
-				1.0F);
-  }
-
-  public static void applyAttributes(LivingUpdateEvent event) {
-    Entity entity = event.getEntity();
-    if (entity instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) entity;
-      Map<IAttribute, AttributeModifier> attributeMap = new HashMap<IAttribute, AttributeModifier>();
-      if (player.hasCapability(Skills.DEFENSE, EnumFacing.NORTH)) {
-        SkillDefense defense = (SkillDefense) player.getCapability(Skills.DEFENSE, EnumFacing.NORTH);
-        Entry<IAttribute, AttributeModifier> overshields = defense.getAttributeModifier();
-        if (overshields != null) {
-          attributeMap.put(overshields.getKey(), overshields.getValue());
-        }
-      }
-      if (!attributeMap.isEmpty()) {
-        Utils.applyAttributesModifiersToEntity(player, attributeMap, 0);
-      }
-
-    }
+        1.0F);
   }
 
   public static Map<Class, Integer> killXp = new HashMap<Class, Integer>();

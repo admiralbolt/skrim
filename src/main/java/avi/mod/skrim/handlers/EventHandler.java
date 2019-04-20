@@ -10,7 +10,6 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.skills.botany.SkillBotany;
 import avi.mod.skrim.skills.cooking.SkillCooking;
-import avi.mod.skrim.skills.defense.SkillDefense;
 import avi.mod.skrim.skills.demolition.SkillDemolition;
 import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.skills.farming.SkillFarming;
@@ -56,7 +55,6 @@ public class EventHandler {
       CanesSword.CanesHandler.slayChicken(event);
       GruesomeMask.GruesomeHandler.doubleAllDamage(event);
     } else if (event.getEntity() instanceof EntityPlayer) {
-      SkillDefense.applyDefense(event);
       SkillDemolition.reduceExplosion(event);
       SkillDigging.vitalicBreathing(event);
       SkillMining.reduceLava(event);
@@ -132,10 +130,8 @@ public class EventHandler {
     if (event.getEntity() instanceof EntityPlayer) {
       SkillMining.climbWall(event);
       SkillCooking.angelUpdate(event);
-      SkillDefense.update(event);
       SkillDigging.metalDetector(event);
       SkillFarming.farmersTan(event);
-      Skills.applyAttributes(event);
 
       LeafArmor.LeafArmorHandler.invisibility(event);
 

@@ -23,7 +23,7 @@ import java.util.List;
 public class SkillScreen extends GuiScreen {
 
   //======== Scroll Bar ========//
-  private static final int MAX_SCROLL = 490;
+  private static final int MAX_SCROLL = 435;
   private static final int SCROLL_BAR_WIDTH = 6;
   private static final int SCROLL_BAR_HEIGHT = 40;
   private static final int SCROLL_PADDING_LEFT = 5;
