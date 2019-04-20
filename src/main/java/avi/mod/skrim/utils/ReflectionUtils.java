@@ -92,6 +92,27 @@ public class ReflectionUtils {
   }
 
   /**
+   * Gets a field of the super class of the super class of the object.
+   */
+  public static Object getSuperXField(Object instance, int depth, String... fieldNames) {
+    Class c = instance.getClass();
+    for (int i = 0; i < depth; i++) {
+      c = c.getSuperclass();
+    }
+    Field field;
+    for (String fieldName : fieldNames) {
+      try {
+        field = c.getDeclaredField(fieldName);
+        return getFieldValue(instance, field);
+      } catch (NoSuchFieldException e) {
+        // e.printStackTrace();
+      }
+    }
+    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with depth: [" + depth + "], with names: [" + Arrays.toString(fieldNames) + "]");
+    return null;
+  }
+
+  /**
    * Executes a private method of the object.
    */
   public static Object executePrivateMethod(Object instance, String... methodNames) {
@@ -177,6 +198,21 @@ public class ReflectionUtils {
 
   public static void printSuperSuperFields(Object instance) {
     for (Field field : instance.getClass().getSuperclass().getSuperclass().getDeclaredFields()) {
+      try {
+        field.setAccessible(true);
+        System.out.println("field: " + field.getName() + ", value: " + field.get(instance));
+      } catch (IllegalArgumentException | IllegalAccessException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public static void printSuperXFields(Object instance, int depth) {
+    Class c = instance.getClass();
+    for (int i = 0; i < depth; i++) {
+      c = c.getSuperclass();
+    }
+    for (Field field : c.getDeclaredFields()) {
       try {
         field.setAccessible(true);
         System.out.println("field: " + field.getName() + ", value: " + field.get(instance));

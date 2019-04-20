@@ -2,6 +2,8 @@ package avi.mod.skrim.items.artifacts;
 
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.weapons.ArtifactSword;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.cooking.SkillCooking;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -9,10 +11,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -76,12 +80,12 @@ public class CanesSword extends ArtifactSword {
    */
   private static void doFireSweep(EntityPlayer player, EntityLivingBase targetEntity) {
     for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
-        targetEntity.getEntityBoundingBox().expand(SWEEP_RANGE, SWEEP_RANGE, SWEEP_RANGE).expand(-1 * SWEEP_RANGE, -1* SWEEP_RANGE, -1 * SWEEP_RANGE))) {
-      System.out.println("checkingEnityt:" + entitylivingbase);
+        targetEntity.getEntityBoundingBox().expand(SWEEP_RANGE, SWEEP_RANGE, SWEEP_RANGE).expand(-1 * SWEEP_RANGE, -1 * SWEEP_RANGE,
+            -1 * SWEEP_RANGE))) {
 
       if (entitylivingbase == player || entitylivingbase == targetEntity || player.isOnSameTeam(entitylivingbase))
         continue;
-      System.out.println("setting: " + entitylivingbase + " on Fire.");
+
       entitylivingbase.setFire(4);
     }
   }
@@ -107,18 +111,34 @@ public class CanesSword extends ArtifactSword {
      * Deep fries every chicken into a delicious golden treat every time.
      */
     public static void fryChicken(LivingDropsEvent event) {
-      if (event.getEntity() instanceof EntityChicken) {
-        DamageSource source = event.getSource();
-        Entity sourceEntity = source.getTrueSource();
-        if (!(sourceEntity instanceof EntityPlayer)) return;
-        EntityPlayer player = (EntityPlayer) sourceEntity;
-        Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
-        if (sword != SkrimItems.CANES_SWORD) return;
-        List<EntityItem> drops = event.getDrops();
-        for (int i = 0; i < drops.size(); i++) {
-          EntityItem item = drops.get(i);
-          if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
-            drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, new ItemStack(SkrimItems.CANES_CHICKEN)));
+      if (!(event.getEntity() instanceof EntityChicken)) return;
+
+      DamageSource source = event.getSource();
+      Entity sourceEntity = source.getTrueSource();
+      if (!(sourceEntity instanceof EntityPlayer)) return;
+
+      EntityPlayer player = (EntityPlayer) sourceEntity;
+      Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
+      if (sword != SkrimItems.CANES_SWORD) return;
+
+      SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+
+      List<EntityItem> drops = event.getDrops();
+      for (int i = 0; i < drops.size(); i++) {
+        EntityItem item = drops.get(i);
+        if (item.getName().equals("item.item.chickenCooked") || item.getName().equals("item.item.chickenRaw")) {
+          ItemStack chickenStrips = new ItemStack(SkrimItems.CANES_CHICKEN, item.getItem().getCount());
+          NBTTagCompound compound = new NBTTagCompound();
+          NBTTagCompound customName = new NBTTagCompound();
+          compound.setInteger("level", cooking.level);
+
+          // Set a custom name based on who cooked it.
+          customName.setString("Name", player.getName() + "'s " + chickenStrips.getDisplayName());
+          compound.setTag("display", customName);
+          chickenStrips.setTagCompound(compound);
+          drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, chickenStrips));
+          if (player instanceof EntityPlayerMP) {
+            cooking.addXp((EntityPlayerMP) player, SkillCooking.getXp("chickencooked"));
           }
         }
       }

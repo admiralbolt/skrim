@@ -36,6 +36,8 @@ public class Obfuscation {
 
   public static ObfuscatedField EXPLOSION_SIZE = new ObfuscatedField("explosionSize", "field_77280_f");
 
+  public static ObfuscatedField ENTITY_FIRE = new ObfuscatedField("fire", "field_190534_ay");
+
   public static int getStackSize(ItemStack stack) {
     return stack.getCount();
   }

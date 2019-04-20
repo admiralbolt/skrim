@@ -49,6 +49,7 @@ public class EventHandler {
   @SubscribeEvent
   public void onLivingHurt(LivingHurtEvent event) {
     if (event.getSource().getTrueSource() instanceof EntityPlayer) {
+      SkillCooking.markEntities(event);
       SkillMelee.applyMelee(event);
       SkillRanged.applyRanged(event);
 
@@ -73,7 +74,6 @@ public class EventHandler {
       SkillRanged.handleKill(event);
       SkillDemolition.onKillCreeper(event);
       SkillFarming.sideChick(event);
-      SkillCooking.fireCook(event);
     } else if (event.getEntity() instanceof EntityPlayer) {
       PlayerCoords.saveDeathLocation(event);
     } else if (event.getEntity() instanceof EntityChicken) {
@@ -197,9 +197,9 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onLivingDrop(LivingDropsEvent event) {
-
-    // Artifact handlers
+    // Run the canes handler before the cooking one.
     CanesSword.CanesHandler.fryChicken(event);
+    SkillCooking.fireCook(event);
   }
 
   @SubscribeEvent

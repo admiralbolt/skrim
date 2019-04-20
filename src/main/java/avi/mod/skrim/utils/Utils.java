@@ -189,14 +189,12 @@ public class Utils {
       stack = inventory.getStackInSlot(i);
       if (stack.getItem() != removeItem) continue;
       remove = Math.min(stack.getCount(), (amount - totalRemoved));
-      System.out.println("rmeove: " + remove);
       if (remove == stack.getCount()) {
         inventory.removeStackFromSlot(i);
       } else {
         inventory.decrStackSize(i, remove);
       }
       totalRemoved += remove;
-      System.out.println("totalRemoved: " + totalRemoved);
       if (totalRemoved >= amount) return;
     }
   }

@@ -7,11 +7,13 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,19 +25,15 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SkillCooking extends Skill implements ISkillCooking {
 
@@ -44,6 +42,12 @@ public class SkillCooking extends Skill implements ISkillCooking {
   private static Map<String, Integer> XP_MAP;
   private static Map<String, Item> FOOD_MAP;
   private static Map<Class, String> ENTITY_FOOD_MAP;
+
+  // Marks entities for cooking. The logic for this is a little complex:
+  // 1. On damaging an entity with a fire attack mark it for cooking.
+  // 2. When it dies produce the correct cooked food type.
+  // We maintain a map from the target entity UUID to the player that attacked it.
+  private static Map<UUID, EntityPlayer> ENTITIES_MARKED = new HashMap<>();
 
 
   private static final double FIRE_COOKED_XP_MULT = 0.25;
@@ -63,32 +67,33 @@ public class SkillCooking extends Skill implements ISkillCooking {
     FOOD_MAP = new HashMap<>();
     XP_MAP = new HashMap<>();
     ENTITY_FOOD_MAP = new HashMap<>();
-    addFood("bread", SkrimItems.OVERWRITE_BREAD, 200);
-    addFood("cookie", SkrimItems.OVERWRITE_COOKIE, 25);
+    addFood("bread", SkrimItems.OVERWRITE_BREAD, 100);
+    addFood("cookie", SkrimItems.OVERWRITE_COOKIE, 15);
 
-    addFood("potatobaked", SkrimItems.OVERWRITE_BAKED_POTATO, 200);
+    addFood("potatobaked", SkrimItems.OVERWRITE_BAKED_POTATO, 100);
 
-    addFood("beetroot_soup", SkrimItems.OVERWRITE_BEETROOT_SOUP, 250);
-    addFood("mushroomstew", SkrimItems.OVERWRITE_MUSHROOM_STEW, 250);
+    addFood("beetroot_soup", SkrimItems.OVERWRITE_BEETROOT_SOUP, 150);
+    addFood("mushroomstew", SkrimItems.OVERWRITE_MUSHROOM_STEW, 150);
 
-    addFood("muttoncooked", SkrimItems.OVERWRITE_MUTTON, 500);
+    addFood("muttoncooked", SkrimItems.OVERWRITE_MUTTON, 200);
     ENTITY_FOOD_MAP.put(EntitySheep.class, "muttoncooked");
-    addFood("beefcooked", SkrimItems.OVERWRITE_STEAK, 500);
+    addFood("beefcooked", SkrimItems.OVERWRITE_STEAK, 200);
     ENTITY_FOOD_MAP.put(EntityCow.class, "beefcooked");
-    addFood("porkchopcooked", SkrimItems.OVERWRITE_PORKCHOP, 500);
+    addFood("porkchopcooked", SkrimItems.OVERWRITE_PORKCHOP, 200);
     ENTITY_FOOD_MAP.put(EntityPig.class, "porkchopcooked");
-    addFood("chickencooked", SkrimItems.OVERWRITE_CHICKEN, 500);
+    addFood("chickencooked", SkrimItems.OVERWRITE_CHICKEN, 200);
     ENTITY_FOOD_MAP.put(EntityChicken.class, "chickencooked");
 
-    addFood("cooked_fish", SkrimItems.OVERWRITE_FISH, 800);
-    addFood("pumpkinpie", SkrimItems.OVERWRITE_PUMPKIN_STEW, 1500);
-    addFood("cooked_salmon", SkrimItems.OVERWRITE_SALMON, 1000);
+    addFood("cooked_fish", SkrimItems.OVERWRITE_FISH, 200);
+    addFood("cooked_salmon", SkrimItems.OVERWRITE_SALMON, 250);
 
-    addFood("rabbitcooked", SkrimItems.OVERWRITE_RABBIT, 2500);
+    addFood("pumpkinpie", SkrimItems.OVERWRITE_PUMPKIN_STEW, 300);
+
+    addFood("rabbitcooked", SkrimItems.OVERWRITE_RABBIT, 500);
     ENTITY_FOOD_MAP.put(EntityRabbit.class, "rabbitcooked");
-    addFood("rabbitstew", SkrimItems.OVERWRITE_RABBIT_STEW, 3000);
+    addFood("rabbitstew", SkrimItems.OVERWRITE_RABBIT_STEW, 500);
 
-    addFood("item.cake", SkrimItems.SKRIM_CAKE, 7500);
+    addFood("item.cake", SkrimItems.SKRIM_CAKE, 1000);
     addFood("angel_cake", SkrimItems.ANGEL_CAKE, 10000);
 
   }
@@ -114,31 +119,18 @@ public class SkillCooking extends Skill implements ISkillCooking {
     this.addAbilities(OVERFULL, PANACEA, SUPER_FOOD, ANGEL_CAKE);
   }
 
-  public static int getXp(String foodName) {
-    return XP_MAP.getOrDefault(foodName, 0);
-  }
-
-  /**
-   * These methods are static so they can be accessed from the CustomFood
-   * class onFoodEaten() method.
-   */
-
-  public static double extraFood(int level) {
-    return 0.01 * level;
-  }
-
-  public static double extraSaturation(int level) {
-    return 0.005 * level;
-  }
-
   @Override
   public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
+    List<String> tooltip = new ArrayList<>();
     tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraFood(this.level)) + "%§r food.");
     tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
     tooltip.add("Shift clicking crafted items provides §aregular and modded§r food.");
     tooltip.add("§eWe swear this is a feature and not a bug...§r");
     return tooltip;
+  }
+
+  public static int getXp(String foodName) {
+    return XP_MAP.getOrDefault(foodName, 0);
   }
 
   private static String getFoodName(ItemStack stack) {
@@ -173,8 +165,9 @@ public class SkillCooking extends Skill implements ISkillCooking {
       ReflectionUtils.hackValueTo(event.player.inventory, newFood, "itemStack");
     }
     SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+
     if (player instanceof EntityPlayerMP) {
-      cooking.addXp((EntityPlayerMP) player, getXp(getFoodName(stack)));
+      cooking.addXp((EntityPlayerMP) player, getXp(getFoodName(stack)) * stack.getCount());
     }
   }
 
@@ -190,11 +183,21 @@ public class SkillCooking extends Skill implements ISkillCooking {
     NBTTagCompound customName = new NBTTagCompound();
     compound.setInteger("level", cooking.level);
     ItemStack newStack = new ItemStack(replaceFood, stack.getCount());
+
     // Set a custom name based on who cooked it.
     customName.setString("Name", player.getName() + "'s " + newStack.getDisplayName());
     compound.setTag("display", customName);
     newStack.setTagCompound(compound);
     return newStack;
+  }
+
+  // These methods are static since they are used by the custom food & cake classes.
+  public static double extraFood(int level) {
+    return 0.01 * level;
+  }
+
+  public static double extraSaturation(int level) {
+    return 0.005 * level;
   }
 
   public static void injectSmeltedFood(ItemSmeltedEvent event) {
@@ -216,91 +219,112 @@ public class SkillCooking extends Skill implements ISkillCooking {
     injectFakeFood(event, event.crafting, event.player);
   }
 
-  public static void fireCook(LivingDeathEvent event) {
-    Entity targetEntity = event.getEntity();
-    DamageSource source = event.getSource();
-    Entity entity = source.getTrueSource();
-    if (entity instanceof EntityPlayer) {
-      System.out.println("Working as intended");
-      EntityPlayer player = (EntityPlayer) entity;
-      if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
-        SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-        ItemStack mainStack = player.getHeldItemMainhand();
-        ItemStack offStack = player.getHeldItemOffhand();
-        boolean hasFire = false;
-        if (mainStack != null) {
-          Map<Enchantment, Integer> mainEnchants = EnchantmentHelper.getEnchantments(mainStack);
-          for (Enchantment ench : mainEnchants.keySet()) {
-            if (ench == Enchantments.FLAME || ench == Enchantments.FIRE_ASPECT) {
-              hasFire = true;
-            }
-          }
-        }
-        if (offStack != null) {
-          Map<Enchantment, Integer> offEnchants = EnchantmentHelper.getEnchantments(offStack);
-          for (Enchantment ench : offEnchants.keySet()) {
-            if (ench == Enchantments.FLAME) {
-              hasFire = true;
-            }
-          }
-        }
-        if (hasFire) {
-          if (ENTITY_FOOD_MAP.containsKey(targetEntity.getClass())) {
-            int cookingXp = (int) (FIRE_COOKED_XP_MULT * XP_MAP.get(ENTITY_FOOD_MAP.get(targetEntity.getClass())));
-            if (cookingXp > 0) {
-              cooking.addXp((EntityPlayerMP) player, cookingXp);
-            }
-          }
-        }
+  private static boolean hasFireEnchantment(ItemStack stack) {
+    Map<Enchantment, Integer> mainEnchants = EnchantmentHelper.getEnchantments(stack);
+    for (Enchantment ench : mainEnchants.keySet()) {
+      if (ench == Enchantments.FLAME || ench == Enchantments.FIRE_ASPECT) {
+        return true;
       }
     }
+    return false;
+  }
+
+  public static void markEntities(LivingHurtEvent event) {
+    DamageSource source = event.getSource();
+    Entity entity = source.getTrueSource();
+    if (entity == null || entity.world.isRemote) return;
+
+    Entity targetEntity = event.getEntity();
+    if (!(entity instanceof EntityPlayer) || !(ENTITY_FOOD_MAP.containsKey(targetEntity.getClass()))) return;
+
+    EntityPlayer player = (EntityPlayer) entity;
+    ItemStack mainStack = player.getHeldItemMainhand();
+
+    if (!hasFireEnchantment(mainStack)) return;
+    ENTITIES_MARKED.put(targetEntity.getUniqueID(), player);
+  }
+
+  private static void cookDrops(EntityPlayer player, List<EntityItem> drops) {
+    for (int i = 0; i < drops.size(); i++) {
+      EntityItem item = drops.get(i);
+      ItemStack replaceFood = getReplaceFood(player, item.getItem());
+      if (replaceFood == null) continue;
+
+      drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, replaceFood));
+      SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+      if (player instanceof EntityPlayerMP) {
+        cooking.addXp((EntityPlayerMP) player, (int) (getXp(getFoodName(item.getItem())) * FIRE_COOKED_XP_MULT));
+      }
+    }
+  }
+
+  public static void fireCook(LivingDropsEvent event) {
+    Entity targetEntity = event.getEntity();
+    if (!ENTITIES_MARKED.containsKey(targetEntity.getUniqueID())) return;
+
+    EntityPlayer mappedPlayer = ENTITIES_MARKED.get(targetEntity.getUniqueID());
+    ENTITIES_MARKED.remove(targetEntity.getUniqueID());
+
+    DamageSource source = event.getSource();
+
+    int fire = (int) ReflectionUtils.getSuperXField(targetEntity, 6, Obfuscation.ENTITY_FIRE.getFieldNames());
+
+    if (source.isFireDamage() || fire > 0) {
+      cookDrops(mappedPlayer, event.getDrops());
+      return;
+    }
+
+    Entity entity = source.getTrueSource();
+    if (!(entity instanceof EntityPlayer)) return;
+
+    // See if the player hit the entity with a fire sword.
+    EntityPlayer player = (EntityPlayer) entity;
+    ItemStack mainStack = player.getHeldItemMainhand();
+
+    if (!hasFireEnchantment(mainStack)) return;
+
+    cookDrops(player, event.getDrops());
   }
 
   public static void angelUpdate(LivingUpdateEvent event) {
     Entity entity = event.getEntity();
-    if (entity instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) entity;
-      if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
-        SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-        if (cooking.hasAngel && cooking.currentTicks > 0) {
-          cooking.currentTicks--;
-        } else {
-          cooking.hasAngel = false;
-          cooking.currentTicks = 0;
-          cooking.startFlyingSound = true;
-          if (!player.capabilities.isCreativeMode) {
-            player.capabilities.allowFlying = false;
-            player.capabilities.isFlying = false;
-          }
-        }
-      }
+    if (!(entity instanceof EntityPlayer)) return;
+    EntityPlayer player = (EntityPlayer) entity;
+    SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+    if (cooking.hasAngel && cooking.currentTicks > 0) {
+      cooking.currentTicks--;
+      return;
     }
+
+    cooking.hasAngel = false;
+    cooking.currentTicks = 0;
+    cooking.startFlyingSound = true;
+    if (!player.capabilities.isCreativeMode) {
+      player.capabilities.allowFlying = false;
+      player.capabilities.isFlying = false;
+    }
+
   }
 
   public static void angelFall(LivingFallEvent event) {
     Entity entity = event.getEntity();
-    if (entity instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) entity;
-      if (player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
-        SkillCooking cooking = (SkillCooking) player.getCapability(Skills.COOKING, EnumFacing.NORTH);
-        if (cooking.hasAngel) {
-          event.setDistance(0);
-          event.setCanceled(true);
-        }
-      }
-    }
+    if (!(entity instanceof EntityPlayer)) return;
+    EntityPlayer player = (EntityPlayer) entity;
+    SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+    if (!cooking.hasAngel) return;
+
+    event.setDistance(0);
+    event.setCanceled(true);
+
   }
 
   public void initAngel(EntityPlayer player) {
     this.hasAngel = true;
     player.capabilities.allowFlying = true;
     this.currentTicks = ANGEL_DURATION;
-    if (!player.world.isRemote) {
-      if (this.startFlyingSound) {
-        SkrimPacketHandler.INSTANCE.sendTo(new AngelFlyingSoundPacket(), (EntityPlayerMP) player);
-        this.startFlyingSound = false;
-      }
-    }
+    if (player.world.isRemote || !this.startFlyingSound) return;
+    SkrimPacketHandler.INSTANCE.sendTo(new AngelFlyingSoundPacket(), (EntityPlayerMP) player);
+    this.startFlyingSound = false;
   }
 
 }
