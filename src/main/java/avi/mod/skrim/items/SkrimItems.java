@@ -20,6 +20,7 @@ import avi.mod.skrim.items.weapons.GreatBow;
 import avi.mod.skrim.items.weapons.RocketLauncher;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -313,6 +314,12 @@ public class SkrimItems {
       }
     }
 
+  }
+
+  public static void modifyBaseItems() {
+    Items.MILK_BUCKET.setMaxStackSize(16);
+    Items.WATER_BUCKET.setMaxStackSize(16);
+    Items.LAVA_BUCKET.setMaxStackSize(16);
   }
 
 }

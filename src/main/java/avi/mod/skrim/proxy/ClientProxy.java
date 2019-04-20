@@ -10,6 +10,7 @@ import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.handlers.GuiHandler;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -63,7 +64,7 @@ public class ClientProxy implements IProxy {
 
   @Override
   public void postInit() {
-
+    SkrimItems.modifyBaseItems();
   }
 
   @Override
