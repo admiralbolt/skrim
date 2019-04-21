@@ -12,6 +12,7 @@ import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import avi.mod.skrim.blocks.tnt.Dynamite;
 import avi.mod.skrim.blocks.tnt.Napalm;
 import avi.mod.skrim.items.artifacts.FatBoy;
+import avi.mod.skrim.skills.botany.SkillBotany;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
@@ -29,7 +30,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.jline.utils.InfoCmp;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @GameRegistry.ObjectHolder(Skrim.MOD_ID)
@@ -68,8 +71,6 @@ public final class SkrimBlocks {
   public static WeirwoodWood WEIRWOOD_WOOD = new WeirwoodWood();
   public static WeirwoodLeaf WEIRWOOD_LEAF = new WeirwoodLeaf();
   public static MegaChest MEGA_CHEST = new MegaChest();
-
-  public static Dynamite DDDD = new Dynamite();
 
   // Artifact blocks.
   public static FatBoy FAT_BOY = new FatBoy();
@@ -157,6 +158,7 @@ public final class SkrimBlocks {
 
       for (Block block : GLOW_FLOWERS) {
         CustomItemBlock item = new CustomItemBlock(block, false, EnumRarity.UNCOMMON);
+        SkillBotany.GLOW_FLOWER_ITEMS.add(item);
         final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
             "registry NAME", block);
         registry.register(item.setRegistryName(registryName));
@@ -164,6 +166,7 @@ public final class SkrimBlocks {
 
       for (Block block : ENCHANTED_FLOWERS) {
         CustomItemBlock item = new CustomItemBlock(block, true, EnumRarity.RARE);
+        SkillBotany.ENCHANTED_FLOWER_ITEMS.add(item);
         final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null " +
             "registry NAME", block);
         registry.register(item.setRegistryName(registryName));

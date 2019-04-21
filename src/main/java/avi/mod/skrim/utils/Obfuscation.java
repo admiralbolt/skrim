@@ -35,8 +35,8 @@ public class Obfuscation {
   public static ObfuscatedField CRITERA_TRIGGERS_REGISTER = new ObfuscatedField("register", "func_192118_a");
 
   public static ObfuscatedField EXPLOSION_SIZE = new ObfuscatedField("explosionSize", "field_77280_f");
-
   public static ObfuscatedField ENTITY_FIRE = new ObfuscatedField("fire", "field_190534_ay");
+  public static ObfuscatedField VILLAGER_BUY_LIST = new ObfuscatedField("buyingList", "field_70963_i");
 
   public static int getStackSize(ItemStack stack) {
     return stack.getCount();
@@ -73,6 +73,10 @@ public class Obfuscation {
 
     public void hackValueTo(Object instance, Object value) {
       ReflectionUtils.hackValueTo(instance, value, this.obName, this.deobName);
+    }
+
+    public Object getValue(Object instance) {
+      return ReflectionUtils.getPrivateField(instance, this.obName, this.deobName);
     }
 
   }
