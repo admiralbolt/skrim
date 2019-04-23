@@ -2,7 +2,7 @@ package avi.mod.skrim.proxy;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.advancements.SkrimAdvancements;
-import avi.mod.skrim.capabilities.ModCapabilities;
+import avi.mod.skrim.capabilities.SkrimCapabilities;
 import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.entities.SkrimEntities;
 import avi.mod.skrim.handlers.EventHandler;
@@ -46,7 +46,7 @@ public class ClientProxy implements IProxy {
   @Override
   public void init() {
     CustomLootTables.registerLootTables();
-    ModCapabilities.registerCapabilities();
+    SkrimCapabilities.registerCapabilities();
     SkrimEntities.register();
     SkrimEntitySpawnHandler.init();
     SkrimPacketHandler.registerPackets();

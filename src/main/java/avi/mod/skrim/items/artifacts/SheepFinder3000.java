@@ -33,7 +33,7 @@ public class SheepFinder3000 extends ArtifactItem {
 	
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add("§4\"Detect all sheep in a " + RANGE + "m radius.\"§r");
+		tooltip.add("§4Detect all sheep in a " + RANGE + "m radius.§r");
 		tooltip.add("§e\"Control the sheep, control the world.\"§r");
 	}
 	
