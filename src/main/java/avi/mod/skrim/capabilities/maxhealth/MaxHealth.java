@@ -44,7 +44,7 @@ public class MaxHealth implements IMaxHealth {
     final AttributeModifier oldModifier = entityMaxHealthAttribute.getModifier(MODIFIER_ID);
 
     if (oldModifier == null) return;
-    
+
     final float oldAmount = (float) oldModifier.getAmount();
     entityMaxHealthAttribute.removeModifier(oldModifier);
     entityMaxHealthAttribute.applyModifier(new AttributeModifier(MODIFIER_ID, MODIFIER_NAME, this.getBonusMaxHealth(),
