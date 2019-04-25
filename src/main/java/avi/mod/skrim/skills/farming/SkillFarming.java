@@ -1,34 +1,17 @@
 package avi.mod.skrim.skills.farming;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import avi.mod.skrim.blocks.SkrimBlocks;
-import avi.mod.skrim.items.tools.CustomHoe;
 import avi.mod.skrim.items.SkrimItems;
+import avi.mod.skrim.items.tools.CustomHoe;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.utils.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockBeetroot;
-import net.minecraft.block.BlockCarrot;
-import net.minecraft.block.BlockCocoa;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockFarmland;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockMelon;
-import net.minecraft.block.BlockNetherWart;
-import net.minecraft.block.BlockOldLog;
-import net.minecraft.block.BlockPotato;
-import net.minecraft.block.BlockPumpkin;
-import net.minecraft.block.BlockStem;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import net.minecraft.block.*;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -43,283 +26,268 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class SkillFarming extends Skill implements ISkillFarming {
 
-	public static SkillStorage<ISkillFarming> skillStorage = new SkillStorage<ISkillFarming>();
-	public static Map<String, Integer> xpMap;
-	public static List<Block> cropBlocks = new ArrayList<Block>();
+  public static SkillStorage<ISkillFarming> skillStorage = new SkillStorage<>();
+  private static final Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
+      .put("crops", 200)
+      .put("beetroots", 225)
+      .put("cocoa", 250)
+      .put("potatoes", 275)
+      .put("carrots", 275)
+      .put("pumpkin", 350)
+      .put("melon", 350)
+      .put("nether_wart", 450)
+      .build();
+  private static List<Block> cropBlocks = ImmutableList.of(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);
 
-	static {
-		xpMap = new HashMap<String, Integer>();
-		xpMap.put("crops", 225);
-		xpMap.put("beetroots", 275);
-		xpMap.put("cocoa", 325);
-		xpMap.put("potatoes", 425);
-		xpMap.put("carrots", 425);
-		xpMap.put("pumpkin", 525);
-		xpMap.put("melon", 525);
-		xpMap.put("nether_wart", 625);
 
-		cropBlocks.add(Blocks.WHEAT);
-		cropBlocks.add(Blocks.CARROTS);
-		cropBlocks.add(Blocks.POTATOES);
-		cropBlocks.add(Blocks.BEETROOTS);
-	}
+  private static final int TAN_DURATION = 160;
+  private static final long TAN_CHECK = 40L;
 
-	public static int TAN_DURATION = 160;
-	public static long TAN_CHECK = 40L;
-	public int ticks = 0;
+  private static SkillAbility OVERALLS = new SkillAbility("farming", "Overalls", 25,
+      "Overall, this ability seems pretty good! AHAHAHA Get it?  (Please help me I need sleep.)", "Grants you the ability to craft " +
+      "overalls.",
+      "While worn, right clicking with a hoe acts like applying bonemeal.");
 
-	public static SkillAbility OVERALLS = new SkillAbility("farming", "Overalls", 25,
-			"Overall, this ability seems pretty good! AHAHAHA Get it?  (Please help me I need sleep.)", "Grants you the ability to craft overalls.",
-			"While worn, right clicking with a hoe acts like applying bonemeal.");
+  private static SkillAbility SIDE_CHICK = new SkillAbility("farming", "Side Chick", 50, "This IS my other hoe.",
+      "Killing an entity while holding a hoe automatically plants a random plant.");
 
-	public static SkillAbility SIDE_CHICK = new SkillAbility("farming", "Side Chick", 50, "This IS my other hoe.",
-			"Killing an entity while holding a hoe automatically plants a random plant.");
+  private static SkillAbility FARMERS_TAN = new SkillAbility("farming", "Farmer's Tan", 75, "You're a plant Vash.",
+      "Being in sunlight grants you a speed boost and saturation.");
 
-	public static SkillAbility FARMERS_TAN = new SkillAbility("farming", "Farmer's Tan", 75, "You're a plant Vash.",
-			"Being in sunlight grants you a speed boost and saturation.");
+  private static SkillAbility MAGIC_BEANSTALK = new SkillAbility("farming", "Magic Beanstalk", 100, "Fee-fi-fo-fum! Random chests for " +
+      "everyone!",
+      "Grants you the ability to craft a magic bean.");
 
-	public static SkillAbility MAGIC_BEANSTALK = new SkillAbility("farming", "Magic Beanstalk", 100, "Fee-fi-fo-fum! Random chests for everyone!",
-			"Grants you the ability to craft a magic bean.");
+  public SkillFarming() {
+    this(1, 0);
+  }
 
-	public SkillFarming() {
-		this(1, 0);
-	}
+  public SkillFarming(int level, int currentXp) {
+    super("Farming", level, currentXp);
+    this.addAbilities(OVERALLS, SIDE_CHICK, FARMERS_TAN, MAGIC_BEANSTALK);
+  }
 
-	public SkillFarming(int level, int currentXp) {
-		super("Farming", level, currentXp);
-		this.addAbilities(OVERALLS, SIDE_CHICK, FARMERS_TAN, MAGIC_BEANSTALK);
-	}
+  @Override
+  public List<String> getToolTip() {
+    List<String> tooltip = new ArrayList<String>();
+    tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
+        + "§r harvest drops.");
+    tooltip.add("   This bonus stacks with fortune.");
+    if (this.getGrowthStage() > 1) {
+      tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
+    }
+    return tooltip;
+  }
 
-	public int getXp(String blockName) {
-		return (xpMap.containsKey(blockName)) ? xpMap.get(blockName) : 0;
-	}
+  private double getFortuneChance() {
+    return 0.01 * this.level;
+  }
 
-	public double getFortuneChance() {
-		return 0.01 * this.level;
-	}
+  private int getFortuneAmount() {
+    return 2 + this.level / 25;
+  }
 
-	public int getFortuneAmount() {
-		return 2 + (int) (this.level / 25);
-	}
+  public static int getXp(String blockName) {
+    return XP_MAP.getOrDefault(blockName, 0);
+  }
 
-	@Override
-	public List<String> getToolTip() {
-		List<String> tooltip = new ArrayList<String>();
-		tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
-				+ "§r harvest drops.");
-		tooltip.add("   This bonus stacks with fortune.");
-		if (this.getGrowthStage() > 1) {
-			tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
-		}
-		return tooltip;
-	}
+  public static boolean validCrop(IBlockState state) {
+    Block block = state.getBlock();
+    return block instanceof BlockStem || block instanceof BlockCrops || block instanceof BlockCocoa || block instanceof BlockNetherWart;
+  }
 
-	public static boolean validCrop(IBlockState state) {
-		Block block = state.getBlock();
-		return (block instanceof BlockStem || block instanceof BlockCarrot || block instanceof BlockPotato || block instanceof BlockCrops
-				|| block instanceof BlockCocoa || block instanceof BlockNetherWart);
-	}
+  /**
+   * Need to cap this shit @ 6 to avoid super OPNESS Still pretty OPOP
+   */
+  private int getGrowthStage() {
+    int growthStage = (int) Math.floor((double) this.level / 20);
+    return (growthStage > 6) ? 6 : growthStage;
+  }
 
-	/**
-	 * Need to cap this shit @ 6 to avoid super OPNESS Still pretty OPOP
-	 */
-	public int getGrowthStage() {
-		int growthStage = (int) Math.floor((double) this.level / 10) + 1;
-		return (growthStage > 6) ? 6 : growthStage;
-	}
+  private static boolean isPlantFullyGrown(IBlockState state) {
+    Block block = state.getBlock();
+    int age = block.getMetaFromState(state);
 
-	public boolean validFortuneTarget(IBlockState state) {
-		Block block = state.getBlock();
-		/**
-		 * They decided to make every plants growth go from 0-7 EXCEPT for beets
-		 * for some reason they go from 0-3. I guess you could say it... Beets
-		 * me! AHAHAHAHAHAHAHAHA! (Can't wake up)
-		 *
-		 * UPDATE: Okay seriously? Cocoa beans have 3 stages, but instead of
-		 * using 0-1-2 like the established standard, they use 2/6/10? WTF?
-		 *
-		 * UPDATE: Netherwart has FOUR growth stages. The legend continues.
-		 */
-		return (block instanceof BlockMelon || ((block instanceof BlockCarrot || block instanceof BlockPotato) && block.getMetaFromState(state) == 7)
-				|| (block instanceof BlockCrops && block.getMetaFromState(state) == 7) || (block instanceof BlockBeetroot && block.getMetaFromState(state) == 3)
-				|| (block instanceof BlockCocoa && block.getMetaFromState(state) == 10)
-				|| (block instanceof BlockNetherWart && block.getMetaFromState(state) == 4)) ? true : false;
-	}
+    // In case max ages get updated in the future, easiest place to check is the json files under blockstates/
+    return block instanceof BlockMelon
+        || block instanceof BlockPumpkin
+        || (block instanceof BlockCrops && age == 7)
+        || (block instanceof BlockBeetroot && age == 3)
+        || (block instanceof BlockNetherWart && age == 3)
+        || (block instanceof BlockCocoa && age == 2);
+  }
 
-	public static void addFarmingXp(BlockEvent.BreakEvent event) {
-		EntityPlayer player = event.getPlayer();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-			IBlockState state = event.getState();
-			Block target = state.getBlock();
-			// Don't want to always give xp, only for fully grown stuff.
-			if (farming.validFortuneTarget(state) || target instanceof BlockPumpkin) {
-				int addXp = farming.getXp(Utils.getBlockName(target));
-				farming.addXp((EntityPlayerMP) player, addXp);
-			}
-		}
-	}
+  public static void addFarmingXp(BlockEvent.BreakEvent event) {
+    EntityPlayer player = event.getPlayer();
+    if (player.world.isRemote) return;
 
-	public static void giveMoreCrops(BlockEvent.HarvestDropsEvent event) {
-		EntityPlayer player = event.getHarvester();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-			IBlockState state = event.getState();
-			if (farming.validFortuneTarget(state)) {
-				Block block = state.getBlock();
-				double random = Math.random();
-				if (random < farming.getFortuneChance()) {
-					List<ItemStack> drops = event.getDrops();
-					// Let's not loop infinitely, that seems like a good idea.
-					int dropSize = drops.size();
-					for (int j = 0; j < farming.getFortuneAmount() - 1; j++) {
-						for (int i = 0; i < dropSize; i++) {
-							drops.add(drops.get(i).copy());
-						}
-					}
-					Skills.playFortuneSound(player);
-					farming.addXp((EntityPlayerMP) player, 200);
-				}
-			}
-		}
-	}
+    IBlockState state = event.getState();
+    if (!isPlantFullyGrown(state)) return;
 
-	public static void applyGrowth(BlockEvent.PlaceEvent event) {
-		EntityPlayer player = event.getPlayer();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-			IBlockState placedState = event.getPlacedBlock();
-			IBlockState targetState = event.getPlacedAgainst();
-			Block placedBlock = placedState.getBlock();
-			Block targetBlock = targetState.getBlock();
-			if (validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
-				World world = event.getWorld();
-				world.setBlockState(event.getPos(), farming.cropWithGrowth(placedState));
-			}
-		}
-	}
+    SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+    Block target = state.getBlock();
+    int addXp = getXp(Utils.getBlockName(target));
+    if (addXp > 0) {
+      farming.addXp((EntityPlayerMP) player, addXp);
+    }
+  }
 
-	public IBlockState cropWithGrowth(IBlockState placedState) {
-		Block placedBlock = placedState.getBlock();
-		PropertyInteger prop = null;
-		int growthStage = this.getGrowthStage();
-		if (placedBlock instanceof BlockStem) {
-			prop = BlockStem.AGE;
-		} else if (placedBlock instanceof BlockBeetroot) {
-			prop = BlockBeetroot.BEETROOT_AGE;
-			if (growthStage > 2) {
-				growthStage = 2;
-			}
-		} else if (placedBlock instanceof BlockCocoa) {
-			// Because fuck it.
-			int[] cocoaStages = { 2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
-			growthStage = cocoaStages[growthStage];
-			prop = BlockCocoa.AGE;
-		} else if (placedBlock instanceof BlockCrops) {
-			prop = BlockCrops.AGE;
-		}
-		return placedState.withProperty(prop, growthStage);
+  public static void giveMoreCrops(BlockEvent.HarvestDropsEvent event) {
+    EntityPlayer player = event.getHarvester();
+    if (player.world.isRemote) return;
 
-	}
+    IBlockState state = event.getState();
+    if (!isPlantFullyGrown(state)) return;
 
-	public static void verifyItems(ItemCraftedEvent event) {
-		Item targetItem = event.crafting.getItem();
-		Item magicBean = new ItemStack(SkrimBlocks.MAGIC_BEAN).getItem();
+    SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+    if (Math.random() >= farming.getFortuneChance()) return;
 
-		if (targetItem != null && targetItem == SkrimItems.OVERALLS) {
-			if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
-				Skills.replaceWithComponents(event);
-			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-				farming.addXp((EntityPlayerMP) event.player, 500);
-			}
-		} else if (targetItem != null && targetItem == magicBean) {
-			if (!Skills.canCraft(event.player, Skills.FARMING, 100)) {
-				Skills.replaceWithComponents(event);
-			} else if (!event.player.world.isRemote && event.player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-				SkillFarming farming = (SkillFarming) event.player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-				farming.addXp((EntityPlayerMP) event.player, 5000);
-			}
-		}
-	}
+    List<ItemStack> drops = event.getDrops();
+    int dropSize = drops.size();
+    for (int i = 0; i < dropSize; i++) {
+      drops.add(new ItemStack(drops.get(0).getItem(), farming.getFortuneAmount() - 1, drops.get(0).getMetadata()));
+    }
+    Skills.playFortuneSound(player);
+  }
 
-	public static void createFarmland(UseHoeEvent event) {
-		EntityPlayer player = event.getEntityPlayer();
-		if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-			SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-			BlockPos targetPos = event.getPos();
-			String blockName = SkillDigging.getDirtName(event.getWorld().getBlockState(targetPos));
-			if (blockName.equals("dirt") || blockName.equals("grass_block")) {
-				farming.addXp((EntityPlayerMP) player, 10);
-			}
-		}
-	}
+  public static void applyGrowth(BlockEvent.PlaceEvent event) {
+    EntityPlayer player = event.getPlayer();
+    if (player.world.isRemote) return;
 
-	public static void sideChick(LivingDeathEvent event) {
-		Entity sourceEntity = event.getSource().getTrueSource();
-		if (sourceEntity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) sourceEntity;
-			Entity targetEntity = event.getEntity();
-			if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-				SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-				if (farming.hasAbility(2)) {
-					BlockPos aboveLocation = new BlockPos(targetEntity.posX, targetEntity.posY, targetEntity.posZ);
-					BlockPos groundLocation = new BlockPos(aboveLocation.getX(), aboveLocation.getY() - 1, aboveLocation.getZ());
-					IBlockState aboveState = player.world.getBlockState(aboveLocation);
-					IBlockState groundState = player.world.getBlockState(groundLocation);
-					Block aboveBlock = aboveState.getBlock();
-					Block groundBlock = groundState.getBlock();
-					if (aboveBlock instanceof BlockAir
-							&& (groundBlock instanceof BlockDirt || groundBlock instanceof BlockGrass || groundBlock instanceof BlockFarmland)) {
-						ItemStack mainStack = player.getHeldItemMainhand();
-						ItemStack offStack = player.getHeldItemOffhand();
-						if (mainStack != null || offStack != null) {
-							Item mainItem = (mainStack != null) ? mainStack.getItem() : null;
-							Item offItem = (offStack != null) ? offStack.getItem() : null;
-							if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe || offItem instanceof ItemHoe || offItem instanceof CustomHoe) {
-								player.world.setBlockState(groundLocation, Blocks.FARMLAND.getDefaultState());
-								IBlockState placedState = cropBlocks.get(Utils.rand.nextInt(cropBlocks.size())).getDefaultState();
-								player.world.setBlockState(aboveLocation, farming.cropWithGrowth(placedState));
-								farming.addXp((EntityPlayerMP) player, 200);
-								Skills.playFortuneSound(player);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    IBlockState placedState = event.getPlacedBlock();
+    Block targetBlock = event.getPlacedAgainst().getBlock();
+    if (validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
+      SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+      event.getWorld().setBlockState(event.getPos(), farming.cropWithGrowth(placedState));
+    }
+  }
 
-	public static void farmersTan(LivingUpdateEvent event) {
-		Entity entity = event.getEntity();
-		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			if (!player.world.isRemote) {
-				if (player != null && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-					SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-					if (farming.hasAbility(3)) {
-						if (player.world.getTotalWorldTime() % TAN_CHECK == 0L) {
-							BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
-							if (player.world.isDaytime() && player.world.canSeeSky(playerPos)) {
-								for (Potion potion : new Potion[] { MobEffects.SATURATION, MobEffects.SPEED }) {
-									PotionEffect newEffect = new PotionEffect(potion, TAN_DURATION, 0, true, false);
-									Utils.addOrCombineEffect(player, newEffect);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  private IBlockState cropWithGrowth(IBlockState placedState) {
+    Block placedBlock = placedState.getBlock();
+    PropertyInteger prop = null;
+    int growthStage = this.getGrowthStage();
+    if (placedBlock instanceof BlockStem) {
+      prop = BlockStem.AGE;
+    } else if (placedBlock instanceof BlockBeetroot) {
+      prop = BlockBeetroot.BEETROOT_AGE;
+      if (growthStage > 2) {
+        growthStage = 2;
+      }
+    } else if (placedBlock instanceof BlockCocoa) {
+      prop = BlockCocoa.AGE;
+      if (growthStage > 1) {
+        growthStage = 1;
+      }
+    } else if (placedBlock instanceof BlockCrops) {
+      prop = BlockCrops.AGE;
+    }
+
+    return placedState.withProperty(prop, growthStage);
+  }
+
+  public static void verifyItems(ItemCraftedEvent event) {
+    if (event.player.world.isRemote) return;
+
+    Item targetItem = event.crafting.getItem();
+    Item magicBean = new ItemStack(SkrimBlocks.MAGIC_BEAN).getItem();
+
+    int addXp = 0;
+    if (targetItem == SkrimItems.OVERALLS) {
+      if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
+        Skills.replaceWithComponents(event);
+        return;
+      }
+      addXp = 500;
+    } else if (targetItem == magicBean) {
+      if (!Skills.canCraft(event.player, Skills.FARMING, 100)) {
+        Skills.replaceWithComponents(event);
+        return;
+      }
+      addXp = 5000;
+    }
+    if (addXp > 0) {
+      SkillFarming farming = Skills.getSkill(event.player, Skills.FARMING, SkillFarming.class);
+      farming.addXp((EntityPlayerMP) event.player, 500);
+    }
+  }
+
+  public static void createFarmland(UseHoeEvent event) {
+    EntityPlayer player = event.getEntityPlayer();
+    if (player.world.isRemote) return;
+
+    String blockName = SkillDigging.getDirtName(event.getWorld().getBlockState(event.getPos()));
+    if (blockName.equals("dirt") || blockName.equals("grass_block")) {
+      SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+      farming.addXp((EntityPlayerMP) player, 10);
+    }
+  }
+
+  public static void sideChick(LivingDeathEvent event) {
+    Entity sourceEntity = event.getSource().getTrueSource();
+    if (sourceEntity instanceof EntityPlayer) {
+      EntityPlayer player = (EntityPlayer) sourceEntity;
+      Entity targetEntity = event.getEntity();
+      if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
+        SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
+        if (farming.hasAbility(2)) {
+          BlockPos aboveLocation = new BlockPos(targetEntity.posX, targetEntity.posY, targetEntity.posZ);
+          BlockPos groundLocation = new BlockPos(aboveLocation.getX(), aboveLocation.getY() - 1, aboveLocation.getZ());
+          IBlockState aboveState = player.world.getBlockState(aboveLocation);
+          IBlockState groundState = player.world.getBlockState(groundLocation);
+          Block aboveBlock = aboveState.getBlock();
+          Block groundBlock = groundState.getBlock();
+          if (aboveBlock instanceof BlockAir
+              && (groundBlock instanceof BlockDirt || groundBlock instanceof BlockGrass || groundBlock instanceof BlockFarmland)) {
+            ItemStack mainStack = player.getHeldItemMainhand();
+            ItemStack offStack = player.getHeldItemOffhand();
+            if (mainStack != null || offStack != null) {
+              Item mainItem = (mainStack != null) ? mainStack.getItem() : null;
+              Item offItem = (offStack != null) ? offStack.getItem() : null;
+              if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe || offItem instanceof ItemHoe || offItem instanceof CustomHoe) {
+                player.world.setBlockState(groundLocation, Blocks.FARMLAND.getDefaultState());
+                IBlockState placedState = cropBlocks.get(Utils.rand.nextInt(cropBlocks.size())).getDefaultState();
+                player.world.setBlockState(aboveLocation, farming.cropWithGrowth(placedState));
+                farming.addXp((EntityPlayerMP) player, 200);
+                Skills.playFortuneSound(player);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public static void farmersTan(LivingUpdateEvent event) {
+    Entity entity = event.getEntity();
+    if (!(entity instanceof EntityPlayer)) return;
+
+    EntityPlayer player = (EntityPlayer) entity;
+    if (player.world.isRemote) return;
+
+    SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+    if (!farming.hasAbility(3)) return;
+
+    if (player.world.getTotalWorldTime() % TAN_CHECK != 0L) return;
+
+    BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
+    if (!player.world.isDaytime() || !player.world.canSeeSky(playerPos)) return;
+
+    for (Potion potion : new Potion[]{MobEffects.SATURATION, MobEffects.SPEED}) {
+      PotionEffect newEffect = new PotionEffect(potion, TAN_DURATION, 0, true, false);
+      Utils.addOrCombineEffect(player, newEffect);
+    }
+  }
 
 }
