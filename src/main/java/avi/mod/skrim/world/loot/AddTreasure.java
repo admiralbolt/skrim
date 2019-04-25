@@ -15,6 +15,7 @@ public class AddTreasure {
     chests.add(LootTableList.CHESTS_ABANDONED_MINESHAFT);
     chests.add(LootTableList.CHESTS_END_CITY_TREASURE);
     chests.add(LootTableList.CHESTS_IGLOO_CHEST);
+    chests.add(LootTableList.CHESTS_DESERT_PYRAMID);
     chests.add(LootTableList.CHESTS_JUNGLE_TEMPLE);
     chests.add(LootTableList.CHESTS_JUNGLE_TEMPLE_DISPENSER);
     chests.add(LootTableList.CHESTS_NETHER_BRIDGE);

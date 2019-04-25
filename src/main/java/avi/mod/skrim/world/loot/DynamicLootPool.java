@@ -21,10 +21,10 @@ import java.util.stream.Stream;
  */
 public class DynamicLootPool {
 
-  public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 10000, 10, 25, 3, 2,
+  public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 10000, 20, 30, 3, 2,
       Stream.concat(Arrays.stream(SkrimItems.ARTIFACTS), SkrimBlocks.RegistrationHandler.ARTIFACT_ITEM_BLOCK_MAP.values().stream())).toLootPool();
 
-  public static LootPool RECORD_POOL = new DynamicLootPool("record_pool", 10000, 50, 10, 2, 2,
+  public static LootPool RECORD_POOL = new DynamicLootPool("record_pool", 10000, 60, 10, 2, 2,
       Stream.of(SkrimItems.SONGS)).toLootPool();
 
 
@@ -33,7 +33,6 @@ public class DynamicLootPool {
   private RandomValueRange bonusRolls;
   private List<LootEntry> lootEntries = new ArrayList<>();
   private List<LootCondition> lootConditions = new ArrayList<>();
-
 
 
   private DynamicLootPool(String name, int maxWeight, int itemWeight, int itemQuality, int maxRolls, int maxBonusRolls,
@@ -47,7 +46,7 @@ public class DynamicLootPool {
       this.lootEntries.add(new LootEntryItem(item, itemWeight, itemQuality, lootFunction, lootCondition, item.getUnlocalizedName()));
     });
     if (lootEntries.size() * itemWeight >= maxWeight) return;
-    this.lootEntries.add(new LootEntryItem(Items.ROTTEN_FLESH, maxWeight - lootEntries.size() * itemWeight, -1, lootFunction,
+    this.lootEntries.add(new LootEntryItem(Items.ROTTEN_FLESH, maxWeight - lootEntries.size() * itemWeight, -1000, lootFunction,
         lootCondition, "minecraft:rotten_flesh"));
   }
 
