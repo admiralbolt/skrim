@@ -2,6 +2,7 @@ package avi.mod.skrim.world.loot;
 
 import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.SkrimItems;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -10,16 +11,22 @@ import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
+import net.minecraft.world.storage.loot.functions.SetCount;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
  * Loot pools that dynamically adjust weights to have a total max weight.
  */
 public class DynamicLootPool {
+
+  private static final Map<Item, LootFunction[]> FUNCTIONS = ImmutableMap.of(
+      SkrimItems.DEATH_ARROW, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(7, 7))}
+  );
 
   public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 10000, 20, 30, 3, 2,
       Stream.concat(Arrays.stream(SkrimItems.ARTIFACTS), SkrimBlocks.RegistrationHandler.ARTIFACT_ITEM_BLOCK_MAP.values().stream())).toLootPool();
@@ -43,7 +50,8 @@ public class DynamicLootPool {
     LootCondition[] lootCondition = new LootCondition[0];
     LootFunction[] lootFunction = new LootFunction[0];
     items.forEach(item -> {
-      this.lootEntries.add(new LootEntryItem(item, itemWeight, itemQuality, lootFunction, lootCondition, item.getUnlocalizedName()));
+      this.lootEntries.add(new LootEntryItem(item, itemWeight, itemQuality, FUNCTIONS.getOrDefault(item, lootFunction), lootCondition,
+          item.getUnlocalizedName()));
     });
     if (lootEntries.size() * itemWeight >= maxWeight) return;
     this.lootEntries.add(new LootEntryItem(Items.ROTTEN_FLESH, maxWeight - lootEntries.size() * itemWeight, -1000, lootFunction,

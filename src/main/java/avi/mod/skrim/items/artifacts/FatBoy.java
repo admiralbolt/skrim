@@ -1,6 +1,5 @@
 package avi.mod.skrim.items.artifacts;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.ArtifactItemBlock;
 import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
@@ -54,10 +53,9 @@ public class FatBoy extends BlockTNT {
   }
 
 
-
   public static class ItemBlock extends ArtifactItemBlock {
 
-    public ItemBlock () {
+    public ItemBlock() {
       super(SkrimBlocks.FAT_BOY);
     }
 

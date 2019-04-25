@@ -146,7 +146,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
   public static void giveMoreCrops(BlockEvent.HarvestDropsEvent event) {
     EntityPlayer player = event.getHarvester();
-    if (player.world.isRemote) return;
+    if (player == null || player.world.isRemote) return;
 
     IBlockState state = event.getState();
     if (!isPlantFullyGrown(state)) return;
