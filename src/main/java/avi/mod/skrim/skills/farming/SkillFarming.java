@@ -147,10 +147,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
     SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
     Block target = state.getBlock();
-    int addXp = getXp(Utils.getBlockName(target));
-    if (addXp > 0) {
-      farming.addXp((EntityPlayerMP) player, addXp);
-    }
+    farming.addXp((EntityPlayerMP) player, getXp(Utils.getBlockName(target)));
   }
 
   public static void giveMoreCrops(BlockEvent.HarvestDropsEvent event) {
@@ -163,6 +160,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
     SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
     if (Math.random() >= farming.getFortuneChance()) return;
 
+    // Crops can drop multiple types of items, so we want to copy each dropped item.
     List<ItemStack> drops = event.getDrops();
     int dropSize = drops.size();
     for (int i = 0; i < dropSize; i++) {

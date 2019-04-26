@@ -62,11 +62,11 @@ public class SkillRanged extends Skill implements ISkillRanged {
 		this.addAbilities(SNEAK_ATTACK, FAERIE_FIRE, GREAT_BOW, CRITICAL_ASCENSION);
 	}
 
-	public double getExtraDamage() {
+	private double getExtraDamage() {
 		return this.level * 0.0075 + this.accuracyStacks * 0.005;
 	}
 
-	public double getHeadshotDamage() {
+	private double getHeadshotDamage() {
 		return this.level * 0.0075 + this.accuracyStacks * 0.005;
 	}
 
@@ -94,7 +94,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
 	@Override
 	public List<String> getToolTip() {
-		List<String> tooltip = new ArrayList<String>();
+		List<String> tooltip = new ArrayList<>();
 		tooltip.add("Ranged attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
 		tooltip.add("Headshot deal §a" + Utils.formatPercentTwo(this.getHeadshotDamage()) + "%§r extra damage.");
 		tooltip.add("§eYou'll know you've gotten a headshot when you hear horses.§r");
