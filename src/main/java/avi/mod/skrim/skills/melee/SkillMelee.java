@@ -25,7 +25,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.*;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -62,6 +65,23 @@ public class SkillMelee extends Skill implements ISkillMelee {
     this.addAbilities(VAMPIRISM, SPIN_SLASH, DUAL_WIELDING, GRAND_SMITE);
   }
 
+  @Override
+  public List<String> getToolTip() {
+    List<String> tooltip = new ArrayList<String>();
+    tooltip.add("Melee attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
+    tooltip.add("Melee attacks have a §a" + Utils.formatPercent(this.getCritChance()) + "%§r chance to critically " +
+        "strike.");
+    return tooltip;
+  }
+
+  private double getExtraDamage() {
+    return this.level * 0.01;
+  }
+
+  private double getCritChance() {
+    return this.level * 0.005;
+  }
+
   public static void applyMelee(LivingHurtEvent event) {
     DamageSource source = event.getSource();
     Entity entity = source.getTrueSource();
@@ -79,7 +99,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
     // Handle critical strike.
     EntityLivingBase targetEntity = event.getEntityLiving();
-    player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SkrimSoundEvents.CRITICAL_HIT,
+    player.world.playSound(null, player.posX, player.posY, player.posZ, SkrimSoundEvents.CRITICAL_HIT,
         player.getSoundCategory(), 1.0F, 1.0F);
     event.setAmount(event.getAmount() * 2);
     melee.addXp((EntityPlayerMP) player, (int) event.getAmount() * 10);
@@ -153,6 +173,22 @@ public class SkillMelee extends Skill implements ISkillMelee {
         targetEntity.getEntityId()));
   }
 
+  private float getCooldownPeriod(EntityPlayer player) {
+    return (float) (1.0D / player.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue() * 20.0D);
+  }
+
+  /**
+   * Returns the percentage of attack power available based on the cooldown
+   * (zero to one).
+   */
+  private float getCooledAttackStrength(EntityPlayer player, float adjustTicks) {
+    return MathHelper.clamp(((float) this.ticksSinceLastLeft + adjustTicks) / this.getCooldownPeriod(player), 0.0F,
+        1.0F);
+  }
+
+  // Everything below here is disgusting and shouldn't ever be touched again. Please God let me not have to touch it
+  // again.
+
   /**
    * This function is basically a copy of the
    * attackTargetEntityWithCurrentItem function in EntityPlayer.java. So when
@@ -191,7 +227,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
           i = i + EnchantmentHelper.getKnockbackModifier(player);
 
           if (player.isSprinting() && flag) {
-            player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ,
+            player.world.playSound(null, player.posX, player.posY, player.posZ,
                 SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK,
                 player.getSoundCategory(), 1.0F, 1.0F);
             ++i;
@@ -263,7 +299,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
                 }
               }
 
-              player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ,
+              player.world.playSound(null, player.posX, player.posY, player.posZ,
                   SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP,
                   player.getSoundCategory(), 1.0F, 1.0F);
               player.spawnSweepParticles();
@@ -278,7 +314,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
             }
 
             if (flag2) {
-              player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ,
+              player.world.playSound(null, player.posX, player.posY, player.posZ,
                   SoundEvents.ENTITY_PLAYER_ATTACK_CRIT,
                   player.getSoundCategory(), 1.0F, 1.0F);
               player.onCriticalHit(targetEntity);
@@ -286,11 +322,11 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
             if (!flag2 && !flag3) {
               if (flag) {
-                player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ,
+                player.world.playSound(null, player.posX, player.posY, player.posZ,
                     SoundEvents.ENTITY_PLAYER_ATTACK_STRONG,
                     player.getSoundCategory(), 1.0F, 1.0F);
               } else {
-                player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ,
+                player.world.playSound(null, player.posX, player.posY, player.posZ,
                     SoundEvents.ENTITY_PLAYER_ATTACK_WEAK,
                     player.getSoundCategory(), 1.0F, 1.0F);
               }
@@ -328,7 +364,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
               itemstack1.hitEntity((EntityLivingBase) entity, player);
 
               if (Obfuscation.getStackSize(itemstack1) <= 0) {
-                player.setHeldItem(EnumHand.OFF_HAND, (ItemStack) null);
+                player.setHeldItem(EnumHand.OFF_HAND, null);
                 net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, EnumHand.OFF_HAND);
               }
             }
@@ -345,13 +381,13 @@ public class SkillMelee extends Skill implements ISkillMelee {
                 int k = (int) ((double) f5 * 0.5D);
                 ((WorldServer) player.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, targetEntity.posX,
                     targetEntity.posY + (double) (targetEntity.height * 0.5F), targetEntity.posZ, k, 0.1D, 0.0D, 0.1D
-                    , 0.2D, new int[0]);
+                    , 0.2D);
               }
             }
 
             player.addExhaustion(0.3F);
           } else {
-            player.world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ,
+            player.world.playSound(null, player.posX, player.posY, player.posZ,
                 SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE,
                 player.getSoundCategory(), 1.0F, 1.0F);
 
@@ -413,7 +449,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
         double d2 = d1;
 
         for (int j = 0; j < list.size(); ++j) {
-          Entity entity1 = (Entity) list.get(j);
+          Entity entity1 = list.get(j);
           if (entity1 != player) {
             AxisAlignedBB axisalignedbb =
                 entity1.getEntityBoundingBox().grow((double) entity1.getCollisionBorderSize());
@@ -445,7 +481,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
           if (pointedEntity != null && flag && vec3d.distanceTo(vec3d3) > 3.0D) {
             pointedEntity = null;
-            mc.objectMouseOver = new RayTraceResult(RayTraceResult.Type.MISS, vec3d3, (EnumFacing) null,
+            mc.objectMouseOver = new RayTraceResult(RayTraceResult.Type.MISS, vec3d3, null,
                 new BlockPos(vec3d3));
           }
 
@@ -462,39 +498,6 @@ public class SkillMelee extends Skill implements ISkillMelee {
     } else {
       return pointedEntity;
     }
-  }
-
-  @Override
-  public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
-    tooltip.add("Melee attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
-    tooltip.add("Melee attacks have a §a" + Utils.formatPercent(this.getCritChance()) + "%§r chance to critically " +
-        "strike.");
-    return tooltip;
-  }
-
-  private double getExtraDamage() {
-    return this.level * 0.01;
-  }
-
-  private double getCritChance() {
-    return this.level * 0.005;
-  }
-
-  // Everything below here is disgusting and shouldn't ever be touched again. Please God let me not have to touch it
-  // again.
-
-  private float getCooldownPeriod(EntityPlayer player) {
-    return (float) (1.0D / player.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue() * 20.0D);
-  }
-
-  /**
-   * Returns the percentage of attack power available based on the cooldown
-   * (zero to one).
-   */
-  private float getCooledAttackStrength(EntityPlayer player, float adjustTicks) {
-    return MathHelper.clamp(((float) this.ticksSinceLastLeft + adjustTicks) / this.getCooldownPeriod(player), 0.0F,
-        1.0F);
-  }
+  } 
 
 }
