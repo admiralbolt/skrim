@@ -21,7 +21,7 @@ public class DemolitionProvider {
   public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillDemolition");
 
   public static void register() {
-    CapabilityManager.INSTANCE.register(ISkillDemolition.class, SkillDemolition.skillStorage, SkillDemolition.class);
+    CapabilityManager.INSTANCE.register(ISkillDemolition.class, SkillDemolition.skillStorage, SkillDemolition::new);
     MinecraftForge.EVENT_BUS.register(new EventHandler());
   }
 
@@ -40,11 +40,11 @@ public class DemolitionProvider {
   }
 
   public static SkillProvider<ISkillDemolition> createProvider() {
-    return new SkillProvider<ISkillDemolition>(DEMOLITION, EnumFacing.NORTH);
+    return new SkillProvider<>(DEMOLITION, EnumFacing.NORTH);
   }
 
   public static SkillProvider<ISkillDemolition> createProvider(ISkillDemolition demolition) {
-    return new SkillProvider<ISkillDemolition>(DEMOLITION, EnumFacing.NORTH, demolition);
+    return new SkillProvider<>(DEMOLITION, EnumFacing.NORTH, demolition);
   }
 
 }

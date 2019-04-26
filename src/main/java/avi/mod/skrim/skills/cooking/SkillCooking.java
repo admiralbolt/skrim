@@ -7,6 +7,7 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.farming.SkillFarming;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
@@ -270,6 +271,19 @@ public class SkillCooking extends Skill implements ISkillCooking {
     int fire = (int) ReflectionUtils.getSuperXField(targetEntity, 6, Obfuscation.ENTITY_FIRE.getFieldNames());
 
     if (source.isFireDamage() || fire > 0) {
+      // Some special handling here, want to trigger husbandry from player caused fire damage.
+      // Stealing the logic for doubling the drops.
+      SkillFarming farming = Skills.getSkill(mappedPlayer, Skills.FARMING, SkillFarming.class);
+      if (farming.hasAbility(2)) {
+        List<EntityItem> drops = event.getDrops();
+        List<EntityItem> duplicateItems = new ArrayList<>();
+
+        for (EntityItem item : drops) {
+          duplicateItems.add(new EntityItem(mappedPlayer.world, item.posX, item.posY, item.posZ, item.getItem()));
+        }
+
+        drops.addAll(duplicateItems);
+      }
       cookDrops(mappedPlayer, event.getDrops());
       return;
     }

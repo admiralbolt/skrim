@@ -21,7 +21,7 @@ public class DiggingProvider {
     public static final ResourceLocation ID = new ResourceLocation(Skrim.MOD_ID, "SkillDigging");
 
     public static void register() {
-      CapabilityManager.INSTANCE.register(ISkillDigging.class, SkillDigging.skillStorage, SkillDigging.class);
+      CapabilityManager.INSTANCE.register(ISkillDigging.class, SkillDigging.skillStorage, SkillDigging::new);
       MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
@@ -40,11 +40,11 @@ public class DiggingProvider {
     }
 
     public static SkillProvider<ISkillDigging> createProvider() {
-    	return new SkillProvider<ISkillDigging>(DIGGING, EnumFacing.NORTH);
+    	return new SkillProvider<>(DIGGING, EnumFacing.NORTH);
     }
 
     public static SkillProvider<ISkillDigging> createProvider(ISkillDigging digging) {
-    	return new SkillProvider<ISkillDigging>(DIGGING, EnumFacing.NORTH, digging);
+    	return new SkillProvider<>(DIGGING, EnumFacing.NORTH, digging);
     }
 
 }

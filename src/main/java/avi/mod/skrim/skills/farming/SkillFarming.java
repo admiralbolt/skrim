@@ -212,23 +212,19 @@ public class SkillFarming extends Skill implements ISkillFarming {
     Item targetItem = event.crafting.getItem();
     Item magicBean = new ItemStack(SkrimBlocks.MAGIC_BEAN).getItem();
 
-    int addXp = 0;
+    SkillFarming farming = Skills.getSkill(event.player, Skills.FARMING, SkillFarming.class);
     if (targetItem == SkrimItems.OVERALLS) {
       if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
         Skills.replaceWithComponents(event);
         return;
       }
-      addXp = 500;
+      farming.addXp((EntityPlayerMP) event.player, 500);
     } else if (targetItem == magicBean) {
       if (!Skills.canCraft(event.player, Skills.FARMING, 100)) {
         Skills.replaceWithComponents(event);
         return;
       }
-      addXp = 5000;
-    }
-    if (addXp > 0) {
-      SkillFarming farming = Skills.getSkill(event.player, Skills.FARMING, SkillFarming.class);
-      farming.addXp((EntityPlayerMP) event.player, 500);
+      farming.addXp((EntityPlayerMP) event.player, 5000);
     }
   }
 
@@ -244,19 +240,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
   }
 
   public static void husbandry(LivingDropsEvent event) {
-    System.out.println("husbandry");
     if (!FARM_ANIMALS.contains(event.getEntity().getClass())) return;
 
     Entity entity = event.getSource().getTrueSource();
     if (!(entity instanceof EntityPlayer)) return;
 
-    System.out.println("AHHA");
-
     EntityPlayer player = (EntityPlayer) entity;
     SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
     if (!farming.hasAbility(2)) return;
-
-    System.out.println("its the adalll");
 
     List<EntityItem> drops = event.getDrops();
     List<EntityItem> duplicateItems = new ArrayList<>();

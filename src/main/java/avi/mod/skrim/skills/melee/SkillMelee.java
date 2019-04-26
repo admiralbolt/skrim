@@ -25,10 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -67,7 +64,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
   @Override
   public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
+    List<String> tooltip = new ArrayList<>();
     tooltip.add("Melee attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
     tooltip.add("Melee attacks have a §a" + Utils.formatPercent(this.getCritChance()) + "%§r chance to critically " +
         "strike.");
@@ -118,8 +115,8 @@ public class SkillMelee extends Skill implements ISkillMelee {
             && player.getDistanceSq(entitylivingbase) < 20.0D) {
           entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F),
               (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
-          // Want to avoid an infinite player damage loop, use generic damage source.
-          entitylivingbase.attackEntityFrom(DamageSource.GENERIC, event.getAmount() / 4);
+          // Want to avoid an infinite player damage loop and want the damage to be affected by armor so we'll use cactus. :D
+          entitylivingbase.attackEntityFrom(new EntityDamageSource("cactus", player), event.getAmount() / 4);
         }
       }
     }
@@ -130,7 +127,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
           targetEntity.posZ,
           true);
       player.world.addWeatherEffect(smite);
-      targetEntity.attackEntityFrom(DamageSource.LIGHTNING_BOLT, 20.0F);
+      targetEntity.attackEntityFrom(new EntityDamageSource("lightningBolt", player), 20.0F);
     }
   }
 
