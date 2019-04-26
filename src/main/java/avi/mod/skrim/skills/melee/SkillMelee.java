@@ -498,6 +498,6 @@ public class SkillMelee extends Skill implements ISkillMelee {
     } else {
       return pointedEntity;
     }
-  } 
+  }
 
 }

@@ -6,7 +6,6 @@ import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.armor.Overalls;
 import avi.mod.skrim.items.artifacts.*;
-import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.skills.botany.SkillBotany;
 import avi.mod.skrim.skills.cooking.SkillCooking;
@@ -128,7 +127,7 @@ public class EventHandler {
   @SubscribeEvent
   public void onLivingUpdate(LivingUpdateEvent event) {
     if (event.getEntity() instanceof EntityPlayer) {
-      SkillMining.climbWall(event);
+      SkillMining.miningUpdate(event);
       SkillCooking.angelUpdate(event);
       SkillDigging.metalDetector(event);
       SkillFarming.farmersTan(event);
