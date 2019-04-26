@@ -256,11 +256,7 @@ public class Skills {
    * Bonus xp for killing shit.
    */
   public static int entityKillXp(Entity entity) {
-    if (killXp.containsKey(entity.getClass())) {
-      return killXp.get(entity.getClass());
-    }
-
-    return 0;
+    return killXp.getOrDefault(entity.getClass(), 0);
   }
 
 }
