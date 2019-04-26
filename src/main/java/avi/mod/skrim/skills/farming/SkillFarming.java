@@ -2,7 +2,6 @@ package avi.mod.skrim.skills.farming;
 
 import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.SkrimItems;
-import avi.mod.skrim.items.tools.CustomHoe;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
@@ -11,22 +10,23 @@ import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.*;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -35,6 +35,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SkillFarming extends Skill implements ISkillFarming {
 
@@ -51,6 +52,14 @@ public class SkillFarming extends Skill implements ISkillFarming {
       .build();
   private static List<Block> cropBlocks = ImmutableList.of(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);
 
+  private static final Set<Class> FARM_ANIMALS = ImmutableSet.<Class>builder()
+      .add(EntityCow.class)
+      .add(EntityChicken.class)
+      .add(EntityPig.class)
+      .add(EntityRabbit.class)
+      .add(EntityLlama.class)
+      .build();
+
 
   private static final int TAN_DURATION = 160;
   private static final long TAN_CHECK = 40L;
@@ -60,8 +69,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
       "overalls.",
       "While worn, right clicking with a hoe acts like applying bonemeal.");
 
-  private static SkillAbility SIDE_CHICK = new SkillAbility("farming", "Side Chick", 50, "This IS my other hoe.",
-      "Killing an entity while holding a hoe automatically plants a random plant.");
+  private static SkillAbility HUSBANDRY = new SkillAbility("farming", "Husbandry", 50, "Like lambs to the slaughter.", "Doubles drops " +
+      "from all farm animals.");
 
   private static SkillAbility FARMERS_TAN = new SkillAbility("farming", "Farmer's Tan", 75, "You're a plant Vash.",
       "Being in sunlight grants you a speed boost and saturation.");
@@ -76,7 +85,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
   public SkillFarming(int level, int currentXp) {
     super("Farming", level, currentXp);
-    this.addAbilities(OVERALLS, SIDE_CHICK, FARMERS_TAN, MAGIC_BEANSTALK);
+    this.addAbilities(OVERALLS, HUSBANDRY, FARMERS_TAN, MAGIC_BEANSTALK);
   }
 
   @Override
@@ -234,39 +243,29 @@ public class SkillFarming extends Skill implements ISkillFarming {
     }
   }
 
-  public static void sideChick(LivingDeathEvent event) {
-    Entity sourceEntity = event.getSource().getTrueSource();
-    if (sourceEntity instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) sourceEntity;
-      Entity targetEntity = event.getEntity();
-      if (player != null && player instanceof EntityPlayerMP && player.hasCapability(Skills.FARMING, EnumFacing.NORTH)) {
-        SkillFarming farming = (SkillFarming) player.getCapability(Skills.FARMING, EnumFacing.NORTH);
-        if (farming.hasAbility(2)) {
-          BlockPos aboveLocation = new BlockPos(targetEntity.posX, targetEntity.posY, targetEntity.posZ);
-          BlockPos groundLocation = new BlockPos(aboveLocation.getX(), aboveLocation.getY() - 1, aboveLocation.getZ());
-          IBlockState aboveState = player.world.getBlockState(aboveLocation);
-          IBlockState groundState = player.world.getBlockState(groundLocation);
-          Block aboveBlock = aboveState.getBlock();
-          Block groundBlock = groundState.getBlock();
-          if (aboveBlock instanceof BlockAir
-              && (groundBlock instanceof BlockDirt || groundBlock instanceof BlockGrass || groundBlock instanceof BlockFarmland)) {
-            ItemStack mainStack = player.getHeldItemMainhand();
-            ItemStack offStack = player.getHeldItemOffhand();
-            if (mainStack != null || offStack != null) {
-              Item mainItem = (mainStack != null) ? mainStack.getItem() : null;
-              Item offItem = (offStack != null) ? offStack.getItem() : null;
-              if (mainItem instanceof ItemHoe || mainItem instanceof CustomHoe || offItem instanceof ItemHoe || offItem instanceof CustomHoe) {
-                player.world.setBlockState(groundLocation, Blocks.FARMLAND.getDefaultState());
-                IBlockState placedState = cropBlocks.get(Utils.rand.nextInt(cropBlocks.size())).getDefaultState();
-                player.world.setBlockState(aboveLocation, farming.cropWithGrowth(placedState));
-                farming.addXp((EntityPlayerMP) player, 200);
-                Skills.playFortuneSound(player);
-              }
-            }
-          }
-        }
-      }
+  public static void husbandry(LivingDropsEvent event) {
+    System.out.println("husbandry");
+    if (!FARM_ANIMALS.contains(event.getEntity().getClass())) return;
+
+    Entity entity = event.getSource().getTrueSource();
+    if (!(entity instanceof EntityPlayer)) return;
+
+    System.out.println("AHHA");
+
+    EntityPlayer player = (EntityPlayer) entity;
+    SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+    if (!farming.hasAbility(2)) return;
+
+    System.out.println("its the adalll");
+
+    List<EntityItem> drops = event.getDrops();
+    List<EntityItem> duplicateItems = new ArrayList<>();
+
+    for (EntityItem item : drops) {
+      duplicateItems.add(new EntityItem(player.world, item.posX, item.posY, item.posZ, item.getItem()));
     }
+
+    drops.addAll(duplicateItems);
   }
 
   public static void farmersTan(LivingUpdateEvent event) {

@@ -71,7 +71,6 @@ public class EventHandler {
       SkillMelee.handleKill(event);
       SkillRanged.handleKill(event);
       SkillDemolition.onKillCreeper(event);
-      SkillFarming.sideChick(event);
     } else if (event.getEntity() instanceof EntityPlayer) {
       PlayerCoords.saveDeathLocation(event);
     } else if (event.getEntity() instanceof EntityChicken) {
@@ -193,6 +192,7 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onLivingDrop(LivingDropsEvent event) {
+    SkillFarming.husbandry(event);
     // Run the canes handler before the cooking one.
     CanesSword.CanesHandler.fryChicken(event);
     SkillCooking.fireCook(event);
