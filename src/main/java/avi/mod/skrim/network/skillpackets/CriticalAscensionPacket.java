@@ -5,7 +5,6 @@ import avi.mod.skrim.skills.ranged.SkillRanged;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -42,10 +41,10 @@ public class CriticalAscensionPacket implements IMessage {
       if (ctx.side.isServer()) return null;
 
       EntityPlayerSP player = Minecraft.getMinecraft().player;
-      if (player == null || !player.hasCapability(Skills.RANGED, EnumFacing.NORTH)) return null;
+      if (player == null) return null;
 
       IThreadListener mainThread = Minecraft.getMinecraft();
-      final SkillRanged ranged = (SkillRanged) player.getCapability(Skills.RANGED, EnumFacing.NORTH);
+      SkillRanged ranged = Skills.getSkill(player, Skills.RANGED, SkillRanged.class);
       mainThread.addScheduledTask(() -> {
         ranged.setStacks(message.stacks);
       });

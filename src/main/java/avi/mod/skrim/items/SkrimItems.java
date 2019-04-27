@@ -14,10 +14,7 @@ import avi.mod.skrim.items.items.ArtifactItem;
 import avi.mod.skrim.items.items.CustomRecord;
 import avi.mod.skrim.items.items.WeirwoodTotem;
 import avi.mod.skrim.items.tools.*;
-import avi.mod.skrim.items.weapons.ArtifactSword;
-import avi.mod.skrim.items.weapons.CustomSword;
-import avi.mod.skrim.items.weapons.GreatBow;
-import avi.mod.skrim.items.weapons.RocketLauncher;
+import avi.mod.skrim.items.weapons.*;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
@@ -182,6 +179,8 @@ public class SkrimItems {
   public static Item OVERALLS = new Overalls();
   public static Item HAND_SAW = new HandSaw();
 
+  public static Item OVERWRITE_BOW = new OverwriteBow();
+
 
   // Leafy bois
   public static LeafArmor OAK_LEAF_BOOTS = new LeafArmor(BlockPlanks.EnumType.OAK, "leaf_boots", 1,
@@ -283,6 +282,8 @@ public class SkrimItems {
           GREAT_BOW,
           OVERALLS,
           HAND_SAW,
+
+          OVERWRITE_BOW,
 
           // Food
           OVERWRITE_PORKCHOP,

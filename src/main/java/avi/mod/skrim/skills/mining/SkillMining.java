@@ -151,6 +151,8 @@ public class SkillMining extends Skill implements ISkillMining {
 
   public static void giveMoreOre(BlockEvent.HarvestDropsEvent event) {
     EntityPlayer player = event.getHarvester();
+    if (player == null) return;
+
     SkillMining mining = Skills.getSkill(player, Skills.MINING, SkillMining.class);
     IBlockState state = event.getState();
     if (!mining.validFortuneTarget(state) || Utils.rand.nextDouble() >= mining.getFortuneChance()) return;

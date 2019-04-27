@@ -54,6 +54,7 @@ public class EventHandler {
       CanesSword.CanesHandler.slayChicken(event);
       GruesomeMask.GruesomeHandler.doubleAllDamage(event);
     } else if (event.getEntity() instanceof EntityPlayer) {
+      SkillRanged.removeAscensionStacks(event);
       SkillDemolition.reduceExplosion(event);
       SkillDigging.vitalicBreathing(event);
       SkillMining.reduceLava(event);

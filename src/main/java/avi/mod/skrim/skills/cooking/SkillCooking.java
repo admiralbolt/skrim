@@ -163,7 +163,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
       event.player.inventory.addItemStackToInventory(newFood);
       Utils.removeFromInventory(event.player.inventory, stack.getItem(), stack.getCount());
     } else {
-      ReflectionUtils.hackValueTo(event.player.inventory, newFood, "itemStack");
+      Obfuscation.CURRENT_ITEM.hackValueTo(event.player.inventory, newFood);
     }
     SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
 

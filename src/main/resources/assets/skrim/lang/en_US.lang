@@ -25,6 +25,7 @@ entity.fox.name=Fox
 entity.giga_chicken.name=Giga Chicken
 entity.mega_chicken.name=Mega Chicken
 entity.napalm_creeper.name=Napalm Creeper
+item.overwrite_bow.name=Skrim Bow
 item.death_arrow.name=Arrow of Death
 item.acacia_leaf_armor.name=Acacia Chestplate
 item.acacia_leaf_boots.name=Acacia Boots
