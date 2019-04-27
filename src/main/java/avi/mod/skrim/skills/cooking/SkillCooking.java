@@ -68,33 +68,33 @@ public class SkillCooking extends Skill implements ISkillCooking {
     FOOD_MAP = new HashMap<>();
     XP_MAP = new HashMap<>();
     ENTITY_FOOD_MAP = new HashMap<>();
-    addFood("bread", SkrimItems.OVERWRITE_BREAD, 100);
-    addFood("cookie", SkrimItems.OVERWRITE_COOKIE, 15);
+    addFood("bread", SkrimItems.OVERWRITE_BREAD, 200);
+    addFood("cookie", SkrimItems.OVERWRITE_COOKIE, 25);
 
-    addFood("potatobaked", SkrimItems.OVERWRITE_BAKED_POTATO, 100);
+    addFood("potatobaked", SkrimItems.OVERWRITE_BAKED_POTATO, 200);
 
-    addFood("beetroot_soup", SkrimItems.OVERWRITE_BEETROOT_SOUP, 150);
-    addFood("mushroomstew", SkrimItems.OVERWRITE_MUSHROOM_STEW, 150);
+    addFood("beetroot_soup", SkrimItems.OVERWRITE_BEETROOT_SOUP, 250);
+    addFood("mushroomstew", SkrimItems.OVERWRITE_MUSHROOM_STEW, 250);
 
-    addFood("muttoncooked", SkrimItems.OVERWRITE_MUTTON, 200);
+    addFood("muttoncooked", SkrimItems.OVERWRITE_MUTTON, 500);
     ENTITY_FOOD_MAP.put(EntitySheep.class, "muttoncooked");
-    addFood("beefcooked", SkrimItems.OVERWRITE_STEAK, 200);
+    addFood("beefcooked", SkrimItems.OVERWRITE_STEAK, 500);
     ENTITY_FOOD_MAP.put(EntityCow.class, "beefcooked");
-    addFood("porkchopcooked", SkrimItems.OVERWRITE_PORKCHOP, 200);
+    addFood("porkchopcooked", SkrimItems.OVERWRITE_PORKCHOP, 500);
     ENTITY_FOOD_MAP.put(EntityPig.class, "porkchopcooked");
-    addFood("chickencooked", SkrimItems.OVERWRITE_CHICKEN, 200);
+    addFood("chickencooked", SkrimItems.OVERWRITE_CHICKEN, 500);
     ENTITY_FOOD_MAP.put(EntityChicken.class, "chickencooked");
 
-    addFood("cooked_fish", SkrimItems.OVERWRITE_FISH, 200);
-    addFood("cooked_salmon", SkrimItems.OVERWRITE_SALMON, 250);
+    addFood("cooked_fish", SkrimItems.OVERWRITE_FISH, 800);
+    addFood("cooked_salmon", SkrimItems.OVERWRITE_SALMON, 1000);
 
-    addFood("pumpkinpie", SkrimItems.OVERWRITE_PUMPKIN_STEW, 300);
+    addFood("pumpkinpie", SkrimItems.OVERWRITE_PUMPKIN_STEW, 1500);
 
-    addFood("rabbitcooked", SkrimItems.OVERWRITE_RABBIT, 500);
+    addFood("rabbitcooked", SkrimItems.OVERWRITE_RABBIT, 2500);
     ENTITY_FOOD_MAP.put(EntityRabbit.class, "rabbitcooked");
-    addFood("rabbitstew", SkrimItems.OVERWRITE_RABBIT_STEW, 500);
+    addFood("rabbitstew", SkrimItems.OVERWRITE_RABBIT_STEW, 3000);
 
-    addFood("item.cake", SkrimItems.SKRIM_CAKE, 1000);
+    addFood("item.cake", SkrimItems.SKRIM_CAKE, 5000);
     addFood("angel_cake", SkrimItems.ANGEL_CAKE, 10000);
 
   }

@@ -137,8 +137,8 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
           angler.world.spawnEntity(new EntityXPOrb(angler.world, angler.posX, angler.posY + 0.5D, angler.posZ + 0.5D,
               this.rand.nextInt(6) + 1));
           if (angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
-            SkillFishing fishing = (SkillFishing) angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
-            fishing.addXp((EntityPlayerMP) angler, 1250);
+            SkillFishing fishing = Skills.getSkill(angler, Skills.FISHING, SkillFishing.class);
+            fishing.addXp((EntityPlayerMP) angler, 1500);
             // Roll for treasure chance
             if (this.rand.nextDouble() < fishing.getTreasureChance()) {
               EntityItem treasure = new EntityItem(this.world, this.posX, this.posY, this.posZ,
@@ -199,14 +199,13 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
       double d0 = angler.posX - this.posX;
       double d1 = angler.posY - this.posY;
       double d2 = angler.posZ - this.posZ;
-      double d3 = 0.1D;
       int addY = 0;
-      if (angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
-        SkillFishing fishing = (SkillFishing) angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
-        if (fishing.hasAbility(4)) {
-          addY = 5;
-        }
+      SkillFishing fishing = Skills.getSkill(angler, Skills.FISHING, SkillFishing.class);
+
+      if (fishing.hasAbility(4)) {
+        addY = 5;
       }
+
       this.caughtEntity.motionX += d0 * 0.1D;
       this.caughtEntity.motionY += d1 * 0.1D + addY;
       this.caughtEntity.motionZ += d2 * 0.1D;

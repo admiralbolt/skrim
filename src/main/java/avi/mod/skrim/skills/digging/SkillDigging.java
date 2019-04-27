@@ -57,7 +57,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
       .put("soul_sand", 200)
       .put("podzol", 250)
       .put("red_sand", 350)
-      .put("mycelium", 500)
+      .put("mycelium", 450)
       .build();
 
   private static final int REQUIRED_SAND = 640;

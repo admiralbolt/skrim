@@ -1,6 +1,5 @@
 package avi.mod.skrim.skills.botany;
 
-import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket;
@@ -22,7 +21,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;

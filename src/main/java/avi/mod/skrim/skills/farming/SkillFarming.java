@@ -8,7 +8,6 @@ import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.utils.Utils;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.*;
@@ -19,7 +18,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -44,13 +42,12 @@ public class SkillFarming extends Skill implements ISkillFarming {
       .put("crops", 200)
       .put("beetroots", 225)
       .put("cocoa", 250)
-      .put("potatoes", 275)
-      .put("carrots", 275)
-      .put("pumpkin", 350)
-      .put("melon", 350)
-      .put("nether_wart", 450)
+      .put("potatoes", 300)
+      .put("carrots", 300)
+      .put("pumpkin", 500)
+      .put("melon", 500)
+      .put("nether_wart", 550)
       .build();
-  private static List<Block> cropBlocks = ImmutableList.of(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);
 
   private static final Set<Class> FARM_ANIMALS = ImmutableSet.<Class>builder()
       .add(EntityCow.class)

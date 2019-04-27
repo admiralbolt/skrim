@@ -8,23 +8,27 @@ import avi.mod.skrim.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Most of the interesting logic of the fishing skill is actually in the fishing hook entity itself.
+ * See the SkrimFishHook.java.
+ */
 public class SkillFishing extends Skill implements ISkillFishing {
 
-  public static SkillStorage<ISkillFishing> skillStorage = new SkillStorage<ISkillFishing>();
+  public static SkillStorage<ISkillFishing> skillStorage = new SkillStorage<>();
 
   private static SkillAbility BATMAN = new SkillAbility("fishing", "Batman", 25, "na na na na na na na na",
       "Your fishing rod can now be used as a grappling hook.");
 
   private static SkillAbility TRIPLE_HOOK = new SkillAbility("fishing", "Triple Hook", 50, "Triple the hooks, triple " +
-			"the pleasure.",
+      "the pleasure.",
       "You now catch §a3x" + SkillAbility.DESC_COLOR + " as many items.");
 
   private static SkillAbility BOUNTIFUL_CATCH = new SkillAbility("fishing", "Bountiful Catch", 75, "On that E-X-P " +
-			"grind.",
+      "grind.",
       "Catching a fish provides an additional§a 9-24" + SkillAbility.DESC_COLOR + " xp.");
 
   private static SkillAbility FLING = new SkillAbility("fishing", "Fling", 100, "Sometimes I don't know my own " +
-			"strength.",
+      "strength.",
       "Launch hooked entities into the air.");
 
   public SkillFishing() {

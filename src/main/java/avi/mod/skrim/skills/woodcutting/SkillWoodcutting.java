@@ -53,10 +53,10 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
 
 
   private static Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
-      .put("oak", 100)
-      .put("spruce", 150)
-      .put("birch", 175)
-      .put("jungle", 200)
+      .put("oak", 125)
+      .put("spruce", 175)
+      .put("birch", 200)
+      .put("jungle", 225)
       .put("dark_oak", 250)
       .put("acacia", 300)
       .build();
