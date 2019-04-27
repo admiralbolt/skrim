@@ -195,13 +195,12 @@ public class CustomBow extends ItemBow implements ItemBase {
      */
     @SubscribeEvent
     public static void pickupBow(PlayerEvent.ItemPickupEvent event) {
-      System.out.println("pickup fired");
-
       ItemStack stack = event.getStack();
       if (stack.getItem() == Items.BOW) {
-        System.out.println("it's a bow!");
         Utils.removeFromInventory(event.player.inventory, Items.BOW, stack.getCount());
-        event.player.addItemStackToInventory(new ItemStack(SkrimItems.OVERWRITE_BOW, stack.getCount(), stack.getMetadata()));
+        ItemStack newStack = new ItemStack(SkrimItems.OVERWRITE_BOW, stack.getCount(), stack.getMetadata());
+        newStack.setTagCompound(stack.getTagCompound());
+        event.player.addItemStackToInventory(newStack);
       }
     }
 
@@ -210,6 +209,7 @@ public class CustomBow extends ItemBow implements ItemBase {
       if (event.crafting.getItem() != Items.BOW) return;
 
       ItemStack newStack = new ItemStack(SkrimItems.OVERWRITE_BOW, event.crafting.getCount(), event.crafting.getMetadata());
+      newStack.setTagCompound(event.crafting.getTagCompound());
       if (event.player.inventory.getItemStack().getItem() == Items.AIR) {
         // Player shift-clicked. We'll need to add the skrim bow to their inventory directly and remove the wrong version.
         event.player.inventory.addItemStackToInventory(newStack);
