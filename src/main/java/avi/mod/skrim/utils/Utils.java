@@ -82,7 +82,7 @@ public class Utils {
   }
 
   public static String getFortuneString(int fortuneAmount) {
-    return tuplets[fortuneAmount];
+    return (fortuneAmount >= tuplets.length) ? "fucktuple" : tuplets[fortuneAmount];
   }
 
   public static int gaussianSum(int n) {
