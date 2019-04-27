@@ -60,7 +60,7 @@ public class WhirlingChopPacket implements IMessage {
         BlockPos start = new BlockPos(message.x, message.y, message.z);
         ItemStack mainStack = player.getHeldItemMainhand();
         Item mainItem = mainStack.getItem();
-        int addXp = woodcutting.hewTree(world, woodcutting, start, start, player, mainStack, (mainItem instanceof HandSaw), 3);
+        int addXp = woodcutting.hewTree(world, start, player, mainStack, (mainItem instanceof HandSaw), 3);
         woodcutting.addXp(player, addXp / 5);
       });
       return null;

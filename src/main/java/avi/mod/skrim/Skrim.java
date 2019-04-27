@@ -32,7 +32,7 @@ public class Skrim {
    * player placed blocks.
    * Should be TRUE for release.
    */
-  public static final boolean ENFORCE_NATURAL = false;
+  public static final boolean ENFORCE_NATURAL = true;
 
   /**
    * Pretty straight forward, every hit is a critical hit.
