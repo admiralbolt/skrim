@@ -55,9 +55,8 @@ public class Skills {
   public static Map<String, Capability<? extends ISkill>> skillMap = new HashMap<>();
   public static List<Capability<? extends ISkill>> ALL_SKILLS = new ArrayList<>();
 
-  public static String[] ALPHABETICAL_SKILLS = {"blacksmithing", "botany", "cooking", "demolition", "digging", "farming",
-      "fishing", "melee",
-      "mining", "ranged", "woodcutting"};
+  public static String[] ALPHABETICAL_SKILLS = {"blacksmithing", "botany", "cooking", "defense", "demolition", "digging", "farming",
+      "fishing", "melee", "mining", "ranged", "woodcutting"};
 
   public static void register() {
     MiningProvider.register();
