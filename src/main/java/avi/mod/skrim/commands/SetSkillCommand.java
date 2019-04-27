@@ -76,13 +76,13 @@ public class SetSkillCommand extends CommandBase implements ICommand {
 
 
     EntityPlayerMP player = args.length == 3 ? getPlayer(server, sender, args[2]) : getCommandSenderAsPlayer(sender);
-    if (Skills.skillMap.containsKey(args[0])) {
+    if (Skills.SKILL_MAP.containsKey(args[0])) {
       int level = Integer.parseInt(args[1]);
       if (level < 1) {
         sender.sendMessage(new TextComponentString("Level must be positive."));
         return;
       }
-        Capability<? extends ISkill> iskill = Skills.skillMap.get(args[0]);
+        Capability<? extends ISkill> iskill = Skills.SKILL_MAP.get(args[0]);
         Skill skill = (Skill) player.getCapability(iskill, EnumFacing.NORTH);
         if (skill == null) return;
         skill.setLevel(level);

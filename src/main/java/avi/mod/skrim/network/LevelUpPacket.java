@@ -46,7 +46,7 @@ public class LevelUpPacket implements IMessage {
     @Override
     public IMessage onMessage(final LevelUpPacket message, MessageContext ctx) {
       if (ctx.side.isServer() || message.skillName == null) return null;
-      Capability<? extends ISkill> skill = Skills.skillMap.get(message.skillName.toLowerCase());
+      Capability<? extends ISkill> skill = Skills.SKILL_MAP.get(message.skillName.toLowerCase());
       final EntityPlayerSP player = Minecraft.getMinecraft().player;
       if (player == null || !player.hasCapability(skill, EnumFacing.NORTH)) return null;
       IThreadListener mainThread = Minecraft.getMinecraft();

@@ -198,6 +198,14 @@ public class Utils {
     }
   }
 
+  public static void removeAllFromInventory(EntityPlayer player, Item removeItem) {
+    for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+      if (player.inventory.getStackInSlot(i).getItem() != removeItem) continue;
+
+      player.inventory.removeStackFromSlot(i);
+    }
+  }
+
   public static int getNumberOfItems(NonNullList<ItemStack> inventory) {
     int size = 0;
     for (ItemStack stack : inventory) {
