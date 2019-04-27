@@ -50,15 +50,15 @@ public class LoadSkillsHandler {
   public void onPlayerClone(PlayerEvent.Clone event) {
     EntityPlayer newPlayer = event.getEntityPlayer();
     EntityPlayer original = event.getOriginal();
-    if (newPlayer instanceof EntityPlayerMP) {
-      for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
-        ISkill oldSkill = original.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
-        Skill yeOldeSkill = (Skill) oldSkill;
-        ISkill newSkill = newPlayer.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
-        newSkill.setLevel(oldSkill.getLevel());
-        newSkill.setXp(oldSkill.getXp());
-      }
+    if (!(newPlayer instanceof EntityPlayerMP)) return;
+
+    for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
+      ISkill oldSkill = original.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
+      ISkill newSkill = newPlayer.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
+      newSkill.setLevel(oldSkill.getLevel());
+      newSkill.setXp(oldSkill.getXp());
     }
+
   }
 
 }

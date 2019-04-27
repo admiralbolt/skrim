@@ -37,11 +37,9 @@ public class LifeCrystal extends ArtifactItem {
 
   @Nonnull
   public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-    System.out.println("cool");
     if (entityLiving instanceof EntityPlayer) {
       IMaxHealth maxHealth = CapabilityMaxHealth.getMaxHealth(entityLiving);
       if (maxHealth != null) {
-        System.out.println("BONUS!");
         maxHealth.addBonusMaxHealth(2.0f);
       }
     }

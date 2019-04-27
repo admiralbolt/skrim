@@ -4,6 +4,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.capabilities.SimpleCapabilityProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.util.EnumFacing;
@@ -57,7 +58,7 @@ public class CapabilityMaxHealth {
 
     @SubscribeEvent
     public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
-      if (event.getObject() instanceof EntityLivingBase) {
+      if (event.getObject() instanceof EntityPlayer) {
         final MaxHealth maxHealth = new MaxHealth((EntityLivingBase) event.getObject());
         event.addCapability(ID, createProvider(maxHealth));
       }

@@ -43,10 +43,13 @@ public class MaxHealth implements IMaxHealth {
     final IAttributeInstance entityMaxHealthAttribute = entity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
     final AttributeModifier oldModifier = entityMaxHealthAttribute.getModifier(MODIFIER_ID);
 
-    if (oldModifier == null) return;
+    float oldAmount = 0;
 
-    final float oldAmount = (float) oldModifier.getAmount();
-    entityMaxHealthAttribute.removeModifier(oldModifier);
+    if (oldModifier != null) {
+      oldAmount = (float) oldModifier.getAmount();
+      entityMaxHealthAttribute.removeModifier(oldModifier);
+    }
+
     entityMaxHealthAttribute.applyModifier(new AttributeModifier(MODIFIER_ID, MODIFIER_NAME, this.getBonusMaxHealth(),
         ATTRIBUTE_MODIFIER_OPERATION_ADD));
 
