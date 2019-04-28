@@ -3,7 +3,6 @@ package avi.mod.skrim.items.weapons;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.items.ItemBase;
 import avi.mod.skrim.skills.demolition.SkillDemolition;
-import avi.mod.skrim.utils.Obfuscation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -68,9 +67,9 @@ public class RocketLauncher extends ItemBow implements ItemBase {
 
           worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT,
               SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-          Obfuscation.setStackSize(itemstack, Obfuscation.getStackSize(itemstack) - 1);
+          stack.setCount(itemstack.getCount() - 1);
 
-          if (Obfuscation.getStackSize(itemstack) == 0) {
+          if (itemstack.getCount() == 0) {
             entityplayer.inventory.deleteStack(itemstack);
           }
         }

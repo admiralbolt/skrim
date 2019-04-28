@@ -90,7 +90,7 @@ public class CustomCake extends ItemBlockSpecial implements ItemBase {
         SoundType soundtype = iblockstate1.getBlock().getSoundType(iblockstate1, worldIn, pos, playerIn);
         worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F,
             soundtype.getPitch() * 0.8F);
-        Obfuscation.setStackSize(stack, Obfuscation.getStackSize(stack) - 1);
+        stack.setCount(stack.getCount() - 1);
         return EnumActionResult.SUCCESS;
       }
     } else {

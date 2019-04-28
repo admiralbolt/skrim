@@ -5,7 +5,6 @@ import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.woodcutting.SkillWoodcutting;
-import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.WeirwoodCoords;
 import net.minecraft.block.SoundType;
@@ -47,8 +46,8 @@ public class WeirwoodWood extends BlockBase {
   private static void setTeleportLocation(World worldIn, BlockPos pos, EntityPlayer playerIn, ItemStack heldItem,
                                           float hitX, float hitZ) {
     if (WeirwoodCoords.addCoord(playerIn, pos)) {
-      Obfuscation.setStackSize(heldItem, Obfuscation.getStackSize(heldItem) - 1);
-      if (Obfuscation.getStackSize(heldItem) == 0) {
+      heldItem.setCount(heldItem.getCount() - 1);
+      if (heldItem.getCount() == 0) {
         playerIn.inventory.deleteStack(heldItem);
       }
       heldItem.damageItem(heldItem.getMaxDamage(), playerIn);

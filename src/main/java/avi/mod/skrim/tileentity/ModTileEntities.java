@@ -13,11 +13,10 @@ public class ModTileEntities {
 
   @SubscribeEvent
   public static void registerTileEntities(final RegistryEvent.Register<Block> event) {
-    System.out.println("Registering tile entities.");
     GameRegistry.registerTileEntity(EnchantedFlowerTileEntity.class, new ResourceLocation(Skrim.MOD_ID,
-				"tile_entity_enchanted_flower"));
+        "tile_entity_enchanted_flower"));
     GameRegistry.registerTileEntity(MegaChestTileEntity.class, new ResourceLocation(Skrim.MOD_ID,
-				"tile_entity_mega_chest"));
+        "tile_entity_mega_chest"));
     GameRegistry.registerTileEntity(CakeTileEntity.class, new ResourceLocation(Skrim.MOD_ID, "cake_tile_entity"));
   }
 

@@ -8,7 +8,6 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -360,7 +359,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
             if (itemstack1 != null && entity instanceof EntityLivingBase) {
               itemstack1.hitEntity((EntityLivingBase) entity, player);
 
-              if (Obfuscation.getStackSize(itemstack1) <= 0) {
+              if (itemstack1.getCount() <= 0) {
                 player.setHeldItem(EnumHand.OFF_HAND, null);
                 net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, EnumHand.OFF_HAND);
               }
