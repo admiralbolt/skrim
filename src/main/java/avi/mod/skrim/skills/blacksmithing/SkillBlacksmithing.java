@@ -31,10 +31,10 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       .put("tile.stonebricksmooth", 50)
       .put("item.netherbrick", 60)
       .put("tile.glass", 50)
-      .put("item.brick", 80)
-      .put("tile.clayhardened", 320)
-      .put("item.ingotiron", 400)
-      .put("item.ingotgold", 1800)
+      .put("item.brick", 100)
+      .put("tile.clayhardened", 400)
+      .put("item.ingotiron", 500)
+      .put("item.ingotgold", 2000)
       .build();
 
   private static final Set<Item> OBSIDIAN_ITEMS = ImmutableSet.of(
