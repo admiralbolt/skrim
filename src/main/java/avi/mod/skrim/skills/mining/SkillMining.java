@@ -92,7 +92,6 @@ public class SkillMining extends Skill implements ISkillMining {
   }
 
   public static int getXp(String blockName) {
-    System.out.println("getXp: " + blockName);
     return XP_MAP.getOrDefault(blockName, 0);
   }
 
@@ -113,7 +112,8 @@ public class SkillMining extends Skill implements ISkillMining {
     List<String> tooltip = new ArrayList<>();
     tooltip.add("§a+" + Utils.formatPercent(this.getSpeedBonus()) + "%§r mining speed bonus.");
     tooltip.add(
-        "§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r ore drops.");
+        "§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r " +
+            "ore drops.");
     tooltip.add("   This bonus stacks with fortune.");
     return tooltip;
   }
