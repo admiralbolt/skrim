@@ -12,7 +12,6 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.Sets;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -22,33 +21,31 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.util.*;
 
 public class SkillDemolition extends Skill implements ISkillDemolition {
 
-  public static SkillStorage<ISkillDemolition> skillStorage = new SkillStorage<ISkillDemolition>();
-  public static Map<BlockPos, EntityPlayer> validGoBoom = new HashMap<BlockPos, EntityPlayer>();
+  public static SkillStorage<ISkillDemolition> skillStorage = new SkillStorage<>();
+  private static Map<BlockPos, EntityPlayer> VALID_GO_BOOM = new HashMap<>();
 
-  public static SkillAbility DYNAMITE = new SkillAbility("demolition", "Dynamite", 25, "Boom goes the dynamite.",
+  private static SkillAbility DYNAMITE = new SkillAbility("demolition", "Dynamite", 25, "Boom goes the dynamite.",
       "Grants you the ability to craft dynamite with tnt & a pickaxe.", "Dynamite has a larger blast radius and a 100% chance to drop " +
       "blocks.");
-  public static SkillAbility BIOBOMB = new SkillAbility("demolition", "Bio-Bomb", 50, "A whole new meaning for c'mon BB.",
+  private static SkillAbility BIOBOMB = new SkillAbility("demolition", "Bio-Bomb", 50, "A whole new meaning for c'mon BB.",
       "Grants you the ability to craft Bio-Bomb with... Stuff...", "Bio-bombs have twice the blast radius of tnt, and don't affect blocks" +
       ".");
-  public static SkillAbility NAPALM = new SkillAbility("demolition", "Napalm", 75, "Handle with care.",
+  private static SkillAbility NAPALM = new SkillAbility("demolition", "Napalm", 75, "Handle with care.",
       "Grants you the ability to craft Napalm with... Stuff...", "Napalm has triple the blast radius of tnt, starts fires, and creates " +
       "lava spawns.");
-  public static SkillAbility BADONKADONK = new SkillAbility("demolition", "Badonkadonk", 100, "Gut full of dynamite and booty like POW.",
+  private static SkillAbility BADONKADONK = new SkillAbility("demolition", "Badonkadonk", 100, "Gut full of dynamite and booty like POW.",
       "Grants you the ability to craft a rocket launcher.");
 
   private static final Set<Item> EXPLOSIVES = Sets.newHashSet(new ItemStack(Blocks.TNT).getItem(),
@@ -65,7 +62,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
     this.addAbilities(DYNAMITE, BIOBOMB, NAPALM, BADONKADONK);
   }
 
-  public double getResistance() {
+  private double getResistance() {
     return this.level * 0.01;
   }
 
@@ -84,103 +81,84 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
   public static void beforeGoBoom(final ExplosionEvent.Start event) {
     Explosion boom = event.getExplosion();
     final BlockPos location = new BlockPos(boom.getPosition());
-    if (validGoBoom.containsKey(location)) {
-      EntityPlayer player = validGoBoom.get(location);
-      if (player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-        SkillDemolition demolition = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-        Utils.logSkillEvent(event, demolition, "explosive placed by: " + event.getExplosion().getExplosivePlacedBy());
-        if (boom instanceof CustomExplosion) {
-          CustomExplosion customBoom = (CustomExplosion) boom;
-          customBoom.setExplosionSize((float) (customBoom.getExplosionSize() * (1 + demolition.getExtraPower())));
-        } else {
-          Obfuscation.EXPLOSION_SIZE.hackValueTo(boom, 4.0 * 1 + demolition.getExtraPower());
-        }
-      }
+    if (!VALID_GO_BOOM.containsKey(location)) return;
+
+    EntityPlayer player = VALID_GO_BOOM.get(location);
+    SkillDemolition demolition = Skills.getSkill(player, Skills.DEMOLITION, SkillDemolition.class);
+
+    if (boom instanceof CustomExplosion) {
+      CustomExplosion customBoom = (CustomExplosion) boom;
+      customBoom.setExplosionSize((float) (customBoom.getExplosionSize() * (1 + demolition.getExtraPower())));
+    } else {
+      Obfuscation.EXPLOSION_SIZE.hackValueTo(boom, 4.0 * 1 + demolition.getExtraPower());
     }
   }
 
   public static void onGoBoom(final ExplosionEvent.Detonate event) {
     Explosion boom = event.getExplosion();
     final BlockPos location = new BlockPos(boom.getPosition());
-    if (validGoBoom.containsKey(location)) {
-      EntityPlayer player = validGoBoom.get(location);
-      validGoBoom.remove(location);
-      if (player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-        SkillDemolition demolition = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-        Utils.logSkillEvent(event, demolition, "explosive placed by: " + event.getExplosion().getExplosivePlacedBy());
-        demolition.addXp((EntityPlayerMP) player, 7000);
-      }
-    }
+    if (!VALID_GO_BOOM.containsKey(location)) return;
+
+    EntityPlayer player = VALID_GO_BOOM.get(location);
+    VALID_GO_BOOM.remove(location);
+    SkillDemolition demolition = Skills.getSkill(player, Skills.DEMOLITION, SkillDemolition.class);
+    demolition.addXp((EntityPlayerMP) player, 7000);
   }
 
   public static void onTntPlaced(BlockEvent.PlaceEvent event) {
     IBlockState state = event.getPlacedBlock();
     EntityPlayer player = event.getPlayer();
-    if (state != null && player != null && player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-      Block block = state.getBlock();
-      if (block instanceof BlockTNT) {
-        validGoBoom.put(event.getPos(), player);
-      }
-    }
+    if (state == null || player == null) return;
+
+    if (!(state.getBlock() instanceof BlockTNT)) return;
+    VALID_GO_BOOM.put(event.getPos(), player);
   }
 
   public static void reduceExplosion(LivingHurtEvent event) {
     Entity entity = event.getEntity();
-    DamageSource source = event.getSource();
-    if (entity instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) entity;
-      if (source.isExplosion()) {
-        if (player != null && player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-          SkillDemolition demo = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-          event.setAmount(event.getAmount() - (float) (event.getAmount() * demo.getResistance()));
-        }
-      }
-    }
+    if (!(entity instanceof EntityPlayer) || !event.getSource().isExplosion()) return;
+
+    EntityPlayer player = (EntityPlayer) entity;
+    SkillDemolition demolition = Skills.getSkill(player, Skills.DEMOLITION, SkillDemolition.class);
+    event.setAmount(event.getAmount() - (float) (event.getAmount() * demolition.getResistance()));
   }
 
   public static void onKillCreeper(LivingDeathEvent event) {
     Entity sourceEntity = event.getSource().getTrueSource();
-    if (sourceEntity instanceof EntityPlayer) {
-      EntityPlayer player = (EntityPlayer) sourceEntity;
-      Entity targetEntity = event.getEntity();
-      if (targetEntity instanceof EntityCreeper) {
-        if (player != null && player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-          SkillDemolition demo = (SkillDemolition) player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-          int addXp = 0;
-          if (targetEntity instanceof NapalmCreeper) {
-            addXp = 2500;
-          } else if (targetEntity instanceof BioCreeper) {
-            addXp = 1000;
-          } else {
-            addXp = 350;
-          }
-          demo.addXp((EntityPlayerMP) player, addXp);
-        }
-      }
-    }
+    if (!(sourceEntity instanceof EntityPlayer)) return;
+
+    Entity targetEntity = event.getEntity();
+    if (!(targetEntity instanceof EntityCreeper)) return;
+
+    EntityPlayer player = (EntityPlayer) sourceEntity;
+    SkillDemolition demolition = Skills.getSkill(player, Skills.DEMOLITION, SkillDemolition.class);
+
+    demolition.addXp((EntityPlayerMP) player, (targetEntity instanceof NapalmCreeper) ? 2500 : (targetEntity instanceof BioCreeper) ?
+        1000 : 350);
   }
 
-  public static void verifyExplosives(ItemCraftedEvent event) {
+  public static void verifyExplosives(PlayerEvent.ItemCraftedEvent event) {
     Item targetItem = event.crafting.getItem();
     Item dynamite = new ItemStack(SkrimBlocks.DYNAMITE).getItem();
     Item biobomb = new ItemStack(SkrimBlocks.BIOBOMB).getItem();
     Item napalm = new ItemStack(SkrimBlocks.NAPALM).getItem();
-    if (targetItem != null && targetItem == dynamite) {
+
+    if (targetItem == dynamite) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
         Skills.replaceWithComponents(event);
         event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 4.0F, true);
       }
-    } else if (targetItem != null && targetItem == biobomb) {
+    } else if (targetItem == biobomb) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 50)) {
         Skills.replaceWithComponents(event);
         event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 8.0F, true);
       }
-    } else if (targetItem != null && targetItem == napalm) {
+    } else if (targetItem == napalm) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 75)) {
         Skills.replaceWithComponents(event);
         event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 12.0F, true);
       }
-    } else if (targetItem != null && targetItem == SkrimItems.ROCKET_LAUNCHER) {
+    } else if (targetItem == SkrimItems.ROCKET_LAUNCHER) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 100)) {
         Skills.replaceWithComponents(event);
       }
