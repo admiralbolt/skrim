@@ -51,10 +51,6 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
     this.customName = customName;
   }
 
-  /**
-   * Currently bugged if there are gaps in the inventory.  Also,
-   * should merge things if possible...
-   */
   public void sort() {
     Collections.sort(this.inventory, new Comparator<ItemStack>() {
       @Override
@@ -71,47 +67,61 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
       }
     });
 
-    int totalStacks = Utils.getNumberOfItems(this.inventory);
-    for (int i = 0; i < totalStacks; i++) {
-      ItemStack current = this.inventory.get(i);
-      int shifted = 0;
-      int next = i + 1;
-      ItemStack target = this.inventory.get(next);
-      while (current.getCount() < current.getMaxStackSize() && (Utils.areSimilarStacks(current, target) || target == ItemStack.EMPTY)) {
-        if (target != ItemStack.EMPTY) {
-          mergeFrom(target, current);
-          if (target.getCount() == 0) {
-            shifted++;
-          }
+    // After the items are sorted, they'll be stacked next to each at the beginning of the inventory, but won't be compact. This next step
+    // merges stacks when available. This is accomplished by maintaining two pointers, an input slot and an output slot:
+    // 1. If the output slot is empty, move the input slot to it, and update the read pointer.
+    // 2. If the input / output slots can't be merged, increment the write pointer.
+    // 3. Otherwise, merge to the best of our abilities. Increment read & write pointers as slots fill up.
+
+    int writeIndex = 0;
+    int readIndex = 1;
+    ItemStack read;
+    while (readIndex < this.inventory.size()) {
+      read = this.inventory.get(readIndex);
+      ItemStack write = this.inventory.get(writeIndex);
+
+      if (write.isEmpty()) {
+        moveStack(readIndex, writeIndex);
+        readIndex++;
+        continue;
+      }
+
+      // If the stacks can't be merged skip ahead to the current read location.
+      if (!Utils.areSimilarStacks(write, read)) {
+        writeIndex++;
+        if (writeIndex == readIndex) {
+          readIndex++;
         }
-        if (current.getCount() < current.getMaxStackSize()) {
-          next++;
-          if (next >= this.inventory.size()) {
-            break;
-          }
-          target = this.inventory.get(next);
+        continue;
+      }
+
+      // Merge as many stacks as we can:
+      mergeFrom(read, write);
+      if (write.getCount() == write.getMaxStackSize()) {
+        writeIndex++;
+        if (writeIndex == readIndex) {
+          readIndex++;
         }
       }
-      if (shifted > 0) {
-        this.shiftLeft(next, shifted);
+      if (read.isEmpty()) {
+        readIndex++;
       }
     }
     this.markDirty();
   }
 
-  public void shiftLeft(int start, int shift) {
-    for (int i = start; i < this.inventory.size(); i++) {
-      this.inventory.set(i - shift, this.inventory.get(i));
-    }
-  }
-
-  public static void mergeFrom(ItemStack from, ItemStack to) {
+  private static void mergeFrom(ItemStack from, ItemStack to) {
     if (Utils.areSimilarStacks(from, to)) {
       int maxSize = to.getMaxStackSize();
       int transferSize = Math.min(maxSize - to.getCount(), from.getCount());
       to.setCount(to.getCount() + transferSize);
       from.setCount(from.getCount() - transferSize);
     }
+  }
+
+  private void moveStack(int fromIndex, int toIndex) {
+    this.inventory.set(toIndex, this.inventory.get(fromIndex));
+    this.inventory.set(fromIndex, ItemStack.EMPTY);
   }
 
   @Override
@@ -282,7 +292,7 @@ public class MegaChestTileEntity extends TileEntity implements IInventory, ITick
 
       for (EntityPlayer entityplayer : this.world.getEntitiesWithinAABB(EntityPlayer.class,
           new AxisAlignedBB((double) ((float) i - 5.0F), (double) ((float) j - 5.0F), (double) ((float) k - 5.0F),
-							(double) ((float) (i + 1) + 5.0F),
+              (double) ((float) (i + 1) + 5.0F),
               (double) ((float) (j + 1) + 5.0F), (double) ((float) (k + 1) + 5.0F)))) {
         if (entityplayer.openContainer instanceof MegaChestContainer) {
           this.numPlayersUsing++;
