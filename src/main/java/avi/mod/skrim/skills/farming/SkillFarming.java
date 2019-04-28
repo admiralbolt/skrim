@@ -202,24 +202,17 @@ public class SkillFarming extends Skill implements ISkillFarming {
   }
 
   public static void verifyItems(ItemCraftedEvent event) {
-    if (event.player.world.isRemote) return;
-
     Item targetItem = event.crafting.getItem();
     Item magicBean = new ItemStack(SkrimBlocks.MAGIC_BEAN).getItem();
 
-    SkillFarming farming = Skills.getSkill(event.player, Skills.FARMING, SkillFarming.class);
     if (targetItem == SkrimItems.OVERALLS) {
       if (!Skills.canCraft(event.player, Skills.FARMING, 25)) {
         Skills.replaceWithComponents(event);
-        return;
       }
-      farming.addXp((EntityPlayerMP) event.player, 500);
     } else if (targetItem == magicBean) {
       if (!Skills.canCraft(event.player, Skills.FARMING, 100)) {
         Skills.replaceWithComponents(event);
-        return;
       }
-      farming.addXp((EntityPlayerMP) event.player, 5000);
     }
   }
 

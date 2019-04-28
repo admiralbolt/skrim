@@ -167,18 +167,11 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
 
   public static void verifyObsidian(PlayerEvent.ItemCraftedEvent event) {
-    System.out.println("event.player.world.isRemote: " + event.player.world.isRemote + ", crafting item: " + event.crafting.getItem());
     if (!OBSIDIAN_ITEMS.contains(event.crafting.getItem())) return;
 
     if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
       Skills.replaceWithComponents(event);
-      return;
     }
-
-    if (event.player.world.isRemote) return;
-
-    SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
-    blacksmithing.addXp((EntityPlayerMP) event.player, 5000);
   }
 
 }

@@ -168,33 +168,21 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
     if (targetItem != null && targetItem == dynamite) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 25)) {
         Skills.replaceWithComponents(event);
-        event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 5.0F, true);
-      } else if (!event.player.world.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-        SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-        demolition.addXp((EntityPlayerMP) event.player, 500);
+        event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 4.0F, true);
       }
     } else if (targetItem != null && targetItem == biobomb) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 50)) {
         Skills.replaceWithComponents(event);
-        event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 6.0F, true);
-      } else if (!event.player.world.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-        SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-        demolition.addXp((EntityPlayerMP) event.player, 750);
+        event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 8.0F, true);
       }
     } else if (targetItem != null && targetItem == napalm) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 75)) {
         Skills.replaceWithComponents(event);
         event.player.world.createExplosion(null, event.player.posX, event.player.posY, event.player.posZ, 12.0F, true);
-      } else if (!event.player.world.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-        SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-        demolition.addXp((EntityPlayerMP) event.player, 1000);
       }
     } else if (targetItem != null && targetItem == SkrimItems.ROCKET_LAUNCHER) {
       if (!Skills.canCraft(event.player, Skills.DEMOLITION, 100)) {
         Skills.replaceWithComponents(event);
-      } else if (!event.player.world.isRemote && event.player.hasCapability(Skills.DEMOLITION, EnumFacing.NORTH)) {
-        SkillDemolition demolition = (SkillDemolition) event.player.getCapability(Skills.DEMOLITION, EnumFacing.NORTH);
-        demolition.addXp((EntityPlayerMP) event.player, 10000);
       }
     }
   }

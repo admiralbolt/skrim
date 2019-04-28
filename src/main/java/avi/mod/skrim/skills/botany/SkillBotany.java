@@ -258,12 +258,10 @@ public class SkillBotany extends Skill implements ISkillBotany {
     Item targetItem = event.crafting.getItem();
 
     if (GLOW_FLOWER_ITEMS.contains(targetItem)) {
-      System.out.println("glow boy");
       if (!Skills.canCraft(event.player, Skills.BOTANY, 25)) {
         Skills.replaceWithComponents(event);
       }
     } else if (ENCHANTED_FLOWER_ITEMS.contains(targetItem)) {
-      System.out.println("enchanted boy");
       if (!Skills.canCraft(event.player, Skills.BOTANY, 100)) {
         Skills.replaceWithComponents(event);
       }

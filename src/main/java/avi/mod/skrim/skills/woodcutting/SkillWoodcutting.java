@@ -188,30 +188,21 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
   }
 
   public static void verifyItems(ItemCraftedEvent event) {
-    if (event.player.world.isRemote) return;
-
     Item targetItem = event.crafting.getItem();
     Item weirwoodSapling = new ItemStack(SkrimBlocks.WEIRWOOD_SAPLING).getItem();
-    SkillWoodcutting woodcutting = Skills.getSkill(event.player, Skills.WOODCUTTING, SkillWoodcutting.class);
 
     if (targetItem == SkrimItems.HAND_SAW) {
       if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 25)) {
         Skills.replaceWithComponents(event);
-        return;
       }
-      woodcutting.addXp((EntityPlayerMP) event.player, 500);
     } else if (targetItem instanceof LeafArmor) {
       if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 75)) {
         Skills.replaceWithComponents(event);
-        return;
       }
-      woodcutting.addXp((EntityPlayerMP) event.player, 1000);
     } else if (targetItem instanceof WeirwoodTotem || targetItem == weirwoodSapling) {
       if (!Skills.canCraft(event.player, Skills.WOODCUTTING, 100)) {
         Skills.replaceWithComponents(event);
-        return;
       }
-      woodcutting.addXp((EntityPlayerMP) event.player, 10000);
     }
   }
 

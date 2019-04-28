@@ -128,7 +128,6 @@ public class Skills {
   }
 
   public static void replaceWithComponents(ItemCraftedEvent event) {
-    System.out.println("event.player.ivnentory: " + event.player.inventory + ", event.crafting: " + event.crafting.getItem());
     if (event.player.inventory == null) return;
 
     final Item targetItem = event.crafting.getItem();
@@ -142,12 +141,6 @@ public class Skills {
       for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
         event.craftMatrix.decrStackSize(i, 1);
       }
-//      new Timer().schedule(new TimerTask() {
-//        @Override
-//        public void run() {
-//          Utils.removeAllFromInventory(event.player, targetItem);
-//        }
-//      }, 1000);
     }
   }
 
