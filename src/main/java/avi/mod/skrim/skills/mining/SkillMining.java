@@ -41,10 +41,13 @@ public class SkillMining extends Skill implements ISkillMining {
       .put("granite", 75)
       .put("andesite", 75)
       .put("diorite", 75)
-      .put("coal_ore", 200)
+      .put("sandstone", 100)
+      .put("end_stone", 100)
+      .put("stained_terracotta", 175)
+      .put("coal_ore", 250)
       .put("iron_ore", 350)
-      .put("quartz_ore", 375)
-      .put("obsidian", 500)
+      .put("nether_quartz_ore", 400)
+      .put("obsidian", 1000)
       .put("redstone_ore", 1000)
       .put("gold_ore", 1500)
       .put("lapis_lazuli_ore", 2000)
@@ -89,6 +92,7 @@ public class SkillMining extends Skill implements ISkillMining {
   }
 
   public static int getXp(String blockName) {
+    System.out.println("getXp: " + blockName);
     return XP_MAP.getOrDefault(blockName, 0);
   }
 
