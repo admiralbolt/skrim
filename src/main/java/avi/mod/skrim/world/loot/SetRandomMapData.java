@@ -30,7 +30,13 @@ public class SetRandomMapData extends LootFunction {
       "Temple"
   };
 
-  protected SetRandomMapData(LootCondition[] conditionsIn) {
+  private static final MapDecoration.Type[] MAP_TYPES = {
+      MapDecoration.Type.BLUE_MARKER,
+      MapDecoration.Type.RED_MARKER,
+      MapDecoration.Type.TARGET_POINT
+  };
+
+  private SetRandomMapData(LootCondition[] conditionsIn) {
     super(conditionsIn);
   }
 
@@ -38,7 +44,7 @@ public class SetRandomMapData extends LootFunction {
   @Nonnull
   public ItemStack apply(@Nonnull ItemStack stack, @Nonnull Random rand, LootContext context) {
     World world = context.getWorld();
-    
+
     Entity entity = context.getKillerPlayer();
     if (entity == null) return stack;
 
@@ -48,7 +54,7 @@ public class SetRandomMapData extends LootFunction {
 
     ItemStack itemstack = ItemMap.setupNewMap(world, (double) blockpos.getX(), (double) blockpos.getZ(), (byte) 2, true, true);
     ItemMap.renderBiomePreviewMap(world, itemstack);
-    MapData.addTargetDecoration(itemstack, blockpos, "+", MapDecoration.Type.PLAYER);
+    MapData.addTargetDecoration(itemstack, blockpos, "+", MAP_TYPES[rand.nextInt(2)]);
     itemstack.setTranslatableName("filled_map." + destination.toLowerCase(Locale.ROOT));
 
     return itemstack;
@@ -61,12 +67,14 @@ public class SetRandomMapData extends LootFunction {
     }
 
     @Override
-    public void serialize(JsonObject object, SetRandomMapData functionClazz, JsonSerializationContext serializationContext) {
+    public void serialize(@Nonnull JsonObject object, @Nonnull SetRandomMapData functionClazz,
+                          @Nonnull JsonSerializationContext serializationContext) {
 
     }
 
-    public SetRandomMapData deserialize(JsonObject object, JsonDeserializationContext deserializationContext,
-                                        LootCondition[] conditionsIn) {
+    @Nonnull
+    public SetRandomMapData deserialize(@Nonnull JsonObject object, @Nonnull JsonDeserializationContext deserializationContext,
+                                        @Nonnull LootCondition[] conditionsIn) {
       return new SetRandomMapData(conditionsIn);
     }
   }
