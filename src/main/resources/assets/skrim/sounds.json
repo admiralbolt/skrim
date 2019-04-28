@@ -190,5 +190,12 @@
       "name": "skrim:artifacts/shinespark_loop",
       "stream": true
     }]
+  },
+  "home_run": {
+    "category": "artifacts",
+    "sounds": [{
+      "name": "skrim:artifacts/casey",
+      "stream": true
+    }]
   }
 }
