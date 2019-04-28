@@ -72,7 +72,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
   @Override
   public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
+    List<String> tooltip = new ArrayList<>();
     tooltip.add("Passively gain §a" + Utils.formatPercent(this.getResistance()) + "%§r explosive resistance.");
     tooltip.add("Your explosions are §a" + Utils.formatPercent(this.getExtraPower()) + "%§r larger.");
     return tooltip;
