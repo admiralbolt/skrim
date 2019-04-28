@@ -1,6 +1,5 @@
 package avi.mod.skrim.handlers;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.entities.SkrimFishHook;
 import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
@@ -33,7 +32,10 @@ import net.minecraftforge.event.brewing.PotionBrewEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -175,9 +177,6 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onBreakBlock(BlockEvent.BreakEvent event) {
-    if (Skrim.DEBUG) {
-      Utils.logBlockState(event.getState());
-    }
     World world = event.getWorld();
     if (PlayerPlacedBlocks.isNaturalBlock(world, event.getPos())) {
       if (!Utils.isSilkTouching(event)) {

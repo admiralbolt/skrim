@@ -1,11 +1,8 @@
 package avi.mod.skrim.utils;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.blocks.SkrimBlocks;
-import avi.mod.skrim.skills.Skill;
-import com.google.common.collect.Maps;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.*;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
@@ -23,17 +20,13 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 import java.text.DecimalFormat;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 
 public class Utils {
 
@@ -42,21 +35,19 @@ public class Utils {
   public static Random rand = new Random();
   public static DecimalFormat oneDigit = new DecimalFormat("0.0");
   public static DecimalFormat twoDigit = new DecimalFormat("0.00");
-  public static HashSet<Potion> negativeEffects = new HashSet<Potion>();
-
-  static {
-    negativeEffects.add(MobEffects.BLINDNESS);
-    negativeEffects.add(MobEffects.GLOWING);
-    negativeEffects.add(MobEffects.HUNGER);
-    negativeEffects.add(MobEffects.LEVITATION);
-    negativeEffects.add(MobEffects.MINING_FATIGUE);
-    negativeEffects.add(MobEffects.NAUSEA);
-    negativeEffects.add(MobEffects.POISON);
-    negativeEffects.add(MobEffects.SLOWNESS);
-    negativeEffects.add(MobEffects.UNLUCK);
-    negativeEffects.add(MobEffects.WEAKNESS);
-    negativeEffects.add(MobEffects.WITHER);
-  }
+  private static final Set<Potion> negativeEffects = ImmutableSet.<Potion>builder()
+      .add(MobEffects.BLINDNESS)
+      .add(MobEffects.GLOWING)
+      .add(MobEffects.HUNGER)
+      .add(MobEffects.LEVITATION)
+      .add(MobEffects.MINING_FATIGUE)
+      .add(MobEffects.NAUSEA)
+      .add(MobEffects.POISON)
+      .add(MobEffects.SLOWNESS)
+      .add(MobEffects.UNLUCK)
+      .add(MobEffects.WEAKNESS)
+      .add(MobEffects.WITHER)
+      .build();
 
   public static boolean isPointInRegion(int left, int top, int right, int bottom, int pointX, int pointY) {
     return (pointX > left && pointX < right && pointY > top && pointY < bottom);
@@ -70,17 +61,6 @@ public class Utils {
     return snakeCase(block.getLocalizedName());
   }
 
-  public static void logBlockState(IBlockState state) {
-    Block block = state.getBlock();
-    System.out.println("harvestTool: " + block.getHarvestTool(state) + ", NAME: " + getBlockName(block) + ", class: " + block.getClass());
-  }
-
-  public static void logHurtEvent(LivingHurtEvent event) {
-    DamageSource source = event.getSource();
-    System.out.println("source.damageType: " + source.damageType + ", damageAmount: " + event.getAmount() + ", isExplosion: " + source.isExplosion()
-        + ", isFire: " + source.isFireDamage() + ", isMagic: " + source.isMagicDamage() + ", isProjectile: " + source.isProjectile());
-  }
-
   public static String getFortuneString(int fortuneAmount) {
     return (fortuneAmount >= tuplets.length) ? "fucktuple" : tuplets[fortuneAmount];
   }
@@ -90,29 +70,24 @@ public class Utils {
   }
 
   public static String formatPercent(double percent) {
-    return (String) oneDigit.format(percent * 100);
+    return oneDigit.format(percent * 100);
   }
 
   public static String formatPercentTwo(double percent) {
-    return (String) twoDigit.format(percent * 100);
+    return twoDigit.format(percent * 100);
   }
-
-  // registerPotionAttributeModifier(SharedMonsterAttributes.MAX_HEALTH, "5D6F0BA2-1186-46AC-B896-C61C5CEE99CC", 4.0D, 0).setBeneficial());
-
-  private final Map<IAttribute, AttributeModifier> attributeModifierMap = Maps.<IAttribute, AttributeModifier>newHashMap();
 
   public static void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn,
                                                       Map<IAttribute, AttributeModifier> attributeMap, int amplifier) {
     AbstractAttributeMap entityAttributes = entityLivingBaseIn.getAttributeMap();
     for (Entry<IAttribute, AttributeModifier> entry : attributeMap.entrySet()) {
       IAttributeInstance iattributeinstance = entityAttributes.getAttributeInstance((IAttribute) entry.getKey());
-      if (iattributeinstance != null) {
-        AttributeModifier attributemodifier = (AttributeModifier) entry.getValue();
-        iattributeinstance.removeModifier(attributemodifier);
-        iattributeinstance.applyModifier(new AttributeModifier(attributemodifier.getID(), attributemodifier.getName(),
-            getAttributeModifierAmount(amplifier, attributemodifier), attributemodifier.getOperation()));
-      }
+      AttributeModifier attributemodifier = entry.getValue();
+      iattributeinstance.removeModifier(attributemodifier);
+      iattributeinstance.applyModifier(new AttributeModifier(attributemodifier.getID(), attributemodifier.getName(),
+          getAttributeModifierAmount(amplifier, attributemodifier), attributemodifier.getOperation()));
     }
+
   }
 
   public static double getAttributeModifierAmount(int amplifier, AttributeModifier modifier) {
@@ -154,22 +129,6 @@ public class Utils {
     return player.inventory.armorInventory.get(armorType.getIndex());
   }
 
-  public static void log(String message) {
-    if (Skrim.DEBUG) {
-      System.out.println(message);
-    }
-  }
-
-  public static void logSkillEvent(Event event, Skill skill, String message) {
-    log("[" + getEventName(event) + "](" + skill.name + ") " + message);
-  }
-
-  public static String getEventName(Event event) {
-    String className = event.getClass().getName();
-    String[] split = className.split("\\.");
-    return split[split.length - 1];
-  }
-
   public static void addOrCombineEffect(EntityPlayer player, PotionEffect effect) {
     PotionEffect activeEffect = player.getActivePotionEffect(effect.getPotion());
     if (activeEffect != null) {
@@ -204,16 +163,6 @@ public class Utils {
 
       player.inventory.removeStackFromSlot(i);
     }
-  }
-
-  public static int getNumberOfItems(NonNullList<ItemStack> inventory) {
-    int size = 0;
-    for (ItemStack stack : inventory) {
-      if (stack != ItemStack.EMPTY) {
-        size++;
-      }
-    }
-    return size;
   }
 
   public static boolean areSimilarStacks(ItemStack stack1, ItemStack stack2) {
