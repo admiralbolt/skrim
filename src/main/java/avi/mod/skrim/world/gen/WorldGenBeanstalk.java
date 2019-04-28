@@ -28,7 +28,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 	private int maxLeafLength;
 
 	public WorldGenBeanstalk() {
-		this(20, 30, 5, 7, 5, 8);
+		this(30, 50, 5, 7, 5, 8);
 	}
 
 	public WorldGenBeanstalk(int minHeight, int maxHeight, int minLeafDelta, int maxLeafDelta, int minLeafLength, int maxLeafLength) {
@@ -64,7 +64,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 		return maxLeafLength;
 	}
 
-	public boolean isReplaceable(World world, BlockPos pos) {
+	private boolean isReplaceable(World world, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
 		return state.getBlock().isAir(state, world, pos);
 	}
@@ -75,7 +75,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 		 * Generate leaves ahead of time that way we can check block positions
 		 * accordingly. Leaves will go: +x, +y, -x, -y
 		 */
-		List<BeanstalkLeaf> leaves = new ArrayList<BeanstalkLeaf>();
+		List<BeanstalkLeaf> leaves = new ArrayList<>();
 		BeanstalkLeaf leaf = new BeanstalkLeaf(rand, this.minLeafLength, this.maxLeafLength, this.minLeafDelta, this.maxLeafDelta, position.getY() + 2, null);
 		while (leaf.leafHeight < height + position.getY()) {
 			leaves.add(leaf);
@@ -130,7 +130,6 @@ public class WorldGenBeanstalk extends WorldGenerator {
 
 			// We can generate! Do the thing!
 			IBlockState beanState = SkrimBlocks.BEANSTALK_BLOCK.getDefaultState();
-			IBlockState vineState = Blocks.VINE.getDefaultState();
 
 			// Generate the stalk
 			for (int y = position.getY(); y <= position.getY() + height; y++) {
@@ -171,7 +170,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 	}
 
 	private void addVine(World worldIn, BlockPos pos, PropertyBool prop) {
-		IBlockState iblockstate = Blocks.VINE.getDefaultState().withProperty(prop, Boolean.valueOf(true));
+		IBlockState iblockstate = Blocks.VINE.getDefaultState().withProperty(prop, true);
 		this.setBlockAndNotifyAdequately(worldIn, pos, iblockstate);
 		int i = 4;
 
@@ -198,7 +197,7 @@ public class WorldGenBeanstalk extends WorldGenerator {
 			this.cardinality = LeafEnum.next(cardinality);
 		}
 
-		public static enum LeafEnum {
+		public enum LeafEnum {
 			POSITIVE_X, POSITIVE_Z, NEGATIVE_X, NEGATIVE_Z;
 
 			public EnumFacing getChestFacing() {
