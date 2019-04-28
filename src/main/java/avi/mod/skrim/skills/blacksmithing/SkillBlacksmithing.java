@@ -96,7 +96,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   }
 
   private double extraIngot() {
-    return 0.015 * this.level;
+    return 0.01 * this.level;
   }
 
   private double extraRepair() {

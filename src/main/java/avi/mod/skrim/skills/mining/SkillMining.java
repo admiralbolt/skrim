@@ -34,7 +34,7 @@ import java.util.*;
 
 public class SkillMining extends Skill implements ISkillMining {
 
-  public static SkillStorage<ISkillMining> skillStorage = new SkillStorage<ISkillMining>();
+  public static SkillStorage<ISkillMining> skillStorage = new SkillStorage<>();
   private static Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
       .put("stone", 50)
       .put("netherrack", 60)

@@ -8,8 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 
 import java.util.List;
 
@@ -21,8 +21,6 @@ public class CustomLootTables {
   // This is a duplicate of the vanilla desert temple that WON'T have artifacts added to it.
   public static ResourceLocation DESERT_TEMPLE = null;
 
-  public static LootTable BEANSTALK_TABLE = null;
-
   private static ResourceLocation register(String name) {
     return LootTableList.register(new ResourceLocation(Skrim.MOD_ID, name));
   }
@@ -32,21 +30,24 @@ public class CustomLootTables {
     RANDOM_TREASURE = register("gameplay/random_treasure");
     METAL_TREASURE = register("gameplay/metal_treasure");
     DESERT_TEMPLE = register("chests/desert_temple");
+
+    LootFunctionManager.registerFunction(new SetRandomMapData.Serializer());
   }
 
   public static ItemStack getRandomTreasure(World world, EntityPlayer player, int level) {
     LootContext.Builder builder = new LootContext.Builder((WorldServer) world);
-    builder.withLuck(player.getLuck() + (float) (level / 5));
+    builder.withPlayer(player);
+    builder.withLuck(player.getLuck() + (float) (level / 7));
     List<ItemStack> items = world.getLootTableManager().getLootTableFromLocation(RANDOM_TREASURE).generateLootForPools(Utils.rand,
-				builder.build());
+        builder.build());
     return items.get(0);
   }
 
   public static ItemStack getMetalTreasure(World world, EntityPlayer player, int level) {
     LootContext.Builder builder = new LootContext.Builder((WorldServer) world);
-    builder.withLuck(player.getLuck() + (float) (level / 5));
+    builder.withLuck(player.getLuck() + (float) (level / 7));
     List<ItemStack> items = world.getLootTableManager().getLootTableFromLocation(METAL_TREASURE).generateLootForPools(Utils.rand,
-				builder.build());
+        builder.build());
     return items.get(0);
   }
 

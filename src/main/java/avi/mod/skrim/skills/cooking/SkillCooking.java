@@ -194,7 +194,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
   // These methods are static since they are used by the custom food & cake classes.
   public static double extraFood(int level) {
-    return 0.01 * level;
+    return 0.005 * level;
   }
 
   public static double extraSaturation(int level) {
