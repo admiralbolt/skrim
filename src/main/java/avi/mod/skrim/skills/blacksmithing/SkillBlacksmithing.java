@@ -64,7 +64,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   private static SkillAbility OBSIDIAN_SMITH = new SkillAbility("blacksmithing", "Obsidian Smith", 100, "How can " +
       "obsidian be real if our " +
       "eyes aren't real?",
-      "Allows you to craft obsidian armor, weapons, and tools.");
+      "Allows you to craft obsidian armor, weapons, and tools.", "To craft, encase an undamaged diamond item in obsidian.");
 
   public SkillBlacksmithing() {
     this(1, 0);
@@ -167,12 +167,15 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
 
   public static void verifyObsidian(PlayerEvent.ItemCraftedEvent event) {
-    if (event.player.world.isRemote || !OBSIDIAN_ITEMS.contains(event.crafting.getItem())) return;
+    System.out.println("event.player.world.isRemote: " + event.player.world.isRemote + ", crafting item: " + event.crafting.getItem());
+    if (!OBSIDIAN_ITEMS.contains(event.crafting.getItem())) return;
 
     if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
       Skills.replaceWithComponents(event);
       return;
     }
+
+    if (event.player.world.isRemote) return;
 
     SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
     blacksmithing.addXp((EntityPlayerMP) event.player, 5000);

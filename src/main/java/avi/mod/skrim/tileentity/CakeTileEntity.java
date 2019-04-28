@@ -25,6 +25,7 @@ public class CakeTileEntity extends TileEntity {
   }
 
   @Override
+  @Nonnull
   public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
     super.writeToNBT(compound);
 

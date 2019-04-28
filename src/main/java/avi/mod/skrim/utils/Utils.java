@@ -200,8 +200,10 @@ public class Utils {
 
   public static void removeAllFromInventory(EntityPlayer player, Item removeItem) {
     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+      System.out.println("checing item: " + player.inventory.getStackInSlot(i) + ", aginst: " + removeItem);
       if (player.inventory.getStackInSlot(i).getItem() != removeItem) continue;
 
+      System.out.println("removing item...");
       player.inventory.removeStackFromSlot(i);
     }
   }

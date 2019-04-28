@@ -5,16 +5,17 @@
   "group": "skrim:obsidian",
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "XX",
-    " #",
-    " #"
+    "OOO",
+    "OAO",
+    "OOO"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "X": {
+    "O": {
       "item": "minecraft:obsidian"
+    },
+    "A": {
+      "item": "minecraft:diamond_hoe",
+      "data": 0
     }
   },
   "result": {

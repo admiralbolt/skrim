@@ -30,13 +30,17 @@ import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Skills {
 
@@ -124,21 +128,27 @@ public class Skills {
   }
 
   public static void replaceWithComponents(ItemCraftedEvent event) {
+    System.out.println("event.player.ivnentory: " + event.player.inventory + ", event.crafting: " + event.crafting.getItem());
     if (event.player.inventory == null) return;
+
+    final Item targetItem = event.crafting.getItem();
 
     event.player.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1.0F, (float) (Math.random() - Math.random()) * 0.2F);
     event.crafting.setCount(0);
 
-    final EntityPlayer player = event.player;
-    final Item targetItem = event.crafting.getItem();
-    Utils.removeAllFromInventory(player, targetItem);
-
-    new Timer().schedule(new TimerTask() {
-      @Override
-      public void run() {
-        Utils.removeAllFromInventory(player, targetItem);
+    if (event.player.inventory.getItemStack().getItem() == Items.AIR) {
+      // Player shift clicked, remove all items from their inventory, and decrement stacks.
+      Utils.removeAllFromInventory(event.player, targetItem);
+      for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
+        event.craftMatrix.decrStackSize(i, 1);
       }
-    }, 1000);
+//      new Timer().schedule(new TimerTask() {
+//        @Override
+//        public void run() {
+//          Utils.removeAllFromInventory(event.player, targetItem);
+//        }
+//      }, 1000);
+    }
   }
 
   public static int getTotalSkillLevels(EntityPlayer player) {
