@@ -1,6 +1,5 @@
 package avi.mod.skrim.items.tools;
 
-import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ItemBase;
 import net.minecraft.item.ItemPickaxe;
 

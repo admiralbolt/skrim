@@ -42,7 +42,7 @@ public class CanesSword extends ArtifactSword {
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add("§4Sweep attack ignites enemies.");
-    tooltip.add("§4Deals 20x damage to chickens & fries them.§r");
+    tooltip.add("§4Deals 10x damage to chickens & fries them.§r");
     tooltip.add("§e\"Chicken chicken chicken, which combo you pickin'?\"");
   }
 

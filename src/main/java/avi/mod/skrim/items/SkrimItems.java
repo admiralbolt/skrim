@@ -72,6 +72,7 @@ public class SkrimItems {
   // Artifacts!
   public static ArtifactSword CANES_SWORD = new CanesSword();
   public static ArtifactItem FIRE_STAFF = new FireStaff();
+  public static ArtifactPickaxe COBBLE_FUCKER = new CobbleFucker();
 
   public static ArtifactArmor POWER_SUIT_CHESTPLATE = new PowerSuitChestplate();
 
@@ -105,7 +106,8 @@ public class SkrimItems {
       ETHER_MEDALLION,
       FIRE_STAFF,
       LIFE_CRYSTAL,
-      DEATH_ARROW
+      DEATH_ARROW,
+      COBBLE_FUCKER
   };
 
   // La musica

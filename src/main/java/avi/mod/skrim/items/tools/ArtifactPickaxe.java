@@ -1,4 +1,4 @@
-package avi.mod.skrim.items.weapons;
+package avi.mod.skrim.items.tools;
 
 import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.client.util.ITooltipFlag;
@@ -12,11 +12,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ArtifactSword extends CustomSword {
+public class ArtifactPickaxe extends CustomPickaxe {
 
-  protected String name;
-
-  public ArtifactSword(String name, ToolMaterial material) {
+  public ArtifactPickaxe(String name, ToolMaterial material) {
     super(name, material);
   }
 
@@ -41,8 +39,5 @@ public class ArtifactSword extends CustomSword {
     return 0;
   }
 
-  @Override
-  public String getTexturePath() {
-    return "weapons";
-  }
+
 }

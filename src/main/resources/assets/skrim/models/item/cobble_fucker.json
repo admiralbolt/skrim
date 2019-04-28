@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/handheld",
     "textures": {
-        "layer0": "skrim:tools/obsidian_pickaxe"
+        "layer0": "skrim:tools/cobble_fucker"
     }
 }
