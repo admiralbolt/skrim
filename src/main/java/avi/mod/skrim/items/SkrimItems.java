@@ -91,6 +91,7 @@ public class SkrimItems {
   public static ArtifactItem HORSE_STEROID_JUMP = new HorseSteroidJump();
   public static ArtifactItem LIFE_CRYSTAL = new LifeCrystal();
   public static Item DEATH_ARROW = new DeathArrow();
+  public static Item ENCHIRIDION = new Enchiridion();
 
   public static Item[] ARTIFACTS = {
       CANES_SWORD,
@@ -109,7 +110,8 @@ public class SkrimItems {
       LIFE_CRYSTAL,
       DEATH_ARROW,
       COBBLE_FUCKER,
-      CASEY
+      CASEY,
+      ENCHIRIDION
   };
 
   // La musica
