@@ -93,6 +93,7 @@ public class SkrimItems {
   public static ArtifactItem KING_OF_RED_LIONS = new KingOfRedLions();
   public static Item DEATH_ARROW = new DeathArrow();
   public static Item ENCHIRIDION = new Enchiridion();
+  public static Item PUMPKIN_STONE = new PumpkinStone();
 
   public static Item[] ARTIFACTS = {
       CANES_SWORD,
@@ -113,7 +114,8 @@ public class SkrimItems {
       COBBLE_FUCKER,
       CASEY,
       ENCHIRIDION,
-      KING_OF_RED_LIONS
+      KING_OF_RED_LIONS,
+      PUMPKIN_STONE
   };
 
   // La musica

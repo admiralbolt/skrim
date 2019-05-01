@@ -175,7 +175,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
   /**
    * Gets the replacement version of an existing minecraft food item. Sets the correct NBT tags based on cooking level.
    */
-  private static ItemStack getReplaceFood(EntityPlayer player, ItemStack stack) {
+  public static ItemStack getReplaceFood(EntityPlayer player, ItemStack stack) {
     if (player == null || !Skills.hasSkill(player, Skills.COOKING)) return null;
     SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
     Item replaceFood = FOOD_MAP.getOrDefault(getFoodName(stack), null);

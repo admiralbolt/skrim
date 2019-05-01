@@ -30,8 +30,8 @@ public class Casey extends ArtifactSword {
 
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add("§4Buh-bye now.");
-    tooltip.add("§e\"And now the air is shattered by the force of Casey's blow.\"");
+    tooltip.add("§4Buh-bye now.§r");
+    tooltip.add("§e\"And now the air is shattered by the force of Casey's blow.\"§r");
   }
 
   @Override

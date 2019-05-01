@@ -7,6 +7,7 @@ import avi.mod.skrim.entities.monster.GigaChicken;
 import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
 import avi.mod.skrim.entities.passive.EntityFox;
+import avi.mod.skrim.entities.passive.EntityPumpkow;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.items.artifacts.DeathArrow;
 import net.minecraft.entity.EnumCreatureType;
@@ -30,6 +31,7 @@ public class SkrimEntities {
     EntityRegistry.registerModEntity(new ResourceLocation("skrim:fox"), EntityFox.class, EntityFox.name, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFF77, 0x222222);
     EntityRegistry.registerModEntity(new ResourceLocation("skrim:death_arrow"), DeathArrow.EntityDeathArrow.class, "death_arrow", ENTITY_ID++, Skrim.instance, 48, 3, true);
     EntityRegistry.registerModEntity(new ResourceLocation("skrim:king_of_red_lions"), EntityKingOfRedLions.class, "king_of_red_lions", ENTITY_ID++, Skrim.instance, 48, 3, true);
+    EntityRegistry.registerModEntity(new ResourceLocation("skrim:pumpkow"), EntityPumpkow.class, EntityPumpkow.NAME, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFF55, 0xFF8855);
   }
 
 }
