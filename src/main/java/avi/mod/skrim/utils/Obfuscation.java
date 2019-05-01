@@ -26,6 +26,11 @@ public class Obfuscation {
   public static ObfuscatedField VILLAGER_BUY_LIST = new ObfuscatedField("buyingList", "field_70963_i");
   public static ObfuscatedField CURRENT_ITEM = new ObfuscatedField("itemStack", "field_70457_g");
 
+  public static ObfuscatedField BOAT_FORWARD_DOWN = new ObfuscatedField("forwardInputDown", "field_184461_aB");
+  public static ObfuscatedField BOAT_LEFT_DOWN = new ObfuscatedField("leftInputDown", "field_184480_az");
+  public static ObfuscatedField BOAT_RIGHT_DOWN = new ObfuscatedField("rightInputDown", "field_184459_aA");
+
+
   public static boolean canBlockBePlaced(World world, Block block, BlockPos pos, boolean notsure, EnumFacing facing,
                                          @Nullable Entity entity) {
     return world.mayPlace(block, pos, notsure, facing, entity);

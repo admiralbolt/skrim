@@ -90,6 +90,7 @@ public class SkrimItems {
   public static ArtifactItem HORSE_STEROID_HEALTH = new HorseSteroidHealth();
   public static ArtifactItem HORSE_STEROID_JUMP = new HorseSteroidJump();
   public static ArtifactItem LIFE_CRYSTAL = new LifeCrystal();
+  public static ArtifactItem KING_OF_RED_LIONS = new KingOfRedLions();
   public static Item DEATH_ARROW = new DeathArrow();
   public static Item ENCHIRIDION = new Enchiridion();
 
@@ -111,7 +112,8 @@ public class SkrimItems {
       DEATH_ARROW,
       COBBLE_FUCKER,
       CASEY,
-      ENCHIRIDION
+      ENCHIRIDION,
+      KING_OF_RED_LIONS
   };
 
   // La musica

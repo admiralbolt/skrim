@@ -197,5 +197,12 @@
       "name": "skrim:artifacts/casey",
       "stream": true
     }]
+  },
+  "wind_waker": {
+    "category": "artifacts",
+    "sounds": [{
+      "name": "skrim:artifacts/wind_waker",
+      "stream": true
+    }]
   }
 }

@@ -1,6 +1,7 @@
 package avi.mod.skrim.entities;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.entities.items.EntityKingOfRedLions;
 import avi.mod.skrim.entities.monster.BioCreeper;
 import avi.mod.skrim.entities.monster.GigaChicken;
 import avi.mod.skrim.entities.monster.MegaChicken;
@@ -28,6 +29,7 @@ public class SkrimEntities {
     EntityRegistry.registerModEntity(new ResourceLocation("skrim:giga_chicken"), GigaChicken.class, GigaChicken.NAME, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFFFF, 0xFF8888);
     EntityRegistry.registerModEntity(new ResourceLocation("skrim:fox"), EntityFox.class, EntityFox.name, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFF77, 0x222222);
     EntityRegistry.registerModEntity(new ResourceLocation("skrim:death_arrow"), DeathArrow.EntityDeathArrow.class, "death_arrow", ENTITY_ID++, Skrim.instance, 48, 3, true);
+    EntityRegistry.registerModEntity(new ResourceLocation("skrim:king_of_red_lions"), EntityKingOfRedLions.class, "king_of_red_lions", ENTITY_ID++, Skrim.instance, 48, 3, true);
   }
 
 }
