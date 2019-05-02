@@ -91,14 +91,23 @@ public class ReflectionUtils {
     return null;
   }
 
+  public static Class getSuperX(Object instance, int depth) {
+    Class c = instance.getClass();
+    for (int i = 0; i < depth; i++) {
+      if (c.getSuperclass() == null) {
+        System.out.println("[ReflectionUtils] Max depth reached at: " + i);
+        break;
+      }
+      c = c.getSuperclass();
+    }
+    return c;
+  }
+
   /**
    * Gets a field of the super class of the super class of the object.
    */
   public static Object getSuperXField(Object instance, int depth, String... fieldNames) {
-    Class c = instance.getClass();
-    for (int i = 0; i < depth; i++) {
-      c = c.getSuperclass();
-    }
+    Class c = getSuperX(instance, depth);
     Field field;
     for (String fieldName : fieldNames) {
       try {
@@ -108,9 +117,11 @@ public class ReflectionUtils {
         // e.printStackTrace();
       }
     }
-    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with depth: [" + depth + "], with names: [" + Arrays.toString(fieldNames) + "]");
+    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with depth: [" + depth + "], with " +
+        "names: [" + Arrays.toString(fieldNames) + "]");
     return null;
   }
+
 
   /**
    * Executes a private method of the object.
@@ -210,6 +221,10 @@ public class ReflectionUtils {
   public static void printSuperXFields(Object instance, int depth) {
     Class c = instance.getClass();
     for (int i = 0; i < depth; i++) {
+      if (c.getSuperclass() == null) {
+        System.out.println("[ReflectionUtils] Max depth reached at: " + i);
+        break;
+      }
       c = c.getSuperclass();
     }
     for (Field field : c.getDeclaredFields()) {
@@ -217,6 +232,25 @@ public class ReflectionUtils {
         field.setAccessible(true);
         System.out.println("field: " + field.getName() + ", value: " + field.get(instance));
       } catch (IllegalArgumentException | IllegalAccessException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public static void printSuperXMethods(Object instance, int depth) {
+    Class c = instance.getClass();
+    for (int i = 0; i < depth; i++) {
+      if (c.getSuperclass() == null) {
+        System.out.println("[ReflectionUtils] Max depth reached at: " + i);
+        break;
+      }
+      c = c.getSuperclass();
+    }
+    for (Method method : c.getDeclaredMethods()) {
+      try {
+        method.setAccessible(true);
+        System.out.println("method: " + method.getName() + ", args: " + method.getParameterTypes());
+      } catch (IllegalArgumentException e) {
         e.printStackTrace();
       }
     }
