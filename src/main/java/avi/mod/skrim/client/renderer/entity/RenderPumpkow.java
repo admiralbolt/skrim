@@ -38,7 +38,7 @@ public class RenderPumpkow extends RenderLiving<EntityPumpkow> {
   @SideOnly(Side.CLIENT)
   public static class LayerPumpkowPumpkin implements LayerRenderer<EntityPumpkow> {
 
-    private static final float SCALE = 0.65F;
+    private static final float SCALE = 0.3F;
     private final RenderPumpkow pumpkowRenderer;
 
     public LayerPumpkowPumpkin(RenderPumpkow pumpkowRendererIn) {
@@ -54,24 +54,25 @@ public class RenderPumpkow extends RenderLiving<EntityPumpkow> {
         GlStateManager.cullFace(GlStateManager.CullFace.FRONT);
         GlStateManager.pushMatrix();
         GlStateManager.scale(SCALE, -SCALE, SCALE);
-        GlStateManager.translate(0.2F, 0.35F, 0.5F);
-        GlStateManager.rotate(42.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.translate(0.2F, 0.0F, 0.5F);
+        GlStateManager.rotate(23.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.pushMatrix();
-        GlStateManager.translate(-0.5F, -0.5F, 0.5F);
+        GlStateManager.translate(-1.2F, -0.5F, 1.2F);
         blockrendererdispatcher.renderBlockBrightness(Blocks.PUMPKIN.getDefaultState(), 1.0F);
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.1F, 0.0F, -0.6F);
-        GlStateManager.rotate(42.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(142.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(-0.5F, -0.5F, 0.5F);
         blockrendererdispatcher.renderBlockBrightness(Blocks.PUMPKIN.getDefaultState(), 1.0F);
         GlStateManager.popMatrix();
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
+
         this.pumpkowRenderer.getMainModel().head.postRender(0.0625F);
         GlStateManager.scale(SCALE, -SCALE, SCALE);
-        GlStateManager.translate(0.0F, 0.7F, -0.2F);
-        GlStateManager.rotate(12.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.translate(0.0F, 1.2F, -0.5F);
+        GlStateManager.rotate(270.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(-0.5F, -0.5F, 0.5F);
         blockrendererdispatcher.renderBlockBrightness(Blocks.PUMPKIN.getDefaultState(), 1.0F);
         GlStateManager.popMatrix();
