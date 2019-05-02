@@ -84,6 +84,7 @@ public class EventHandler {
   public void onInteractEntity(PlayerInteractEvent.EntityInteract event) {
     SkillBotany.seduceVillager(event);
     SkillDigging.entomb(event);
+    SkillCooking.mooshroom(event);
   }
 
   @SubscribeEvent

@@ -26,10 +26,12 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
@@ -298,6 +300,28 @@ public class SkillCooking extends Skill implements ISkillCooking {
     if (!hasFireEnchantment(mainStack)) return;
 
     cookDrops(player, event.getDrops());
+  }
+
+  public static void mooshroom(PlayerInteractEvent.EntityInteract event) {
+    if (!(event.getTarget() instanceof EntityMooshroom)) return;
+
+    EnumHand hand = event.getHand();
+    EntityMooshroom cow = (EntityMooshroom) event.getTarget();
+    EntityPlayer player = event.getEntityPlayer();
+    ItemStack itemstack = player.getHeldItem(hand);
+
+    if (itemstack.getItem() != Items.BOWL || cow.getGrowingAge() < 0) return;
+    itemstack.shrink(1);
+
+    ItemStack newFood = SkillCooking.getReplaceFood(player, new ItemStack(Items.MUSHROOM_STEW));
+
+    if (itemstack.isEmpty()) {
+      player.setHeldItem(hand, newFood);
+    } else if (!player.inventory.addItemStackToInventory(newFood)) {
+      player.dropItem(newFood, false);
+    }
+
+    event.setCanceled(true);
   }
 
   public static void angelUpdate(LivingUpdateEvent event) {
