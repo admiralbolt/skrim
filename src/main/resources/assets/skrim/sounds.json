@@ -191,6 +191,13 @@
       "stream": true
     }]
   },
+  "spin_jump": {
+    "category": "artifacts",
+    "sounds": [{
+      "name": "skrim:artifacts/spin_jump",
+      "stream": true
+    }]
+  },
   "home_run": {
     "category": "artifacts",
     "sounds": [{

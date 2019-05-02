@@ -76,6 +76,7 @@ public class SkrimItems {
   public static ArtifactSword CASEY = new Casey();
 
   public static ArtifactArmor POWER_SUIT_CHESTPLATE = new PowerSuitChestplate();
+  public static ArtifactArmor POWER_SUIT_BOOTS = new PowerSuitBoots();
 
   public static ArtifactArmor SPRINGHEEL_BOOTS = new SpringheelBoots();
   public static ArtifactArmor BLINDING_BOOTS = new BlindingBoots();
@@ -115,7 +116,8 @@ public class SkrimItems {
       CASEY,
       ENCHIRIDION,
       KING_OF_RED_LIONS,
-      PUMPKIN_STONE
+      PUMPKIN_STONE,
+      POWER_SUIT_BOOTS
   };
 
   // La musica

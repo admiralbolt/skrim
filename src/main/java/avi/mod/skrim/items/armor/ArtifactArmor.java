@@ -20,13 +20,15 @@ import java.util.List;
  */
 public class ArtifactArmor extends CustomArmor {
 
+  public static ArmorMaterial POWERSUIT_MATERIAL = getAndCreateMaterial("powersuit_armor");
+
   protected String name;
 
   public ArtifactArmor(String name, EntityEquipmentSlot armorType) {
     this(name, getAndCreateMaterial(name), armorType);
   }
 
-  private ArtifactArmor(String name, ItemArmor.ArmorMaterial material, EntityEquipmentSlot armorType) {
+  public ArtifactArmor(String name, ItemArmor.ArmorMaterial material, EntityEquipmentSlot armorType) {
     super(name, material, 1, armorType);
   }
 

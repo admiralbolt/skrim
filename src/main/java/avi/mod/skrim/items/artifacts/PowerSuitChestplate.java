@@ -37,7 +37,7 @@ public class PowerSuitChestplate extends ArtifactArmor {
   private Double savedMotionZ = null;
 
   public PowerSuitChestplate() {
-    super("powersuit_chestplate", EntityEquipmentSlot.CHEST);
+    super("powersuit_chestplate", ArtifactArmor.POWERSUIT_MATERIAL, EntityEquipmentSlot.CHEST);
   }
 
   @Override

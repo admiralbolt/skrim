@@ -53,6 +53,7 @@ public class SkrimSoundEvents {
   public static SoundEvent SHINESPARK_LOOP = makeSoundEvent("shinespark_loop");
   public static SoundEvent HOME_RUN = makeSoundEvent("home_run");
   public static SoundEvent WIND_WAKER = makeSoundEvent("wind_waker");
+  public static SoundEvent SPIN_JUMP = makeSoundEvent("spin_jump");
 
   private static List<SoundEvent> ZELDA_SOUNDS = Arrays.asList(ZELDA_BIG, ZELDA_SPOOKY, ZELDA_WINDWAKER, ZELDA_CHEST_OPEN);
 
