@@ -81,6 +81,7 @@ public class SkrimItems {
   public static ArtifactArmor SPRINGHEEL_BOOTS = new SpringheelBoots();
   public static ArtifactArmor BLINDING_BOOTS = new BlindingBoots();
 
+  public static ArtifactArmor DEEP_HELM = new DeepHelm();
   public static ArtifactArmor GRUESOME_MASK = new GruesomeMask();
   public static ArtifactArmor FOX_MASK = new FoxMask();
 
@@ -117,7 +118,8 @@ public class SkrimItems {
       ENCHIRIDION,
       KING_OF_RED_LIONS,
       PUMPKIN_STONE,
-      POWER_SUIT_BOOTS
+      POWER_SUIT_BOOTS,
+      DEEP_HELM
   };
 
   // La musica

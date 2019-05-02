@@ -49,7 +49,7 @@ public class PowerSuitBoots extends ArtifactArmor {
       if (!jumpKey.isPressed()) return;
 
       EntityPlayer player = Minecraft.getMinecraft().player;
-      if (player.onGround) return;
+      if (player.onGround || player.isInWater()) return;
 
       long ticksSinceJump = player.world.getWorldTime() - lastJump.getOrDefault(player.getUniqueID(), 0L);
       if (ticksSinceJump < TICKS_BETWEEN_JUMPS) return;
