@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -77,7 +78,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
   @Override
   public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
+    List<String> tooltip = new ArrayList<>();
     tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
     tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
     return tooltip;
@@ -171,6 +172,16 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
     if (!Skills.canCraft(event.player, Skills.BLACKSMITHING, 100)) {
       Skills.replaceWithComponents(event);
+    }
+
+    if (event.player.inventory.getItemStack().getItem() == Items.AIR) {
+      // Player shift-clicked. We'll need to add the new stack directly to their inventory and remove the wrong verison.
+      ItemStack newStack = new ItemStack(event.crafting.getItem(), event.crafting.getCount(), event.crafting.getMetadata());
+      newStack.setTagCompound(event.craftMatrix.getStackInSlot(4).getTagCompound());
+      Utils.removeFromInventoryNoNBT(event.player.inventory, event.crafting.getItem(), event.crafting.getCount());
+      event.player.inventory.addItemStackToInventory(newStack);
+    } else {
+      event.crafting.setTagCompound(event.craftMatrix.getStackInSlot(4).getTagCompound());
     }
   }
 

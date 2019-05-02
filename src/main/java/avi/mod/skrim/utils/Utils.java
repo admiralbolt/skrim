@@ -157,6 +157,26 @@ public class Utils {
     }
   }
 
+  public static void removeFromInventoryNoNBT(InventoryPlayer inventory, Item removeItem, int amount) {
+    int totalRemoved = 0;
+    int remove;
+    ItemStack stack;
+    for (int i = 0; i < inventory.getSizeInventory(); i++) {
+      stack = inventory.getStackInSlot(i);
+      if (stack.getItem() != removeItem || stack.getTagCompound() != null) continue;
+
+      remove = Math.min(stack.getCount(), (amount - totalRemoved));
+      if (remove == stack.getCount()) {
+        inventory.removeStackFromSlot(i);
+      } else {
+        inventory.decrStackSize(i, remove);
+      }
+
+      totalRemoved += remove;
+      if (totalRemoved >= amount) return;
+    }
+  }
+
   public static void removeAllFromInventory(EntityPlayer player, Item removeItem) {
     for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
       if (player.inventory.getStackInSlot(i).getItem() != removeItem) continue;
