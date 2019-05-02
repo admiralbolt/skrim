@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.cooking;
 
+import avi.mod.skrim.entities.passive.EntityPumpkow;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.AngelFlyingSoundPacket;
@@ -82,6 +83,8 @@ public class SkillCooking extends Skill implements ISkillCooking {
     ENTITY_FOOD_MAP.put(EntitySheep.class, "muttoncooked");
     addFood("beefcooked", SkrimItems.OVERWRITE_STEAK, 500);
     ENTITY_FOOD_MAP.put(EntityCow.class, "beefcooked");
+    ENTITY_FOOD_MAP.put(EntityMooshroom.class, "beefcooked");
+    ENTITY_FOOD_MAP.put(EntityPumpkow.class, "beefcooked");
     addFood("porkchopcooked", SkrimItems.OVERWRITE_PORKCHOP, 500);
     ENTITY_FOOD_MAP.put(EntityPig.class, "porkchopcooked");
     addFood("chickencooked", SkrimItems.OVERWRITE_CHICKEN, 500);
@@ -242,7 +245,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
     EntityPlayer player = (EntityPlayer) entity;
     ItemStack mainStack = player.getHeldItemMainhand();
-
+    
     if (!hasFireEnchantment(mainStack)) return;
     ENTITIES_MARKED.put(targetEntity.getUniqueID(), player);
   }
