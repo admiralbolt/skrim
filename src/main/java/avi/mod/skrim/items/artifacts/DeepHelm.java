@@ -29,13 +29,13 @@ import java.util.Map;
 public class DeepHelm extends ArtifactArmor {
 
   public DeepHelm() {
-    super("deep_helm", EntityEquipmentSlot.HEAD);
+    super("deep_helm", ArtifactArmor.DWARVEN_MATERIAL, EntityEquipmentSlot.HEAD);
   }
 
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add("§4Reduces speed on land, grants water breathing, and night vision.§r");
-    tooltip.add("§e\"Our pride was a veil over our eyes.\"");
+    tooltip.add("§4While in water, gain water breathing, speed, haste, and night vision.§r");
+    tooltip.add("§e\"How can mirrors be real if our eyes aren’t real.\"");
   }
 
   @Override
@@ -51,8 +51,8 @@ public class DeepHelm extends ArtifactArmor {
     private static final long CHECK_TIME = 40L;
     private static final int DURATION = 50;
 
-    private static final Map<Potion, Integer> EFFECTS = ImmutableMap.of(MobEffects.WATER_BREATHING, 1,
-        MobEffects.NIGHT_VISION, 1, MobEffects.SPEED, 3);
+    private static final Map<Potion, Integer> EFFECTS = ImmutableMap.of(MobEffects.WATER_BREATHING, 0,
+        MobEffects.NIGHT_VISION, 0, MobEffects.SPEED, 2, MobEffects.HASTE, 2);
 
     @SubscribeEvent
     public static void breathWater(LivingEvent.LivingUpdateEvent event) {
@@ -64,7 +64,8 @@ public class DeepHelm extends ArtifactArmor {
         return;
 
       for (Map.Entry<Potion, Integer> effect : EFFECTS.entrySet()) {
-        PotionEffect newEffect = new PotionEffect(effect.getKey(), (effect.getKey() == MobEffects.NIGHT_VISION) ? 250 : DURATION, effect.getValue(), false, false);
+        PotionEffect newEffect = new PotionEffect(effect.getKey(), (effect.getKey() == MobEffects.NIGHT_VISION) ? 250 : DURATION,
+            effect.getValue(), false, false);
         Utils.addOrCombineEffect(player, newEffect);
       }
 

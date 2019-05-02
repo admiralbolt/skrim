@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 public class DynamicLootPool {
 
   private static final Map<Item, LootFunction[]> FUNCTIONS = ImmutableMap.of(
-      SkrimItems.DEATH_ARROW, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(7, 7))}
+      SkrimItems.DEATH_ARROW, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(3, 3))}
   );
 
   public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 10000, 20, 30, 3, 2,

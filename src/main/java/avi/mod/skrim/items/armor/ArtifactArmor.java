@@ -21,6 +21,7 @@ import java.util.List;
 public class ArtifactArmor extends CustomArmor {
 
   public static ArmorMaterial POWERSUIT_MATERIAL = getAndCreateMaterial("powersuit_armor");
+  public static ArmorMaterial DWARVEN_MATERIAL = getAndCreateMaterial("dwarven_armor");
 
   protected String name;
 
