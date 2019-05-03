@@ -4,20 +4,29 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Houses all sound events!
- *
+ * <p>
  * Sound files are stored in assets/skrim/sounds/.
  * Mapping from resource location -> sound is in assets/skrim/sounds.json
  */
 public class SkrimSoundEvents {
 
+  private static Set<SoundEvent> SOUND_EVENTS = new HashSet<>();
+
   private static SoundEvent makeSoundEvent(String path) {
-    return new SoundEvent(new ResourceLocation(Skrim.MOD_ID, path));
+    SoundEvent event = new SoundEvent(new ResourceLocation(Skrim.MOD_ID, path)).setRegistryName(path);
+    SOUND_EVENTS.add(event);
+    return event;
   }
 
   // Records.
@@ -27,7 +36,7 @@ public class SkrimSoundEvents {
   public static SoundEvent DOGSONG = makeSoundEvent("dogsong");
   public static SoundEvent GDAWG = makeSoundEvent("gdawg");
   public static SoundEvent HEYA = makeSoundEvent("heya");
-  public static SoundEvent LACK_OF_COLOR = makeSoundEvent("money");
+  public static SoundEvent LACK_OF_COLOR = makeSoundEvent("lack_of_color");
   public static SoundEvent MONEY = makeSoundEvent("money");
   public static SoundEvent NORTH = makeSoundEvent("north");
   public static SoundEvent NUMBER10 = makeSoundEvent("number10");
@@ -55,11 +64,22 @@ public class SkrimSoundEvents {
   public static SoundEvent WIND_WAKER = makeSoundEvent("wind_waker");
   public static SoundEvent SPIN_JUMP = makeSoundEvent("spin_jump");
   public static SoundEvent NAIL_ART_GREAT_SLASH = makeSoundEvent("nail_art_great_slash");
+  public static SoundEvent BAN_HAMMER = makeSoundEvent("ban_hammer");
 
   private static List<SoundEvent> ZELDA_SOUNDS = Arrays.asList(ZELDA_BIG, ZELDA_SPOOKY, ZELDA_WINDWAKER, ZELDA_CHEST_OPEN);
 
   public static SoundEvent randomZeldaSound() {
     return ZELDA_SOUNDS.get(Utils.rand.nextInt(ZELDA_SOUNDS.size()));
+  }
+
+  @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
+  public static class Handler {
+
+    @SubscribeEvent
+    public static void registerSoundEvents(final RegistryEvent.Register<SoundEvent> event) {
+      SOUND_EVENTS.forEach(event.getRegistry()::register);
+    }
+
   }
 
 }

@@ -1,8 +1,16 @@
 package avi.mod.skrim;
 
+import avi.mod.skrim.advancements.SkrimAdvancements;
+import avi.mod.skrim.capabilities.SkrimCapabilities;
 import avi.mod.skrim.client.SkrimTab;
 import avi.mod.skrim.commands.CommandRegistry;
+import avi.mod.skrim.entities.SkrimEntities;
+import avi.mod.skrim.handlers.EventHandler;
+import avi.mod.skrim.handlers.LoadSkillsHandler;
+import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.proxy.IProxy;
+import avi.mod.skrim.world.loot.CustomLootTables;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -49,12 +57,23 @@ public class Skrim {
   public void preInit(FMLPreInitializationEvent event) {
     System.out.println(NAME + " is in preInit.");
     proxy.preInit();
+    SkrimEntities.register();
+    SkrimPacketHandler.registerPackets();
   }
 
   @Mod.EventHandler
   public void init(FMLInitializationEvent event) {
     System.out.println(NAME + " is in init.");
     proxy.init();
+
+    CustomLootTables.registerLootTables();
+    SkrimCapabilities.registerCapabilities();
+    SkrimAdvancements.register();
+
+    // Hook up all event handlers, this allows them to use Subscribe to Events
+    MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
+    MinecraftForge.EVENT_BUS.register(new EventHandler());
+
   }
 
   @Mod.EventHandler

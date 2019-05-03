@@ -20,7 +20,6 @@ public class ServerProxy implements IProxy {
 
   @Override
   public void init() {
-
   }
 
   @Override
@@ -48,6 +47,7 @@ public class ServerProxy implements IProxy {
   @Override
   public IThreadListener getThreadListener(MessageContext context) {
     if (context.side.isServer()) return context.getServerHandler().player.getServer();
+
     throw new WrongSideException("Tried to get the IThreadListener from a client-side MessageContext on the dedicated" +
         " server");
   }

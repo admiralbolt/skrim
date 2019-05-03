@@ -34,14 +34,15 @@ public class PumpkinStone extends ArtifactItem {
 
     @SubscribeEvent
     public static void evolveCow(PlayerInteractEvent.EntityInteract event) {
-      if (event.getEntityPlayer().world.isRemote) return;
       if (event.getItemStack().getItem() != SkrimItems.PUMPKIN_STONE) return;
       if (!(event.getTarget() instanceof EntityCow)) return;
 
       EntityCow cow = (EntityCow) event.getTarget();
       cow.setDead();
-      event.getEntityPlayer().world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, false, cow.posX, cow.posY + (cow.height / 2),
-          cow.posZ, 1, 0.0D, 0.0D, 0, 0);
+      if (event.getEntityPlayer().world.isRemote) {
+        event.getEntityPlayer().world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, false, cow.posX, cow.posY + (cow.height / 2),
+            cow.posZ, 1, 0.0D, 0.0D, 0, 0);
+      }
 
       EntityCow entitycow = new EntityPumpkow(cow.world);
       entitycow.setLocationAndAngles(cow.posX, cow.posY, cow.posZ, cow.rotationYaw, cow.rotationPitch);

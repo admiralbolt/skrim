@@ -218,5 +218,12 @@
       "name": "skrim:artifacts/nail_art_great_slash",
       "stream": true
     }]
+  },
+  "ban_hammer": {
+    "category": "artifacts",
+    "sounds": [{
+      "name": "skrim:artifacts/ban_hammer",
+      "stream": true
+    }]
   }
 }

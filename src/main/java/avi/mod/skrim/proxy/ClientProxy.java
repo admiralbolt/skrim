@@ -1,19 +1,11 @@
 package avi.mod.skrim.proxy;
 
 import avi.mod.skrim.Skrim;
-import avi.mod.skrim.advancements.SkrimAdvancements;
-import avi.mod.skrim.capabilities.SkrimCapabilities;
 import avi.mod.skrim.client.renderer.CustomRenderers;
-import avi.mod.skrim.entities.SkrimEntities;
-import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.GuiEventHandler;
-import avi.mod.skrim.handlers.LoadSkillsHandler;
-import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.handlers.GuiHandler;
+import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.items.SkrimItems;
-import avi.mod.skrim.network.SkrimPacketHandler;
-import avi.mod.skrim.world.loot.CustomLootTables;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,19 +37,7 @@ public class ClientProxy implements IProxy {
    */
   @Override
   public void init() {
-    CustomLootTables.registerLootTables();
-    SkrimCapabilities.registerCapabilities();
-    SkrimEntities.register();
     SkrimEntitySpawnHandler.init();
-    SkrimPacketHandler.registerPackets();
-
-    for (SkrimAdvancements.CustomAdvancement advancement : SkrimAdvancements.ADVANCEMENTS_BY_NAME.values()) {
-      CriteriaTriggers.register(advancement.trigger);
-    }
-
-    // Hook up all event handlers, this allows them to use Subscribe to Events
-    MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
-    MinecraftForge.EVENT_BUS.register(new EventHandler());
     MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
     NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
   }

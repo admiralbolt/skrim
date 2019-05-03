@@ -1,6 +1,7 @@
 package avi.mod.skrim.advancements;
 
 import avi.mod.skrim.Skrim;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,6 +33,12 @@ public class SkrimAdvancements {
     CustomAdvancement advancement = new CustomAdvancement(name);
     ADVANCEMENTS_BY_NAME.put(name, advancement);
     return advancement;
+  }
+
+  public static void register() {
+    for (SkrimAdvancements.CustomAdvancement advancement : SkrimAdvancements.ADVANCEMENTS_BY_NAME.values()) {
+      CriteriaTriggers.register(advancement.trigger);
+    }
   }
 
 

@@ -10,6 +10,8 @@ import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
@@ -49,6 +51,7 @@ public class EntityKingOfRedLions extends EntityBoat {
 
   }
 
+  @SideOnly(Side.CLIENT)
   @Override
   protected void addPassenger(Entity passenger) {
     super.addPassenger(passenger);

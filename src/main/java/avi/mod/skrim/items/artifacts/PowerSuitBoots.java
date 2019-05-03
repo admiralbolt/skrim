@@ -17,6 +17,8 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -44,6 +46,7 @@ public class PowerSuitBoots extends ArtifactArmor {
   public static class PowerSuitBootsHandler {
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void spaceJump(InputEvent.KeyInputEvent event) {
       EntityPlayer player = Minecraft.getMinecraft().player;
       if (!Utils.isWearingArmor(player, SkrimItems.POWER_SUIT_BOOTS)) return;

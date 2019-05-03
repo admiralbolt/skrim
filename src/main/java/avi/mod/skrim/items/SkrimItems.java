@@ -24,12 +24,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
@@ -75,6 +78,7 @@ public class SkrimItems {
   public static ArtifactPickaxe COBBLE_FUCKER = new CobbleFucker();
   public static ArtifactSword CASEY = new Casey();
   public static ArtifactSword PURE_NAIL = new PureNail();
+  public static ArtifactItem BAN_HAMMER = new BanHammer();
 
   public static ArtifactArmor POWER_SUIT_CHESTPLATE = new PowerSuitChestplate();
   public static ArtifactArmor POWER_SUIT_BOOTS = new PowerSuitBoots();
@@ -123,7 +127,8 @@ public class SkrimItems {
       POWER_SUIT_BOOTS,
       DEEP_HELM,
       ESSENCE_AEGIS,
-      PURE_NAIL
+      PURE_NAIL,
+      BAN_HAMMER
   };
 
   // La musica
@@ -261,6 +266,7 @@ public class SkrimItems {
 
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
+      System.out.println("items registered");
       ArrayList<Item> items = new ArrayList<Item>(Arrays.asList(
           OAK_LEAF_BOOTS,
           OAK_LEAF_PANTS,
@@ -331,12 +337,19 @@ public class SkrimItems {
         registry.register(item);
         item.setCreativeTab(Skrim.CREATIVE_TAB);
         ITEMS.add(item);
-        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),
-            ((ItemBase) item).getTexturePath()));
-
       }
     }
 
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public static void registerItemModels(ModelRegistryEvent event) {
+      System.out.println("models registered");
+      for (final Item item : ITEMS) {
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),
+            ((ItemBase) item).getTexturePath()));
+      }
+
+    }
   }
 
   public static void modifyBaseItems() {
@@ -344,5 +357,6 @@ public class SkrimItems {
     Items.WATER_BUCKET.setMaxStackSize(16);
     Items.LAVA_BUCKET.setMaxStackSize(16);
   }
+
 
 }

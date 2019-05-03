@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Level up!
@@ -44,6 +46,7 @@ public class LevelUpPacket implements IMessage {
   public static class LevelUpPacketHandler implements IMessageHandler<LevelUpPacket, IMessage> {
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IMessage onMessage(final LevelUpPacket message, MessageContext ctx) {
       if (ctx.side.isServer() || message.skillName == null) return null;
       Capability<? extends ISkill> skill = Skills.SKILL_MAP.get(message.skillName.toLowerCase());

@@ -50,7 +50,7 @@ public class PureNail extends ArtifactSword {
       if (player.world.isRemote || player.getHeldItemMainhand().getItem() != SkrimItems.PURE_NAIL) return;
       if (player.getCooledAttackStrength(0.0f) < 1) return;
 
-      player.world.playSound(null, player.getPosition(), SkrimSoundEvents.NAIL_ART_GREAT_SLASH, SoundCategory.PLAYERS, 1.0f, 1.0f);
+      player.world.playSound(null, player.getPosition(), SkrimSoundEvents.NAIL_ART_GREAT_SLASH, SoundCategory.PLAYERS, 5.0f, 1.0f);
     }
   }
 

@@ -3,14 +3,16 @@ package avi.mod.skrim.network;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Make boom.
@@ -58,12 +60,13 @@ public class ExplosionPacket implements IMessage {
 
   public static class ExplosionPacketHandler implements IMessageHandler<ExplosionPacket, IMessage> {
 
+    @SideOnly(Side.CLIENT)
     @Override
     public IMessage onMessage(final ExplosionPacket message, MessageContext ctx) {
       if (ctx.side.isServer()) return null;
 
       final IThreadListener mainThread = Minecraft.getMinecraft();
-      final EntityPlayerSP player = Minecraft.getMinecraft().player;
+      final EntityPlayer player = Minecraft.getMinecraft().player;
       mainThread.addScheduledTask(() -> {
         Entity entity = player.world.getEntityByID(message.entityId);
         Explosion explosion = CustomTNTPrimed.createExplosion(message.explosionType, message.explosionSize, player.world, entity,

@@ -4,11 +4,13 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.ranged.SkillRanged;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Level 100 ranged skill.
@@ -36,11 +38,12 @@ public class CriticalAscensionPacket implements IMessage {
 
   public static class CriticalAscensionPacketHandler implements IMessageHandler<CriticalAscensionPacket, IMessage> {
 
+    @SideOnly(Side.CLIENT)
     @Override
     public IMessage onMessage(final CriticalAscensionPacket message, MessageContext ctx) {
       if (ctx.side.isServer()) return null;
 
-      EntityPlayerSP player = Minecraft.getMinecraft().player;
+      EntityPlayer player = Minecraft.getMinecraft().player;
       if (player == null) return null;
 
       IThreadListener mainThread = Minecraft.getMinecraft();

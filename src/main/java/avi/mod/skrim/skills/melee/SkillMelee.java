@@ -96,8 +96,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
     // Handle critical strike.
     EntityLivingBase targetEntity = event.getEntityLiving();
-    player.world.playSound(null, player.posX, player.posY, player.posZ, SkrimSoundEvents.CRITICAL_HIT,
-        player.getSoundCategory(), 1.0F, 1.0F);
+    player.world.playSound(null, player.getPosition(), SkrimSoundEvents.CRITICAL_HIT, SoundCategory.PLAYERS, 1.0f, 1.0f);
     event.setAmount(event.getAmount() * 2);
     // Hai there its me pure nail.
     if (player.getHeldItemMainhand().getItem() == SkrimItems.PURE_NAIL) {
