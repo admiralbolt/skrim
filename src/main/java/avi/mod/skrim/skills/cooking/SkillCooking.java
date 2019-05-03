@@ -245,7 +245,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
 
     EntityPlayer player = (EntityPlayer) entity;
     ItemStack mainStack = player.getHeldItemMainhand();
-    
+
     if (!hasFireEnchantment(mainStack)) return;
     ENTITIES_MARKED.put(targetEntity.getUniqueID(), player);
   }

@@ -96,6 +96,7 @@ public class SkrimItems {
   public static Item DEATH_ARROW = new DeathArrow();
   public static Item ENCHIRIDION = new Enchiridion();
   public static Item PUMPKIN_STONE = new PumpkinStone();
+  public static Item ESSENCE_AEGIS = new EssenceAegis();
 
   public static Item[] ARTIFACTS = {
       CANES_SWORD,
@@ -119,7 +120,8 @@ public class SkrimItems {
       KING_OF_RED_LIONS,
       PUMPKIN_STONE,
       POWER_SUIT_BOOTS,
-      DEEP_HELM
+      DEEP_HELM,
+      ESSENCE_AEGIS
   };
 
   // La musica

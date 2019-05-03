@@ -45,12 +45,13 @@ public class PowerSuitBoots extends ArtifactArmor {
 
     @SubscribeEvent
     public static void spaceJump(InputEvent.KeyInputEvent event) {
-      KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
-      if (!jumpKey.isPressed()) return;
-
       EntityPlayer player = Minecraft.getMinecraft().player;
+      if (!Utils.isWearingArmor(player, SkrimItems.POWER_SUIT_BOOTS)) return;
       if (player.onGround || player.isInWater()) return;
 
+      KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
+      if (!jumpKey.isPressed()) return;
+      
       long ticksSinceJump = player.world.getWorldTime() - lastJump.getOrDefault(player.getUniqueID(), 0L);
       if (ticksSinceJump < TICKS_BETWEEN_JUMPS) return;
 
