@@ -81,9 +81,7 @@ public class EssenceAegis extends ItemShield implements ItemBase {
       EntityPlayer player = (EntityPlayer) event.getEntity();
       if (player.getHeldItemOffhand().getItem() != SkrimItems.ESSENCE_AEGIS) return;
 
-
       DamageSource source = event.getSource();
-      System.out.println("Input damage type: " + source.getDamageType() + "amount: " + event.getAmount());
 
       if (!RESISTANCES.contains(source.getDamageType())) return;
 
