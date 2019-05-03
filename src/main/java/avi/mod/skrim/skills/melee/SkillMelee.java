@@ -2,6 +2,7 @@ package avi.mod.skrim.skills.melee;
 
 import avi.mod.skrim.Skrim;
 import avi.mod.skrim.init.SkrimSoundEvents;
+import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.OffHandAttackPacket;
 import avi.mod.skrim.skills.Skill;
@@ -98,6 +99,10 @@ public class SkillMelee extends Skill implements ISkillMelee {
     player.world.playSound(null, player.posX, player.posY, player.posZ, SkrimSoundEvents.CRITICAL_HIT,
         player.getSoundCategory(), 1.0F, 1.0F);
     event.setAmount(event.getAmount() * 2);
+    // Hai there its me pure nail.
+    if (player.getHeldItemMainhand().getItem() == SkrimItems.PURE_NAIL) {
+      event.setAmount(event.getAmount() * 2);
+    }
     melee.addXp((EntityPlayerMP) player, (int) event.getAmount() * 10);
 
     // Spin slash / grand smite only work with swords.

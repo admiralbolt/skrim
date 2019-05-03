@@ -55,7 +55,7 @@ public class PowerSuitBoots extends ArtifactArmor {
       long ticksSinceJump = player.world.getWorldTime() - lastJump.getOrDefault(player.getUniqueID(), 0L);
       if (ticksSinceJump < TICKS_BETWEEN_JUMPS) return;
 
-      player.playSound(SkrimSoundEvents.SPIN_JUMP, 1.0f, 1.0f);
+      player.playSound(SkrimSoundEvents.SPIN_JUMP, 0.5f, 1.0f);
       player.jump();
       lastJump.put(player.getUniqueID(), player.world.getWorldTime());
     }

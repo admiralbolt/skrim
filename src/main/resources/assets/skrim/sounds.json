@@ -211,5 +211,12 @@
       "name": "skrim:artifacts/wind_waker",
       "stream": true
     }]
+  },
+  "nail_art_great_slash": {
+    "category": "artifacts",
+    "sounds": [{
+      "name": "skrim:artifacts/nail_art_great_slash",
+      "stream": true
+    }]
   }
 }

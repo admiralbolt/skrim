@@ -54,6 +54,7 @@ public class SkrimSoundEvents {
   public static SoundEvent HOME_RUN = makeSoundEvent("home_run");
   public static SoundEvent WIND_WAKER = makeSoundEvent("wind_waker");
   public static SoundEvent SPIN_JUMP = makeSoundEvent("spin_jump");
+  public static SoundEvent NAIL_ART_GREAT_SLASH = makeSoundEvent("nail_art_great_slash");
 
   private static List<SoundEvent> ZELDA_SOUNDS = Arrays.asList(ZELDA_BIG, ZELDA_SPOOKY, ZELDA_WINDWAKER, ZELDA_CHEST_OPEN);
 

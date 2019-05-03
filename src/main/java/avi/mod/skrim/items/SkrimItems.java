@@ -65,7 +65,7 @@ public class SkrimItems {
    * Entity wood: 0.0F stone: 1.0F iron: 2.0F gold: 0.0F diamond: 3.0F Enchantability: wood: 15 stone: 5 iron: 14
    * gold: 22 diamond: 10
    */
-  public static ToolMaterial ARTIFACT_DEFAULT = EnumHelper.addToolMaterial("artifact_default", 3, 4500, 6.0F, 4.0F, 0);
+  public static ToolMaterial ARTIFACT_DEFAULT = EnumHelper.addToolMaterial("artifact_default", 3, 2500, 9.0F, 4.0F, 0);
   public static ToolMaterial OBSIDIAN_TOOL = EnumHelper.addToolMaterial("obsidian", 3, 2000, 9.0F, 4.0F, 20);
 
 
@@ -74,6 +74,7 @@ public class SkrimItems {
   public static ArtifactItem FIRE_STAFF = new FireStaff();
   public static ArtifactPickaxe COBBLE_FUCKER = new CobbleFucker();
   public static ArtifactSword CASEY = new Casey();
+  public static ArtifactSword PURE_NAIL = new PureNail();
 
   public static ArtifactArmor POWER_SUIT_CHESTPLATE = new PowerSuitChestplate();
   public static ArtifactArmor POWER_SUIT_BOOTS = new PowerSuitBoots();
@@ -121,7 +122,8 @@ public class SkrimItems {
       PUMPKIN_STONE,
       POWER_SUIT_BOOTS,
       DEEP_HELM,
-      ESSENCE_AEGIS
+      ESSENCE_AEGIS,
+      PURE_NAIL
   };
 
   // La musica
