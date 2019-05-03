@@ -63,7 +63,7 @@ public class EssenceAegis extends ItemShield implements ItemBase {
 
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add("§4Talk half damage from all non-physical sources.§r");
+    tooltip.add("§4Take half damage from all non-physical sources.§r");
     tooltip.add("§e\"If you're killing a Shaper, you'd better go prepared.\"§r");
   }
 
