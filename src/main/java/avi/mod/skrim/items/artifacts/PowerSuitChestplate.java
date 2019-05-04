@@ -16,7 +16,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * One of the metroid artifacts. Power suit chestplate allows players to shine spark.
@@ -26,15 +29,11 @@ import java.util.List;
 public class PowerSuitChestplate extends ArtifactArmor {
 
   // This is pretty fucking fast.
-  private static double SPARK_SPEED = 2.5;
+  private static final double SPARK_SPEED = 2.5;
 
-  private int sprintingTicks = 0;
-  public boolean spark = false;
-
-  // Saves the current speed for when jumps activate.
-  private Float initialDirection = null;
-  private Double savedMotionX = null;
-  private Double savedMotionZ = null;
+  // We need to maintain information about shine sparks on a per-player basis in case there are multiple people wearing the powersuit
+  // chestplate on the server at the same time.
+  public static Map<UUID, ShineSpark> PLAYER_SPARKS = new HashMap<>();
 
   public PowerSuitChestplate() {
     super("powersuit_chestplate", ArtifactArmor.POWERSUIT_MATERIAL, EntityEquipmentSlot.CHEST);
@@ -47,7 +46,7 @@ public class PowerSuitChestplate extends ArtifactArmor {
   }
 
   @SideOnly(Side.CLIENT)
-  private void playShineSpark(EntityPlayer player) {
+  private static void playShineSpark(EntityPlayer player) {
     Minecraft.getMinecraft().getSoundHandler().playSound(new ShineSparkSound(player));
   }
 
@@ -58,35 +57,61 @@ public class PowerSuitChestplate extends ArtifactArmor {
     EntityPlayer player = (EntityPlayer) entity;
     if (!player.world.isRemote || !Utils.isWearingArmor(player, SkrimItems.POWER_SUIT_CHESTPLATE)) return;
 
-    PowerSuitChestplate chozoChest = (PowerSuitChestplate) Utils.getArmor(player, EntityEquipmentSlot.CHEST).getItem();
-    if (chozoChest.spark) {
+    if (!PLAYER_SPARKS.containsKey(player.getUniqueID())) {
+      PLAYER_SPARKS.put(player.getUniqueID(), new ShineSpark());
+    }
+
+    ShineSpark spark = PLAYER_SPARKS.get(player.getUniqueID());
+
+    if (spark.active) {
       if (!player.isSprinting()) {
-        chozoChest.sprintingTicks = 0;
-        chozoChest.spark = false;
-        chozoChest.initialDirection = null;
-        chozoChest.savedMotionX = null;
-        chozoChest.savedMotionZ = null;
+        spark.sprintingTicks = 0;
+        spark.active = false;
+        spark.initialDirection = null;
+        spark.savedMotionX = null;
+        spark.savedMotionZ = null;
         return;
       }
       // Store the initial motion direction.
-      if (chozoChest.initialDirection == null || chozoChest.savedMotionX == null || chozoChest.savedMotionZ == null) {
-        chozoChest.initialDirection = player.rotationYaw;
+      if (spark.initialDirection == null || spark.savedMotionX == null || spark.savedMotionZ == null) {
+        spark.initialDirection = player.rotationYaw;
         double speed = Math.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
         double scale = SPARK_SPEED / speed;
-        chozoChest.savedMotionX = scale * player.motionX;
-        chozoChest.savedMotionZ = scale * player.motionZ;
+        spark.savedMotionX = scale * player.motionX;
+        spark.savedMotionZ = scale * player.motionZ;
       }
 
-      player.rotationYaw = chozoChest.initialDirection;
-      player.motionX = chozoChest.savedMotionX;
-      player.motionZ = chozoChest.savedMotionZ;
+      player.rotationYaw = spark.initialDirection;
+      player.motionX = spark.savedMotionX;
+      player.motionZ = spark.savedMotionZ;
     } else if (player.isSprinting() && player.onGround) {
-      chozoChest.sprintingTicks++;
-      if (chozoChest.sprintingTicks >= 100) {
-        chozoChest.spark = true;
-        chozoChest.playShineSpark(player);
+      spark.sprintingTicks++;
+      if (spark.sprintingTicks >= 100) {
+        spark.active = true;
+        playShineSpark(player);
       }
+    } else {
+      spark.sprintingTicks = 0;
     }
+  }
+
+  /**
+   * Helper class to hold data about the shine spark.
+   */
+  public static class ShineSpark {
+
+    public boolean active = false;
+
+    private int sprintingTicks = 0;
+
+    // Saves the current speed for when sparking starts.
+    private Float initialDirection = null;
+    private Double savedMotionX = null;
+    private Double savedMotionZ = null;
+
+    public ShineSpark() {
+    }
+
   }
 
 }

@@ -16,8 +16,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ShineSparkSound extends MovingSound {
 
-  private static float MAX_PITCH = 1.0F;
-  private static float MAX_VOLUME = 0.35F;
+  private static final float MAX_PITCH = 1.0F;
+  private static final float MAX_VOLUME = 0.35F;
+
   private EntityPlayer player;
 
   public ShineSparkSound(EntityPlayer player) {
@@ -33,8 +34,10 @@ public class ShineSparkSound extends MovingSound {
   public void update() {
     Item armor = this.player.inventory.armorInventory.get(EntityEquipmentSlot.CHEST.getIndex()).getItem();
     if (!(armor instanceof PowerSuitChestplate)) return;
-    PowerSuitChestplate chozoChest = (PowerSuitChestplate) armor;
-    if (chozoChest.spark) {
+
+    PowerSuitChestplate.ShineSpark spark = PowerSuitChestplate.PLAYER_SPARKS.get(this.player.getUniqueID());
+
+    if (spark.active) {
       this.xPosF = (float) this.player.posX;
       this.yPosF = (float) this.player.posY;
       this.zPosF = (float) this.player.posZ;
