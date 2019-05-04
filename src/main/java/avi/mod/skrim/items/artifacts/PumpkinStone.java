@@ -42,6 +42,7 @@ public class PumpkinStone extends ArtifactItem {
       if (event.getEntityPlayer().world.isRemote) {
         event.getEntityPlayer().world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, false, cow.posX, cow.posY + (cow.height / 2),
             cow.posZ, 1, 0.0D, 0.0D, 0, 0);
+        return;
       }
 
       EntityCow entitycow = new EntityPumpkow(cow.world);

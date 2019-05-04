@@ -37,10 +37,9 @@ public class BanHammer extends ArtifactItem {
     // Only fires on server side.
     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
     ICommandManager cm = server.getCommandManager();
-    System.out.println("Executing: /ban " + target.getName());
     cm.executeCommand(server, "/ban " + target.getName());
     attacker.world.playSound(null, attacker.getPosition(), SkrimSoundEvents.BAN_HAMMER, SoundCategory.PLAYERS, 10000f, 1.0f);
-    stack.damageItem(1, attacker);
+    stack.damageItem(2, attacker);
 
     return true;
   }
