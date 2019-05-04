@@ -96,13 +96,13 @@ public class MegaChicken extends EntityChicken {
 
     Entity chicken = event.getEntity();
     if (event.getEntity() instanceof MegaChicken) {
-      if (Utils.rand.nextDouble() < 0.01) {
+      if (Utils.rand.nextDouble() < 0.02) {
         SkrimPacketHandler.INSTANCE.sendToServer(new SpawnEntityPacket(GigaChicken.NAME, true, chicken.posX, chicken.posY, chicken.posZ));
       }
       return;
     }
 
-    if (Utils.rand.nextDouble() < 0.01) {
+    if (Utils.rand.nextDouble() < 0.02) {
       SkrimPacketHandler.INSTANCE.sendToServer(new SpawnEntityPacket(MegaChicken.NAME, true, chicken.posX, chicken.posY, chicken.posZ));
     }
   }

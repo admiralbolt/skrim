@@ -32,6 +32,7 @@ public class BanHammer extends ArtifactItem {
 
   @Override
   public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+    System.out.println("attacker.world.isRemote: " + attacker.world.isRemote);
     if (!(target instanceof EntityPlayer)) return true;
 
     // Only fires on server side.

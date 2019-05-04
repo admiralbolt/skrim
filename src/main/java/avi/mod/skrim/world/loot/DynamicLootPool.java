@@ -33,8 +33,7 @@ public class DynamicLootPool {
 
   public static LootPool RECORD_POOL = new DynamicLootPool("record_pool", 10000, 60, 10, 2, 2,
       Stream.of(SkrimItems.SONGS)).toLootPool();
-
-
+  
   private String name;
   private RandomValueRange rolls;
   private RandomValueRange bonusRolls;
