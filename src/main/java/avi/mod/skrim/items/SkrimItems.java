@@ -266,6 +266,83 @@ public class SkrimItems {
 
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
+      System.out.println("items registered");
+      ArrayList<Item> items = new ArrayList<Item>(Arrays.asList(
+          OAK_LEAF_BOOTS,
+          OAK_LEAF_PANTS,
+          OAK_LEAF_ARMOR,
+          OAK_LEAF_HELMET,
+          SPRUCE_LEAF_BOOTS,
+          SPRUCE_LEAF_PANTS,
+          SPRUCE_LEAF_ARMOR,
+          SPRUCE_LEAF_HELMET,
+          BIRCH_LEAF_BOOTS,
+          BIRCH_LEAF_PANTS,
+          BIRCH_LEAF_ARMOR,
+          BIRCH_LEAF_HELMET,
+          JUNGLE_LEAF_BOOTS,
+          JUNGLE_LEAF_PANTS,
+          JUNGLE_LEAF_ARMOR,
+          JUNGLE_LEAF_HELMET,
+          DARK_OAK_LEAF_BOOTS,
+          DARK_OAK_LEAF_PANTS,
+          DARK_OAK_LEAF_ARMOR,
+          DARK_OAK_LEAF_HELMET,
+          ACACIA_LEAF_BOOTS,
+          ACACIA_LEAF_PANTS,
+          ACACIA_LEAF_ARMOR,
+          ACACIA_LEAF_HELMET,
+          OBSIDIAN_HELMET,
+          OBSIDIAN_CHEST,
+          OBSIDIAN_PANTS,
+          OBSIDIAN_BOOTS,
+          OBSIDIAN_AXE,
+          OBSIDIAN_HOE,
+          OBSIDIAN_PICKAXE,
+          OBSIDIAN_SHOVEL,
+          OBSIDIAN_SWORD,
+          WEIRWOOD_TOTEM,
+          ROCKET_LAUNCHER,
+          GREAT_BOW,
+          OVERALLS,
+          HAND_SAW,
+
+          OVERWRITE_BOW,
+
+          // Food
+          OVERWRITE_PORKCHOP,
+          OVERWRITE_BAKED_POTATO,
+          OVERWRITE_BEETROOT_SOUP,
+          OVERWRITE_BREAD,
+          OVERWRITE_CHICKEN,
+          OVERWRITE_FISH,
+          OVERWRITE_MUTTON,
+          OVERWRITE_SALMON,
+          OVERWRITE_COOKIE,
+          OVERWRITE_MUSHROOM_STEW,
+          OVERWRITE_PUMPKIN_STEW,
+          OVERWRITE_RABBIT_STEW,
+          OVERWRITE_STEAK,
+          OVERWRITE_RABBIT,
+          CANES_CHICKEN,
+          SKRIM_CAKE,
+          ANGEL_CAKE
+      ));
+
+      items.addAll(new ArrayList<>(Arrays.asList(ARTIFACTS)));
+      items.addAll(new ArrayList<>(Arrays.asList(SONGS)));
+
+      final IForgeRegistry<Item> registry = event.getRegistry();
+      for (final Item item : items) {
+        registry.register(item);
+        item.setCreativeTab(Skrim.CREATIVE_TAB);
+        ITEMS.add(item);
+      }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public static void registerItemModels(ModelRegistryEvent event) {
       for (final Item item : ITEMS) {
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),
             ((ItemBase) item).getTexturePath()));
