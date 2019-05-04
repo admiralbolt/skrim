@@ -19,7 +19,7 @@ public class Config {
       initGeneralConfig(cfg);
       initDimensionConfig(cfg);
     } catch (Exception e1) {
-      System.out.println(e1);
+      e1.printStackTrace();
     } finally {
       if (cfg.hasChanged()) {
         cfg.save();

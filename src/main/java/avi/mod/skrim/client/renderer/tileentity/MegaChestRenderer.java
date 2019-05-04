@@ -39,7 +39,6 @@ public class MegaChestRenderer extends TileEntitySpecialRenderer<MegaChestTileEn
     modelchest = this.simpleChest;
 
     if (destroyStage >= 0) {
-      System.out.println("destroy stage: " + destroyStage);
       this.bindTexture(DESTROY_STAGES[destroyStage]);
       GlStateManager.matrixMode(5890);
       GlStateManager.pushMatrix();

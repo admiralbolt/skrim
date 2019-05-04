@@ -47,7 +47,6 @@ public class FireStaff extends ArtifactItem {
     if (worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 
     Vec3d vec3d = playerIn.getLookVec();
-    System.out.println(vec3d);
     worldIn.playEvent(null, 1016, new BlockPos(playerIn), 0);
     EntityLargeFireball entitylargefireball = new EntityLargeFireball(worldIn, playerIn, 0, 0, 0);
     entitylargefireball.explosionPower = FIREBALL_RADIUS;

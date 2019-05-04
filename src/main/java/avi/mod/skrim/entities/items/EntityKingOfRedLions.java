@@ -57,7 +57,6 @@ public class EntityKingOfRedLions extends EntityBoat {
     super.addPassenger(passenger);
 
     if (passenger.world.isRemote) {
-      System.out.println("playing shit.");
       Minecraft.getMinecraft().getSoundHandler().playSound(new WindWakerSeaSound(this));
     }
 

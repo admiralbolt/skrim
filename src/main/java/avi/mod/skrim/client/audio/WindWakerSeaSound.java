@@ -28,7 +28,6 @@ public class WindWakerSeaSound extends MovingSound {
     this.zPosF = (float) boat.posZ;
     if (boat.isBeingRidden()) return;
 
-    System.out.println("OOO");
     this.repeat = false;
     this.donePlaying = true;
   }

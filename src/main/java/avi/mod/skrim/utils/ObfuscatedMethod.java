@@ -61,7 +61,6 @@ public class ObfuscatedMethod {
           System.out.println("Found method: " + method.getName() + ", at depth: " + depth + ", className: " + c.getName());
           if (!this.matchesModifiers(method)) continue;
 
-          System.out.println("invoking....");
           method.setAccessible(true);
           return method.invoke(instance, args);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -74,16 +73,12 @@ public class ObfuscatedMethod {
 
   private boolean matchesModifiers(Method method) {
     int modifiers = method.getModifiers();
-    System.out.println(modifiers);
-    System.out.println(this.modifierWhitelist);
-    System.out.println(this.modifierBlacklist);
     for (int mod : this.modifierWhitelist) {
       if ((mod & modifiers) != mod) return false;
     }
     for (int mod : this.modifierBlacklist) {
       if ((mod & modifiers) == mod) return false;
     }
-    System.out.println("passedTheModifier check!");
     return true;
   }
 

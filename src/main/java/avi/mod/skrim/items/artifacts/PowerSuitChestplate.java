@@ -75,7 +75,6 @@ public class PowerSuitChestplate extends ArtifactArmor {
         double scale = SPARK_SPEED / speed;
         chozoChest.savedMotionX = scale * player.motionX;
         chozoChest.savedMotionZ = scale * player.motionZ;
-        System.out.println("SPARK! X: " + chozoChest.savedMotionX + ", Z: " + chozoChest.savedMotionZ);
       }
 
       player.rotationYaw = chozoChest.initialDirection;
@@ -87,7 +86,6 @@ public class PowerSuitChestplate extends ArtifactArmor {
         chozoChest.spark = true;
         chozoChest.playShineSpark(player);
       }
-      System.out.println("motionX: " + player.motionX + ", motionZ: " + player.motionZ);
     }
   }
 

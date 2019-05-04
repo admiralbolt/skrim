@@ -192,7 +192,6 @@ public class CustomExplosion extends Explosion {
 		}
 
 		if (this.damagesTerrain) {
-			System.out.println("affectedBlockPositionsSize: " + this.affectedBlockPositions.size());
 			for (BlockPos blockpos : this.affectedBlockPositions) {
 				IBlockState iblockstate = this.worldObj.getBlockState(blockpos);
 				Block block = iblockstate.getBlock();

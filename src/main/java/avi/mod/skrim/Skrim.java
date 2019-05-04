@@ -55,7 +55,6 @@ public class Skrim {
 
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent event) {
-    System.out.println(NAME + " is in preInit.");
     proxy.preInit();
     SkrimEntities.register();
     SkrimPacketHandler.registerPackets();
@@ -63,7 +62,6 @@ public class Skrim {
 
   @Mod.EventHandler
   public void init(FMLInitializationEvent event) {
-    System.out.println(NAME + " is in init.");
     proxy.init();
 
     CustomLootTables.registerLootTables();
@@ -78,14 +76,12 @@ public class Skrim {
 
   @Mod.EventHandler
   public void postInit(FMLPostInitializationEvent event) {
-    System.out.println(NAME + " is in postinit.");
     proxy.postInit();
     // CookingPatch.apply();
   }
 
   @Mod.EventHandler
   public void serverStarting(FMLServerStartingEvent event) {
-    System.out.println("server starting...");
     CommandRegistry.registerCommands(event);
   }
 

@@ -52,11 +52,7 @@ public class Casey extends ArtifactSword {
       EntityPlayer player = (EntityPlayer) entity;
       if (player.getHeldItemMainhand().getItem() != SkrimItems.CASEY) return;
 
-      System.out.println("player.world.isRemote: " + player.world.isRemote);
-
       player.world.playSound(null, player.getPosition(), SkrimSoundEvents.HOME_RUN, SoundCategory.PLAYERS, 10.0F, 1.0F);
-
-      System.out.println("played the sound....");
     }
 
   }

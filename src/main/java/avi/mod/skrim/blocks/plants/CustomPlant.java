@@ -67,7 +67,6 @@ public abstract class CustomPlant extends BlockBush implements IGrowable {
 	}
 
 	public void finishedGrowing(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-		System.out.println("calling finished Growing()... pos: " + pos + ", state: " + state);
 	}
 
 	public int getAge(IBlockState state) {

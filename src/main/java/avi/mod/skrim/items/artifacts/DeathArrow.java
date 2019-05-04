@@ -74,7 +74,6 @@ public class DeathArrow extends ItemArrow implements ItemBase {
 
     @Override
     protected void arrowHit(EntityLivingBase living) {
-      System.out.println("hit entity: " + living);
       living.onKillCommand();
     }
 
@@ -90,12 +89,8 @@ public class DeathArrow extends ItemArrow implements ItemBase {
       Entity entity = raytraceResultIn.entityHit;
       if (!(entity instanceof MultiPartEntityPart)) return;
 
-      System.out.println("hit a dragon part");
-
       MultiPartEntityPart dragonPart = (MultiPartEntityPart) entity;
       if (!(dragonPart.parent instanceof EntityDragon)) return;
-
-      System.out.println("converted to a draogn...");
 
       EntityDragon dragon = (EntityDragon) dragonPart.parent;
       dragon.attackEntityFrom(DamageSource.causeThornsDamage(this.shootingEntity), 1000);

@@ -39,8 +39,6 @@ public class SkrimEntitySpawnHandler {
 
         return new SkrimFishHook(world, (EntityPlayer) angler, posX, posY, posZ);
       } catch (IllegalArgumentException e) {
-        System.out.println("Illegal Argument");
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
 

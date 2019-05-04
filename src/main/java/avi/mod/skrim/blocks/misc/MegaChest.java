@@ -73,7 +73,6 @@ public class MegaChest extends BlockContainer {
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     EnumFacing enumfacing =
 				EnumFacing.getHorizontal(MathHelper.floor((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3).getOpposite();
-    System.out.println("enumfacing: " + enumfacing);
     state = state.withProperty(FACING, enumfacing);
     if (stack.hasDisplayName()) {
       ((MegaChestTileEntity) worldIn.getTileEntity(pos)).setCustomName(stack.getDisplayName());
