@@ -4,7 +4,6 @@ import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.capabilities.SkrimCapabilities;
 import avi.mod.skrim.client.SkrimTab;
 import avi.mod.skrim.commands.CommandRegistry;
-import avi.mod.skrim.entities.SkrimEntities;
 import avi.mod.skrim.handlers.EventHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -31,7 +30,7 @@ public class Skrim {
    * messages for debugging individual skills and abilities.
    * Should be FALSE for release.
    */
-  public static final boolean DEBUG = true;
+  public static final boolean DEBUG = false;
 
   /**
    * Whether or not to enforce only giving xp / bonuses
@@ -40,7 +39,7 @@ public class Skrim {
    * player placed blocks.
    * Should be TRUE for release.
    */
-  public static final boolean ENFORCE_NATURAL = false;
+  public static final boolean ENFORCE_NATURAL = true;
 
   /**
    * Pretty straight forward, every hit is a critical hit.
@@ -56,7 +55,6 @@ public class Skrim {
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent event) {
     proxy.preInit();
-    SkrimEntities.register();
     SkrimPacketHandler.registerPackets();
   }
 

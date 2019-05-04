@@ -10,28 +10,86 @@ import avi.mod.skrim.entities.passive.EntityFox;
 import avi.mod.skrim.entities.passive.EntityPumpkow;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.items.artifacts.DeathArrow;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@GameRegistry.ObjectHolder(Skrim.MOD_ID)
 public class SkrimEntities {
 
-  private static int ENTITY_ID = 0;
+  public static final EntityEntry SKRIM_FISH_HOOK = null;
+  public static final EntityEntry ROCKET = null;
+  public static final EntityEntry NAPALM_CREEPER = null;
+  public static final EntityEntry BIO_CREEPER = null;
+  public static final EntityEntry MEGA_CHICKEN = null;
+  public static final EntityEntry GIGA_CHICKEN = null;
+  public static final EntityEntry FOX = null;
+  public static final EntityEntry DEATH_ARROW = null;
+  public static final EntityEntry KING_OF_RED_LIONS = null;
+  public static final EntityEntry PUMPKOW = null;
 
-  public static void register() {
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:skrim_fish_hook"), SkrimFishHook.class, "SkrimFishHook", ENTITY_ID++, Skrim.instance, 64, 10, true);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:rocket"), Rocket.class, "rocket", ENTITY_ID++, Skrim.instance, 48, 3, true);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:napalm_creeper"), NapalmCreeper.class, "napalm_creeper", ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFF3000, 0xEE9000);
-    EntityRegistry.addSpawn(NapalmCreeper.class, 10, 2, 4, EnumCreatureType.MONSTER, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MUTATED_DESERT, Biomes.MUTATED_SAVANNA, Biomes.MUTATED_SAVANNA_ROCK, Biomes.SAVANNA_PLATEAU, Biomes.SAVANNA, Biomes.HELL);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:bio_creeper"), BioCreeper.class, "bio_creeper", ENTITY_ID++, Skrim.instance, 48, 3, true, 0x00CCEE, 0x00CCBB);
-    EntityRegistry.addSpawn(BioCreeper.class, 20, 2, 4, EnumCreatureType.MONSTER, Biomes.SWAMPLAND, Biomes.COLD_TAIGA, Biomes.COLD_TAIGA_HILLS, Biomes.MUTATED_SWAMPLAND, Biomes.MUTATED_TAIGA_COLD);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:mega_chicken"), MegaChicken.class, MegaChicken.NAME, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFFFF, 0xFF8888);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:giga_chicken"), GigaChicken.class, GigaChicken.NAME, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFFFF, 0xFF8888);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:fox"), EntityFox.class, EntityFox.name, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFF77, 0x222222);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:death_arrow"), DeathArrow.EntityDeathArrow.class, "death_arrow", ENTITY_ID++, Skrim.instance, 48, 3, true);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:king_of_red_lions"), EntityKingOfRedLions.class, "king_of_red_lions", ENTITY_ID++, Skrim.instance, 48, 3, true);
-    EntityRegistry.registerModEntity(new ResourceLocation("skrim:pumpkow"), EntityPumpkow.class, EntityPumpkow.NAME, ENTITY_ID++, Skrim.instance, 48, 3, true, 0xFFFF55, 0xFF8855);
+  @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
+  public static class RegistrationHandler {
+
+    private static int ENTITY_ID = 0;
+
+    @SubscribeEvent
+    public static void registerEntities(final RegistryEvent.Register<EntityEntry> event) {
+      final EntityEntry[] entries = {
+          createBuilder("skrim_fish_hook").entity(SkrimFishHook.class).tracker(64, 10, true).build(),
+          createBuilder("rocket").entity(Rocket.class).tracker(48, 3, true).build(),
+          createBuilder("napalm_creeper").entity(NapalmCreeper.class).tracker(48, 3, true).egg(0xFF3000, 0xEE9000).build(),
+          createBuilder("bio_creeper").entity(BioCreeper.class).tracker(48, 3, true).egg(0x00CCEE, 0x00CCBB).build(),
+          createBuilder("mega_chicken").entity(MegaChicken.class).tracker(48, 3, true).egg(0xFFFFFF, 0xFF8888).build(),
+          createBuilder("giga_chicken").entity(GigaChicken.class).tracker(48, 3, true).egg(0xFFFFFF, 0x000000).build(),
+          createBuilder("fox").entity(EntityFox.class).tracker(48, 3, true).egg(0xFF9900, 0xFF4400).build(),
+          createBuilder("death_arrow").entity(DeathArrow.EntityDeathArrow.class).tracker(48, 3, true).build(),
+          createBuilder("king_of_red_lions").entity(EntityKingOfRedLions.class).tracker(48, 3, true).build(),
+          createBuilder("pumpkow").entity(EntityPumpkow.class).tracker(48, 3, true).build()
+      };
+
+      event.getRegistry().registerAll(entries);
+      addSpawns();
+    }
+
+    private static void addSpawns() {
+      EntityRegistry.addSpawn(NapalmCreeper.class, 15, 2, 6, EnumCreatureType.MONSTER, getBiomes(BiomeDictionary.Type.HOT));
+      EntityRegistry.addSpawn(BioCreeper.class, 20, 2, 6, EnumCreatureType.MONSTER, getBiomes(BiomeDictionary.Type.COLD,
+          BiomeDictionary.Type.SWAMP, BiomeDictionary.Type.CONIFEROUS));
+    }
+
+    private static Biome[] getBiomes(BiomeDictionary.Type... types) {
+      Set<Biome> biomes = new HashSet<>();
+      for (BiomeDictionary.Type type : types) {
+        biomes.addAll(BiomeDictionary.getBiomes(type));
+      }
+      return biomes.toArray(new Biome[0]);
+    }
+
+    /**
+     * Create an {@link EntityEntryBuilder} with the specified registry name/translation key and an automatically-assigned network ID.
+     *
+     * @param name The name
+     * @param <E>  The entity type
+     * @return The builder
+     */
+    private static <E extends Entity> EntityEntryBuilder<E> createBuilder(final String name) {
+      final EntityEntryBuilder<E> builder = EntityEntryBuilder.create();
+      final ResourceLocation registryName = new ResourceLocation(Skrim.MOD_ID, name);
+      return builder.id(registryName, ENTITY_ID++).name(registryName.toString());
+    }
   }
 
 }
