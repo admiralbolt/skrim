@@ -98,6 +98,7 @@ public class SkrimItems {
   public static ArtifactItem HORSE_STEROID_JUMP = new HorseSteroidJump();
   public static ArtifactItem LIFE_CRYSTAL = new LifeCrystal();
   public static ArtifactItem KING_OF_RED_LIONS = new KingOfRedLions();
+  public static ArtifactItem LAMENT_CONFIGURUM = new LamentConfigurum();
 
   public static Item DEATH_ARROW = new DeathArrow();
   public static Item ENCHIRIDION = new Enchiridion();
@@ -130,6 +131,7 @@ public class SkrimItems {
       ESSENCE_AEGIS,
       PURE_NAIL,
       BAN_HAMMER,
+      LAMENT_CONFIGURUM,
   };
 
   // La musica

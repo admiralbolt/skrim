@@ -28,12 +28,17 @@ public class AddTreasure {
   );
 
 
-
   public static void addTreasure(LootTableLoadEvent event) {
     if (!LOOT_TABLES.contains(event.getName())) return;
 
-    event.getTable().addPool(DynamicLootPool.ARTIFACT_POOL);
     event.getTable().addPool(DynamicLootPool.RECORD_POOL);
+
+    // Higher chance for artifacts to spawn in the bonus chest. Will use this to make lament configurum better.
+    if (event.getName() == LootTableList.CHESTS_SPAWN_BONUS_CHEST) {
+      event.getTable().addPool(DynamicLootPool.HIGH_CHANCE_ARTIFACT_POOL);
+    } else {
+      event.getTable().addPool(DynamicLootPool.ARTIFACT_POOL);
+    }
   }
 
 }

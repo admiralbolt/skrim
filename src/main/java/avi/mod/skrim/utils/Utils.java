@@ -189,4 +189,8 @@ public class Utils {
     return (stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata() && stack1 != ItemStack.EMPTY && stack2 != ItemStack.EMPTY && stack1.getCount() > 0 && stack2.getCount() > 0);
   }
 
+  public static int randInt(int min, int max) {
+    return rand.nextInt(max - min) + min;
+  }
+
 }
