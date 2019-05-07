@@ -58,8 +58,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
   private static final int ANGEL_DURATION = 600;
 
   public boolean hasAngel = false;
-  public boolean startFlyingSound = true;
-
+  private boolean startFlyingSound = true;
   public int currentTicks = 0;
 
   private static void addFood(String name, Item food, int xp) {
@@ -330,6 +329,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
   public static void angelUpdate(LivingUpdateEvent event) {
     Entity entity = event.getEntity();
     if (!(entity instanceof EntityPlayer)) return;
+
     EntityPlayer player = (EntityPlayer) entity;
     SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
     if (cooking.hasAngel && cooking.currentTicks > 0) {
@@ -350,6 +350,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
   public static void angelFall(LivingFallEvent event) {
     Entity entity = event.getEntity();
     if (!(entity instanceof EntityPlayer)) return;
+
     EntityPlayer player = (EntityPlayer) entity;
     SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
     if (!cooking.hasAngel) return;
@@ -363,7 +364,11 @@ public class SkillCooking extends Skill implements ISkillCooking {
     this.hasAngel = true;
     player.capabilities.allowFlying = true;
     this.currentTicks = ANGEL_DURATION;
+    System.out.println("this.startFlyingSound: " + this.startFlyingSound);
     if (player.world.isRemote || !this.startFlyingSound) return;
+
+    System.out.println("Sending packet to: " + player.getName());
+
     SkrimPacketHandler.INSTANCE.sendTo(new AngelFlyingSoundPacket(), (EntityPlayerMP) player);
     this.startFlyingSound = false;
   }

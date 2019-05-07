@@ -34,7 +34,7 @@ public class AngelCakeFlyingSound extends MovingSound {
   @Override
   public void update() {
     if (this.player.hasCapability(Skills.COOKING, EnumFacing.NORTH)) {
-      SkillCooking cooking = (SkillCooking) this.player.getCapability(Skills.COOKING, EnumFacing.NORTH);
+      SkillCooking cooking = Skills.getSkill(this.player, Skills.COOKING, SkillCooking.class);
       if (!cooking.hasAngel) {
         this.repeat = false;
         this.donePlaying = true;
@@ -47,6 +47,7 @@ public class AngelCakeFlyingSound extends MovingSound {
 
       // Once time starts to run out, linearly decrease the pitch and volume.
       if (cooking.currentTicks > 100) return;
+
       this.pitch = (float) MathUtils.linearRescale(cooking.currentTicks, 0, 100, (double) MIN_PITCH,
           (double) MAX_PITCH);
       this.volume = (float) MathUtils.linearRescale(cooking.currentTicks, 0, 100, 0.0, (double) MAX_VOLUME);

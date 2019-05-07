@@ -1,5 +1,7 @@
 package avi.mod.skrim.utils;
 
+import net.minecraft.entity.EntityLivingBase;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -14,6 +16,9 @@ public class ObfuscatedMethod {
 
   public static ObfuscatedMethod ENTITY_SET_SIZE =
       new ObfuscatedMethod("setSize", "func_70105_a").addToWhitelist(Modifier.PROTECTED).addToBlacklist(Modifier.FINAL).addParameters(float.class, float.class);
+
+  public static ObfuscatedMethod CAN_RENDER_NAME =
+      new ObfuscatedMethod("canRenderName", "func_177070_b").addToWhitelist(Modifier.PROTECTED).addParameters(EntityLivingBase.class);
 
   private static final int MAX_DEPTH = 10;
 

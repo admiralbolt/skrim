@@ -34,6 +34,8 @@ public class BanHammer extends ArtifactItem {
   public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
     if (!(target instanceof EntityPlayer)) return true;
 
+    System.out.println("attacker.world.isRemote: " + attacker.world.isRemote);
+    System.out.println("target.world.isRemote: " + target.world.isRemote);
     // Only fires on server side.
     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
     ICommandManager cm = server.getCommandManager();
