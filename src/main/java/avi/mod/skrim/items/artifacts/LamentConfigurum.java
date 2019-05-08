@@ -60,6 +60,7 @@ public class LamentConfigurum extends ArtifactItem {
     for (int i = 0; i < Utils.randInt(2, 4); i++) {
       skeleton = new EntitySkeleton(worldIn);
       skeleton.setPosition(playerIn.posX + Utils.randInt(-2, 2), playerIn.posY, playerIn.posZ + Utils.randInt(-2, 2));
+      skeleton.onInitialSpawn(worldIn.getDifficultyForLocation(skeleton.getPosition()), null);
       worldIn.spawnEntity(skeleton);
     }
 
@@ -67,6 +68,7 @@ public class LamentConfigurum extends ArtifactItem {
     for (int i = 0; i < Utils.randInt(1, 3); i++) {
       witherSkeleton = new EntityWitherSkeleton(worldIn);
       witherSkeleton.setPosition(playerIn.posX + Utils.randInt(-2, 2), playerIn.posY, playerIn.posZ + Utils.randInt(-2, 2));
+      witherSkeleton.onInitialSpawn(worldIn.getDifficultyForLocation(witherSkeleton.getPosition()), null);
       worldIn.spawnEntity(witherSkeleton);
     }
 
