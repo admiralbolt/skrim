@@ -79,6 +79,7 @@ public class SkrimItems {
   public static ArtifactSword CASEY = new Casey();
   public static ArtifactSword PURE_NAIL = new PureNail();
   public static ArtifactItem BAN_HAMMER = new BanHammer();
+  public static ArtifactHoe WRETCHED_SCYTHE = new WretchedScythe();
 
   public static ArtifactArmor POWER_SUIT_CHESTPLATE = new PowerSuitChestplate();
   public static ArtifactArmor POWER_SUIT_BOOTS = new PowerSuitBoots();
@@ -134,6 +135,7 @@ public class SkrimItems {
       BAN_HAMMER,
       LAMENT_CONFIGURUM,
       DOUBLE_XP_WEEKEND,
+      WRETCHED_SCYTHE
   };
 
   // La musica

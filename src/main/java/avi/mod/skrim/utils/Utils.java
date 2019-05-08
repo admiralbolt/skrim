@@ -70,11 +70,11 @@ public class Utils {
   }
 
   public static String formatPercent(double percent) {
-    return oneDigit.format(percent * 100);
+    return oneDigit.format(Math.round(percent * 100));
   }
 
   public static String formatPercentTwo(double percent) {
-    return twoDigit.format(percent * 100);
+    return twoDigit.format(Math.round(percent * 100));
   }
 
   public static void applyAttributesModifiersToEntity(EntityLivingBase entityLivingBaseIn,

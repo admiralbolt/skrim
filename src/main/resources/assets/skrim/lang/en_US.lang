@@ -27,6 +27,7 @@ entity.giga_chicken.name=Giga Chicken
 entity.mega_chicken.name=Mega Chicken
 entity.napalm_creeper.name=Napalm Creeper
 entity.pumpkow.name=Pumpkow
+item.wretched_scythe.name=Scythe of the Wretched
 item.lament_configurum.name=Lament Configurum
 item.double_xp_weekend.name=Double XP Weekend
 item.ban_hammer.name=Ban Hammer
