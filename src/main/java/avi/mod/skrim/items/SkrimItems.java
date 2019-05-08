@@ -99,6 +99,7 @@ public class SkrimItems {
   public static ArtifactItem LIFE_CRYSTAL = new LifeCrystal();
   public static ArtifactItem KING_OF_RED_LIONS = new KingOfRedLions();
   public static ArtifactItem LAMENT_CONFIGURUM = new LamentConfigurum();
+  public static ArtifactItem DOUBLE_XP_WEEKEND = new DoubleXPWeekend();
 
   public static Item DEATH_ARROW = new DeathArrow();
   public static Item ENCHIRIDION = new Enchiridion();
@@ -132,6 +133,7 @@ public class SkrimItems {
       PURE_NAIL,
       BAN_HAMMER,
       LAMENT_CONFIGURUM,
+      DOUBLE_XP_WEEKEND,
   };
 
   // La musica
