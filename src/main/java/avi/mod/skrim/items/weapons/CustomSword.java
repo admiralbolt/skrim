@@ -18,4 +18,5 @@ public class CustomSword extends ItemSword implements ItemBase {
   public String getTexturePath() {
     return "weapons";
   }
+
 }

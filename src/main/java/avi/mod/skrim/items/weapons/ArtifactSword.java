@@ -41,8 +41,4 @@ public class ArtifactSword extends CustomSword {
     return 0;
   }
 
-  @Override
-  public String getTexturePath() {
-    return "weapons";
-  }
 }
