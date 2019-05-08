@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import avi.mod.skrim.Skrim;
+import avi.mod.skrim.SkrimGlobalConfig;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -79,7 +80,7 @@ public class PlayerPlacedBlocks extends WorldSavedData {
 	}
 
 	public boolean isNaturalBlock(BlockPos pos) {
-		return !placedPos.contains(pos) || !Skrim.ENFORCE_NATURAL;
+		return !placedPos.contains(pos) || !SkrimGlobalConfig.ENFORCE_NATURAL.value;
 	}
 
 	public void addBlock(BlockPos pos) {

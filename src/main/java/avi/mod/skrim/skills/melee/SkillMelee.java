@@ -1,6 +1,6 @@
 package avi.mod.skrim.skills.melee;
 
-import avi.mod.skrim.Skrim;
+import avi.mod.skrim.SkrimGlobalConfig;
 import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -89,7 +89,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
     SkillMelee melee = Skills.getSkill(player, Skills.MELEE, SkillMelee.class);
     event.setAmount(event.getAmount() + (float) (melee.getExtraDamage() * event.getAmount()));
-    if (!Skrim.ALWAYS_CRIT && Math.random() >= melee.getCritChance()) {
+    if (!SkrimGlobalConfig.ALWAYS_CRIT.value && Math.random() >= melee.getCritChance()) {
       melee.addXp((EntityPlayerMP) player, (int) event.getAmount() * 10);
       return;
     }

@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills;
 
+import avi.mod.skrim.SkrimGlobalConfig;
 import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.skills.blacksmithing.BlacksmithingProvider;
 import avi.mod.skrim.skills.blacksmithing.ISkillBlacksmithing;
@@ -158,7 +159,7 @@ public class Skills {
   }
 
   public static double getTotalXp(EntityPlayer player, int xp) {
-    return getTotalXpBonus(player) * xp + xp;
+    return SkrimGlobalConfig.XP_MULTIPLIER.value * (1 + getTotalXpBonus(player)) * xp;
   }
 
   public static void playFortuneSound(EntityPlayer player) {

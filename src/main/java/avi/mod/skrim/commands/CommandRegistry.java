@@ -8,6 +8,7 @@ public class CommandRegistry {
     event.registerServerCommand(new SetSkillCommand());
     event.registerServerCommand(new WTFDIDCommand());
     event.registerServerCommand(new CoordCommand());
+    event.registerServerCommand(new SkrimOptionCommand());
   }
 
 }

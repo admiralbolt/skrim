@@ -25,28 +25,6 @@ public class Skrim {
   public static final String VERSION = "1.1.12-1.0";
   public static final SkrimTab CREATIVE_TAB = new SkrimTab();
 
-  /**
-   * The debug flag is used for logging several different
-   * messages for debugging individual skills and abilities.
-   * Should be FALSE for release.
-   */
-  public static final boolean DEBUG = false;
-
-  /**
-   * Whether or not to enforce only giving xp / bonuses
-   * for NON player placed blocks.  If enforce=true
-   * then NO experience will be given for breaking
-   * player placed blocks.
-   * Should be TRUE for release.
-   */
-  public static final boolean ENFORCE_NATURAL = true;
-
-  /**
-   * Pretty straight forward, every hit is a critical hit.
-   * Should be FALSE for release.
-   */
-  public static final boolean ALWAYS_CRIT = false;
-
   @SidedProxy(serverSide = "avi.mod.skrim.proxy.ServerProxy", clientSide = "avi.mod.skrim.proxy.ClientProxy")
   public static IProxy proxy;
   @Mod.Instance(MOD_ID)
