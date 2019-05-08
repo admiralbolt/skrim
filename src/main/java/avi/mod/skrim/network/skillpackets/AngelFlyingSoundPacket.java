@@ -37,8 +37,6 @@ public class AngelFlyingSoundPacket implements IMessage {
       final EntityPlayer player = Minecraft.getMinecraft().player;
       if (player == null) return null;
 
-      System.out.println("playing sound for player: " + player.getName());
-
       IThreadListener mainThread = Minecraft.getMinecraft();
       mainThread.addScheduledTask(() -> {
         Minecraft.getMinecraft().getSoundHandler().playSound(new AngelCakeFlyingSound(player));

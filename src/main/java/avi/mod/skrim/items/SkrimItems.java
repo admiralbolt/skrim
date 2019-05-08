@@ -271,7 +271,6 @@ public class SkrimItems {
 
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
-      System.out.println("items registered");
       ArrayList<Item> items = new ArrayList<Item>(Arrays.asList(
           OAK_LEAF_BOOTS,
           OAK_LEAF_PANTS,

@@ -364,10 +364,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
     this.hasAngel = true;
     player.capabilities.allowFlying = true;
     this.currentTicks = ANGEL_DURATION;
-    System.out.println("this.startFlyingSound: " + this.startFlyingSound);
     if (player.world.isRemote || !this.startFlyingSound) return;
-
-    System.out.println("Sending packet to: " + player.getName());
 
     SkrimPacketHandler.INSTANCE.sendTo(new AngelFlyingSoundPacket(), (EntityPlayerMP) player);
     this.startFlyingSound = false;
