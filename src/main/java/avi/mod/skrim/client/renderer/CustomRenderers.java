@@ -11,6 +11,7 @@ import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
 import avi.mod.skrim.entities.passive.EntityFox;
 import avi.mod.skrim.entities.passive.EntityPumpkow;
+import avi.mod.skrim.entities.passive.EntityWatermoolon;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.items.artifacts.DeathArrow;
 import avi.mod.skrim.tileentity.EnchantedFlowerTileEntity;
@@ -38,6 +39,7 @@ public class CustomRenderers {
     RenderingRegistry.registerEntityRenderingHandler(DeathArrow.EntityDeathArrow.class, RenderDeathArrow::new);
     RenderingRegistry.registerEntityRenderingHandler(EntityKingOfRedLions.class, RenderKingOfRedLions::new);
     RenderingRegistry.registerEntityRenderingHandler(EntityPumpkow.class, RenderPumpkow::new);
+    RenderingRegistry.registerEntityRenderingHandler(EntityWatermoolon.class, RenderWatermoolon::new);
   }
 
 }

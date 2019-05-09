@@ -105,6 +105,7 @@ public class SkrimItems {
   public static Item DEATH_ARROW = new DeathArrow();
   public static Item ENCHIRIDION = new Enchiridion();
   public static Item PUMPKIN_STONE = new PumpkinStone();
+  public static Item WATERMELON_STONE = new WatermelonStone();
   public static Item ESSENCE_AEGIS = new EssenceAegis();
 
   public static Item[] ARTIFACTS = {
@@ -128,6 +129,7 @@ public class SkrimItems {
       ENCHIRIDION,
       KING_OF_RED_LIONS,
       PUMPKIN_STONE,
+      WATERMELON_STONE,
       POWER_SUIT_BOOTS,
       DEEP_HELM,
       ESSENCE_AEGIS,

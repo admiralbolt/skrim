@@ -8,6 +8,7 @@ import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.entities.monster.NapalmCreeper;
 import avi.mod.skrim.entities.passive.EntityFox;
 import avi.mod.skrim.entities.passive.EntityPumpkow;
+import avi.mod.skrim.entities.passive.EntityWatermoolon;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.items.artifacts.DeathArrow;
 import net.minecraft.entity.Entity;
@@ -57,7 +58,8 @@ public class SkrimEntities {
           createBuilder("fox").entity(EntityFox.class).tracker(48, 3, true).egg(0xFF9900, 0xFF4400).build(),
           createBuilder("death_arrow").entity(DeathArrow.EntityDeathArrow.class).tracker(48, 3, true).build(),
           createBuilder("king_of_red_lions").entity(EntityKingOfRedLions.class).tracker(48, 3, true).build(),
-          createBuilder("pumpkow").entity(EntityPumpkow.class).tracker(48, 3, true).build()
+          createBuilder("pumpkow").entity(EntityPumpkow.class).tracker(48, 3, true).build(),
+          createBuilder("watermoolon").entity(EntityWatermoolon.class).tracker(48, 3, true).build()
       };
 
       event.getRegistry().registerAll(entries);

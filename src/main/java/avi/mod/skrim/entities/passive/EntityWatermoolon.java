@@ -1,12 +1,11 @@
 package avi.mod.skrim.entities.passive;
 
 import avi.mod.skrim.items.SkrimItems;
-import avi.mod.skrim.skills.cooking.SkillCooking;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -18,11 +17,11 @@ import net.minecraft.world.storage.loot.LootTableList;
 
 import javax.annotation.Nullable;
 
-public class EntityPumpkow extends EntityCow implements net.minecraftforge.common.IShearable {
+public class EntityWatermoolon extends EntityCow implements net.minecraftforge.common.IShearable {
 
-  public static final String NAME = "pumpkow";
+  public static final String NAME = "watermoolon";
 
-  public EntityPumpkow(World worldIn) {
+  public EntityWatermoolon(World worldIn) {
     super(worldIn);
     this.setSize(0.9F, 1.4F);
   }
@@ -34,16 +33,15 @@ public class EntityPumpkow extends EntityCow implements net.minecraftforge.commo
   public boolean processInteract(EntityPlayer player, EnumHand hand) {
     ItemStack itemstack = player.getHeldItem(hand);
 
-    if (itemstack.isEmpty() && this.getGrowingAge() >= 0 && !player.capabilities.isCreativeMode) {
-      player.setHeldItem(hand, SkillCooking.getReplaceFood(player, new ItemStack(Items.PUMPKIN_PIE)));
-      return true;
-    }
+    if (!itemstack.isEmpty()) return true;
 
-    return super.processInteract(player, hand);
+    player.setHeldItem(hand, new ItemStack(Blocks.MELON_BLOCK));
+    return true;
+
   }
 
-  public EntityPumpkow createChild(EntityAgeable ageable) {
-    return new EntityPumpkow(this.world);
+  public EntityWatermoolon createChild(EntityAgeable ageable) {
+    return new EntityWatermoolon(this.world);
   }
 
   @Override
@@ -80,4 +78,5 @@ public class EntityPumpkow extends EntityCow implements net.minecraftforge.commo
   protected ResourceLocation getLootTable() {
     return LootTableList.ENTITIES_COW;
   }
+
 }
