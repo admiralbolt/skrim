@@ -101,7 +101,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
   }
 
   private double getSpeedBonus() {
-    return 0.15 * this.level;
+    return 0.12 * this.level;
   }
 
   private double getHewingChance() {

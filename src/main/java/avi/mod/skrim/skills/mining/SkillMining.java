@@ -96,7 +96,7 @@ public class SkillMining extends Skill implements ISkillMining {
   }
 
   private double getSpeedBonus() {
-    return 0.01 * this.level;
+    return 0.008 * this.level;
   }
 
   private double getFortuneChance() {
