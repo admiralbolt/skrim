@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "1.9"
+version = "1.12.2-1.0"
 group = "avi.mod"
 archivesBaseName = "skrim"
 

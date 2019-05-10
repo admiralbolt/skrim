@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid = Skrim.MOD_ID, name = Skrim.NAME, version = Skrim.VERSION, acceptedMinecraftVersions = "[1.12.1]")
+@Mod(modid = Skrim.MOD_ID, name = Skrim.NAME, version = Skrim.VERSION, acceptedMinecraftVersions = "[1.12.2]")
 public class Skrim {
 
   public static final String MOD_ID = "skrim";
