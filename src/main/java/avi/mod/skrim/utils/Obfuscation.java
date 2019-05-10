@@ -7,7 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Modifier;
 
 /**
  * Really just an extended Utils/ReflectionUtils specifically for dealing with
@@ -31,7 +30,8 @@ public class Obfuscation {
   public static ObfuscatedField BOAT_LEFT_DOWN = new ObfuscatedField("leftInputDown", "field_184480_az");
   public static ObfuscatedField BOAT_RIGHT_DOWN = new ObfuscatedField("rightInputDown", "field_184459_aA");
 
-
+  public static ObfuscatedField POTION_EFFECT_DURATION = new ObfuscatedField("duration", "field_76460_b");
+  public static ObfuscatedField POTION_EFFECT_AMPLIFIER = new ObfuscatedField("amplifier", "field_76461_c");
 
 
   public static boolean canBlockBePlaced(World world, Block block, BlockPos pos, boolean notsure, EnumFacing facing,
