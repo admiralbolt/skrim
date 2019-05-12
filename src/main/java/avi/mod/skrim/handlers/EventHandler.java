@@ -5,6 +5,7 @@ import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.armor.Overalls;
 import avi.mod.skrim.items.artifacts.*;
+import avi.mod.skrim.items.items.SkrimPotion;
 import avi.mod.skrim.skills.blacksmithing.SkillBlacksmithing;
 import avi.mod.skrim.skills.botany.SkillBotany;
 import avi.mod.skrim.skills.cooking.SkillCooking;
@@ -25,14 +26,15 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.brewing.PlayerBrewedPotionEvent;
-import net.minecraftforge.event.brewing.PotionBrewEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -276,26 +278,36 @@ public class EventHandler {
   // @SubscribeEvent
   // public void onBrew(PotionBrewEvent.Post event) {
   //   System.out.println("onPostBrew, length: " + event.getLength() + ", isCancellable: " + event.isCancelable());
-  //   System.out.println("onPostBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ", " +
+  //   System.out.println("onPostBrew, item0: " + event.getItem(0) + ", item1: " + event.getItem(1) + ", item2: " + event.getItem(2) + ",
+  //   " +
   //       "item3: " + event.getItem(3));
   // }
   //
-  // @SubscribeEvent
-  // public void grabPotion(PlayerBrewedPotionEvent event) {
-  //   System.out.println("PlayerBrewedPotion isCancellable: " + event.isCancelable());
-  //   System.out.println("player: " + event.getEntityPlayer());
-  //   System.out.println("item: " + event.getStack());
-  //   List<PotionEffect> effects = PotionUtils.getEffectsFromStack(event.getStack());
-  //   List<PotionEffect> newEffects = new ArrayList<>();
-  //   for (PotionEffect effect : effects) {
-  //     System.out.println("effect: " + effect + ", effect.name: " + effect.getEffectName() + ", effect.duration: " + effect.getDuration() + ", amp: " + effect.getAmplifier());
-  //     PotionEffect newEffect = new PotionEffect(effect);
-  //     Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, effect.getDuration() * 2);
-  //     Obfuscation.POTION_EFFECT_AMPLIFIER.hackValueTo(newEffect, effect.getAmplifier() + 2);
-  //   }
-  //   NBTTagCompound compound = new NBTTagCompound();
-  //   PotionUtils.addCustomPotionEffectToList(compound, newEffects);
-  //   event.getStack().setTagCompound(compound);
-  // }
+
+  @SubscribeEvent
+  public void grabPotion(PlayerBrewedPotionEvent event) {
+    System.out.println("PlayerBrewedPotion isCancellable: " + event.isCancelable());
+    System.out.println("player: " + event.getEntityPlayer());
+    System.out.println("item: " + event.getStack());
+    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(event.getStack());
+    List<PotionEffect> newEffects = new ArrayList<>();
+    NBTTagCompound compound = new NBTTagCompound();
+    NBTTagList list = compound.getTagList("CustomPotionEffects", 9);
+    for (PotionEffect effect : effects) {
+      System.out.println("effect: " + effect + ", effect.name: " + effect.getEffectName() + ", effect.duration: " + effect.getDuration() + ", amp: " + effect.getAmplifier());
+      PotionEffect newEffect = new PotionEffect(effect);
+      Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, effect.getDuration() * 2);
+      Obfuscation.POTION_EFFECT_AMPLIFIER.hackValueTo(newEffect, effect.getAmplifier() + 2);
+      list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
+    }
+    compound.setTag("CustomPotionEffects", list);
+    NBTTagCompound name = new NBTTagCompound();
+    name.setString("Name", "Skrim Potion");
+    compound.setTag("display", name);
+    event.getStack().setTagCompound(compound);
+
+    ItemStack newStack = SkrimPotion.convertVanillaPotion(event.getStack());
+    event.getEntityPlayer().addItemStackToInventory(newStack);
+  }
 
 }
