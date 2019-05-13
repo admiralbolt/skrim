@@ -27,7 +27,7 @@ public class SkillScreen extends GuiScreen {
   private static final int SCROLL_BAR_WIDTH = 6;
   private static final int SCROLL_BAR_HEIGHT = 40;
   private static final int SCROLL_PADDING_LEFT = 5;
-  private static final double SCROLL_SPEED = 0.03;
+  private static final double SCROLL_SPEED = 0.05;
 
   //======== Global ========//
   private static final int HEADER_COLOR = 0xFF333333;
