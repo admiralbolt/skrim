@@ -13,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * The UI for the MegaChest!
@@ -97,6 +96,13 @@ public class MegaChestGui extends GuiContainer {
       this.fontRenderer.drawString(line, 69 - this.fontRenderer.getStringWidth(line) / 2, 9 * 19 + 1 + i * 9, 4210752);
       i++;
     }
+  }
+
+  @Override
+  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    this.drawDefaultBackground();
+    super.drawScreen(mouseX, mouseY, partialTicks);
+    this.renderHoveredToolTip(mouseX, mouseY);
   }
 
 }
