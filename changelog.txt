@@ -2,3 +2,4 @@
 * Items in mega chests now have their tooltips rendered correctly.
 * Buffed mining xp for ores again.
 * Tall grass will no longer ding from botany.
+* Nerfed seduce villager, allows reducing total trade cost by half.

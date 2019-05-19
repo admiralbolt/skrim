@@ -29,12 +29,15 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.Sys;
 
 import java.util.*;
 
 public class SkillBotany extends Skill implements ISkillBotany {
 
-  private static final int MIN_VILLAGER_COST = 4;
+  private static Map<UUID, List<Pair<Integer, Integer>>> VILLAGER_TRADES = new HashMap<>();
+
   public static SkillStorage<ISkillBotany> skillStorage = new SkillStorage<>();
   public static Set<Item> GLOW_FLOWER_ITEMS = new HashSet<>();
   public static Set<Item> ENCHANTED_FLOWER_ITEMS = new HashSet<>();
@@ -43,21 +46,21 @@ public class SkillBotany extends Skill implements ISkillBotany {
   private static Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
       .put("dandelion", 300)
       .put("poppy", 300)
-       // 3 Biomes
+      // 3 Biomes
       .put("houstonia", 600) // azure_bluet
       .put("red_tulip", 600)
       .put("orange_tulip", 600)
       .put("white_tulip", 600)
       .put("pink_tulip", 600)
       .put("oxeye_daisy", 600)
-       // Only swamp, can respawn
+      // Only swamp, can respawn
       .put("blue_orchid", 1200)
       .put("allium", 1200)
-       // Only forest & flower forest on generation
+      // Only forest & flower forest on generation
       .put("syringa", 3000) // lilac
       .put("double_rose", 3000)
       .put("paeonia", 3000) // peony
-       // Only sunflower plains on generation
+      // Only sunflower plains on generation
       .put("sunflower", 5000)
       .build();
 
@@ -127,7 +130,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
       if (targetState.getBlock() instanceof BlockDoublePlant) {
         flowerName = getFlowerName(targetState);
         if (!XP_MAP.containsKey(flowerName)) return;
-        
+
         if (Utils.rand.nextDouble() < botany.getFortuneChance()) {
           Item droppedItem = targetState.getBlock().getItemDropped(targetState, Utils.rand, 0);
           int meta = targetState.getBlock().damageDropped(targetState);
@@ -236,23 +239,49 @@ public class SkillBotany extends Skill implements ISkillBotany {
     // Lol, why am I setting this?
     villager.setIsWillingToMate(true);
     MerchantRecipeList buyingList = (MerchantRecipeList) Obfuscation.VILLAGER_BUY_LIST.getValue(villager);
-    for (MerchantRecipe recipe : buyingList) {
-      ItemStack first = recipe.getItemToBuy();
-      first.setCount(Math.max(MIN_VILLAGER_COST, first.getCount() - 1));
-      if (recipe.hasSecondItemToBuy()) {
-        ItemStack second = recipe.getSecondItemToBuy();
-        second.setCount(Math.max(MIN_VILLAGER_COST, second.getCount() - 1));
+
+    if (buyingList.size() > 0) {
+      UUID villagerId = villager.getUniqueID();
+
+      // The original count of the items for trading. We maintain what the originals were before seducing them, and limit the amount to
+      // half of the original.
+      List<Pair<Integer, Integer>> baseCounts = new ArrayList<>();
+      if (!VILLAGER_TRADES.containsKey(villagerId)) {
+        for (MerchantRecipe recipe : buyingList) {
+          Pair<Integer, Integer> buyingAmount = Pair.of(recipe.getItemToBuy().getCount(),
+              recipe.getSecondItemToBuy().getCount());
+          baseCounts.add(buyingAmount);
+        }
+        VILLAGER_TRADES.put(villagerId, baseCounts);
+      } else {
+        baseCounts = VILLAGER_TRADES.get(villagerId);
       }
+
+      // Really I want to zip the buyingList & baseCounts collections, but this ain't python dorthy.
+      int i = 0;
+      for (MerchantRecipe recipe : buyingList) {
+        Pair<Integer, Integer> baseCount = baseCounts.get(i);
+        ItemStack first = recipe.getItemToBuy();
+        first.setCount(Math.max(Math.round(baseCount.getLeft() / 2f), first.getCount() - 1));
+        if (recipe.hasSecondItemToBuy()) {
+          ItemStack second = recipe.getSecondItemToBuy();
+          second.setCount(Math.max(baseCount.getRight() / 2, second.getCount() - 1));
+        }
+        ++i;
+      }
+
+
+      SkrimPacketHandler.INSTANCE.sendTo(
+          new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height,
+              villager.width),
+          (EntityPlayerMP) player);
+
+      mainStack.setCount(mainStack.getCount() - 1);
+      if (mainStack.getCount() == 0) {
+        player.inventory.deleteStack(mainStack);
+      }
+      event.setCanceled(true);
     }
-    SkrimPacketHandler.INSTANCE.sendTo(
-        new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height,
-            villager.width),
-        (EntityPlayerMP) player);
-    mainStack.setCount(mainStack.getCount() - 1);
-    if (mainStack.getCount() == 0) {
-      player.inventory.deleteStack(mainStack);
-    }
-    event.setCanceled(true);
   }
 
   public static void verifyFlowers(ItemCraftedEvent event) {
