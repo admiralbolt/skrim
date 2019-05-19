@@ -44,15 +44,15 @@ public class SkillMining extends Skill implements ISkillMining {
       .put("sandstone", 100)
       .put("end_stone", 100)
       .put("stained_terracotta", 175)
-      .put("coal_ore", 250)
-      .put("iron_ore", 350)
-      .put("nether_quartz_ore", 400)
+      .put("coal_ore", 500)
+      .put("iron_ore", 750)
+      .put("nether_quartz_ore", 800)
       .put("obsidian", 1000)
-      .put("redstone_ore", 1000)
-      .put("gold_ore", 1500)
-      .put("lapis_lazuli_ore", 2000)
-      .put("diamond_ore", 2500)
-      .put("emerald_ore", 5000)
+      .put("redstone_ore", 1500)
+      .put("gold_ore", 2000)
+      .put("lapis_lazuli_ore", 3000)
+      .put("diamond_ore", 5000)
+      .put("emerald_ore", 10000)
       .build();
 
   private static final long DARKVISION_CHECK = 80L;

@@ -1,2 +1,3 @@
 # 1.12.2-1.1
 * Items in mega chests now have their tooltips rendered correctly.
+* Buffed mining xp for ores again.
