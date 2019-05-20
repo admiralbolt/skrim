@@ -10,10 +10,7 @@ import avi.mod.skrim.items.artifacts.*;
 import avi.mod.skrim.items.food.AngelCake;
 import avi.mod.skrim.items.food.CustomFood;
 import avi.mod.skrim.items.food.SkrimCake;
-import avi.mod.skrim.items.items.ArtifactItem;
-import avi.mod.skrim.items.items.CustomRecord;
-import avi.mod.skrim.items.items.SkrimPotion;
-import avi.mod.skrim.items.items.WeirwoodTotem;
+import avi.mod.skrim.items.items.*;
 import avi.mod.skrim.items.tools.*;
 import avi.mod.skrim.items.weapons.*;
 import net.minecraft.block.BlockPlanks;
@@ -190,6 +187,7 @@ public class SkrimItems {
   public static AngelCake ANGEL_CAKE = new AngelCake();
 
   public static Item SKRIM_POTION = new SkrimPotion();
+  public static Item BREWING_STAND = new SkrimBrewingStandItem();
 
   // Obsidian
   public static CustomArmor OBSIDIAN_HELMET = new CustomArmor("obsidian_helmet", OBSIDIAN_MATERIAL, 4,
@@ -320,6 +318,7 @@ public class SkrimItems {
 
           OVERWRITE_BOW,
           SKRIM_POTION,
+          BREWING_STAND,
 
           // Food
           OVERWRITE_PORKCHOP,

@@ -6,6 +6,7 @@ import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.blocks.food.AngelCakeBlock;
 import avi.mod.skrim.blocks.food.SkrimCakeBlock;
 import avi.mod.skrim.blocks.misc.MegaChest;
+import avi.mod.skrim.blocks.misc.SkrimBrewingStand;
 import avi.mod.skrim.blocks.plants.*;
 import avi.mod.skrim.blocks.tnt.BioBomb;
 import avi.mod.skrim.blocks.tnt.CustomTNTPrimed;
@@ -71,6 +72,7 @@ public final class SkrimBlocks {
   public static WeirwoodWood WEIRWOOD_WOOD = new WeirwoodWood();
   public static WeirwoodLeaf WEIRWOOD_LEAF = new WeirwoodLeaf();
   public static MegaChest MEGA_CHEST = new MegaChest();
+  public static SkrimBrewingStand BREWING_STAND = new SkrimBrewingStand();
 
   // Artifact blocks.
   public static FatBoy FAT_BOY = new FatBoy();
@@ -91,7 +93,8 @@ public final class SkrimBlocks {
         BEANSTALK_BLOCK,
         WEIRWOOD_LEAF,
         WEIRWOOD_SAPLING,
-        WEIRWOOD_WOOD
+        WEIRWOOD_WOOD,
+        BREWING_STAND
     };
 
     public static final Block[] GLOW_FLOWERS = {
