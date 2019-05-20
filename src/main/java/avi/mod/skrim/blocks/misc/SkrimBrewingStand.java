@@ -4,7 +4,6 @@ import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.tileentity.SkrimBrewingStandEntity;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -12,7 +11,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
@@ -39,8 +37,8 @@ public class SkrimBrewingStand extends BlockContainer {
 
   public static final String NAME = "skrim_brewing_stand";
 
-  public static final PropertyBool[] HAS_BOTTLE = new PropertyBool[]{PropertyBool.create("has_bottle_0"), PropertyBool.create(
-      "has_bottle_1"), PropertyBool.create("has_bottle_2")};
+  public static final PropertyBool[] HAS_BOTTLE = new PropertyBool[]{PropertyBool.create("skrim_has_bottle_0"), PropertyBool.create(
+      "skrim_has_bottle_1"), PropertyBool.create("skrim_has_bottle_2")};
   protected static final AxisAlignedBB BASE_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
   protected static final AxisAlignedBB STICK_AABB = new AxisAlignedBB(0.4375D, 0.0D, 0.4375D, 0.5625D, 0.875D, 0.5625D);
 
@@ -79,6 +77,7 @@ public class SkrimBrewingStand extends BlockContainer {
    * Returns a new instance of a block's tile entity class. Called on placing the block.
    */
   public TileEntity createNewTileEntity(World worldIn, int meta) {
+    System.out.println("creating new tile entity.");
     return new SkrimBrewingStandEntity();
   }
 
@@ -202,8 +201,10 @@ public class SkrimBrewingStand extends BlockContainer {
   }
 
   protected BlockStateContainer createBlockState() {
-    return new BlockStateContainer(this, new IProperty[]{HAS_BOTTLE[0], HAS_BOTTLE[1], HAS_BOTTLE[2]});
+    return new BlockStateContainer(this, HAS_BOTTLE[0], HAS_BOTTLE[1], HAS_BOTTLE[2]);
   }
+
+
 
   /**
    * Get the geometry of the queried face at the given position and state. This is used to decide whether things like

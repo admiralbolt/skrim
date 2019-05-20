@@ -1,29 +1,23 @@
 {
-  "defaults": {
-    "textures": {
-      "0": "minecraft:items/brewing_stand"
-    }
-  },
     "multipart": [
         {   "apply": { "model": "minecraft:brewing_stand" }},
-        {   "when": { "has_bottle_0": "true" },
+        {   "when": { "skrim_has_bottle_0": true },
             "apply": { "model": "minecraft:brewing_stand_bottle0" }
         },
-        {   "when": { "has_bottle_1": "true" },
+        {   "when": { "skrim_has_bottle_1": true },
             "apply": { "model": "minecraft:brewing_stand_bottle1" }
         },
-        {   "when": { "has_bottle_2": "true" },
+        {   "when": { "skrim_has_bottle_2": true },
             "apply": { "model": "minecraft:brewing_stand_bottle2" }
         },
-        {   "when": { "has_bottle_0": "false" },
+        {   "when": { "skrim_has_bottle_0": false },
             "apply": { "model": "minecraft:brewing_stand_empty0" }
         },
-        {   "when": { "has_bottle_1": "false" },
+        {   "when": { "skrim_has_bottle_1": false },
             "apply": { "model": "minecraft:brewing_stand_empty1" }
         },
-        {   "when": { "has_bottle_2": "false" },
+        {   "when": { "skrim_has_bottle_2": false },
             "apply": { "model": "minecraft:brewing_stand_empty2" }
         }
     ]
-
 }

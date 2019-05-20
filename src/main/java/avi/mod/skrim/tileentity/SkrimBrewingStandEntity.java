@@ -1,6 +1,6 @@
 package avi.mod.skrim.tileentity;
 
-import net.minecraft.block.BlockBrewingStand;
+import avi.mod.skrim.blocks.misc.SkrimBrewingStand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -18,6 +18,7 @@ import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.Arrays;
 
@@ -126,12 +127,13 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
         this.filledSlots = aboolean;
         IBlockState iblockstate = this.world.getBlockState(this.getPos());
 
-        if (!(iblockstate.getBlock() instanceof BlockBrewingStand)) {
+        if (!(iblockstate.getBlock() instanceof SkrimBrewingStand)) {
           return;
         }
 
-        for (int i = 0; i < BlockBrewingStand.HAS_BOTTLE.length; ++i) {
-          iblockstate = iblockstate.withProperty(BlockBrewingStand.HAS_BOTTLE[i], Boolean.valueOf(aboolean[i]));
+        for (int i = 0; i < SkrimBrewingStand.HAS_BOTTLE.length; ++i) {
+          iblockstate = iblockstate.withProperty(SkrimBrewingStand.HAS_BOTTLE[i], Boolean.valueOf(aboolean[i]));
+          System.out.println("Updating block state with has_bottle_" + i + ": " + iblockstate.getValue(SkrimBrewingStand.HAS_BOTTLE[i]));
         }
 
         this.world.setBlockState(this.pos, iblockstate, 2);
@@ -218,6 +220,11 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     }
 
     this.fuel = compound.getByte("Fuel");
+  }
+
+  @Override
+  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+    return oldState.getBlock() != newState.getBlock();
   }
 
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
