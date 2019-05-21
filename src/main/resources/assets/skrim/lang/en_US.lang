@@ -28,6 +28,7 @@ entity.giga_chicken.name=Giga Chicken
 entity.mega_chicken.name=Mega Chicken
 entity.napalm_creeper.name=Napalm Creeper
 entity.pumpkow.name=Pumpkow
+item.skrim_brewing_stand_item.name=Skrim Brewing Stand
 item.acacia_leaf_armor.name=Acacia Chestplate
 item.acacia_leaf_boots.name=Acacia Boots
 item.acacia_leaf_helmet.name=Acacia Helmet
