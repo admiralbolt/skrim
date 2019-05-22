@@ -129,8 +129,6 @@ public class SkillCooking extends Skill implements ISkillCooking {
     List<String> tooltip = new ArrayList<>();
     tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraFood(this.level)) + "%§r food.");
     tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
-    tooltip.add("Shift clicking crafted items provides §aregular and modded§r food.");
-    tooltip.add("§eWe swear this is a feature and not a bug...§r");
     return tooltip;
   }
 
