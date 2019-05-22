@@ -4,3 +4,5 @@
 * Tall grass will no longer ding from botany.
 * Nerfed seduce villager, allows reducing total trade cost by half.
 * Buffed blacksmithing xp for repairing items.
+* Buffed blacksmithing xp for non-gold items.
+* Glazed terracota now gives blacksmithing xp.
