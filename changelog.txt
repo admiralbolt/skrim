@@ -6,3 +6,4 @@
 * Buffed blacksmithing xp for repairing items.
 * Buffed blacksmithing xp for non-gold items.
 * Glazed terracota now gives blacksmithing xp.
+* Drill no longer triggers on activateable blocks (chests, furances, crafting table e.t.c). Sorry!
