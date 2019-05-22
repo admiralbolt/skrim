@@ -106,6 +106,7 @@ public class SkrimBrewingStand extends BlockContainer {
       TileEntity tileentity = worldIn.getTileEntity(pos);
 
       if (tileentity instanceof SkrimBrewingStandEntity) {
+        ((SkrimBrewingStandEntity) tileentity).setPlayer(playerIn);
         playerIn.displayGUIChest((SkrimBrewingStandEntity) tileentity);
         playerIn.addStat(StatList.BREWINGSTAND_INTERACTION);
       }
@@ -203,7 +204,6 @@ public class SkrimBrewingStand extends BlockContainer {
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, HAS_BOTTLE[0], HAS_BOTTLE[1], HAS_BOTTLE[2]);
   }
-
 
 
   /**

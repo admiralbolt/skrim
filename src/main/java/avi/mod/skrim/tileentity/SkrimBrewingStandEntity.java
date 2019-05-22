@@ -1,6 +1,8 @@
 package avi.mod.skrim.tileentity;
 
 import avi.mod.skrim.blocks.misc.SkrimBrewingStand;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.brewing.SkillBrewing;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -22,6 +24,21 @@ import net.minecraft.world.World;
 
 import java.util.Arrays;
 
+/**
+ * I'm making some executive decisions about how brewing will work:
+ * <p>
+ * When a player interacts with a brewing stand they are set as the 'active player'.
+ * When brewing is started (the timer kicks off) the 'active player' is marked as the `brewing player`.
+ * The brewing player's skill level will be used for potion adjustments, and they will get experience when potions are brewed, not when
+ * potions are pulled out of the brewing stand. I think this is the best choice to preventing griefing from brewing.
+ * <p>
+ * Forge does provide access via some brewing events, but the base game potions don't provide the functionality I'm looking for. For
+ * some reason, they decided it was a good idea to hard-code effect + duration combinations. So if you adjust a potions duration by 1
+ * second for example, the name / color doesn't get loaded correctly. Additionally, shift-clicking is still fuck for the brewing event.
+ * It doesn't give any insight into what the original potion was, so modification would be impossible if a player shift clicked items out.
+ * For these reasons, I've decided to make a brand new potion item that will be more dynamic in name / color loading. Finally, I wanted to
+ * increase the speed of the brewing event itself, which can't be done without attaching the player to the tile-entity in some way anyway.
+ */
 public class SkrimBrewingStandEntity extends TileEntityLockable implements ITickable, ISidedInventory {
   /**
    * an array of the input slot indices
@@ -37,6 +54,10 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
    */
   private NonNullList<ItemStack> brewingItemStacks = NonNullList.<ItemStack>withSize(5, ItemStack.EMPTY);
   private int brewTime;
+
+  // A double version to better keep track of "real" progress.
+  private double doubleBrewTime;
+  private int actualBrewTime;
   /**
    * an integer with each bit specifying whether that slot of the stand contains a potion
    */
@@ -47,6 +68,14 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
   private Item ingredientID;
   private String customName;
   private int fuel;
+
+
+  private EntityPlayer activePlayer;
+  private EntityPlayer brewingPlayer;
+
+  public void setPlayer(EntityPlayer player) {
+    this.activePlayer = player;
+  }
 
   /**
    * Get the name of this object. For players this returns their username
@@ -84,6 +113,16 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
   }
 
   /**
+   * So, the ui for brewing is hard-coded to expect 400 ticks of brewing. If we increase the speed of brewing by reducing the number of
+   * ticks, it looks weird because the arrow starts half-filled instead of filling more quickly. To make it seem more natural we will
+   * update brewing time by more than 1 per tick.
+   */
+  private void updateBrewTime() {
+    this.doubleBrewTime -= 400 / this.actualBrewTime;
+    this.brewTime = Math.max((int) this.doubleBrewTime, 0);
+  }
+
+  /**
    * Like the old updateEntity(), except more generic.
    */
   public void update() {
@@ -100,7 +139,7 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     ItemStack itemstack1 = this.brewingItemStacks.get(3);
 
     if (flag1) {
-      --this.brewTime;
+      this.updateBrewTime();
       boolean flag2 = this.brewTime == 0;
 
       if (flag2 && flag) {
@@ -115,7 +154,11 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
       }
     } else if (flag && this.fuel > 0) {
       --this.fuel;
-      this.brewTime = 100;
+      this.brewingPlayer = this.activePlayer;
+      SkillBrewing brewing = Skills.getSkill(this.brewingPlayer, Skills.BREWING, SkillBrewing.class);
+      this.brewTime = 400;
+      this.doubleBrewTime = 400;
+      this.actualBrewTime = (int) (400 * (1.0 / (1 + brewing.brewSpeed())));
       this.ingredientID = itemstack1.getItem();
       this.markDirty();
     }
