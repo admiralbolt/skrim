@@ -30,7 +30,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.Sys;
 
 import java.util.*;
 
@@ -41,6 +40,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   public static SkillStorage<ISkillBotany> skillStorage = new SkillStorage<>();
   public static Set<Item> GLOW_FLOWER_ITEMS = new HashSet<>();
   public static Set<Item> ENCHANTED_FLOWER_ITEMS = new HashSet<>();
+  private static Set<String> DOUBLE_FLOWER_NAMES = ImmutableSet.of("azure_bluet", "lilac", "peony", "rose_bush", "double_rose");
 
   // The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
   private static Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
@@ -76,8 +76,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   private static SkillAbility ENCHANTED_FLOWER = new SkillAbility("botany", "Enchanted Flower", 100, "It shares a " +
       "giant friendliness beam! :D",
       "Enables you to craft enchanted flowers that function like speed beacons.");
-  private static Set<String> DOUBLE_FLOWER_NAMES = ImmutableSet.of("azure_bluet", "lilac", "peony", "rose_bush",
-      "double_rose");
+
 
   public SkillBotany() {
     this(1, 0);
