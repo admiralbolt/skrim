@@ -1,8 +1,5 @@
 package avi.mod.skrim.skills;
 
-import avi.mod.skrim.client.gui.GuiUtils;
-import avi.mod.skrim.client.gui.GuiUtils.Icon;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
