@@ -40,6 +40,7 @@ import java.util.List;
 public class SkillMelee extends Skill implements ISkillMelee {
 
   public static SkillStorage<ISkillMelee> skillStorage = new SkillStorage<ISkillMelee>();
+
   private static SkillAbility VAMPIRISM = new SkillAbility("melee", "Vampirism", 25, "What I need is your blood. What" +
       " I don't need is your permission.",
       "Killing an enemy restores §a1" + SkillAbility.DESC_COLOR + " heart.");
@@ -51,6 +52,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
       "meter for damage & swipe attacks.");
   private static SkillAbility GRAND_SMITE = new SkillAbility("melee", "Grand Smite", 100, "DESTRUUUUCTIOOONNN",
       "Criitting an enemy call down lightning.");
+
   private int ticksSinceLastLeft = 0;
 
   public SkillMelee() {

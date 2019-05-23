@@ -1,36 +1,31 @@
 package avi.mod.skrim.skills;
 
-import java.util.List;
-
-import avi.mod.skrim.client.gui.GuiUtils.Icon;
 import net.minecraft.entity.player.EntityPlayerMP;
+
+import java.util.List;
 
 public interface ISkill {
 
-	int getNextLevelTotal();
+  int getNextLevelTotal();
 
-	boolean canLevelUp();
+  boolean canLevelUp();
 
-	void levelUp(EntityPlayerMP player);
+  void levelUp(EntityPlayerMP player);
 
-	List<String> getToolTip();
+  List<String> getToolTip();
 
-	Icon getIcon();
+  boolean hasAbility(int abilityLevel);
 
-	Icon getAbilityIcon(int abilityLevel);
+  void setXp(double xp);
 
-	boolean hasAbility(int abilityLevel);
+  void setLevel(int level);
 
-	void setXp(double xp);
+  double getXp();
 
-	void setLevel(int level);
+  int getLevel();
 
-	double getXp();
+  void addXp(EntityPlayerMP player, int xp);
 
-	int getLevel();
-
-	void addXp(EntityPlayerMP player, int xp);
-
-	int getIntXp();
+  int getIntXp();
 
 }

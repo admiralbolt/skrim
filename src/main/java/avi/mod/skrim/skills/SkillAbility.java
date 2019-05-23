@@ -19,20 +19,20 @@ public class SkillAbility {
   public int level;
   private List<String> description = new ArrayList<>();
   private String flavor;
-  private Icon locked;
-  private Icon unlocked;
 
   public SkillAbility(String skillName, String name, int level, String flavor, String... descLines) {
     this.name = name;
     this.level = level;
     this.description.addAll(Arrays.asList(descLines));
     this.flavor = "\"" + flavor + "\"";
-    this.locked = GuiUtils.getAbilityIcon(skillName, (level / 25), false);
-    this.unlocked = GuiUtils.getAbilityIcon(skillName, (level / 25), true);
   }
 
   public static List<String> getAbilityTooltip(SkillAbility ability, boolean hasAbility) {
     List<String> tooltip = new ArrayList<>();
+    if (ability == null) {
+      tooltip.add(NOT_UNLOCKED_COLOR + "Nothin Yet" + RESET);
+      return tooltip;
+    }
     if (hasAbility) {
       tooltip.add(NAME_COLOR + ability.name + RESET);
       for (String descLine : ability.description) {
@@ -43,10 +43,6 @@ public class SkillAbility {
       tooltip.add(NOT_UNLOCKED_COLOR + ability.name + RESET);
     }
     return tooltip;
-  }
-
-  public static Icon getAbilityIcon(SkillAbility ability, boolean hasAbility) {
-    return (hasAbility) ? ability.unlocked : ability.locked;
   }
 
 }

@@ -1,6 +1,5 @@
 package avi.mod.skrim.client.gui;
 
-import avi.mod.skrim.client.gui.GuiUtils.Icon;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.Skills;
@@ -23,7 +22,7 @@ import java.util.List;
 public class SkillScreen extends GuiScreen {
 
   //======== Scroll Bar ========//
-  private static final int MAX_SCROLL = 435;
+  private static final int MAX_SCROLL = 485; //435;
   private static final int SCROLL_BAR_WIDTH = 6;
   private static final int SCROLL_BAR_HEIGHT = 40;
   private static final int SCROLL_PADDING_LEFT = 5;
@@ -182,8 +181,8 @@ public class SkillScreen extends GuiScreen {
    * Draw a skill at the target spot. Respects the bound of the skills window so no overflowing will occur.
    */
   private void drawSkillIcon(Skill skill, int left, int top) {
-    this.mc.getTextureManager().bindTexture(GuiUtils.SKILL_ICONS);
-    GuiUtils.drawIconWithBounds(this, left, top, skill.getIcon(), this.boundTop, this.boundBottom);
+    this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim:textures/guis/skills/" + Utils.snakeCase(skill.name) + ".png"));
+    GuiUtils.drawSkillIconWithBounds(this, skill, left, top, this.boundTop, this.boundBottom);
   }
 
   /**
@@ -200,12 +199,12 @@ public class SkillScreen extends GuiScreen {
   private void drawAbilityIcons(Skill skill, int left, int top) {
     int startLeft = left + SKILL_PADDING_DESC + SKILL_ICON_SIZE;
     int abilityTop = top + SKILL_HEADER_HEIGHT;
-    this.mc.getTextureManager().bindTexture(GuiUtils.ABILITY_ICONS);
+    this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim:textures/guis/skills/" + Utils.snakeCase(skill.name) + ".png"));
 
     for (int i = 1; i <= 4; i++) {
       int abilityLeft = startLeft + (i - 1) * (ABILITY_ICON_SIZE + ABILITY_ICON_PADDING);
-      Icon icon = skill.getAbilityIcon(i);
-      GuiUtils.drawIconWithBounds(this, abilityLeft, abilityTop, icon, this.boundTop, this.boundBottom);
+      GuiUtils.drawAbilityIconWithBounds(this, skill, i, abilityLeft, abilityTop,
+          this.boundTop, this.boundBottom);
     }
   }
 
@@ -223,6 +222,7 @@ public class SkillScreen extends GuiScreen {
       int abilityLeft = startLeft + (i - 1) * (ABILITY_ICON_SIZE + ABILITY_ICON_PADDING);
       int abilityRight = abilityLeft + ABILITY_ICON_SIZE;
       if (!Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) continue;
+
       this.drawHoveringText(SkillAbility.getAbilityTooltip(skill.getAbility(i), skill.hasAbility(i)), mouseX, mouseY);
     }
   }

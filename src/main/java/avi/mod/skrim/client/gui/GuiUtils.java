@@ -1,71 +1,42 @@
 package avi.mod.skrim.client.gui;
 
-import avi.mod.skrim.skills.Skills;
-import avi.mod.skrim.utils.Utils;
+import avi.mod.skrim.skills.Skill;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class GuiUtils {
 
+  private static ResourceLocation DEFAULT_SKILL_ICON = new ResourceLocation("skrim:textures/guis/skills/default_skill.png");
+  private static ResourceLocation DEFAULT_ABILITY_ICON = new ResourceLocation("skrim:textures/guis/skills/default_ability.png");
   public static ResourceLocation CUSTOM_ICONS = new ResourceLocation("skrim:textures/guis/overlays/custom_icons.png");
-  public static ResourceLocation ABILITY_ICONS = new ResourceLocation("skrim:textures/guis/skills/skill_abilities.png");
-  public static ResourceLocation SKILL_ICONS = new ResourceLocation("skrim:textures/guis/skills/skills.png");
+
   // First row
   public static Icon EXTRA_ARMOR_HALF = new Icon("extra_armor_half", 0, 0, 9, 9);
-  public static Icon EXTRA_ARMOR_FULL = new Icon("extra_armo_full", 9, 0, 9, 9);
+  public static Icon EXTRA_ARMOR_FULL = new Icon("extra_armor_full", 9, 0, 9, 9);
   public static Icon ACCURACY = new Icon("accuracy", 108, 0, 16, 16);
 
+  // Look at the textures in textures/guis/skills/ for an explanation of these numbers.
+  private static Icon SKILL_ICON = new Icon("skill", 0, 0, 32, 32);
+  private static Icon SKILL_ICON_DISABLED = new Icon("skill_disabled", 32, 0, 32, 32);
+  private static Icon ABILITY_ICON_1 = new Icon("ability_1", 0, 32, 16, 16);
+  private static Icon ABILITY_ICON_1_LOCKED = new Icon("ability_1_locked", 16, 32, 16, 16);
+  private static Icon ABILITY_ICON_2 = new Icon("ability_2", 0, 48, 16, 16);
+  private static Icon ABILITY_ICON_2_LOCKED = new Icon("ability_2_locked", 16, 48, 16, 16);
+  private static Icon ABILITY_ICON_3 = new Icon("ability_3", 0, 64, 16, 16);
+  private static Icon ABILITY_ICON_3_LOCKED = new Icon("ability_3_locked", 16, 64, 16, 16);
+  private static Icon ABILITY_ICON_4 = new Icon("ability_4", 0, 80, 16, 16);
+  private static Icon ABILITY_ICON_4_LOCKED = new Icon("ability_4_locked", 16, 80, 16, 16);
 
-
-  // Tracks the location of skill & ability icons in their respective textures.
-  private static Map<String, Integer> SKILL_ABILITY_X = new HashMap<>();
-  private static Map<String, Integer> SKILL_ABILITY_Y = new HashMap<>();
-  private static Map<String, Integer> SKILL_X = new HashMap<>();
-  private static Map<String, Integer> SKILL_Y = new HashMap<>();
-
-  /**
-   * Looking at the textures makes this easier to understand:
-   *   textures/guis/skills/skill_abilities.png
-   *   textures/guis/skills/skills.png
-   * Each skill has 4 abilities that are 16x16 icons. So, each skill has a 16x64 block of pixels corresponding to its
-   * abilities. Since the texture is 256 pixels wide, we can fit 4 sets of skill abilities per row.
-   *
-   * Each skill icon is 32x32, so we can fit 8 skills per row.
-   */
-  static {
-    int i = 0;
-    for (String skillName : Skills.ALPHABETICAL_SKILLS) {
-      SKILL_ABILITY_X.put(skillName, (i % 4) * 64);
-      SKILL_ABILITY_Y.put(skillName, (i / 4) * 16);
-      SKILL_X.put(skillName, (i % 8) * 32);
-      SKILL_Y.put(skillName, (i / 8) * 32);
-      i++;
-    }
-  }
-
-  /**
-   * Gets the correct location of an ability icon based on skill & level.
-   * <p>
-   * textures/guis/skills/skill_abilities.png contains all the icons for the skill abilities. Texture file is a grid
-   * of 16x16 icons with the grayscale versions being 3 rows (48 pixels) lower than the full color VERSION.
-   */
-  public static Icon getAbilityIcon(String skillName, int level, boolean unlocked) {
-    return new Icon(skillName + "_" + level, SKILL_ABILITY_X.get(skillName) + (level - 1) * 16,
-        SKILL_ABILITY_Y.get(skillName) + ((unlocked) ? 0 : 48), 16, 16);
-  }
-
-  /**
-   * Gets the correct location of a skill icon.
-   * <p>
-   * textures/guis/skills/skills.png contains all the icons for the skills themselves. Texture file is a grid of
-   * 32x32 icons.
-   */
-  public static Icon getSkillIcon(String skillName) {
-    return new Icon(skillName + "_icon", SKILL_X.get(skillName), SKILL_Y.get(skillName), 32, 32);
-  }
+  private static Map<Integer, Pair<Icon, Icon>> ABILITY_ICON_MAP = ImmutableMap.<Integer, Pair<Icon, Icon>>builder()
+      .put(1, Pair.of(ABILITY_ICON_1, ABILITY_ICON_1_LOCKED))
+      .put(2, Pair.of(ABILITY_ICON_2, ABILITY_ICON_2_LOCKED))
+      .put(3, Pair.of(ABILITY_ICON_3, ABILITY_ICON_3_LOCKED))
+      .put(4, Pair.of(ABILITY_ICON_4, ABILITY_ICON_4_LOCKED))
+      .build();
 
   /**
    * Helper method for drawing icons with slightly less parameters.
@@ -90,6 +61,14 @@ public class GuiUtils {
     }
   }
 
+  public static void drawSkillIconWithBounds(Gui gui, Skill skill, int xCoord, int yCoord, int boundTop, int boundBottom) {
+    drawIconWithBounds(gui, xCoord, yCoord, SKILL_ICON, boundTop, boundBottom);
+  }
+
+  public static void drawAbilityIconWithBounds(Gui gui, Skill skill, int i, int xCoord, int yCoord, int boundTop, int boundBottom) {
+    Icon icon = skill.hasAbility(i) ? ABILITY_ICON_MAP.get(i).getLeft() : ABILITY_ICON_MAP.get(i).getRight();
+    drawIconWithBounds(gui, xCoord, yCoord, icon, boundTop, boundBottom);
+  }
 
   /**
    * Helper class to keep track of ~10 billion icons.
