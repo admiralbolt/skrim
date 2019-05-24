@@ -284,30 +284,30 @@ public class EventHandler {
   // }
   //
 
-  @SubscribeEvent
-  public void grabPotion(PlayerBrewedPotionEvent event) {
-    System.out.println("PlayerBrewedPotion isCancellable: " + event.isCancelable());
-    System.out.println("player: " + event.getEntityPlayer());
-    System.out.println("item: " + event.getStack());
-    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(event.getStack());
-    List<PotionEffect> newEffects = new ArrayList<>();
-    NBTTagCompound compound = new NBTTagCompound();
-    NBTTagList list = compound.getTagList("CustomPotionEffects", 9);
-    for (PotionEffect effect : effects) {
-      System.out.println("effect: " + effect + ", effect.name: " + effect.getEffectName() + ", effect.duration: " + effect.getDuration() + ", amp: " + effect.getAmplifier());
-      PotionEffect newEffect = new PotionEffect(effect);
-      Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, effect.getDuration() * 2);
-      Obfuscation.POTION_EFFECT_AMPLIFIER.hackValueTo(newEffect, effect.getAmplifier() + 2);
-      list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
-    }
-    compound.setTag("CustomPotionEffects", list);
-    NBTTagCompound name = new NBTTagCompound();
-    name.setString("Name", "Skrim Potion");
-    compound.setTag("display", name);
-    event.getStack().setTagCompound(compound);
-
-    ItemStack newStack = SkrimPotion.convertVanillaPotion(event.getStack());
-    event.getEntityPlayer().addItemStackToInventory(newStack);
-  }
+//  @SubscribeEvent
+//  public void grabPotion(PlayerBrewedPotionEvent event) {
+//    System.out.println("PlayerBrewedPotion isCancellable: " + event.isCancelable());
+//    System.out.println("player: " + event.getEntityPlayer());
+//    System.out.println("item: " + event.getStack());
+//    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(event.getStack());
+//    List<PotionEffect> newEffects = new ArrayList<>();
+//    NBTTagCompound compound = new NBTTagCompound();
+//    NBTTagList list = compound.getTagList("CustomPotionEffects", 9);
+//    for (PotionEffect effect : effects) {
+//      System.out.println("effect: " + effect + ", effect.name: " + effect.getEffectName() + ", effect.duration: " + effect.getDuration() + ", amp: " + effect.getAmplifier());
+//      PotionEffect newEffect = new PotionEffect(effect);
+//      Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, effect.getDuration() * 2);
+//      Obfuscation.POTION_EFFECT_AMPLIFIER.hackValueTo(newEffect, effect.getAmplifier() + 2);
+//      list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
+//    }
+//    compound.setTag("CustomPotionEffects", list);
+//    NBTTagCompound name = new NBTTagCompound();
+//    name.setString("Name", "Skrim Potion");
+//    compound.setTag("display", name);
+//    event.getStack().setTagCompound(compound);
+//
+//    ItemStack newStack = SkrimPotion.convertVanillaPotion(event.getStack());
+//    event.getEntityPlayer().addItemStackToInventory(newStack);
+//  }
 
 }

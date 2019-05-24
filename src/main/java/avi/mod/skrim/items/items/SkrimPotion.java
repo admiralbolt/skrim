@@ -12,7 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,11 +23,17 @@ import java.util.List;
 
 public class SkrimPotion extends ItemPotion implements ItemBase {
 
-  private static final String NAME = "skrim_potion";
+  private String name = "skrim_potion";
 
   public SkrimPotion() {
-    this.setRegistryName(NAME);
-    this.setUnlocalizedName(NAME);
+    this.setRegistryName(name);
+    this.setUnlocalizedName(name);
+  }
+
+  public SkrimPotion(String name) {
+    this.name = name;
+    this.setRegistryName(name);
+    this.setUnlocalizedName(name);
   }
 
   public static ItemStack convertVanillaPotion(ItemStack potion) {
@@ -60,7 +65,17 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
 
   @Nonnull
   public String getItemStackDisplayName(@Nonnull ItemStack stack) {
-    return I18n.translateToLocal(PotionUtils.getPotionFromItem(stack).getNamePrefixed("potion.effect."));
+    return getBaseDisplayName(stack);
+  }
+
+  public String getBaseDisplayName(@Nonnull ItemStack stack) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Potion of");
+    for (PotionEffect effect : PotionUtils.getEffectsFromStack(stack)) {
+      sb.append(" ");
+      sb.append(effect.getEffectName());
+    }
+    return sb.toString();
   }
 
   /**

@@ -187,6 +187,8 @@ public class SkrimItems {
   public static AngelCake ANGEL_CAKE = new AngelCake();
 
   public static Item SKRIM_POTION = new SkrimPotion();
+  public static Item SPLASH_SKRIM_POTION = new SplashSkrimPotion();
+  public static Item LINGERING_SKRIM_POTION = new LingeringSkrimPotion();
   public static Item BREWING_STAND = new SkrimBrewingStandItem();
 
   // Obsidian
@@ -318,6 +320,8 @@ public class SkrimItems {
 
           OVERWRITE_BOW,
           SKRIM_POTION,
+          SPLASH_SKRIM_POTION,
+          LINGERING_SKRIM_POTION,
           BREWING_STAND,
 
           // Food

@@ -3,6 +3,7 @@ package avi.mod.skrim.tileentity;
 import avi.mod.skrim.blocks.misc.SkrimBrewingStand;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.brewing.SkillBrewing;
+import avi.mod.skrim.skills.brewing.SkrimPotionRecipes;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,7 +12,7 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionHelper;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -21,8 +22,10 @@ import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * I'm making some executive decisions about how brewing will work:
@@ -134,25 +137,23 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
       this.markDirty();
     }
 
-    boolean flag = this.canBrew();
-    boolean flag1 = this.brewTime > 0;
+    boolean canBrew = this.canBrew();
     ItemStack itemstack1 = this.brewingItemStacks.get(3);
 
-    if (flag1) {
+    if (this.brewTime > 0) {
       this.updateBrewTime();
-      boolean flag2 = this.brewTime == 0;
 
-      if (flag2 && flag) {
+      if (this.brewTime == 0 && canBrew) {
         this.brewPotions();
         this.markDirty();
-      } else if (!flag) {
+      } else if (!canBrew) {
         this.brewTime = 0;
         this.markDirty();
       } else if (this.ingredientID != itemstack1.getItem()) {
         this.brewTime = 0;
         this.markDirty();
       }
-    } else if (flag && this.fuel > 0) {
+    } else if (canBrew && this.fuel > 0) {
       --this.fuel;
       this.brewingPlayer = this.activePlayer;
       SkillBrewing brewing = Skills.getSkill(this.brewingPlayer, Skills.BREWING, SkillBrewing.class);
@@ -201,49 +202,46 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
   }
 
   private boolean canBrew() {
-    if (1 == 1)
-      return net.minecraftforge.common.brewing.BrewingRecipeRegistry.canBrew(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS);
-    // divert to VanillaBrewingRegistry
-    ItemStack itemstack = this.brewingItemStacks.get(3);
-
-    if (itemstack.isEmpty()) {
-      return false;
-    } else if (!PotionHelper.isReagent(itemstack)) {
-      return false;
-    } else {
-      for (int i = 0; i < 3; ++i) {
-        ItemStack itemstack1 = this.brewingItemStacks.get(i);
-
-        if (!itemstack1.isEmpty() && PotionHelper.hasConversions(itemstack1, itemstack)) {
-          return true;
-        }
-      }
-
-      return false;
+    for (Map.Entry entry : SkrimPotionRecipes.INGREDIENT_EFFECTS.entrySet()) {
+      System.out.println("entry.left: " + entry.getKey() + ", entyr.val: " + entry.getValue());
     }
+
+    return net.minecraftforge.common.brewing.BrewingRecipeRegistry.canBrew(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS);
   }
 
   private void brewPotions() {
     if (net.minecraftforge.event.ForgeEventFactory.onPotionAttemptBrew(brewingItemStacks)) return;
-    ItemStack itemstack = this.brewingItemStacks.get(3);
+    ItemStack ingredient = this.brewingItemStacks.get(3);
 
-    net.minecraftforge.common.brewing.BrewingRecipeRegistry.brewPotions(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS);
+    // Instead of calling this directly, we do it by hand, and modify the outputs before setting them.
+    // net.minecraftforge.common.brewing.BrewingRecipeRegistry.brewPotions(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS);
+    for (int i : OUTPUT_SLOTS) {
+      ItemStack output = BrewingRecipeRegistry.getOutput(this.brewingItemStacks.get(i), ingredient);
 
-    itemstack.shrink(1);
+      System.out.println("output[" + i + "]: " + output);
+      System.out.println("getPotionType(" + i + "): " + PotionUtils.getPotionTypeFromNBT(output.getTagCompound()).toString());
+      System.out.println("effects[" + i + "]: " + PotionUtils.getEffectsFromStack(output));
+
+      if (!output.isEmpty()) {
+        this.brewingItemStacks.set(i, output);
+      }
+    }
+
+    ingredient.shrink(1);
     BlockPos blockpos = this.getPos();
 
-    if (itemstack.getItem().hasContainerItem(itemstack)) {
-      ItemStack itemstack1 = itemstack.getItem().getContainerItem(itemstack);
+    if (ingredient.getItem().hasContainerItem(ingredient)) {
+      ItemStack itemstack1 = ingredient.getItem().getContainerItem(ingredient);
 
-      if (itemstack.isEmpty()) {
-        itemstack = itemstack1;
+      if (ingredient.isEmpty()) {
+        ingredient = itemstack1;
       } else {
         InventoryHelper.spawnItemStack(this.world, (double) blockpos.getX(), (double) blockpos.getY(), (double) blockpos.getZ(),
             itemstack1);
       }
     }
 
-    this.brewingItemStacks.set(3, itemstack);
+    this.brewingItemStacks.set(3, ingredient);
     this.world.playEvent(1035, blockpos, 0);
     net.minecraftforge.event.ForgeEventFactory.onPotionBrewed(brewingItemStacks);
   }
