@@ -9,3 +9,4 @@
 * Drill no longer triggers on activateable blocks (chests, furances, crafting table e.t.c). Sorry!
 * Fixed an issue with an artifact causing the game to crash when hovered over.
 * Farmers tan now provides speed instead of saturation.
+* Fixed a bug where you weren't able to craft dispensers.
