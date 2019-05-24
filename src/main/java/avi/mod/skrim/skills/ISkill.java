@@ -20,6 +20,8 @@ public interface ISkill {
 
   void setLevel(int level);
 
+  void ding(EntityPlayerMP player);
+
   double getXp();
 
   int getLevel();

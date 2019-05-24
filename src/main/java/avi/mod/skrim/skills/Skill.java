@@ -16,7 +16,6 @@ public abstract class Skill implements ISkill {
 
   public static final int XP_FACTOR = 10000;
 
-
   public String name;
   public int level;
   public double xp;
@@ -99,7 +98,7 @@ public abstract class Skill implements ISkill {
     SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
   }
 
-  private void ding(EntityPlayerMP player) {
+  public void ding(EntityPlayerMP player) {
     if (this.level >= 25) SkrimAdvancements.DING_APPRENTICE.grant(player);
     if (this.level >= 50) SkrimAdvancements.DING_JOURNEYMAN.grant(player);
     if (this.level >= 75) SkrimAdvancements.DING_EXPERT.grant(player);

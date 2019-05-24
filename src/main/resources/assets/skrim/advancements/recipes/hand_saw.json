@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skrim:hand_saw"
+    ]
+  },
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:woodcutting_25"
+    }
+  }
+}

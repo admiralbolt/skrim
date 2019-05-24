@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.woodcutting;
 
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.armor.LeafArmor;
@@ -94,6 +95,14 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
     tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r woodcutting speed bonus.");
     tooltip.add("§a" + Utils.formatPercent(this.getHewingChance()) + "%§r chance to level a tree.");
     return tooltip;
+  }
+
+  @Override
+  public void ding(EntityPlayerMP player) {
+    super.ding(player);
+    if (this.level >= 25) {
+      SkrimAdvancements.HAND_SAW.grant(player);
+    }
   }
 
   public int getXp(String blockName) {
