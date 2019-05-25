@@ -109,6 +109,9 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
       SkrimAdvancements.HAND_SAW.grant(player);
       if (this.level >= 75) {
         SkrimAdvancements.LEAF_ARMOR.grant(player);
+        if (this.level >= 100) {
+          SkrimAdvancements.WEIRWODO.grant(player);
+        }
       }
     }
   }
