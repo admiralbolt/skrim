@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skrim:obsidian_axe",
+      "skrim:obsidian_hoe",
+      "skrim:obsidian_chest",
+      "skrim:obsidian_pants",
+      "skrim:obsidian_helmet",
+      "skrim:obsidian_boots",
+      "skrim:obsidian_sword",
+      "skrim:obsidian_spade",
+      "skrim:obsidian_pickaxe"
+    ]
+  },
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:blacksmithing_100"
+    }
+  }
+}

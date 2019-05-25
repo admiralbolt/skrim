@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.blacksmithing;
 
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
@@ -67,7 +68,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   private static SkillAbility OBSIDIAN_SMITH = new SkillAbility("blacksmithing", "Obsidian Smith", 100, "How can " +
       "obsidian be real if our " +
       "eyes aren't real?",
-      "Allows you to craft obsidian armor, weapons, and tools.", "To craft, encase an undamaged diamond item in obsidian.");
+      "Allows you to craft obsidian armor, weapons, and tools.", "To craft, encase an undamaged diamond item in " +
+      "obsidian.");
 
   public SkillBlacksmithing() {
     this(1, 0);
@@ -84,6 +86,14 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
     tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
     return tooltip;
+  }
+
+  @Override
+  public void ding(EntityPlayerMP player) {
+    super.ding(player);
+    if (this.level >= 100) {
+      SkrimAdvancements.OBSIDIAN_SMITH.grant(player);
+    }
   }
 
   private static String getBlacksmithingName(ItemStack stack) {
@@ -157,7 +167,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     ItemStack output = event.getItemResult();
 
     // If the two input are items are the same we want to calculate the repair based on the healthiest item.
-    int baseDamage = left.getItem() == middle.getItem() ? Math.min(left.getItemDamage(), middle.getItemDamage()) : left.getItemDamage();
+    int baseDamage = left.getItem() == middle.getItem() ? Math.min(left.getItemDamage(), middle.getItemDamage()) :
+        left.getItemDamage();
     int baseRepair = baseDamage - output.getItemDamage();
     int finalItemDamage = Math.max(output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair()), 0);
     output.setItemDamage(finalItemDamage);
