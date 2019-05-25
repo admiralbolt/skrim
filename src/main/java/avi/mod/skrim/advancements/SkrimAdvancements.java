@@ -30,6 +30,7 @@ public class SkrimAdvancements {
 
   // Recipes granted when a player hits an appropriate level.
   public static CustomAdvancement HAND_SAW = registerAdvancement("woodcutting_25");
+  public static CustomAdvancement LEAF_ARMOR = registerAdvancement("woodcutting_75");
 
   private static CustomAdvancement registerAdvancement(String name) {
     CustomAdvancement advancement = new CustomAdvancement(name);

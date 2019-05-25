@@ -62,19 +62,24 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
       .put("acacia", 300)
       .build();
 
-  private static List<String> validWoodcuttingBlocks = new ArrayList<>(Arrays.asList("oak_door", "spruce_door", "birch_door",
+  private static List<String> validWoodcuttingBlocks = new ArrayList<>(Arrays.asList("oak_door", "spruce_door",
+      "birch_door",
       "jungle_door",
-      "dark_oak_door", "acacia_door", "wooden_trapdoor", "wooden_pressure_plate", "oak_wood_stairs", "spruce_wood_stairs",
+      "dark_oak_door", "acacia_door", "wooden_trapdoor", "wooden_pressure_plate", "oak_wood_stairs",
+      "spruce_wood_stairs",
       "birch_wood_stairs",
       "jungle_wood_stairs", "dark_oak_wood_stairs", "acacia_wood_stairs", "crafting_table", "sign"));
 
-  private static SkillAbility HAND_SAW = new SkillAbility("woodcutting", "Hand Saw", 25, "Wee Saw!", "Allows you to craft a hand saw!",
+  private static SkillAbility HAND_SAW = new SkillAbility("woodcutting", "Hand Saw", 25, "Wee Saw!", "Allows you to " +
+      "craft a hand saw!",
       "Hand saws instantly convert broken wood logs into 8 planks.");
 
-  private static SkillAbility WHIRLING_CHOP = new SkillAbility("woodcutting", "Whirling Chop", 50, "My roflchopter go soi soi soi soi soi.",
+  private static SkillAbility WHIRLING_CHOP = new SkillAbility("woodcutting", "Whirling Chop", 50, "My roflchopter go" +
+      " soi soi soi soi soi.",
       "Right click with an axe to massacre trees in a 10 block radius.");
 
-  private static SkillAbility LEAF_ARMOR = new SkillAbility("woodcutting", "Leaf Armor", 75, "Tree!", "Grants you the ability to craft " +
+  private static SkillAbility LEAF_ARMOR = new SkillAbility("woodcutting", "Leaf Armor", 75, "Tree!", "Grants you the" +
+      " ability to craft " +
       "armor out of leaves.");
 
   private static SkillAbility WEIRWOOD = new SkillAbility("woodcutting", "Weirwood", 100, "Not 'weirdwood'.",
@@ -102,6 +107,9 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
     super.ding(player);
     if (this.level >= 25) {
       SkrimAdvancements.HAND_SAW.grant(player);
+      if (this.level >= 75) {
+        SkrimAdvancements.LEAF_ARMOR.grant(player);
+      }
     }
   }
 
