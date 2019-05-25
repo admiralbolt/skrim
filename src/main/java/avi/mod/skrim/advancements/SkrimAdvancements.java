@@ -30,6 +30,8 @@ public class SkrimAdvancements {
 
   // Recipes granted when a player hits an appropriate level.
   public static CustomAdvancement OBSIDIAN_SMITH = registerAdvancement("blacksmithing_100");
+  public static CustomAdvancement GLOW_FLOWER = registerAdvancement("botany_25");
+  public static CustomAdvancement ENCHANTED_FLOWER = registerAdvancement("botany_100");
   public static CustomAdvancement ANGEL_CAKE = registerAdvancement("cooking_100");
   public static CustomAdvancement HAND_SAW = registerAdvancement("woodcutting_25");
   public static CustomAdvancement LEAF_ARMOR = registerAdvancement("woodcutting_75");

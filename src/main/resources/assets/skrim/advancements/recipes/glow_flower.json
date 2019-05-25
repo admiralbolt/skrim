@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skrim:glow_flower_poppy",
+      "skrim:glow_flower_dandelion",
+      "skrim:glow_flower_blue_orchid",
+      "skrim:glow_flower_allium",
+      "skrim:glow_flower_azure_bluet",
+      "skrim:glow_flower_red_tulip",
+      "skrim:glow_flower_orange_tulip",
+      "skrim:glow_flower_white_tulip",
+      "skrim:glow_flower_pink_tulip",
+      "skrim:glow_flower_oxeye_daisy",
+      "skrim:glow_flower_sunflower",
+      "skrim:glow_flower_lilac",
+      "skrim:glow_flower_rose_bush",
+      "skrim:glow_flower_peony"
+    ]
+  },
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:botany_25"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skrim:enchanted_flower_poppy",
+      "skrim:enchanted_flower_poppy_from_glow",
+      "skrim:enchanted_flower_dandelion",
+      "skrim:enchanted_flower_dandelion_from_glow",
+      "skrim:enchanted_flower_blue_orchid",
+      "skrim:enchanted_flower_blue_orchid_from_glow",
+      "skrim:enchanted_flower_allium",
+      "skrim:enchanted_flower_allium_from_glow",
+      "skrim:enchanted_flower_azure_bluet",
+      "skrim:enchanted_flower_azure_bluet_from_glow",
+      "skrim:enchanted_flower_red_tulip",
+      "skrim:enchanted_flower_red_tulip_from_glow",
+      "skrim:enchanted_flower_orange_tulip",
+      "skrim:enchanted_flower_orange_tulip_from_glow",
+      "skrim:enchanted_flower_white_tulip",
+      "skrim:enchanted_flower_white_tulip_from_glow",
+      "skrim:enchanted_flower_pink_tulip",
+      "skrim:enchanted_flower_pink_tulip_from_glow",
+      "skrim:enchanted_flower_oxeye_daisy",
+      "skrim:enchanted_flower_oxeye_daisy_from_glow",
+      "skrim:enchanted_flower_sunflower",
+      "skrim:enchanted_flower_sunflower_from_glow",
+      "skrim:enchanted_flower_lilac",
+      "skrim:enchanted_flower_lilac_from_glow",
+      "skrim:enchanted_flower_rose_bush",
+      "skrim:enchanted_flower_rose_bush_from_glow",
+      "skrim:enchanted_flower_peony",
+      "skrim:enchanted_flower_peony_from_glow"
+    ]
+  },
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:botany_100"
+    }
+  }
+}

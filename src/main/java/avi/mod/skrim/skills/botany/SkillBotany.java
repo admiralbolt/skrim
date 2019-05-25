@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.botany;
 
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket;
@@ -85,6 +86,17 @@ public class SkillBotany extends Skill implements ISkillBotany {
   public SkillBotany(int level, int currentXp) {
     super("Botany", level, currentXp);
     this.addAbilities(SUN_FLOWER, THORN_STYLE, SEDUCE_VILLAGER, ENCHANTED_FLOWER);
+  }
+
+  @Override
+  public void ding(EntityPlayerMP player) {
+    super.ding(player);
+    if (this.level >= 25) {
+      SkrimAdvancements.GLOW_FLOWER.grant(player);
+      if (this.level >= 100) {
+        SkrimAdvancements.ENCHANTED_FLOWER.grant(player);
+      }
+    }
   }
 
   private static boolean validFlowerStack(ItemStack stack) {
