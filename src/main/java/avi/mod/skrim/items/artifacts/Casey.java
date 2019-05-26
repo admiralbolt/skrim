@@ -7,19 +7,27 @@ import avi.mod.skrim.items.weapons.ArtifactSword;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import java.util.List;
+import java.util.Random;
 
 public class Casey extends ArtifactSword {
 
@@ -55,6 +63,38 @@ public class Casey extends ArtifactSword {
       player.world.playSound(null, player.getPosition(), SkrimSoundEvents.HOME_RUN, SoundCategory.PLAYERS, 150.0F, 1.0F);
     }
 
+    @SubscribeEvent
+    public static void blastOff(LivingKnockBackEvent event) {
+      Entity entity = event.getAttacker();
+      if (!(entity instanceof EntityPlayer)) return;
+
+      EntityPlayer player = (EntityPlayer) entity;
+      Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
+      if (sword != SkrimItems.CASEY) return;
+
+      // intercept knockback event and cancel it so that we can apply custom knockback
+      if (event.isCancelable()) {
+        event.setCanceled(true);
+      }
+
+      // this is basically knockback except without the hard cap on the vertical vector so we get a true "home run"
+      EntityLivingBase target = event.getEntityLiving();
+      float strength = event.getStrength(); 
+      double xRatio = event.getRatioX(); 
+      double zRatio = event.getRatioZ();
+      if (new Random().nextDouble() >= target.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue())
+      {
+          target.isAirBorne = true;
+          float f = MathHelper.sqrt(xRatio * xRatio + zRatio * zRatio);
+          target.motionX /= 2.0D;
+          target.motionZ /= 2.0D;
+          target.motionY /= 2.0D;
+          target.motionX -= xRatio / (double)f * (double)strength;
+          target.motionZ -= zRatio / (double)f * (double)strength;
+          target.motionY += (double)strength / 5;
+      }
+
+    }
   }
 
 
