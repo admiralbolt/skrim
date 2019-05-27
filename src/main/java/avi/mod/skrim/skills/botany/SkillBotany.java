@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.botany;
 
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket;
@@ -10,6 +11,7 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
@@ -28,16 +30,40 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
 public class SkillBotany extends Skill implements ISkillBotany {
 
-  private static final int MIN_VILLAGER_COST = 4;
+  private static Map<UUID, List<Pair<Integer, Integer>>> VILLAGER_TRADES = new HashMap<>();
+
   public static SkillStorage<ISkillBotany> skillStorage = new SkillStorage<>();
   public static Set<Item> GLOW_FLOWER_ITEMS = new HashSet<>();
   public static Set<Item> ENCHANTED_FLOWER_ITEMS = new HashSet<>();
-  private static Map<String, Integer> XP_MAP;
+  private static Set<String> DOUBLE_FLOWER_NAMES = ImmutableSet.of("azure_bluet", "lilac", "peony", "rose_bush", "double_rose");
+
+  // The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
+  private static Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
+      .put("dandelion", 300)
+      .put("poppy", 300)
+      // 3 Biomes
+      .put("houstonia", 600) // azure_bluet
+      .put("red_tulip", 600)
+      .put("orange_tulip", 600)
+      .put("white_tulip", 600)
+      .put("pink_tulip", 600)
+      .put("oxeye_daisy", 600)
+      // Only swamp, can respawn
+      .put("blue_orchid", 1200)
+      .put("allium", 1200)
+      // Only forest & flower forest on generation
+      .put("syringa", 3000) // lilac
+      .put("double_rose", 3000)
+      .put("paeonia", 3000) // peony
+      // Only sunflower plains on generation
+      .put("sunflower", 5000)
+      .build();
 
   private static SkillAbility SUN_FLOWER = new SkillAbility("botany", "Sun Flower", 25, "It was either this or " +
       "mariglow, don't know which one is worse.",
@@ -51,31 +77,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   private static SkillAbility ENCHANTED_FLOWER = new SkillAbility("botany", "Enchanted Flower", 100, "It shares a " +
       "giant friendliness beam! :D",
       "Enables you to craft enchanted flowers that function like speed beacons.");
-  private static Set<String> DOUBLE_FLOWER_NAMES = ImmutableSet.of("azure_bluet", "lilac", "peony", "rose_bush",
-      "double_rose");
 
-  static {
-    XP_MAP = new HashMap<>();
-    // The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
-    XP_MAP.put("dandelion", 300);
-    XP_MAP.put("poppy", 300);
-    // 3 Biomes
-    XP_MAP.put("houstonia", 600); // azure_bluet
-    XP_MAP.put("red_tulip", 600);
-    XP_MAP.put("orange_tulip", 600);
-    XP_MAP.put("white_tulip", 600);
-    XP_MAP.put("pink_tulip", 600);
-    XP_MAP.put("oxeye_daisy", 600);
-    // Only swamp, can respawn
-    XP_MAP.put("blue_orchid", 1200);
-    XP_MAP.put("allium", 1200);
-    // Only forest & flower forest on generation
-    XP_MAP.put("syringa", 3000); // lilac
-    XP_MAP.put("double_rose", 3000);
-    XP_MAP.put("paeonia", 3000); // peony
-    // Only sunflower plains on generation
-    XP_MAP.put("sunflower", 5000);
-  }
 
   public SkillBotany() {
     this(1, 0);
@@ -84,6 +86,17 @@ public class SkillBotany extends Skill implements ISkillBotany {
   public SkillBotany(int level, int currentXp) {
     super("Botany", level, currentXp);
     this.addAbilities(SUN_FLOWER, THORN_STYLE, SEDUCE_VILLAGER, ENCHANTED_FLOWER);
+  }
+
+  @Override
+  public void ding(EntityPlayerMP player) {
+    super.ding(player);
+    if (this.level >= 25) {
+      SkrimAdvancements.GLOW_FLOWER.grant(player);
+      if (this.level >= 100) {
+        SkrimAdvancements.ENCHANTED_FLOWER.grant(player);
+      }
+    }
   }
 
   private static boolean validFlowerStack(ItemStack stack) {
@@ -127,6 +140,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
       // of fortune drops here if necessary.
       if (targetState.getBlock() instanceof BlockDoublePlant) {
         flowerName = getFlowerName(targetState);
+        if (!XP_MAP.containsKey(flowerName)) return;
+
         if (Utils.rand.nextDouble() < botany.getFortuneChance()) {
           Item droppedItem = targetState.getBlock().getItemDropped(targetState, Utils.rand, 0);
           int meta = targetState.getBlock().damageDropped(targetState);
@@ -235,23 +250,49 @@ public class SkillBotany extends Skill implements ISkillBotany {
     // Lol, why am I setting this?
     villager.setIsWillingToMate(true);
     MerchantRecipeList buyingList = (MerchantRecipeList) Obfuscation.VILLAGER_BUY_LIST.getValue(villager);
-    for (MerchantRecipe recipe : buyingList) {
-      ItemStack first = recipe.getItemToBuy();
-      first.setCount(Math.max(MIN_VILLAGER_COST, first.getCount() - 1));
-      if (recipe.hasSecondItemToBuy()) {
-        ItemStack second = recipe.getSecondItemToBuy();
-        second.setCount(Math.max(MIN_VILLAGER_COST, second.getCount() - 1));
+
+    if (buyingList.size() > 0) {
+      UUID villagerId = villager.getUniqueID();
+
+      // The original count of the items for trading. We maintain what the originals were before seducing them, and limit the amount to
+      // half of the original.
+      List<Pair<Integer, Integer>> baseCounts = new ArrayList<>();
+      if (!VILLAGER_TRADES.containsKey(villagerId)) {
+        for (MerchantRecipe recipe : buyingList) {
+          Pair<Integer, Integer> buyingAmount = Pair.of(recipe.getItemToBuy().getCount(),
+              recipe.getSecondItemToBuy().getCount());
+          baseCounts.add(buyingAmount);
+        }
+        VILLAGER_TRADES.put(villagerId, baseCounts);
+      } else {
+        baseCounts = VILLAGER_TRADES.get(villagerId);
       }
+
+      // Really I want to zip the buyingList & baseCounts collections, but this ain't python dorthy.
+      int i = 0;
+      for (MerchantRecipe recipe : buyingList) {
+        Pair<Integer, Integer> baseCount = baseCounts.get(i);
+        ItemStack first = recipe.getItemToBuy();
+        first.setCount(Math.max(Math.round(baseCount.getLeft() / 2f), first.getCount() - 1));
+        if (recipe.hasSecondItemToBuy()) {
+          ItemStack second = recipe.getSecondItemToBuy();
+          second.setCount(Math.max(baseCount.getRight() / 2, second.getCount() - 1));
+        }
+        ++i;
+      }
+
+
+      SkrimPacketHandler.INSTANCE.sendTo(
+          new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height,
+              villager.width),
+          (EntityPlayerMP) player);
+
+      mainStack.setCount(mainStack.getCount() - 1);
+      if (mainStack.getCount() == 0) {
+        player.inventory.deleteStack(mainStack);
+      }
+      event.setCanceled(true);
     }
-    SkrimPacketHandler.INSTANCE.sendTo(
-        new SpawnParticlePacket("HEART", villager.posX, villager.posY, villager.posZ, villager.height,
-            villager.width),
-        (EntityPlayerMP) player);
-    mainStack.setCount(mainStack.getCount() - 1);
-    if (mainStack.getCount() == 0) {
-      player.inventory.deleteStack(mainStack);
-    }
-    event.setCanceled(true);
   }
 
   public static void verifyFlowers(ItemCraftedEvent event) {

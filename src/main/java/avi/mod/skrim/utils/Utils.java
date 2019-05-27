@@ -54,7 +54,7 @@ public class Utils {
   }
 
   public static String snakeCase(String str) {
-    return str.toLowerCase().replace(" ", "_");
+    return str.toLowerCase().replace(" ", "_").replace("'", "");
   }
 
   public static String getBlockName(Block block) {

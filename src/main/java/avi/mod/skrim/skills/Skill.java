@@ -1,8 +1,6 @@
 package avi.mod.skrim.skills;
 
 import avi.mod.skrim.advancements.SkrimAdvancements;
-import avi.mod.skrim.client.gui.GuiUtils;
-import avi.mod.skrim.client.gui.GuiUtils.Icon;
 import avi.mod.skrim.network.LevelUpPacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -18,13 +16,11 @@ public abstract class Skill implements ISkill {
 
   public static final int XP_FACTOR = 10000;
 
-
   public String name;
   public int level;
   public double xp;
   public List<String> tooltip = new ArrayList<>();
   private Map<Integer, SkillAbility> abilities = new HashMap<>();
-  private Icon icon;
 
   /**
    * Optionally load a skill with the set level & xp
@@ -33,7 +29,6 @@ public abstract class Skill implements ISkill {
     this.name = name;
     this.level = level;
     this.xp = xp;
-    this.icon = GuiUtils.getSkillIcon(this.name.toLowerCase());
   }
 
   /**
@@ -93,10 +88,6 @@ public abstract class Skill implements ISkill {
     return (this.level / 25) >= abilityLevel;
   }
 
-  public Icon getAbilityIcon(int abilityLevel) {
-    return SkillAbility.getAbilityIcon(this.getAbility(abilityLevel), this.hasAbility(abilityLevel));
-  }
-
 
   public void levelUp(EntityPlayerMP player) {
     if (this.canLevelUp()) {
@@ -107,16 +98,11 @@ public abstract class Skill implements ISkill {
     SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
   }
 
-  private void ding(EntityPlayerMP player) {
+  public void ding(EntityPlayerMP player) {
     if (this.level >= 25) SkrimAdvancements.DING_APPRENTICE.grant(player);
     if (this.level >= 50) SkrimAdvancements.DING_JOURNEYMAN.grant(player);
     if (this.level >= 75) SkrimAdvancements.DING_EXPERT.grant(player);
     if (this.level >= 100) SkrimAdvancements.DING_MASTER.grant(player);
-  }
-
-
-  public Icon getIcon() {
-    return this.icon;
   }
 
   public double getXp() {

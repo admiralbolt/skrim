@@ -39,7 +39,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
   private static SkillAbility DYNAMITE = new SkillAbility("demolition", "Dynamite", 25, "Boom goes the dynamite.",
       "Grants you the ability to craft dynamite with tnt & a pickaxe.", "Dynamite has a larger blast radius and a 100% chance to drop " +
       "blocks.");
-  private static SkillAbility BIOBOMB = new SkillAbility("demolition", "Bio-Bomb", 50, "A whole new meaning for c'mon BB.",
+  private static SkillAbility BIOBOMB = new SkillAbility("demolition", "Bio Bomb", 50, "A whole new meaning for c'mon BB.",
       "Grants you the ability to craft Bio-Bomb with... Stuff...", "Bio-bombs have twice the blast radius of tnt, and don't affect blocks" +
       ".");
   private static SkillAbility NAPALM = new SkillAbility("demolition", "Napalm", 75, "Handle with care.",

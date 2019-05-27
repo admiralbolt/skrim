@@ -28,6 +28,14 @@ public class SkrimAdvancements {
   public static CustomAdvancement DING_EXPERT = registerAdvancement("ding_expert");
   public static CustomAdvancement DING_MASTER = registerAdvancement("ding_master");
 
+  // Recipes granted when a player hits an appropriate level.
+  public static CustomAdvancement OBSIDIAN_SMITH = registerAdvancement("blacksmithing_100");
+  public static CustomAdvancement GLOW_FLOWER = registerAdvancement("botany_25");
+  public static CustomAdvancement ENCHANTED_FLOWER = registerAdvancement("botany_100");
+  public static CustomAdvancement ANGEL_CAKE = registerAdvancement("cooking_100");
+  public static CustomAdvancement HAND_SAW = registerAdvancement("woodcutting_25");
+  public static CustomAdvancement LEAF_ARMOR = registerAdvancement("woodcutting_75");
+  public static CustomAdvancement WEIRWODO = registerAdvancement("woodcutting_100");
 
   private static CustomAdvancement registerAdvancement(String name) {
     CustomAdvancement advancement = new CustomAdvancement(name);

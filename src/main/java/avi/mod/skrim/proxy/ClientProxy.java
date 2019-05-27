@@ -4,6 +4,7 @@ import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.items.SkrimItems;
+import avi.mod.skrim.items.items.SkrimPotion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +37,11 @@ public class ClientProxy implements IProxy {
   public void init() {
     SkrimEntitySpawnHandler.init();
     MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
+<<<<<<< HEAD
+=======
+    NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
+    MINECRAFT.getItemColors().registerItemColorHandler(new SkrimPotion.ColorHandler(), SkrimItems.SKRIM_POTION);
+>>>>>>> 1.12.2-1.1
   }
 
   @Override

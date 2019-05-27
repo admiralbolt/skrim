@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skrim:weirwood_sapling",
+      "skrim:weirwood_totem"
+    ]
+  },
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:woodcutting_100"
+    }
+  }
+}

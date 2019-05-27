@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.blacksmithing;
 
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
@@ -26,14 +27,17 @@ import java.util.Set;
 
 public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
+  private static final String GLAZED_TERRACOTA_NAME = "tile.glazedterracotta";
+
   private static final Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
-      .put("tile.stone", 50)
-      .put("tile.stonebricksmooth", 50)
-      .put("item.netherbrick", 60)
-      .put("tile.glass", 50)
-      .put("item.brick", 100)
-      .put("tile.clayhardened", 400)
-      .put("item.ingotiron", 500)
+      .put("tile.stone", 100)
+      .put("tile.stonebricksmooth", 100)
+      .put("item.netherbrick", 110)
+      .put("tile.glass", 100)
+      .put("item.brick", 200)
+      .put("tile.clayhardened", 500)
+      .put(GLAZED_TERRACOTA_NAME, 400)
+      .put("item.ingotiron", 700)
       .put("item.ingotgold", 2000)
       .build();
 
@@ -64,7 +68,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   private static SkillAbility OBSIDIAN_SMITH = new SkillAbility("blacksmithing", "Obsidian Smith", 100, "How can " +
       "obsidian be real if our " +
       "eyes aren't real?",
-      "Allows you to craft obsidian armor, weapons, and tools.", "To craft, encase an undamaged diamond item in obsidian.");
+      "Allows you to craft obsidian armor, weapons, and tools.", "To craft, encase an undamaged diamond item in " +
+      "obsidian.");
 
   public SkillBlacksmithing() {
     this(1, 0);
@@ -83,12 +88,21 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     return tooltip;
   }
 
+  @Override
+  public void ding(EntityPlayerMP player) {
+    super.ding(player);
+    if (this.level >= 100) {
+      SkrimAdvancements.OBSIDIAN_SMITH.grant(player);
+    }
+  }
+
   private static String getBlacksmithingName(ItemStack stack) {
-    return Utils.snakeCase(stack.getItem().getUnlocalizedName());
+    String name = Utils.snakeCase(stack.getItem().getUnlocalizedName());
+    return (name.startsWith(GLAZED_TERRACOTA_NAME)) ? GLAZED_TERRACOTA_NAME : name;
   }
 
   private static boolean validBlacksmithingTarget(ItemStack stack) {
-    return XP_MAP.containsKey(Utils.snakeCase(stack.getItem().getUnlocalizedName()));
+    return XP_MAP.containsKey(getBlacksmithingName(stack));
   }
 
   public static int getXp(String blockName) {
@@ -105,6 +119,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
   public static void giveMoreIngots(ItemSmeltedEvent event) {
     if (event.player == null || !Skills.hasSkill(event.player, Skills.BLACKSMITHING)) return;
+
     SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
     if (!validBlacksmithingTarget(event.smelting)) return;
 
@@ -152,11 +167,12 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     ItemStack output = event.getItemResult();
 
     // If the two input are items are the same we want to calculate the repair based on the healthiest item.
-    int baseDamage = left.getItem() == middle.getItem() ? Math.min(left.getItemDamage(), middle.getItemDamage()) : left.getItemDamage();
+    int baseDamage = left.getItem() == middle.getItem() ? Math.min(left.getItemDamage(), middle.getItemDamage()) :
+        left.getItemDamage();
     int baseRepair = baseDamage - output.getItemDamage();
     int finalItemDamage = Math.max(output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair()), 0);
     output.setItemDamage(finalItemDamage);
-    blacksmithing.addXp((EntityPlayerMP) player, baseDamage - finalItemDamage);
+    blacksmithing.addXp((EntityPlayerMP) player, 10 * (baseDamage - finalItemDamage));
 
     if (!blacksmithing.hasAbility(1)) return;
     event.setBreakChance(0);

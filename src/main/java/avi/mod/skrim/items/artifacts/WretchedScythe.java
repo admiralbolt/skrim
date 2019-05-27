@@ -38,8 +38,9 @@ public class WretchedScythe extends ArtifactHoe {
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add("§4Gains power as more enemies are killed.§r");
-    tooltip.add("§4Souls harvested: " + stack.getTagCompound().getInteger("souls") + ".§r");
-    tooltip.add("§4Deals " + Utils.formatPercentTwo(stack.getTagCompound().getInteger("souls") * SCALING) + "% more damage.§r");
+    int souls = stack.getTagCompound() != null ? stack.getTagCompound().getInteger("souls") : 0;
+    tooltip.add("§4Souls harvested: " + souls + ".§r");
+    tooltip.add("§4Deals " + Utils.formatPercentTwo(souls * SCALING) + "% more damage.§r");
     tooltip.add("§e\"Listen closely, and you can hear the whispers of the damned.\"§r");
   }
 
@@ -80,7 +81,7 @@ public class WretchedScythe extends ArtifactHoe {
       if (player.getHeldItemMainhand().getItem() != SkrimItems.WRETCHED_SCYTHE) return;
 
       ItemStack scythe = player.getHeldItemMainhand();
-      NBTTagCompound compound = scythe.getTagCompound();
+      NBTTagCompound compound = scythe.getTagCompound() == null ? new NBTTagCompound() : scythe.getTagCompound();
 
       compound.setInteger("souls", compound.getInteger("souls") + 1);
       scythe.setTagCompound(compound);
@@ -95,8 +96,8 @@ public class WretchedScythe extends ArtifactHoe {
       if (player.getHeldItemMainhand().getItem() != SkrimItems.WRETCHED_SCYTHE) return;
 
       ItemStack scythe = player.getHeldItemMainhand();
-      NBTTagCompound compound = scythe.getTagCompound();
-      event.setAmount(event.getAmount() * (1 + SCALING * compound.getInteger("souls")));
+      int souls = scythe.getTagCompound() != null ? scythe.getTagCompound().getInteger("souls") : 0;
+      event.setAmount(event.getAmount() * (1 + SCALING * souls));
     }
 
   }

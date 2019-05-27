@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.mining;
 
+import avi.mod.skrim.blocks.SkrimBlocks;
 import avi.mod.skrim.network.FallDistancePacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.skillpackets.DrillPacket;
@@ -9,6 +10,7 @@ import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -16,6 +18,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
@@ -44,15 +47,15 @@ public class SkillMining extends Skill implements ISkillMining {
       .put("sandstone", 100)
       .put("end_stone", 100)
       .put("stained_terracotta", 175)
-      .put("coal_ore", 250)
-      .put("iron_ore", 350)
-      .put("nether_quartz_ore", 400)
+      .put("coal_ore", 500)
+      .put("iron_ore", 750)
+      .put("nether_quartz_ore", 800)
       .put("obsidian", 1000)
-      .put("redstone_ore", 1000)
-      .put("gold_ore", 1500)
-      .put("lapis_lazuli_ore", 2000)
-      .put("diamond_ore", 2500)
-      .put("emerald_ore", 5000)
+      .put("redstone_ore", 1500)
+      .put("gold_ore", 2000)
+      .put("lapis_lazuli_ore", 3000)
+      .put("diamond_ore", 5000)
+      .put("emerald_ore", 10000)
       .build();
 
   private static final long DARKVISION_CHECK = 80L;
@@ -232,6 +235,12 @@ public class SkillMining extends Skill implements ISkillMining {
     SkrimPacketHandler.INSTANCE.sendToServer(new FallDistancePacket(player.fallDistance));
   }
 
+  // This is a shitty way of doing this, but alas.
+  private static final ImmutableSet<Block> DONT_DRILL_ME_BRO = ImmutableSet.of(
+      Blocks.FURNACE, Blocks.LIT_FURNACE, Blocks.BREWING_STAND, Blocks.CRAFTING_TABLE, Blocks.CHEST, Blocks.ENDER_CHEST,
+      Blocks.TRAPPED_CHEST, Blocks.BEACON, Blocks.POWERED_REPEATER, Blocks.UNPOWERED_REPEATER, SkrimBlocks.BREWING_STAND,
+      SkrimBlocks.MEGA_CHEST);
+
 
   public static void drill(PlayerInteractEvent.RightClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
@@ -242,13 +251,14 @@ public class SkillMining extends Skill implements ISkillMining {
 
     if (!(event.getItemStack().getItem() instanceof ItemPickaxe)) return;
 
+    player.swingArm(EnumHand.MAIN_HAND);
     RayTraceResult result = player.rayTrace(5.0D, 1.0F);
     if (result == null || result.typeOfHit != RayTraceResult.Type.BLOCK) return;
 
-    player.swingArm(EnumHand.MAIN_HAND);
     BlockPos targetPos = result.getBlockPos();
-    SkrimPacketHandler.INSTANCE.sendToServer(new DrillPacket(targetPos.getX(), targetPos.getY(),
-        targetPos.getZ()));
+    if (DONT_DRILL_ME_BRO.contains(player.world.getBlockState(targetPos).getBlock())) return;
+
+    SkrimPacketHandler.INSTANCE.sendToServer(new DrillPacket(targetPos.getX(), targetPos.getY(), targetPos.getZ()));
   }
 
 }

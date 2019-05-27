@@ -5,7 +5,6 @@ import avi.mod.skrim.items.ItemBase;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.ranged.SkillRanged;
-import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -203,22 +202,6 @@ public class CustomBow extends ItemBow implements ItemBase {
         event.player.addItemStackToInventory(newStack);
       }
     }
-
-    @SubscribeEvent
-    public static void craftBow(PlayerEvent.ItemCraftedEvent event) {
-      if (event.crafting.getItem() != Items.BOW) return;
-
-      ItemStack newStack = new ItemStack(SkrimItems.OVERWRITE_BOW, event.crafting.getCount(), event.crafting.getMetadata());
-      newStack.setTagCompound(event.crafting.getTagCompound());
-      if (event.player.inventory.getItemStack().getItem() == Items.AIR) {
-        // Player shift-clicked. We'll need to add the skrim bow to their inventory directly and remove the wrong version.
-        event.player.inventory.addItemStackToInventory(newStack);
-        Utils.removeFromInventory(event.player.inventory, event.crafting.getItem(), event.crafting.getCount());
-      } else {
-        Obfuscation.CURRENT_ITEM.hackValueTo(event.player.inventory, newStack);
-      }
-    }
-
 
   }
 

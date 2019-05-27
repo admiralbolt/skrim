@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
-public class ModTileEntities {
+public class SkrimTileEntities {
 
   @SubscribeEvent
   public static void registerTileEntities(final RegistryEvent.Register<Block> event) {
@@ -18,6 +18,7 @@ public class ModTileEntities {
     GameRegistry.registerTileEntity(MegaChestTileEntity.class, new ResourceLocation(Skrim.MOD_ID,
         "tile_entity_mega_chest"));
     GameRegistry.registerTileEntity(CakeTileEntity.class, new ResourceLocation(Skrim.MOD_ID, "cake_tile_entity"));
+    GameRegistry.registerTileEntity(SkrimBrewingStandEntity.class, new ResourceLocation(Skrim.MOD_ID, "brewing_stand_tile_entity"));
   }
 
 }

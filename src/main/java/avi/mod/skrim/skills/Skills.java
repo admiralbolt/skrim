@@ -6,6 +6,8 @@ import avi.mod.skrim.skills.blacksmithing.BlacksmithingProvider;
 import avi.mod.skrim.skills.blacksmithing.ISkillBlacksmithing;
 import avi.mod.skrim.skills.botany.BotanyProvider;
 import avi.mod.skrim.skills.botany.ISkillBotany;
+import avi.mod.skrim.skills.brewing.BrewingProvider;
+import avi.mod.skrim.skills.brewing.ISkillBrewing;
 import avi.mod.skrim.skills.cooking.CookingProvider;
 import avi.mod.skrim.skills.cooking.ISkillCooking;
 import avi.mod.skrim.skills.demolition.DemolitionProvider;
@@ -47,6 +49,7 @@ public class Skills {
 
   public static Capability<ISkillBlacksmithing> BLACKSMITHING = BlacksmithingProvider.BLACKSMITHING;
   public static Capability<ISkillBotany> BOTANY = BotanyProvider.BOTANY;
+  public static Capability<ISkillBrewing> BREWING = BrewingProvider.BREWING;
   public static Capability<ISkillCooking> COOKING = CookingProvider.COOKING;
   public static Capability<ISkillDemolition> DEMOLITION = DemolitionProvider.DEMOLITION;
   public static Capability<ISkillDigging> DIGGING = DiggingProvider.DIGGING;
@@ -60,7 +63,7 @@ public class Skills {
   public static Map<String, Capability<? extends ISkill>> SKILL_MAP = new HashMap<>();
   public static List<Capability<? extends ISkill>> ALL_SKILLS = new ArrayList<>();
 
-  public static String[] ALPHABETICAL_SKILLS = {"blacksmithing", "botany", "cooking", "defense", "demolition", "digging", "farming",
+  public static String[] ALPHABETICAL_SKILLS = {"blacksmithing", "botany", "brewing", "cooking", "demolition", "digging", "farming",
       "fishing", "melee", "mining", "ranged", "woodcutting"};
 
   public static void register() {
@@ -75,9 +78,11 @@ public class Skills {
     DemolitionProvider.register();
     MeleeProvider.register();
     RangedProvider.register();
+    BrewingProvider.register();
 
     BLACKSMITHING = BlacksmithingProvider.BLACKSMITHING;
     BOTANY = BotanyProvider.BOTANY;
+    BREWING = BrewingProvider.BREWING;
     COOKING = CookingProvider.COOKING;
     DEMOLITION = DemolitionProvider.DEMOLITION;
     DIGGING = DiggingProvider.DIGGING;
@@ -90,6 +95,7 @@ public class Skills {
 
     ALL_SKILLS.add(BLACKSMITHING);
     ALL_SKILLS.add(BOTANY);
+    ALL_SKILLS.add(BREWING);
     ALL_SKILLS.add(COOKING);
     ALL_SKILLS.add(DEMOLITION);
     ALL_SKILLS.add(DIGGING);
@@ -102,6 +108,7 @@ public class Skills {
 
     SKILL_MAP.put("blacksmithing", BLACKSMITHING);
     SKILL_MAP.put("botany", BOTANY);
+    SKILL_MAP.put("brewing", BREWING);
     SKILL_MAP.put("cooking", COOKING);
     SKILL_MAP.put("demolition", DEMOLITION);
     SKILL_MAP.put("digging", DIGGING);
@@ -124,7 +131,7 @@ public class Skills {
 
   public static <T extends Skill> T getSkill(EntityPlayer player, Capability<? extends ISkill> skillCap, Class<T> skillClass) {
     T skill = skillClass.cast(player.getCapability(skillCap, EnumFacing.NORTH));
-    if (skill == null) throw new NullPointerException("No such skill: " + skillCap + " exists.");
+    if (skill == null) throw new NullPointerException("No such skill: [" + skillCap + ", " + skillClass + "] exists.");
     return skill;
   }
 

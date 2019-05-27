@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "skrim:angel_cake"
+    ]
+  },
+  "criteria": {
+    "custom_trigger": {
+      "trigger": "skrim:cooking_100"
+    }
+  }
+}

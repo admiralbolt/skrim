@@ -1,5 +1,6 @@
 package avi.mod.skrim.skills.cooking;
 
+import avi.mod.skrim.advancements.SkrimAdvancements;
 import avi.mod.skrim.entities.passive.EntityPumpkow;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.network.SkrimPacketHandler;
@@ -129,9 +130,15 @@ public class SkillCooking extends Skill implements ISkillCooking {
     List<String> tooltip = new ArrayList<>();
     tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraFood(this.level)) + "%§r food.");
     tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
-    tooltip.add("Shift clicking crafted items provides §aregular and modded§r food.");
-    tooltip.add("§eWe swear this is a feature and not a bug...§r");
     return tooltip;
+  }
+
+  @Override
+  public void ding(EntityPlayerMP player) {
+    super.ding(player);
+    if (this.level >= 100) {
+      SkrimAdvancements.ANGEL_CAKE.grant(player);
+    }
   }
 
   public static int getXp(String foodName) {

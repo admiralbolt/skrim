@@ -72,7 +72,7 @@ public class MegaChest extends BlockContainer {
 
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     EnumFacing enumfacing =
-				EnumFacing.getHorizontal(MathHelper.floor((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3).getOpposite();
+        EnumFacing.getHorizontal(MathHelper.floor((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3).getOpposite();
     state = state.withProperty(FACING, enumfacing);
     if (stack.hasDisplayName()) {
       ((MegaChestTileEntity) worldIn.getTileEntity(pos)).setCustomName(stack.getDisplayName());
@@ -81,7 +81,7 @@ public class MegaChest extends BlockContainer {
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side,
-																	float hitX, float hitY,
+                                  float hitX, float hitY,
                                   float hitZ) {
     if (!world.isRemote) {
       player.openGui(Skrim.instance, GuiHandler.MEGA_CHEST_GUI, world, pos.getX(), pos.getY(), pos.getZ());

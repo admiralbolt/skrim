@@ -262,7 +262,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
     BlockPos playerPos = new BlockPos(player.posX, player.posY, player.posZ);
     if (!player.world.isDaytime() || !player.world.canSeeSky(playerPos)) return;
 
-    for (Potion potion : new Potion[]{MobEffects.SATURATION, MobEffects.HASTE}) {
+    for (Potion potion : new Potion[]{MobEffects.SPEED, MobEffects.HASTE}) {
       PotionEffect newEffect = new PotionEffect(potion, TAN_DURATION, 0, true, false);
       Utils.addOrCombineEffect(player, newEffect);
     }
