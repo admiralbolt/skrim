@@ -5,6 +5,7 @@ import avi.mod.skrim.capabilities.SkrimCapabilities;
 import avi.mod.skrim.client.SkrimTab;
 import avi.mod.skrim.commands.CommandRegistry;
 import avi.mod.skrim.handlers.EventHandler;
+import avi.mod.skrim.handlers.GuiHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.proxy.IProxy;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Skrim.MOD_ID, name = Skrim.NAME, version = Skrim.VERSION, acceptedMinecraftVersions = "[1.12.2]")
 public class Skrim {
@@ -47,6 +49,7 @@ public class Skrim {
     // Hook up all event handlers, this allows them to use Subscribe to Events
     MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
     MinecraftForge.EVENT_BUS.register(new EventHandler());
+    NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
 
   }
 
