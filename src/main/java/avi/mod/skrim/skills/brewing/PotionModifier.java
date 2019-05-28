@@ -1,8 +1,8 @@
 package avi.mod.skrim.skills.brewing;
 
 import avi.mod.skrim.items.SkrimItems;
-import avi.mod.skrim.items.items.SplashSkrimPotion;
 import avi.mod.skrim.utils.Obfuscation;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -19,31 +19,39 @@ public class PotionModifier {
 
   @FunctionalInterface
   interface Function<ItemStack, SkillBrewing> {
-    public ItemStack apply(ItemStack input, SkillBrewing brewing);
+    ItemStack apply(ItemStack input, SkillBrewing brewing);
   }
 
+  // Convert a base potion to a splash version. This modification should only be applied to normal potions or skrim
+  // potions.
   public static PotionModifier BASE_TO_SPLASH = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
+    if (input.getItem() != SkrimItems.SKRIM_POTION && input.getItem() != Items.POTIONITEM) return ItemStack.EMPTY;
+
     ItemStack newPotion = new ItemStack(SkrimItems.SPLASH_SKRIM_POTION);
     newPotion.setTagCompound(input.getTagCompound());
     return newPotion;
   });
 
+  // Converts a potion from splash -> lingering.
   public static PotionModifier SPLASH_TO_LINGERING = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
-    if (!(input.getItem() instanceof SplashSkrimPotion)) return ItemStack.EMPTY;
+    if (input.getItem() != SkrimItems.SPLASH_SKRIM_POTION && input.getItem() != Items.SPLASH_POTION)
+      return ItemStack.EMPTY;
 
     ItemStack newPotion = new ItemStack(SkrimItems.LINGERING_SKRIM_POTION);
     newPotion.setTagCompound(input.getTagCompound());
     return newPotion;
   });
 
+  // Increase the strength of all effects on a potion by 1 level. Some effects like night vision & invisibility don't
+  // get any benefits from strength modification.
   public static PotionModifier INCREASED_STRENGTH = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
-    if (!SkrimPotionUtils.isSkrimPotion(input)) return ItemStack.EMPTY;
+    if (!SkrimPotionUtils.isPotion(input)) return ItemStack.EMPTY;
     if (input.getTagCompound() == null) return ItemStack.EMPTY;
 
+    // If the potion doesn't have any effects, there's nothing to be done.
     NBTTagCompound compound = input.getTagCompound().copy();
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.size() == 0) return ItemStack.EMPTY;
-
     if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
@@ -53,6 +61,7 @@ public class PotionModifier {
       list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
     }
     compound.setTag("CustomPotionEffects", list);
+    // We set the potion type to a custom one in case the input was a vanilla potion.
     compound.setString("Potion", "Skrim");
 
     ItemStack newPotion = new ItemStack(SkrimPotionUtils.TO_SKRIM_POTION.get(input.getItem()));
@@ -61,14 +70,15 @@ public class PotionModifier {
     return newPotion;
   });
 
+  // Increase the duration of all effects on a potion by 50%.
   public static PotionModifier INCREASED_DURATION = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
-    if (!SkrimPotionUtils.isSkrimPotion(input)) return ItemStack.EMPTY;
+    if (!SkrimPotionUtils.isPotion(input)) return ItemStack.EMPTY;
     if (input.getTagCompound() == null) return ItemStack.EMPTY;
 
+    // If the potion doesn't have any effects, there's nothing to be done.
     NBTTagCompound compound = input.getTagCompound().copy();
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.size() == 0) return ItemStack.EMPTY;
-
     if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
@@ -78,6 +88,7 @@ public class PotionModifier {
       list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
     }
     compound.setTag("CustomPotionEffects", list);
+    // We set the potion type to a custom one in case the input was a vanilla potion.
     compound.setString("Potion", "Skrim");
 
     ItemStack newPotion = new ItemStack(SkrimPotionUtils.TO_SKRIM_POTION.get(input.getItem()));

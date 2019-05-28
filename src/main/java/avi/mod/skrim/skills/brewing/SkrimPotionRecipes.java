@@ -3,7 +3,6 @@ package avi.mod.skrim.skills.brewing;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skills;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -19,13 +18,8 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
-import java.util.Set;
 
 public class SkrimPotionRecipes {
-
-  private static Set<Item> ALL_POTION_ITEMS = ImmutableSet.of(Items.POTIONITEM, Items.SPLASH_POTION,
-      Items.LINGERING_POTION, SkrimItems.SKRIM_POTION, SkrimItems.SPLASH_SKRIM_POTION,
-      SkrimItems.LINGERING_SKRIM_POTION);
 
   // Define a mapping from ingredients to the effect they provide.
   public static Map<Item, Potion> INGREDIENT_EFFECTS = ImmutableMap.<Item, Potion>builder()
@@ -63,7 +57,7 @@ public class SkrimPotionRecipes {
   }
 
   public static ItemStack getOutput(EntityPlayer player, @Nonnull ItemStack input, @Nonnull ItemStack ingredientStack) {
-    if (input.isEmpty() || input.getCount() != 1 || ingredientStack.isEmpty() || !ALL_POTION_ITEMS.contains(input.getItem()))
+    if (input.isEmpty() || input.getCount() != 1 || ingredientStack.isEmpty() || !SkrimPotionUtils.isPotion(input))
       return ItemStack.EMPTY;
 
     PotionType potionType = PotionUtils.getPotionTypeFromNBT(input.getTagCompound());

@@ -13,15 +13,18 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SkrimPotionUtils {
 
   private static final int COLOR_BLUE_POTION = 3694022;
 
-  private static final ImmutableSet<Item> POTION_ITEMS = ImmutableSet.of(SkrimItems.SKRIM_POTION, SkrimItems.SPLASH_SKRIM_POTION,
+  private static final ImmutableSet<Item> SKRIM_POTION_ITEMS = ImmutableSet.of(SkrimItems.SKRIM_POTION,
+      SkrimItems.SPLASH_SKRIM_POTION,
       SkrimItems.LINGERING_SKRIM_POTION);
+
+  private static final ImmutableSet<Item> VANILLA_POTION_ITEMS = ImmutableSet.of(Items.POTIONITEM,
+      Items.SPLASH_POTION, Items.LINGERING_POTION);
 
   public static final ImmutableMap<Item, Item> TO_SKRIM_POTION = ImmutableMap.<Item, Item>builder()
       .put(Items.POTIONITEM, SkrimItems.SKRIM_POTION)
@@ -32,7 +35,8 @@ public class SkrimPotionUtils {
       .put(SkrimItems.LINGERING_SKRIM_POTION, SkrimItems.LINGERING_SKRIM_POTION)
       .build();
 
-  // Converts any potion to a skrim potion. Can be used to convert vanilla potions to skrim potions or to copy existing skrim potions.
+  // Converts any potion to a skrim potion. Can be used to convert vanilla potions to skrim potions or to copy
+  // existing skrim potions.
   public static ItemStack convertPotion(ItemStack potion) {
     if (!TO_SKRIM_POTION.containsKey(potion.getItem())) return ItemStack.EMPTY;
 
@@ -76,7 +80,15 @@ public class SkrimPotionUtils {
   }
 
   public static boolean isSkrimPotion(ItemStack potion) {
-    return POTION_ITEMS.contains(potion.getItem());
+    return SKRIM_POTION_ITEMS.contains(potion.getItem());
+  }
+
+  public static boolean isVanillaPotion(ItemStack potion) {
+    return VANILLA_POTION_ITEMS.contains(potion.getItem());
+  }
+
+  public static boolean isPotion(ItemStack potion) {
+    return isSkrimPotion(potion) || isVanillaPotion(potion);
   }
 
   public static int getColor(ItemStack potion) {
@@ -86,7 +98,8 @@ public class SkrimPotionUtils {
 
     String potionTypeString = compound.getString("Potion");
     PotionType type = PotionUtils.getPotionFromItem(potion);
-    if (!potionTypeString.equals("Skrim") && (type == PotionTypes.EMPTY || type == PotionTypes.AWKWARD)) return COLOR_BLUE_POTION;
+    if (!potionTypeString.equals("Skrim") && (type == PotionTypes.EMPTY || type == PotionTypes.AWKWARD))
+      return COLOR_BLUE_POTION;
 
     return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(potion));
   }
