@@ -54,7 +54,13 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
     if (type == PotionTypes.THICK) return "Thick Potion";
 
     sb.append("Potion of");
+    boolean first = true;
     for (PotionEffect effect : PotionUtils.getEffectsFromStack(stack)) {
+      if (!first) {
+        sb.append(",");
+      } else {
+        first = false;
+      }
       sb.append(" ");
       sb.append(Utils.titleizeLowerCamel(effect.getEffectName().split("\\.")[1]));
     }
