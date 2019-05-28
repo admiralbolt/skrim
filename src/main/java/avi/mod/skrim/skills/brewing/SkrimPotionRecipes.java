@@ -131,6 +131,11 @@ public class SkrimPotionRecipes {
     return ItemStack.EMPTY;
   }
 
+  /**
+   * This is a hack to get the brewing UI to work correctly. You're only allowed to put valid potion stacks into the slots of a brewing
+   * entity. Valid stacks are determined by the registered recipes for forge. So we register a recipe that treats skrim potion as a valid
+   * input. The actual output of the recipe is irrelevant since we've overwritten all of the brewing logic.
+   */
   public static void registerRecipes() {
     BrewingRecipeRegistry.addRecipe(new SkrimRecipes());
   }
