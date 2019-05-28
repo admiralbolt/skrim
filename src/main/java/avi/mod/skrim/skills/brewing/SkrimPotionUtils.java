@@ -43,7 +43,7 @@ public class SkrimPotionUtils {
 
     NBTTagList list = new NBTTagList();
 
-    List<PotionEffect> effects = getEffectsFromStack(potion);
+    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(potion);
     if (effects.size() > 0) {
       for (PotionEffect effect : effects) {
         list.appendTag(effect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
@@ -86,7 +86,6 @@ public class SkrimPotionUtils {
 
     String potionTypeString = compound.getString("Potion");
     PotionType type = PotionUtils.getPotionFromItem(potion);
-    System.out.println("type: " + type.getNamePrefixed("") + ", string: " + potionTypeString);
     if (!potionTypeString.equals("Skrim") && (type == PotionTypes.EMPTY || type == PotionTypes.AWKWARD)) return COLOR_BLUE_POTION;
 
     return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(potion));
