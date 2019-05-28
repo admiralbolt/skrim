@@ -11,6 +11,10 @@ import net.minecraft.potion.PotionUtils;
 
 import java.util.List;
 
+/**
+ * This is a helper class to apply modifications to a potion. Effectively, these are lambda functions that are run
+ * against the input potion and adjust it in some way.
+ */
 public class PotionModifier {
 
   @FunctionalInterface
@@ -37,9 +41,10 @@ public class PotionModifier {
     if (input.getTagCompound() == null) return ItemStack.EMPTY;
 
     NBTTagCompound compound = input.getTagCompound().copy();
-
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.size() == 0) return ItemStack.EMPTY;
+
+    if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
     for (PotionEffect effect : effects) {
@@ -61,9 +66,10 @@ public class PotionModifier {
     if (input.getTagCompound() == null) return ItemStack.EMPTY;
 
     NBTTagCompound compound = input.getTagCompound().copy();
-
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.size() == 0) return ItemStack.EMPTY;
+
+    if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
     for (PotionEffect effect : effects) {

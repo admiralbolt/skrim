@@ -22,12 +22,12 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
   @Override
   public List<String> getToolTip() {
     return ImmutableList.of(
-        "Potions have §a+" + Utils.formatPercent(this.extraDuration()) + "%§r extra duration.",
-        "Potions take §a" + Utils.formatPercent(this.brewSpeed()) + "%§r less time to brew.");
+        "Potions take §a" + Utils.formatPercent(this.brewSpeed()) + "%§r less time to brew.",
+        "You can apply strength/duration modifications §a" + this.totalModifiers() + "§r times.");
   }
 
-  public double extraDuration() {
-    return this.level * 0.01;
+  public int totalModifiers() {
+    return 1 + this.level / 10;
   }
 
   public double brewSpeed() {
