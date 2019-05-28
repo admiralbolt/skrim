@@ -2,6 +2,7 @@ package avi.mod.skrim.skills.brewing;
 
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -18,6 +19,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -25,18 +27,19 @@ import java.util.Map;
 
 public class SkrimPotionRecipes {
 
-  // Define a mapping from ingredients to the effect they provide.
-  public static Map<Item, Potion> INGREDIENT_EFFECTS = ImmutableMap.<Item, Potion>builder()
-      .put(Items.RABBIT_FOOT, MobEffects.JUMP_BOOST)
-      .put(Items.SUGAR, MobEffects.SPEED)
-      .put(Items.BLAZE_POWDER, MobEffects.STRENGTH)
-      .put(Items.SPECKLED_MELON, MobEffects.INSTANT_HEALTH)
-      .put(Items.SPIDER_EYE, MobEffects.POISON)
-      .put(Items.GHAST_TEAR, MobEffects.REGENERATION)
-      .put(Items.MAGMA_CREAM, MobEffects.FIRE_RESISTANCE)
-      .put(Items.GOLDEN_CARROT, MobEffects.NIGHT_VISION)
-      .put(Items.FERMENTED_SPIDER_EYE, MobEffects.WEAKNESS)
-      .put(Items.FISH, MobEffects.WATER_BREATHING)
+  // Define a mapping from ingredients to the effect they provide and the starting duration of that effect. All durations are in ticks
+  // with 1 second = 20 ticks.
+  public static Map<Item, Pair<Potion, Integer>> INGREDIENT_EFFECTS = ImmutableMap.<Item, Pair<Potion, Integer>>builder()
+      .put(Items.RABBIT_FOOT, Pair.of(MobEffects.JUMP_BOOST, Utils.TICKS_PER_SECOND * 180))
+      .put(Items.SUGAR, Pair.of(MobEffects.SPEED, Utils.TICKS_PER_SECOND * 180))
+      .put(Items.BLAZE_POWDER, Pair.of(MobEffects.STRENGTH, Utils.TICKS_PER_SECOND * 180))
+      .put(Items.SPECKLED_MELON, Pair.of(MobEffects.INSTANT_HEALTH, 0))
+      .put(Items.SPIDER_EYE, Pair.of(MobEffects.POISON, Utils.TICKS_PER_SECOND * 45))
+      .put(Items.GHAST_TEAR, Pair.of(MobEffects.REGENERATION, Utils.TICKS_PER_SECOND * 45))
+      .put(Items.MAGMA_CREAM, Pair.of(MobEffects.FIRE_RESISTANCE, Utils.TICKS_PER_SECOND * 180))
+      .put(Items.GOLDEN_CARROT, Pair.of(MobEffects.NIGHT_VISION, Utils.TICKS_PER_SECOND * 180))
+      .put(Items.FERMENTED_SPIDER_EYE, Pair.of(MobEffects.WEAKNESS, Utils.TICKS_PER_SECOND * 90))
+      .put(Items.FISH, Pair.of(MobEffects.WATER_BREATHING, Utils.TICKS_PER_SECOND * 180))
       .build();
 
   // Fermented spider eyes can be used to change potions to a different type.
@@ -114,7 +117,9 @@ public class SkrimPotionRecipes {
       NBTTagCompound compound = newPotion.getTagCompound();
       if (compound == null) return ItemStack.EMPTY;
 
-      Potion potion = INGREDIENT_EFFECTS.get(ingredient);
+      Pair<Potion, Integer> effect_and_duration = INGREDIENT_EFFECTS.get(ingredient);
+      Potion potion = effect_and_duration.getKey();
+      Integer duration = effect_and_duration.getValue();
       List<PotionEffect> effects = PotionUtils.getEffectsFromStack(newPotion);
       // Only allow extra effects on potions if the brewing level is high.
       if (effects.size() >= 2 && !brewing.hasAbility(4)) return ItemStack.EMPTY;
@@ -126,7 +131,7 @@ public class SkrimPotionRecipes {
       }
 
       NBTTagList list = compound.getTagList("CustomPotionEffects", 10);
-      list.appendTag(new PotionEffect(potion, 300).writeCustomPotionEffectToNBT(new NBTTagCompound()));
+      list.appendTag(new PotionEffect(potion, duration).writeCustomPotionEffectToNBT(new NBTTagCompound()));
       compound.setTag("CustomPotionEffects", list);
       compound.setString("Potion", "Skrim");
 
