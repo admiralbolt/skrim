@@ -30,6 +30,10 @@ public class SkrimBrewingStandItem extends ItemBlockSpecial implements ItemBase 
   @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
   public static class Handler {
 
+    /**
+     * This event is probably not super necessary since I've overriden the base game recipe, but it'll help grandfather in existing
+     * brewing stands.
+     */
     @SubscribeEvent
     public static void pickupBrewingStand(PlayerEvent.ItemPickupEvent event) {
       ItemStack stack = event.getStack();
@@ -42,4 +46,5 @@ public class SkrimBrewingStandItem extends ItemBlockSpecial implements ItemBase 
     }
 
   }
+
 }

@@ -42,27 +42,35 @@ public class SkrimPotionRecipes {
       .put(Items.FISH, Pair.of(MobEffects.WATER_BREATHING, Utils.TICKS_PER_SECOND * 180))
       .build();
 
-  // Fermented spider eyes can be used to change potions to a different type.
-  public static Map<Potion, Potion> FERMENTED_EYE_MODIFIER = ImmutableMap.<Potion, Potion>builder()
-      .put(MobEffects.JUMP_BOOST, MobEffects.SLOWNESS)
-      .put(MobEffects.SPEED, MobEffects.SLOWNESS)
-      .put(MobEffects.INSTANT_HEALTH, MobEffects.INSTANT_DAMAGE)
-      .put(MobEffects.POISON, MobEffects.WITHER)
-      .put(MobEffects.NIGHT_VISION, MobEffects.INVISIBILITY)
-      .build();
-
   // Modifiers that don't change the base potion effect.
   private static Map<Item, PotionModifier> POTION_MODIFIERS = ImmutableMap.<Item, PotionModifier>builder()
       .put(Items.GLOWSTONE_DUST, PotionModifier.INCREASED_STRENGTH)
       .put(Items.REDSTONE, PotionModifier.INCREASED_DURATION)
       .put(Items.GUNPOWDER, PotionModifier.BASE_TO_SPLASH)
       .put(Items.DRAGON_BREATH, PotionModifier.SPLASH_TO_LINGERING)
+      .put(Items.FERMENTED_SPIDER_EYE, PotionModifier.CORRUPT_EFFECT)
       .build();
 
   public static boolean hasOutput(EntityPlayer player, @Nonnull ItemStack input, @Nonnull ItemStack ingredientStack) {
     return getOutput(player, input, ingredientStack) != ItemStack.EMPTY;
   }
 
+  /**
+   * This function is beefy but does the actual brewing itself. Take a look at https://bit.ly/2EGzirg as a reference guide. There are 4
+   * different types of brewing processes:
+   * 1. Conversion from water -> awkward potion. This can only happen if the input is a water bottle and the ingredient is nether wart.
+   * This is a required first step for brewing any other type of potion.
+   * 2. Adding effects to potions. Generally this can only happen if the input is an awkward potion. In our case, you can add additional
+   * effects to potions if your brewing skill is high enough. We don't add duplicate effects to a potion though.
+   * 3. Modifying effects of potions. Redstone increases the duration and glowstone dust increases the amp level.
+   * 4. Modifying the type of a potion. Gunpowder converts from normal -> splash, dragon's breath converts from splash -> lingering.
+   * <p>
+   * 3 & 4 can be handled via the PotionModifiers. These are helper lambdas that apply a function to an input potion and return
+   * an output potion. 1 & 2 are handled directly in the getOutput function itself.
+   * <p>
+   * The only exception to this is fermented spider eyes which act as both a modifier and an ingredient. It gets a small amount of
+   * special handling to make this work.
+   */
   public static ItemStack getOutput(EntityPlayer player, @Nonnull ItemStack input, @Nonnull ItemStack ingredientStack) {
     if (input.isEmpty() || input.getCount() != 1 || ingredientStack.isEmpty() || !SkrimPotionUtils.isPotion(input))
       return ItemStack.EMPTY;
@@ -79,32 +87,14 @@ public class SkrimPotionRecipes {
     }
 
     // Apply potion modifiers.
-    if (POTION_MODIFIERS.containsKey(ingredient)) return POTION_MODIFIERS.get(ingredient).apply(input, brewing);
-
-    // Handle fermented spider eye weirdness. We want to convert effects *if* the potion has effects, otherwise fermented eye should be
-    // treated like a normal effect ingredient.
-    if (ingredient == Items.FERMENTED_SPIDER_EYE && PotionUtils.getPotionTypeFromNBT(input.getTagCompound()) != PotionTypes.AWKWARD) {
-      List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
-      if (effects.size() == 0) return ItemStack.EMPTY;
-
-      ItemStack newPotion = SkrimPotionUtils.convertPotion(input);
-      NBTTagCompound compound = newPotion.getTagCompound();
-      if (compound == null) return ItemStack.EMPTY;
-
-      NBTTagList list = new NBTTagList();
-      // We only want to return a potion *if* we can modify the effect types.
-      boolean anyEffectsChanged = false;
-      for (PotionEffect effect : effects) {
-        anyEffectsChanged = anyEffectsChanged || FERMENTED_EYE_MODIFIER.containsKey(effect.getPotion());
-        PotionEffect newEffect = new PotionEffect(FERMENTED_EYE_MODIFIER.getOrDefault(effect.getPotion(), effect.getPotion()),
-            effect.getDuration(), effect.getAmplifier(), effect.getIsAmbient(), effect.doesShowParticles());
-        list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
+    if (POTION_MODIFIERS.containsKey(ingredient)) {
+      // We only want to treat fermented spider_eye as a modifier IF the potion type isn't awkward.
+      if (ingredient == Items.FERMENTED_SPIDER_EYE) {
+        if (PotionUtils.getPotionTypeFromNBT(input.getTagCompound()) != PotionTypes.AWKWARD)
+          return POTION_MODIFIERS.get(ingredient).apply(input, brewing);
+      } else {
+        return POTION_MODIFIERS.get(ingredient).apply(input, brewing);
       }
-      // No effect types changed means that fermented eye will do nothing.
-      if (!anyEffectsChanged) return ItemStack.EMPTY;
-
-      compound.setTag("CustomPotionEffects", list);
-      return newPotion;
     }
 
     // Add effects to the potion.

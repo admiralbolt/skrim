@@ -2,14 +2,18 @@ package avi.mod.skrim.skills.brewing;
 
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.utils.Obfuscation;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is a helper class to apply modifications to a potion. Effectively, these are lambda functions that are run
@@ -17,8 +21,17 @@ import java.util.List;
  */
 public class PotionModifier {
 
+  // Fermented spider eyes can be used to change potions to a different type.
+  private static Map<Potion, Potion> FERMENTED_EYE_MODIFIER = ImmutableMap.<Potion, Potion>builder()
+      .put(MobEffects.JUMP_BOOST, MobEffects.SLOWNESS)
+      .put(MobEffects.SPEED, MobEffects.SLOWNESS)
+      .put(MobEffects.INSTANT_HEALTH, MobEffects.INSTANT_DAMAGE)
+      .put(MobEffects.POISON, MobEffects.WITHER)
+      .put(MobEffects.NIGHT_VISION, MobEffects.INVISIBILITY)
+      .build();
+
   @FunctionalInterface
-  interface Function<ItemStack, SkillBrewing> {
+  interface ModifierFunction<ItemStack, SkillBrewing> {
     ItemStack apply(ItemStack input, SkillBrewing brewing);
   }
 
@@ -97,9 +110,33 @@ public class PotionModifier {
     return newPotion;
   });
 
-  private Function<ItemStack, SkillBrewing> conversion;
+  public static PotionModifier CORRUPT_EFFECT = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
+    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
+    if (effects.size() == 0) return ItemStack.EMPTY;
 
-  private PotionModifier(Function<ItemStack, SkillBrewing> conversion) {
+    ItemStack newPotion = SkrimPotionUtils.convertPotion(input);
+    NBTTagCompound compound = newPotion.getTagCompound();
+    if (compound == null) return ItemStack.EMPTY;
+
+    NBTTagList list = new NBTTagList();
+    // We only want to return a potion *if* we can modify the effect types.
+    boolean anyEffectsChanged = false;
+    for (PotionEffect effect : effects) {
+      anyEffectsChanged = anyEffectsChanged || FERMENTED_EYE_MODIFIER.containsKey(effect.getPotion());
+      PotionEffect newEffect = new PotionEffect(FERMENTED_EYE_MODIFIER.getOrDefault(effect.getPotion(),
+          effect.getPotion()), effect.getDuration(), effect.getAmplifier(), effect.getIsAmbient(), effect.doesShowParticles());
+      list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
+    }
+    // No effect types changed means that fermented eye will do nothing.
+    if (!anyEffectsChanged) return ItemStack.EMPTY;
+
+    compound.setTag("CustomPotionEffects", list);
+    return newPotion;
+  });
+
+  private ModifierFunction<ItemStack, SkillBrewing> conversion;
+
+  private PotionModifier(ModifierFunction<ItemStack, SkillBrewing> conversion) {
     this.conversion = conversion;
   }
 

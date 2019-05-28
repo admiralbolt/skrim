@@ -22,6 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+/**
+ * A clone of the ItemPotion class with better handling for arbitrary effects.
+ */
 public class SkrimPotion extends ItemPotion implements ItemBase {
 
   private String name = "skrim_potion";
@@ -64,6 +67,7 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
         first = false;
       }
       sb.append(" ");
+      // Converting from a name like effect.moveSpeed -> Move Speed.
       sb.append(Utils.titleizeLowerCamel(effect.getEffectName().split("\\.")[1]));
     }
     return sb.toString();
@@ -95,7 +99,6 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
 
   }
 
-
   @SideOnly(Side.CLIENT)
   public static class ColorHandler implements IItemColor {
 
@@ -103,7 +106,7 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
     public int colorMultiplier(@Nonnull ItemStack stack, int tintIndex) {
       return (tintIndex > 0) ? -1 : SkrimPotionUtils.getColor(stack);
     }
-  }
 
+  }
 
 }
