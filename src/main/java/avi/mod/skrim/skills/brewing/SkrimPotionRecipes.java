@@ -93,14 +93,13 @@ public class SkrimPotionRecipes {
       Potion potion = INGREDIENT_EFFECTS.get(ingredient);
       List<PotionEffect> effects = PotionUtils.getEffectsFromStack(newPotion);
       // Only allow extra effects on potions if the brewing level is high.
-      if (effects.size() == 2 && !brewing.hasAbility(2)) return ItemStack.EMPTY;
+      if (effects.size() >= 2 && !brewing.hasAbility(4)) return ItemStack.EMPTY;
       if (effects.size() == 1 && !brewing.hasAbility(1)) return ItemStack.EMPTY;
 
       // We only want to add the effect if the potion doesn't have it already.
       for (PotionEffect effect : effects) {
         if (effect.getPotion() == potion) return ItemStack.EMPTY;
       }
-      
 
       NBTTagList list = compound.getTagList("CustomPotionEffects", 10);
       list.appendTag(new PotionEffect(potion, 300).writeCustomPotionEffectToNBT(new NBTTagCompound()));

@@ -1,15 +1,32 @@
 package avi.mod.skrim.skills.brewing;
 
 import avi.mod.skrim.skills.Skill;
+import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
+/**
+ * Most of the logic for this skill is in other places, see:
+ * - SkrimPotionRecipes
+ * - SkrimPotionUtils
+ * - PotionModifier
+ * - SkrimPotion
+ * - SkrimBrewingStandEntity
+ */
 public class SkillBrewing extends Skill implements ISkillBrewing {
 
   public static SkillStorage<ISkillBrewing> STORAGE = new SkillStorage<>();
+
+  private static SkillAbility DOUBLE_BUBBLE = new SkillAbility("brewing", "Double Bubble", 25,
+      "Fire burn and caldron bubble.",
+      "Add an additional effect to potions you create.");
+
+  private static SkillAbility CHEMIST = new SkillAbility("brewing", "Chemist", 100,
+      "Morrowind levels of broken.",
+      "Add any number of additional effects to potions you create.");
 
   public SkillBrewing() {
     this(1, 0);
@@ -17,6 +34,7 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
 
   public SkillBrewing(int level, int xp) {
     super("Brewing", level, xp);
+    this.addAbilities(DOUBLE_BUBBLE, CHEMIST);
   }
 
   @Override
