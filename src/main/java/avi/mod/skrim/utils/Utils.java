@@ -57,6 +57,21 @@ public class Utils {
     return str.toLowerCase().replace(" ", "_").replace("'", "");
   }
 
+  public static String titleizeLowerCamel(String str) {
+    StringBuilder builder = new StringBuilder();
+    builder.append(Character.toUpperCase(str.charAt(0)));
+    char c;
+    for (int i = 1; i < str.length(); i++) {
+      c = str.charAt(i);
+      if (Character.isUpperCase(c)) {
+        builder.append(" ");
+      }
+      builder.append(c);
+    }
+
+    return builder.toString();
+  }
+
   public static String getBlockName(Block block) {
     return snakeCase(block.getLocalizedName());
   }

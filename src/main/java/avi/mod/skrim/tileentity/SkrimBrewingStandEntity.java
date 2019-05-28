@@ -22,25 +22,30 @@ import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * I'm making some executive decisions about how brewing will work:
  * <p>
  * When a player interacts with a brewing stand they are set as the 'active player'.
  * When brewing is started (the timer kicks off) the 'active player' is marked as the `brewing player`.
- * The brewing player's skill level will be used for potion adjustments, and they will get experience when potions are brewed, not when
+ * The brewing player's skill level will be used for potion adjustments, and they will get experience when potions
+ * are brewed, not when
  * potions are pulled out of the brewing stand. I think this is the best choice to preventing griefing from brewing.
  * <p>
- * Forge does provide access via some brewing events, but the base game potions don't provide the functionality I'm looking for. For
- * some reason, they decided it was a good idea to hard-code effect + duration combinations. So if you adjust a potions duration by 1
- * second for example, the name / color doesn't get loaded correctly. Additionally, shift-clicking is still fuck for the brewing event.
- * It doesn't give any insight into what the original potion was, so modification would be impossible if a player shift clicked items out.
- * For these reasons, I've decided to make a brand new potion item that will be more dynamic in name / color loading. Finally, I wanted to
- * increase the speed of the brewing event itself, which can't be done without attaching the player to the tile-entity in some way anyway.
+ * Forge does provide access via some brewing events, but the base game potions don't provide the functionality I'm
+ * looking for. For
+ * some reason, they decided it was a good idea to hard-code effect + duration combinations. So if you adjust a
+ * potions duration by 1
+ * second for example, the name / color doesn't get loaded correctly. Additionally, shift-clicking is still fuck for
+ * the brewing event.
+ * It doesn't give any insight into what the original potion was, so modification would be impossible if a player
+ * shift clicked items out.
+ * For these reasons, I've decided to make a brand new potion item that will be more dynamic in name / color loading.
+ * Finally, I wanted to
+ * increase the speed of the brewing event itself, which can't be done without attaching the player to the
+ * tile-entity in some way anyway.
  */
 public class SkrimBrewingStandEntity extends TileEntityLockable implements ITickable, ISidedInventory {
   /**
@@ -51,7 +56,11 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
   /**
    * an array of the output slot indices
    */
-  private static final int[] OUTPUT_SLOTS = new int[]{0, 1, 2, 4};
+  private static final int[] OUTPUT_SLOTS = new int[]{0, 1, 2};
+  /**
+   * Slot for the blaze powder.
+   */
+  private static final int FUEL_SLOT = 4;
   /**
    * The ItemStacks currently placed in the slots of the brewing stand
    */
@@ -116,12 +125,14 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
   }
 
   /**
-   * So, the ui for brewing is hard-coded to expect 400 ticks of brewing. If we increase the speed of brewing by reducing the number of
-   * ticks, it looks weird because the arrow starts half-filled instead of filling more quickly. To make it seem more natural we will
+   * So, the ui for brewing is hard-coded to expect 400 ticks of brewing. If we increase the speed of brewing by
+   * reducing the number of
+   * ticks, it looks weird because the arrow starts half-filled instead of filling more quickly. To make it seem more
+   * natural we will
    * update brewing time by more than 1 per tick.
    */
   private void updateBrewTime() {
-    this.doubleBrewTime -= 400 / this.actualBrewTime;
+    this.doubleBrewTime -= 400 / Math.max(1, this.actualBrewTime);
     this.brewTime = Math.max((int) this.doubleBrewTime, 0);
   }
 
@@ -202,21 +213,19 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
   }
 
   private boolean canBrew() {
-    for (Map.Entry entry : SkrimPotionRecipes.INGREDIENT_EFFECTS.entrySet()) {
-      System.out.println("entry.left: " + entry.getKey() + ", entyr.val: " + entry.getValue());
+    ItemStack ingredient = brewingItemStacks.get(3);
+    for (int index : OUTPUT_SLOTS) {
+      if (SkrimPotionRecipes.hasOutput(this.brewingPlayer, brewingItemStacks.get(index), ingredient)) return true;
     }
 
-    return net.minecraftforge.common.brewing.BrewingRecipeRegistry.canBrew(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS);
+    return false;
   }
 
   private void brewPotions() {
-    if (net.minecraftforge.event.ForgeEventFactory.onPotionAttemptBrew(brewingItemStacks)) return;
     ItemStack ingredient = this.brewingItemStacks.get(3);
 
-    // Instead of calling this directly, we do it by hand, and modify the outputs before setting them.
-    // net.minecraftforge.common.brewing.BrewingRecipeRegistry.brewPotions(brewingItemStacks, brewingItemStacks.get(3), OUTPUT_SLOTS);
     for (int i : OUTPUT_SLOTS) {
-      ItemStack output = BrewingRecipeRegistry.getOutput(this.brewingItemStacks.get(i), ingredient);
+      ItemStack output = SkrimPotionRecipes.getOutput(this.brewingPlayer, this.brewingItemStacks.get(i), ingredient);
 
       System.out.println("output[" + i + "]: " + output);
       System.out.println("getPotionType(" + i + "): " + PotionUtils.getPotionTypeFromNBT(output.getTagCompound()).toString());
@@ -236,18 +245,19 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
       if (ingredient.isEmpty()) {
         ingredient = itemstack1;
       } else {
-        InventoryHelper.spawnItemStack(this.world, (double) blockpos.getX(), (double) blockpos.getY(), (double) blockpos.getZ(),
+        InventoryHelper.spawnItemStack(this.world, (double) blockpos.getX(), (double) blockpos.getY(),
+            (double) blockpos.getZ(),
             itemstack1);
       }
     }
 
     this.brewingItemStacks.set(3, ingredient);
     this.world.playEvent(1035, blockpos, 0);
-    net.minecraftforge.event.ForgeEventFactory.onPotionBrewed(brewingItemStacks);
   }
 
   public static void registerFixesBrewingStand(DataFixer fixer) {
-    fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(SkrimBrewingStandEntity.class, new String[]{"Items"}));
+    fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(SkrimBrewingStandEntity.class, new String[]{
+        "Items"}));
   }
 
   public void readFromNBT(NBTTagCompound compound) {
@@ -285,7 +295,8 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
    * Returns the stack in the given slot.
    */
   public ItemStack getStackInSlot(int index) {
-    return index >= 0 && index < this.brewingItemStacks.size() ? (ItemStack) this.brewingItemStacks.get(index) : ItemStack.EMPTY;
+    return index >= 0 && index < this.brewingItemStacks.size() ? (ItemStack) this.brewingItemStacks.get(index) :
+        ItemStack.EMPTY;
   }
 
   /**
@@ -325,7 +336,8 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     if (this.world.getTileEntity(this.pos) != this) {
       return false;
     } else {
-      return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+      return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
+          (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
   }
 

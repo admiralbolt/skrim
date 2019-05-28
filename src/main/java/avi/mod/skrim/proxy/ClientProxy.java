@@ -42,6 +42,8 @@ public class ClientProxy implements IProxy {
     MinecraftForge.EVENT_BUS.register(new GuiEventHandler());
     NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
     MINECRAFT.getItemColors().registerItemColorHandler(new SkrimPotion.ColorHandler(), SkrimItems.SKRIM_POTION);
+    MINECRAFT.getItemColors().registerItemColorHandler(new SkrimPotion.ColorHandler(), SkrimItems.SPLASH_SKRIM_POTION);
+    MINECRAFT.getItemColors().registerItemColorHandler(new SkrimPotion.ColorHandler(), SkrimItems.LINGERING_SKRIM_POTION);
   }
 
   @Override
