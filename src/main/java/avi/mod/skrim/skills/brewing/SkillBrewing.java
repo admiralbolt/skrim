@@ -24,6 +24,12 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
       "Fire burn and caldron bubble.",
       "Add an additional effect to potions you create.");
 
+  private static SkillAbility TWO_PLACEHOLDER = new SkillAbility("brewing", "Placeholder", 50,
+      "I'm impressed that you made it to level 50 before I made the ability for it.", "No description.");
+
+  private static SkillAbility THREE_PLACEHOLDER = new SkillAbility("brewing", "Placeholder", 75,
+      "Okay, what the actual fuck.", "No description.");
+
   private static SkillAbility CHEMIST = new SkillAbility("brewing", "Chemist", 100,
       "Morrowind levels of broken.",
       "Add any number of additional effects to potions you create.");
@@ -34,7 +40,7 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
 
   public SkillBrewing(int level, int xp) {
     super("Brewing", level, xp);
-    this.addAbilities(DOUBLE_BUBBLE, CHEMIST);
+    this.addAbilities(DOUBLE_BUBBLE, TWO_PLACEHOLDER, THREE_PLACEHOLDER, CHEMIST);
   }
 
   @Override
