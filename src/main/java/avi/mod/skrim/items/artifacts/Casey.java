@@ -4,6 +4,7 @@ import avi.mod.skrim.Skrim;
 import avi.mod.skrim.init.SkrimSoundEvents;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.weapons.ArtifactSword;
+import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -63,6 +64,11 @@ public class Casey extends ArtifactSword {
       player.world.playSound(null, player.getPosition(), SkrimSoundEvents.HOME_RUN, SoundCategory.PLAYERS, 150.0F, 1.0F);
     }
 
+    /**
+     * The minecraft knockback event except without the hard cap on the vertical vector so we get a true "home run."
+     * Knockback code adapted from {@link EntityLivingBase#knockBack()}
+     * @param event
+     */
     @SubscribeEvent
     public static void blastOff(LivingKnockBackEvent event) {
       Entity entity = event.getAttacker();
@@ -72,30 +78,25 @@ public class Casey extends ArtifactSword {
       Item sword = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
       if (sword != SkrimItems.CASEY) return;
 
-      // intercept knockback event and cancel it so that we can apply custom knockback
-      if (event.isCancelable()) {
-        event.setCanceled(true);
-      }
+      // Intercept knockback event and cancel it so that we can apply custom knockback.
+      event.setCanceled(true);
 
-      // this is basically knockback except without the hard cap on the vertical vector so we get a true "home run"
       EntityLivingBase target = event.getEntityLiving();
+
+      if (Utils.rand.nextDouble() >= target.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue()) return;
+      
       float strength = event.getStrength(); 
       double xRatio = event.getRatioX(); 
       double zRatio = event.getRatioZ();
-      if (new Random().nextDouble() >= target.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue())
-      {
-          target.isAirBorne = true;
-          float f = MathHelper.sqrt(xRatio * xRatio + zRatio * zRatio);
-          target.motionX /= 2.0D;
-          target.motionZ /= 2.0D;
-          target.motionY /= 2.0D;
-          target.motionX -= xRatio / (double)f * (double)strength;
-          target.motionZ -= zRatio / (double)f * (double)strength;
-          target.motionY += (double)strength / 5;
-      }
-
+          
+      target.isAirBorne = true;
+      float f = MathHelper.sqrt(xRatio * xRatio + zRatio * zRatio);
+      target.motionX /= 2.0;
+      target.motionZ /= 2.0;
+      target.motionY /= 2.0;
+      target.motionX -= (xRatio * strength) / f;
+      target.motionZ -= (zRatio * strength) / f;
+      target.motionY += strength / 5.0;
     }
   }
-
-
 }

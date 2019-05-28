@@ -11,3 +11,4 @@
 * Farmers tan now provides speed instead of saturation.
 * Fixed a bug where you weren't able to craft dispensers.
 * Added a recipe for saddles!
+* Casey now hits home runs instead of foul balls.
