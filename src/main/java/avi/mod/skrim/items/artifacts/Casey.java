@@ -83,7 +83,7 @@ public class Casey extends ArtifactSword {
 
       EntityLivingBase target = event.getEntityLiving();
 
-      if (Utils.rand.nextDouble() >= target.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue()) return;
+      if (Utils.rand.nextDouble() <= target.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue()) return;
       
       float strength = event.getStrength(); 
       double xRatio = event.getRatioX(); 
