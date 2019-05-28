@@ -10,13 +10,17 @@ import net.minecraft.init.PotionTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Map;
 
 public class SkrimPotionRecipes {
@@ -82,6 +86,28 @@ public class SkrimPotionRecipes {
       if (ingredient == Items.FISH && ingredientStack.getMetadata() != ItemFishFood.FishType.PUFFERFISH.getMetadata())
         return ItemStack.EMPTY;
 
+      ItemStack newPotion = SkrimPotionUtils.convertPotion(input);
+      NBTTagCompound compound = newPotion.getTagCompound();
+      if (compound == null) return ItemStack.EMPTY;
+
+      Potion potion = INGREDIENT_EFFECTS.get(ingredient);
+      List<PotionEffect> effects = PotionUtils.getEffectsFromStack(newPotion);
+      // Only allow extra effects on potions if the brewing level is high.
+      if (effects.size() == 2 && !brewing.hasAbility(2)) return ItemStack.EMPTY;
+      if (effects.size() == 1 && !brewing.hasAbility(1)) return ItemStack.EMPTY;
+
+      // We only want to add the effect if the potion doesn't have it already.
+      for (PotionEffect effect : effects) {
+        if (effect.getPotion() == potion) return ItemStack.EMPTY;
+      }
+      
+
+      NBTTagList list = compound.getTagList("CustomPotionEffects", 10);
+      list.appendTag(new PotionEffect(potion, 300).writeCustomPotionEffectToNBT(new NBTTagCompound()));
+      compound.setTag("CustomPotionEffects", list);
+      compound.setString("Potion", "Skrim");
+
+      return newPotion;
     }
 
     return ItemStack.EMPTY;
