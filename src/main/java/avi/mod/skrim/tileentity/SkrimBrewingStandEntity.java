@@ -12,7 +12,6 @@ import net.minecraft.inventory.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -228,10 +227,6 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
 
     for (int i : OUTPUT_SLOTS) {
       ItemStack output = SkrimPotionRecipes.getOutput(this.brewingPlayer, this.brewingItemStacks.get(i), ingredient);
-
-      System.out.println("output[" + i + "]: " + output);
-      System.out.println("getPotionType(" + i + "): " + PotionUtils.getPotionTypeFromNBT(output.getTagCompound()).toString());
-      System.out.println("effects[" + i + "]: " + PotionUtils.getEffectsFromStack(output));
 
       if (!output.isEmpty()) {
         this.brewingItemStacks.set(i, output);
