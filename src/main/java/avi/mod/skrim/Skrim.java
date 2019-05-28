@@ -50,7 +50,6 @@ public class Skrim {
     MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());
     MinecraftForge.EVENT_BUS.register(new EventHandler());
     NetworkRegistry.INSTANCE.registerGuiHandler(Skrim.instance, new GuiHandler());
-
   }
 
   @Mod.EventHandler
