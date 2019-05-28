@@ -1,7 +1,9 @@
 package avi.mod.skrim.proxy;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.client.renderer.CustomRenderers;
 import avi.mod.skrim.handlers.GuiEventHandler;
+import avi.mod.skrim.handlers.GuiHandler;
 import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.items.SkrimPotion;
@@ -11,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import javax.annotation.Nullable;
