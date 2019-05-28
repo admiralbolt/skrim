@@ -6,6 +6,7 @@ import avi.mod.skrim.skills.brewing.SkillBrewing;
 import avi.mod.skrim.skills.brewing.SkrimPotionRecipes;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.*;
@@ -224,12 +225,17 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
 
   private void brewPotions() {
     ItemStack ingredient = this.brewingItemStacks.get(3);
+    SkillBrewing brewing = Skills.getSkill(this.brewingPlayer, Skills.BREWING, SkillBrewing.class);
+
 
     for (int i : OUTPUT_SLOTS) {
       ItemStack output = SkrimPotionRecipes.getOutput(this.brewingPlayer, this.brewingItemStacks.get(i), ingredient);
 
       if (!output.isEmpty()) {
         this.brewingItemStacks.set(i, output);
+        if (!this.world.isRemote) {
+          brewing.addXp((EntityPlayerMP) this.brewingPlayer, 800);
+        }
       }
     }
 
