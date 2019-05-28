@@ -5,6 +5,7 @@ import avi.mod.skrim.skills.brewing.SkrimPotionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemPotion;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -84,6 +86,15 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
   public String getTexturePath() {
     return "items";
   }
+
+  /**
+   * We don't want to generate a whole bunch of sub skrim potion items that are carbon copies of the base item potion items.
+   */
+  @Override
+  public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
+
+  }
+
 
   @SideOnly(Side.CLIENT)
   public static class ColorHandler implements IItemColor {
