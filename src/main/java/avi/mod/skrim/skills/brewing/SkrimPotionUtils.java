@@ -89,27 +89,8 @@ public class SkrimPotionUtils {
     System.out.println("type: " + type.getNamePrefixed("") + ", string: " + potionTypeString);
     if (!potionTypeString.equals("Skrim") && (type == PotionTypes.EMPTY || type == PotionTypes.AWKWARD)) return COLOR_BLUE_POTION;
 
-    return PotionUtils.getPotionColorFromEffectList(getEffectsFromStack(potion));
+    return PotionUtils.getPotionColorFromEffectList(PotionUtils.getEffectsFromStack(potion));
   }
 
-  public static List<PotionEffect> getEffectsFromStack(ItemStack stack) {
-    NBTTagCompound compound = stack.getTagCompound();
-    if (compound == null) return new ArrayList<>();
-
-//    List<PotionEffect> vanillaEffects = PotionUtils.getEffectsFromStack(stack);
-//    System.out.println("potionType: " + compound.getString("Potion"));
-//    for (PotionEffect effect : vanillaEffects) {
-//      System.out.println("vanilla effect: " + effect);
-//    }
-
-    System.out.println("hasCustomEffects: " + compound.hasKey("CustomPotionEffects", 9));
-    NBTTagList list = compound.getTagList("CustomPotionEffects", 9);
-    for (int i = 0; i < list.tagCount(); i++) {
-      PotionEffect effect = PotionEffect.readCustomPotionEffectFromNBT(list.getCompoundTagAt(i));
-      System.out.println("customTagEffect: " + effect);
-    }
-
-    return PotionUtils.getEffectsFromStack(stack);
-  }
 
 }
