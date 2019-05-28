@@ -9,6 +9,7 @@ import avi.mod.skrim.handlers.GuiHandler;
 import avi.mod.skrim.handlers.LoadSkillsHandler;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.proxy.IProxy;
+import avi.mod.skrim.skills.brewing.SkrimPotionRecipes;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -45,6 +46,7 @@ public class Skrim {
     CustomLootTables.registerLootTables();
     SkrimCapabilities.registerCapabilities();
     SkrimAdvancements.register();
+    SkrimPotionRecipes.registerRecipes();
 
     // Hook up all event handlers, this allows them to use Subscribe to Events
     MinecraftForge.EVENT_BUS.register(new LoadSkillsHandler());

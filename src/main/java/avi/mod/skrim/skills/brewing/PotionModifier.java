@@ -33,26 +33,51 @@ public class PotionModifier {
   });
 
   public static PotionModifier INCREASED_STRENGTH = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
-    if (!SkrimPotionHelper.isSkrimPotion(input)) return ItemStack.EMPTY;
+    if (!SkrimPotionUtils.isSkrimPotion(input)) return ItemStack.EMPTY;
+    if (input.getTagCompound() == null) return ItemStack.EMPTY;
 
+    NBTTagCompound compound = input.getTagCompound().copy();
 
-    NBTTagCompound compound = input.getTagCompound();
-    if (compound == null) return ItemStack.EMPTY;
-
-    NBTTagList list = compound.getTagList("CustomPotionEffects", 9);
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.size() == 0) return ItemStack.EMPTY;
 
+    NBTTagList list = new NBTTagList();
+    for (PotionEffect effect : effects) {
+      PotionEffect newEffect = new PotionEffect(effect);
+      Obfuscation.POTION_EFFECT_AMPLIFIER.hackValueTo(newEffect, effect.getAmplifier() + 1);
+      list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
+      System.out.println("Adding new Effect: " + newEffect);
+    }
+    compound.setTag("CustomPotionEffects", list);
+    compound.setString("Potion", "Skrim");
+    System.out.println("hasCustomEffects: " + compound.hasKey("CustomPotionEffects", 9));
+
+    ItemStack newPotion = SkrimPotionUtils.convertPotion(input);
+    newPotion.setTagCompound(compound);
+    SkrimPotionUtils.incrementModified(newPotion);
+    return newPotion;
+  });
+
+  public static PotionModifier INCREASED_DURATION = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
+    if (!SkrimPotionUtils.isSkrimPotion(input)) return ItemStack.EMPTY;
+    if (input.getTagCompound() == null) return ItemStack.EMPTY;
+
+    NBTTagCompound compound = input.getTagCompound().copy();
+
+    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
+    if (effects.size() == 0) return ItemStack.EMPTY;
+
+    NBTTagList list = new NBTTagList();
     for (PotionEffect effect : effects) {
       PotionEffect newEffect = new PotionEffect(effect);
       Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, effect.getDuration() * 2);
-      Obfuscation.POTION_EFFECT_AMPLIFIER.hackValueTo(newEffect, effect.getAmplifier() + 2);
       list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
     }
     compound.setTag("CustomPotionEffects", list);
 
-    ItemStack newPotion = SkrimPotionHelper.convertPotion(input);
+    ItemStack newPotion = new ItemStack(SkrimPotionUtils.TO_SKRIM_POTION.get(input.getItem()));
     newPotion.setTagCompound(compound);
+    SkrimPotionUtils.incrementModified(newPotion);
     return newPotion;
   });
 

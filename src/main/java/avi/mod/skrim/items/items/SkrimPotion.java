@@ -1,22 +1,17 @@
 package avi.mod.skrim.items.items;
 
 import avi.mod.skrim.items.ItemBase;
-import avi.mod.skrim.items.SkrimItems;
-import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.skills.brewing.SkrimPotionUtils;
 import avi.mod.skrim.utils.Utils;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,7 +19,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
 
 public class SkrimPotion extends ItemPotion implements ItemBase {
 
@@ -54,6 +48,7 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
   public String getBaseDisplayName(@Nonnull ItemStack stack) {
     StringBuilder sb = new StringBuilder();
     PotionType type = PotionUtils.getPotionTypeFromNBT(stack.getTagCompound());
+    if (type == PotionTypes.WATER) return "Water Bottle";
     if (type == PotionTypes.AWKWARD) return "Awkward Potion";
     if (type == PotionTypes.MUNDANE) return "Mundane Potion";
     if (type == PotionTypes.THICK) return "Thick Potion";
@@ -89,10 +84,9 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
 
     @Override
     public int colorMultiplier(@Nonnull ItemStack stack, int tintIndex) {
-      return (tintIndex > 0) ? -1 : PotionUtils.getColor(stack);
+      return (tintIndex > 0) ? -1 : SkrimPotionUtils.getColor(stack);
     }
   }
-
 
 
 }
