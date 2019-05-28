@@ -91,6 +91,8 @@ public class SkrimPotionUtils {
     return isSkrimPotion(potion) || isVanillaPotion(potion);
   }
 
+  // Logic is partially based on PotionUtils.getColor(). Extra handling needs to be done since we set skrim potions to type "Skrim".
+  // Otherwise all skrim potions would just be this purplish color.
   public static int getColor(ItemStack potion) {
     NBTTagCompound compound = potion.getTagCompound();
     if (compound == null) return COLOR_BLUE_POTION;

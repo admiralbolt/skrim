@@ -76,8 +76,32 @@ public class SkrimPotionRecipes {
     }
 
     // Apply potion modifiers.
-    if (POTION_MODIFIERS.containsKey(ingredient)) {
-      return POTION_MODIFIERS.get(ingredient).apply(input, brewing);
+    if (POTION_MODIFIERS.containsKey(ingredient)) return POTION_MODIFIERS.get(ingredient).apply(input, brewing);
+
+    // Handle fermented spider eye weirdness. We want to convert effects *if* the potion has effects, otherwise fermented eye should be
+    // treated like a normal effect ingredient.
+    if (ingredient == Items.FERMENTED_SPIDER_EYE && PotionUtils.getPotionTypeFromNBT(input.getTagCompound()) != PotionTypes.AWKWARD) {
+      List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
+      if (effects.size() == 0) return ItemStack.EMPTY;
+
+      ItemStack newPotion = SkrimPotionUtils.convertPotion(input);
+      NBTTagCompound compound = newPotion.getTagCompound();
+      if (compound == null) return ItemStack.EMPTY;
+
+      NBTTagList list = new NBTTagList();
+      // We only want to return a potion *if* we can modify the effect types.
+      boolean anyEffectsChanged = false;
+      for (PotionEffect effect : effects) {
+        anyEffectsChanged = anyEffectsChanged || FERMENTED_EYE_MODIFIER.containsKey(effect.getPotion());
+        PotionEffect newEffect = new PotionEffect(FERMENTED_EYE_MODIFIER.getOrDefault(effect.getPotion(), effect.getPotion()),
+            effect.getDuration(), effect.getAmplifier(), effect.getIsAmbient(), effect.doesShowParticles());
+        list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
+      }
+      // No effect types changed means that fermented eye will do nothing.
+      if (!anyEffectsChanged) return ItemStack.EMPTY;
+
+      compound.setTag("CustomPotionEffects", list);
+      return newPotion;
     }
 
     // Add effects to the potion.
