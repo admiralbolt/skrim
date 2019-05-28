@@ -51,7 +51,7 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
   }
 
   public int totalModifiers() {
-    return 1 + this.level / 10;
+    return 1 + this.level / 15;
   }
 
   public double brewSpeed() {
