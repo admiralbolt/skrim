@@ -1,7 +1,6 @@
 package avi.mod.skrim.skills.brewing;
 
 import avi.mod.skrim.items.SkrimItems;
-import avi.mod.skrim.items.items.SkrimPotion;
 import avi.mod.skrim.skills.Skills;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -70,7 +69,7 @@ public class SkrimPotionRecipes {
     Item ingredient = ingredientStack.getItem();
 
     // Water -> Awkward Potion.
-    if (ingredient == Items.NETHER_WART && potionType == PotionTypes.WATER) return SkrimPotion.convertPotion(input);
+    if (ingredient == Items.NETHER_WART && potionType == PotionTypes.WATER) return SkrimPotionHelper.convertPotion(input);
 
     // Conversions
     if (POTION_MODIFIERS.containsKey(ingredientStack)) {

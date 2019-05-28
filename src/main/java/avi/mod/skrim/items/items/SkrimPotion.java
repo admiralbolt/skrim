@@ -41,29 +41,6 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
     this.setUnlocalizedName(name);
   }
 
-  public static ItemStack convertPotion(ItemStack potion) {
-    NBTTagCompound compound = new NBTTagCompound();
-    compound.setString("Potion",
-        PotionUtils.getPotionTypeFromNBT(potion.getTagCompound()).getRegistryName().getResourcePath());
-    NBTTagList list = compound.getTagList("CustomPotionEffects", 9);
-
-    List<PotionEffect> effects = PotionUtils.getEffectsFromStack(potion);
-    if (effects.size() > 0) {
-      for (PotionEffect effect : effects) {
-        PotionEffect newEffect = new PotionEffect(effect);
-        Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, effect.getDuration() * 2);
-        Obfuscation.POTION_EFFECT_AMPLIFIER.hackValueTo(newEffect, effect.getAmplifier() + 2);
-        list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
-      }
-      compound.setTag("CustomPotionEffects", list);
-    }
-
-    ItemStack newPotion = new ItemStack(SkrimItems.SKRIM_POTION);
-    newPotion.setTagCompound(compound);
-    return newPotion;
-  }
-
-
   @Nonnull
   public ItemStack onItemUseFinish(@Nonnull ItemStack stack, World worldIn, @Nonnull EntityLivingBase entityLiving) {
     return super.onItemUseFinish(stack, worldIn, entityLiving);
