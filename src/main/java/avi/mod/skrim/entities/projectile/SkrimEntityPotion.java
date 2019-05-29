@@ -39,6 +39,12 @@ import java.util.List;
  */
 public class SkrimEntityPotion extends EntityPotion {
 
+  /**
+   * See {@link net.minecraft.client.renderer.RenderGlobal} for where these ID's come from / are used.
+   */
+  private static final int SPELL_EFFECT_INSTANT_ID = 2007;
+  private static final int SPELL_EFFECT_LINGERING_ID = 2002;
+
   private static final DataParameter<ItemStack> ITEM = EntityDataManager.<ItemStack>createKey(EntityPotion.class,
       DataSerializers.ITEM_STACK);
 
@@ -83,7 +89,7 @@ public class SkrimEntityPotion extends EntityPotion {
   }
 
   // WARNING WARNING WARNING WARNING WARNING
-  // Everything below here is 99% copy pasted from EntityPotion.java. There are a few small edits to make the cloud coloring work as
+  // Everything below here is 99% copy pasted from {@link EntityPotion.java}. There are a few small edits to make the cloud coloring work as
   // intended.
 
   @Override
@@ -92,9 +98,9 @@ public class SkrimEntityPotion extends EntityPotion {
       ItemStack itemstack = this.getPotion();
       PotionType potiontype = PotionUtils.getPotionFromItem(itemstack);
       List<PotionEffect> list = PotionUtils.getEffectsFromStack(itemstack);
-      boolean flag = potiontype == PotionTypes.WATER && list.isEmpty();
+      boolean isWaterPotion = potiontype == PotionTypes.WATER && list.isEmpty();
 
-      if (result.typeOfHit == RayTraceResult.Type.BLOCK && flag) {
+      if (result.typeOfHit == RayTraceResult.Type.BLOCK && isWaterPotion) {
         BlockPos blockpos = result.getBlockPos().offset(result.sideHit);
         this.extinguishFires(blockpos, result.sideHit);
 
@@ -103,7 +109,7 @@ public class SkrimEntityPotion extends EntityPotion {
         }
       }
 
-      if (flag) {
+      if (isWaterPotion) {
         this.applyWater();
       } else if (!list.isEmpty()) {
         if (this.isLingering()) {
@@ -113,7 +119,7 @@ public class SkrimEntityPotion extends EntityPotion {
         }
       }
 
-      int i = potiontype.hasInstantEffect() ? 2007 : 2002;
+      int i = potiontype.hasInstantEffect() ? SPELL_EFFECT_INSTANT_ID : SPELL_EFFECT_LINGERING_ID;
       // Small edit here to apply SkrimPotionUtils.getColor() instead of PotionUtils.getColor();
       this.world.playEvent(i, new BlockPos(this), SkrimPotionUtils.getColor(itemstack));
       this.setDead();

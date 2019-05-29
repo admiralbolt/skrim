@@ -10,11 +10,11 @@ import java.util.List;
 
 /**
  * Most of the logic for this skill is in other places, see:
- * - SkrimPotionRecipes
- * - SkrimPotionUtils
- * - PotionModifier
- * - SkrimPotion
- * - SkrimBrewingStandEntity
+ * - {@link SkrimPotionRecipes}
+ * - {@link SkrimPotionUtils}
+ * - {@link PotionModifier}
+ * - {@link avi.mod.skrim.items.items.SkrimPotion}
+ * - {@link avi.mod.skrim.tileentity.SkrimBrewingStandEntity}
  */
 public class SkillBrewing extends Skill implements ISkillBrewing {
 

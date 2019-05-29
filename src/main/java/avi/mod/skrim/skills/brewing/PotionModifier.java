@@ -65,7 +65,7 @@ public class PotionModifier {
     // If the potion doesn't have any effects, there's nothing to be done.
     NBTTagCompound compound = input.getTagCompound().copy();
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
-    if (effects.size() == 0) return ItemStack.EMPTY;
+    if (effects.isEmpty()) return ItemStack.EMPTY;
     // Check against totalModifiers - 1 since increased_strength will count as 2 modifiers.
     if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers() - 1) return ItemStack.EMPTY;
 
@@ -95,7 +95,7 @@ public class PotionModifier {
     // If the potion doesn't have any effects, there's nothing to be done.
     NBTTagCompound compound = input.getTagCompound().copy();
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
-    if (effects.size() == 0) return ItemStack.EMPTY;
+    if (effects.isEmpty()) return ItemStack.EMPTY;
     if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
@@ -116,7 +116,7 @@ public class PotionModifier {
 
   public static PotionModifier CORRUPT_EFFECT = new PotionModifier((ItemStack input, SkillBrewing brewing) -> {
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
-    if (effects.size() == 0) return ItemStack.EMPTY;
+    if (effects.isEmpty()) return ItemStack.EMPTY;
 
     ItemStack newPotion = SkrimPotionUtils.convertPotion(input);
     NBTTagCompound compound = newPotion.getTagCompound();
