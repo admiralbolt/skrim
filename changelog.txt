@@ -12,3 +12,4 @@
 * Fixed a bug where you weren't able to craft dispensers.
 * Added a recipe for saddles!
 * Casey now hits home runs instead of foul balls.
+* Reduced chance of finding artifacts in chests. It's a 7.5% chance per roll with 2 maximum rolls for a roughly 14.43% chance of finding an artifact.
