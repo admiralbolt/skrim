@@ -13,3 +13,9 @@
 * Added a recipe for saddles!
 * Casey now hits home runs instead of foul balls.
 * Reduced chance of finding artifacts in chests. It's a 7.5% chance per roll with 2 maximum rolls for a roughly 14.43% chance of finding an artifact.
+* Added recipe advancements for all skill abilities! When you level up, you should get a recipe added to your book for items crafted based on skill level.
+* Added a new skill: Brewing.  I effectively had to rewrite brewing from scratch, so I made some alterations to the base games brewing, though I tried to keep parity as much as possible:
+  1. Mundane & thick potions are no longer craftable. As far as I could tell they were useless, though I may use them in the future.
+  2. Fermented spider eyes can corrupt more effects. Specifically strength -> weakenss, & posion -> wither.
+  3. Potion modifiers (glowstone / redstone) can be applied multiple times. The amount of modifiers you can apply is based on your brewing level. Glowstone now increases potion duration by 30% and costs 1 modifier level. Redstone increases effect level by 1 and costs 2 modifier levels.
+  4. I had to overwrite the base game tile entity for the new brewing skill to work. You should have "Skrim Brewing Stands". When you craft new brewing stands this overwrite will happen automatically, but if you have already placed any brewing stands, you'll need to break them and replace them for the overwrite to happen.
