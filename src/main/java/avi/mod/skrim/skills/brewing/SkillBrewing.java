@@ -47,11 +47,11 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
   public List<String> getToolTip() {
     return ImmutableList.of(
         "Potions take §a" + Utils.formatPercent(this.brewSpeed()) + "%§r less time to brew.",
-        "You can apply strength/duration modifications §a" + this.totalModifiers() + "§r times.");
+        "You can apply §a" + this.totalModifiers() + "§r levels of modification to your potions.");
   }
 
   public int totalModifiers() {
-    return 1 + this.level / 15;
+    return 2 + this.level / 15;
   }
 
   public double brewSpeed() {

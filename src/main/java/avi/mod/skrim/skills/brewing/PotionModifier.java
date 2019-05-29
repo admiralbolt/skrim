@@ -28,6 +28,7 @@ public class PotionModifier {
       .put(MobEffects.INSTANT_HEALTH, MobEffects.INSTANT_DAMAGE)
       .put(MobEffects.POISON, MobEffects.WITHER)
       .put(MobEffects.NIGHT_VISION, MobEffects.INVISIBILITY)
+      .put(MobEffects.STRENGTH, MobEffects.WEAKNESS)
       .build();
 
   @FunctionalInterface
@@ -65,7 +66,8 @@ public class PotionModifier {
     NBTTagCompound compound = input.getTagCompound().copy();
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.size() == 0) return ItemStack.EMPTY;
-    if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
+    // Check against totalModifiers - 1 since increased_strength will count as 2 modifiers.
+    if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers() - 1) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
     for (PotionEffect effect : effects) {
@@ -79,6 +81,8 @@ public class PotionModifier {
 
     ItemStack newPotion = new ItemStack(SkrimPotionUtils.TO_SKRIM_POTION.get(input.getItem()));
     newPotion.setTagCompound(compound);
+    // A modifier so nice you have to increment it twice.
+    SkrimPotionUtils.incrementModified(newPotion);
     SkrimPotionUtils.incrementModified(newPotion);
     return newPotion;
   });
@@ -97,7 +101,7 @@ public class PotionModifier {
     NBTTagList list = new NBTTagList();
     for (PotionEffect effect : effects) {
       PotionEffect newEffect = new PotionEffect(effect);
-      Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, (int) (effect.getDuration() * 1.5));
+      Obfuscation.POTION_EFFECT_DURATION.hackValueTo(newEffect, (int) (effect.getDuration() * 1.3));
       list.appendTag(newEffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
     }
     compound.setTag("CustomPotionEffects", list);

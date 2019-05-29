@@ -79,6 +79,8 @@ public class SkrimPotion extends ItemPotion implements ItemBase {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+    tooltip.add("");
+    tooltip.add("Modification Level: " + SkrimPotionUtils.timesModified(stack));
   }
 
   @SideOnly(Side.CLIENT)
