@@ -70,7 +70,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
       "from all farm animals.");
 
   private static SkillAbility FARMERS_TAN = new SkillAbility("farming", "Farmer's Tan", 75, "You're a plant Vash.",
-      "Being in sunlight grants you a speed boost and saturation.");
+      "Being in sunlight grants you a speed boost and haste.");
 
   private static SkillAbility MAGIC_BEANSTALK = new SkillAbility("farming", "Magic Beanstalk", 100, "Fee-fi-fo-fum! Random chests for " +
       "everyone!",
