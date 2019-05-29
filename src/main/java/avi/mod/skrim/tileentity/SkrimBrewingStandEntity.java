@@ -6,13 +6,13 @@ import avi.mod.skrim.skills.brewing.SkillBrewing;
 import avi.mod.skrim.skills.brewing.SkrimPotionRecipes;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * I'm making some executive decisions about how brewing will work:
@@ -80,7 +81,6 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
   private Item ingredientID;
   private String customName;
   private int fuel;
-
 
   private EntityPlayer activePlayer;
   private EntityPlayer brewingPlayer;
@@ -188,7 +188,6 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
 
         for (int i = 0; i < SkrimBrewingStand.HAS_BOTTLE.length; ++i) {
           iblockstate = iblockstate.withProperty(SkrimBrewingStand.HAS_BOTTLE[i], Boolean.valueOf(aboolean[i]));
-          System.out.println("Updating block state with has_bottle_" + i + ": " + iblockstate.getValue(SkrimBrewingStand.HAS_BOTTLE[i]));
         }
 
         this.world.setBlockState(this.pos, iblockstate, 2);
@@ -212,10 +211,13 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     return aboolean;
   }
 
+  /**
+   * canBrew() is called before brewing actually starts, so brewingPlayer is still null. Use activePlayer instead.
+   */
   private boolean canBrew() {
     ItemStack ingredient = brewingItemStacks.get(3);
     for (int index : OUTPUT_SLOTS) {
-      if (SkrimPotionRecipes.hasOutput(this.brewingPlayer, brewingItemStacks.get(index), ingredient)) return true;
+      if (SkrimPotionRecipes.hasOutput(this.activePlayer, brewingItemStacks.get(index), ingredient)) return true;
     }
 
     return false;
@@ -223,16 +225,17 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
 
   private void brewPotions() {
     ItemStack ingredient = this.brewingItemStacks.get(3);
+    SkillBrewing brewing = Skills.getSkill(this.brewingPlayer, Skills.BREWING, SkillBrewing.class);
+
 
     for (int i : OUTPUT_SLOTS) {
       ItemStack output = SkrimPotionRecipes.getOutput(this.brewingPlayer, this.brewingItemStacks.get(i), ingredient);
 
-      System.out.println("output[" + i + "]: " + output);
-      System.out.println("getPotionType(" + i + "): " + PotionUtils.getPotionTypeFromNBT(output.getTagCompound()).toString());
-      System.out.println("effects[" + i + "]: " + PotionUtils.getEffectsFromStack(output));
-
       if (!output.isEmpty()) {
         this.brewingItemStacks.set(i, output);
+        if (!this.world.isRemote) {
+          brewing.addXp((EntityPlayerMP) this.brewingPlayer, 800);
+        }
       }
     }
 
@@ -271,6 +274,9 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     }
 
     this.fuel = compound.getByte("Fuel");
+    if (compound.hasKey("Player")) {
+      this.brewingPlayer = this.world.getPlayerEntityByUUID(UUID.fromString(compound.getString("Player")));
+    }
   }
 
   @Override
@@ -288,6 +294,9 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     }
 
     compound.setByte("Fuel", (byte) this.fuel);
+    if (this.brewingPlayer != null) {
+      compound.setString("Player", this.brewingPlayer.getUniqueID().toString());
+    }
     return compound;
   }
 

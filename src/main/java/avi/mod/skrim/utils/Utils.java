@@ -30,6 +30,8 @@ import java.util.Set;
 
 public class Utils {
 
+  public static final Integer TICKS_PER_SECOND = 20;
+
   public static String[] tuplets = {"zero-adsf", "one-asdf", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple",
       "octople", "nontople", "decuple"};
   public static Random rand = new Random();

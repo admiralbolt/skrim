@@ -10,6 +10,7 @@ import avi.mod.skrim.entities.passive.EntityFox;
 import avi.mod.skrim.entities.passive.EntityPumpkow;
 import avi.mod.skrim.entities.passive.EntityWatermoolon;
 import avi.mod.skrim.entities.projectile.Rocket;
+import avi.mod.skrim.entities.projectile.SkrimEntityPotion;
 import avi.mod.skrim.items.artifacts.DeathArrow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
@@ -51,6 +52,7 @@ public class SkrimEntities {
       final EntityEntry[] entries = {
           createBuilder("skrim_fish_hook").entity(SkrimFishHook.class).tracker(64, 10, true).build(),
           createBuilder("rocket").entity(Rocket.class).tracker(48, 3, true).build(),
+          createBuilder("skrim_potion").entity(SkrimEntityPotion.class).tracker(48, 3, true).build(),
           createBuilder("napalm_creeper").entity(NapalmCreeper.class).tracker(48, 3, true).egg(0xFF3000, 0xEE9000).build(),
           createBuilder("bio_creeper").entity(BioCreeper.class).tracker(48, 3, true).egg(0x00CCEE, 0x00CCBB).build(),
           createBuilder("mega_chicken").entity(MegaChicken.class).tracker(48, 3, true).egg(0xFFFFFF, 0xFF8888).build(),
