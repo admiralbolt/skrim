@@ -367,9 +367,7 @@ public class SkrimItems {
   }
 
   public static void modifyBaseItems() {
-    Items.MILK_BUCKET.setMaxStackSize(16);
-    Items.WATER_BUCKET.setMaxStackSize(16);
-    Items.LAVA_BUCKET.setMaxStackSize(16);
+
   }
 
 
