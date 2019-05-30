@@ -1,10 +1,8 @@
 package avi.mod.skrim.skills.brewing;
 
 import avi.mod.skrim.items.SkrimItems;
-import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
@@ -51,8 +49,8 @@ public class SkrimPotionRecipes {
       .put(Items.FERMENTED_SPIDER_EYE, PotionModifier.CORRUPT_EFFECT)
       .build();
 
-  public static boolean hasOutput(EntityPlayer player, @Nonnull ItemStack input, @Nonnull ItemStack ingredientStack) {
-    return getOutput(player, input, ingredientStack) != ItemStack.EMPTY;
+  public static boolean hasOutput(SkillBrewing brewing, @Nonnull ItemStack input, @Nonnull ItemStack ingredientStack) {
+    return getOutput(brewing, input, ingredientStack) != ItemStack.EMPTY;
   }
 
   /**
@@ -71,12 +69,11 @@ public class SkrimPotionRecipes {
    * The only exception to this is fermented spider eyes which act as both a modifier and an ingredient. It gets a small amount of
    * special handling to make this work.
    */
-  public static ItemStack getOutput(EntityPlayer player, @Nonnull ItemStack input, @Nonnull ItemStack ingredientStack) {
+  public static ItemStack getOutput(SkillBrewing brewing, @Nonnull ItemStack input, @Nonnull ItemStack ingredientStack) {
     if (input.isEmpty() || input.getCount() != 1 || ingredientStack.isEmpty() || !SkrimPotionUtils.isPotion(input))
       return ItemStack.EMPTY;
 
     PotionType potionType = PotionUtils.getPotionTypeFromNBT(input.getTagCompound());
-    SkillBrewing brewing = Skills.getSkill(player, Skills.BREWING, SkillBrewing.class);
     Item ingredient = ingredientStack.getItem();
 
     // Water -> Awkward Potion.

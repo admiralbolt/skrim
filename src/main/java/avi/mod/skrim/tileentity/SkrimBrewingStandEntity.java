@@ -24,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 /**
  * I'm making some executive decisions about how brewing will work:
@@ -152,6 +151,10 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     ItemStack itemstack1 = this.brewingItemStacks.get(3);
 
     if (this.brewTime > 0) {
+      if (this.brewingPlayer == null) {
+        this.brewTime = 0;
+        this.markDirty();
+      }
       this.updateBrewTime();
 
       if (this.brewTime == 0 && canBrew) {
@@ -216,20 +219,24 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
    */
   private boolean canBrew() {
     ItemStack ingredient = brewingItemStacks.get(3);
+    if (this.activePlayer == null) return false;
+
+    SkillBrewing brewing = Skills.getSkill(this.activePlayer, Skills.BREWING, SkillBrewing.class);
+
     for (int index : OUTPUT_SLOTS) {
-      if (SkrimPotionRecipes.hasOutput(this.activePlayer, brewingItemStacks.get(index), ingredient)) return true;
+      if (SkrimPotionRecipes.hasOutput(brewing, brewingItemStacks.get(index), ingredient)) return true;
     }
 
     return false;
   }
 
   private void brewPotions() {
+    if (this.brewingPlayer == null) return;
+
     ItemStack ingredient = this.brewingItemStacks.get(3);
     SkillBrewing brewing = Skills.getSkill(this.brewingPlayer, Skills.BREWING, SkillBrewing.class);
-
-
     for (int i : OUTPUT_SLOTS) {
-      ItemStack output = SkrimPotionRecipes.getOutput(this.brewingPlayer, this.brewingItemStacks.get(i), ingredient);
+      ItemStack output = SkrimPotionRecipes.getOutput(brewing, this.brewingItemStacks.get(i), ingredient);
 
       if (!output.isEmpty()) {
         this.brewingItemStacks.set(i, output);
@@ -274,9 +281,6 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     }
 
     this.fuel = compound.getByte("Fuel");
-    if (compound.hasKey("Player")) {
-      this.brewingPlayer = this.world.getPlayerEntityByUUID(UUID.fromString(compound.getString("Player")));
-    }
   }
 
   @Override
@@ -294,9 +298,6 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
     }
 
     compound.setByte("Fuel", (byte) this.fuel);
-    if (this.brewingPlayer != null) {
-      compound.setString("Player", this.brewingPlayer.getUniqueID().toString());
-    }
     return compound;
   }
 
