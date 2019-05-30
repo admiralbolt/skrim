@@ -241,7 +241,7 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
       if (!output.isEmpty()) {
         this.brewingItemStacks.set(i, output);
         if (!this.world.isRemote) {
-          brewing.addXp((EntityPlayerMP) this.brewingPlayer, 800);
+          brewing.addXp((EntityPlayerMP) this.brewingPlayer, SkillBrewing.INGREDIENT_XP.get(ingredient.getItem()));
         }
       }
     }
