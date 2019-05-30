@@ -92,7 +92,7 @@ public class SkrimEntities {
     private static <E extends Entity> EntityEntryBuilder<E> createBuilder(final String name) {
       final EntityEntryBuilder<E> builder = EntityEntryBuilder.create();
       final ResourceLocation registryName = new ResourceLocation(Skrim.MOD_ID, name);
-      return builder.id(registryName, ENTITY_ID++).name(registryName.toString());
+      return builder.id(registryName, ENTITY_ID++).name(name);
     }
   }
 
