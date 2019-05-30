@@ -25,8 +25,7 @@ public class BanHammer extends ArtifactItem {
   @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add("§4Bans any player hit.");
-    tooltip.add("§4Only one use, choose wisely.");
-    tooltip.add("§e\"Once you tire of the nail, feel free to join me in my art.\"");
+    tooltip.add("§e\"Only one use, choose wisely.\"");
   }
 
 
