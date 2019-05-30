@@ -28,8 +28,8 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
 
   public static Map<Item, Integer> INGREDIENT_XP = ImmutableMap.<Item, Integer>builder()
        // Primary effects are worth the most experience.
-      .put(Items.GHAST_TEAR, 425)
-      .put(Items.RABBIT_FOOT, 400)
+      .put(Items.RABBIT_FOOT, 450)
+      .put(Items.GHAST_TEAR, 375)
       .put(Items.MAGMA_CREAM, 350)
       .put(Items.BLAZE_POWDER, 325)
       .put(Items.SPECKLED_MELON, 300)
