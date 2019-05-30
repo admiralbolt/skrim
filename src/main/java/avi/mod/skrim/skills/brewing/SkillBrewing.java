@@ -37,7 +37,7 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
       .put(Items.GOLDEN_CARROT, 300)
       .put(Items.SPIDER_EYE, 275)
       .put(Items.FISH, 250)
-      .put(Items.SUGAR, 200)
+      .put(Items.SUGAR, 225)
       // Potion type modifiers.
       .put(Items.DRAGON_BREATH, 200)
       .put(Items.GUNPOWDER, 100)
