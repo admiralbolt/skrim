@@ -44,6 +44,8 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
       // Worth less since they can be applied multiple times. Redstone can be applied twice as much as glowstone.
       .put(Items.GLOWSTONE_DUST, 120)
       .put(Items.REDSTONE, 60)
+      // Netherwart!
+      .put(Items.NETHER_WART, 100)
       .build();
 
   private static SkillAbility DOUBLE_BUBBLE = new SkillAbility("brewing", "Double Bubble", 25,
