@@ -1,5 +1,6 @@
 package avi.mod.skrim.items.items;
 
+import avi.mod.skrim.Skrim;
 import avi.mod.skrim.items.ItemBase;
 import avi.mod.skrim.items.SkrimItems;
 import net.minecraft.client.util.ITooltipFlag;
@@ -13,8 +14,12 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -84,4 +89,16 @@ public class ArtifactItem extends Item implements ItemBase {
   public String getTexturePath() {
     return "items";
   }
+
+  @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
+  public static class ArtifactHandler {
+
+    @SubscribeEvent
+    public static void applyEnchantments(AnvilUpdateEvent event) {
+      if (ArrayUtils.contains(SkrimItems.ARTIFACTS, event.getLeft().getItem())) {
+        event.setCanceled(true);
+      }
+    }
+  }
+
 }
