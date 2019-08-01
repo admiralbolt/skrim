@@ -153,7 +153,7 @@ public class SkrimPotionRecipes {
     @Nonnull
     @Override
     public ItemStack getOutput(@Nonnull ItemStack input, @Nonnull ItemStack ingredient) {
-      return null;
+      return ItemStack.EMPTY;
     }
   }
 
