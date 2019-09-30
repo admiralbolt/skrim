@@ -134,23 +134,25 @@ public class SkillBotany extends Skill implements ISkillBotany {
     String flowerName = getFlowerName(event.getState());
     SkillBotany botany = Skills.getSkill(player, Skills.BOTANY, SkillBotany.class);
     if (event.getState().getBlock() instanceof BlockDoublePlant) {
-      IBlockState targetState = event.getWorld().getBlockState(event.getPos().down());
+      IBlockState targetState = event.getState();
       // So if you break the top block of a double plant, the game thinks it's a sunflower. Also, the top blocks of
       // plants aren't actually responsible for the drops, only the bottom blocks are, so we spawn the correct number
       // of fortune drops here if necessary.
-      if (targetState.getBlock() instanceof BlockDoublePlant) {
-        flowerName = getFlowerName(targetState);
-        if (!XP_MAP.containsKey(flowerName)) return;
+      if (event.getWorld().getBlockState(event.getPos().down()).getBlock() instanceof BlockDoublePlant) {
+        targetState = event.getWorld().getBlockState(event.getPos().down());
+      }
 
-        if (Utils.rand.nextDouble() < botany.getFortuneChance()) {
-          Item droppedItem = targetState.getBlock().getItemDropped(targetState, Utils.rand, 0);
-          int meta = targetState.getBlock().damageDropped(targetState);
-          ItemStack flowerStack = new ItemStack(droppedItem, botany.getFortuneAmount() - 1, meta);
-          EntityItem entityItem = new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY(),
-              event.getPos().getZ(), flowerStack);
-          event.getWorld().spawnEntity(entityItem);
-          Skills.playFortuneSound(player);
-        }
+      flowerName = getFlowerName(targetState);
+      if (!XP_MAP.containsKey(flowerName)) return;
+
+      if (Utils.rand.nextDouble() < botany.getFortuneChance()) {
+        Item droppedItem = targetState.getBlock().getItemDropped(targetState, Utils.rand, 0);
+        int meta = targetState.getBlock().damageDropped(targetState);
+        ItemStack flowerStack = new ItemStack(droppedItem, botany.getFortuneAmount() - 1, meta);
+        EntityItem entityItem = new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY(),
+            event.getPos().getZ(), flowerStack);
+        event.getWorld().spawnEntity(entityItem);
+        Skills.playFortuneSound(player);
       }
     }
 
