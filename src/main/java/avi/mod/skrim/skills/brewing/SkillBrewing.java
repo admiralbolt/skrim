@@ -28,22 +28,22 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
 
   public static Map<Item, Integer> INGREDIENT_XP = ImmutableMap.<Item, Integer>builder()
        // Primary effects are worth the most experience.
-      .put(Items.RABBIT_FOOT, 450)
-      .put(Items.GHAST_TEAR, 375)
-      .put(Items.MAGMA_CREAM, 350)
-      .put(Items.FERMENTED_SPIDER_EYE, 325)
-      .put(Items.BLAZE_POWDER, 300)
-      .put(Items.SPECKLED_MELON, 300)
-      .put(Items.GOLDEN_CARROT, 300)
-      .put(Items.SPIDER_EYE, 275)
-      .put(Items.FISH, 250)
-      .put(Items.SUGAR, 225)
+      .put(Items.RABBIT_FOOT, 650)
+      .put(Items.GHAST_TEAR, 575)
+      .put(Items.MAGMA_CREAM, 525)
+      .put(Items.FERMENTED_SPIDER_EYE, 500)
+      .put(Items.BLAZE_POWDER, 450)
+      .put(Items.SPECKLED_MELON, 450)
+      .put(Items.GOLDEN_CARROT, 450)
+      .put(Items.SPIDER_EYE, 400)
+      .put(Items.FISH, 375)
+      .put(Items.SUGAR, 325)
       // Potion type modifiers.
-      .put(Items.DRAGON_BREATH, 200)
-      .put(Items.GUNPOWDER, 100)
+      .put(Items.DRAGON_BREATH, 300)
+      .put(Items.GUNPOWDER, 200)
       // Worth less since they can be applied multiple times. Redstone can be applied twice as much as glowstone.
-      .put(Items.GLOWSTONE_DUST, 120)
-      .put(Items.REDSTONE, 60)
+      .put(Items.GLOWSTONE_DUST, 200)
+      .put(Items.REDSTONE, 100)
       // Netherwart!
       .put(Items.NETHER_WART, 100)
       .build();
