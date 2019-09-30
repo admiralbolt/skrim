@@ -104,6 +104,8 @@ public class SkrimItems {
   public static Item PUMPKIN_STONE = new PumpkinStone();
   public static Item WATERMELON_STONE = new WatermelonStone();
   public static Item ESSENCE_AEGIS = new EssenceAegis();
+  // Don't actually want to add this one to the artifacts list though.
+  public static Item RAFFLE_TICKET = new RaffleTicket();
 
   public static Item[] ARTIFACTS = {
       CANES_SWORD,
@@ -324,6 +326,7 @@ public class SkrimItems {
           LINGERING_SKRIM_POTION,
           BREWING_STAND,
           SKRIM_TIPPED_ARROW,
+          RAFFLE_TICKET,
 
           // Food
           OVERWRITE_PORKCHOP,

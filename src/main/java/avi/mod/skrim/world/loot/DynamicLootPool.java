@@ -28,13 +28,13 @@ public class DynamicLootPool {
       SkrimItems.DEATH_ARROW, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(3, 3))}
   );
 
-  public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 10000, 25, 30, 2, 1,
+  public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 10000, 35, 30, 2, 1, SkrimItems.RAFFLE_TICKET,
       Stream.concat(Arrays.stream(SkrimItems.ARTIFACTS), SkrimBlocks.RegistrationHandler.ARTIFACT_ITEM_BLOCK_MAP.values().stream())).toLootPool();
 
-  public static LootPool HIGH_CHANCE_ARTIFACT_POOL = new DynamicLootPool("high_chance_artifact_pool", 5000, 50, 30, 3, 2,
+  public static LootPool HIGH_CHANCE_ARTIFACT_POOL = new DynamicLootPool("high_chance_artifact_pool", 5000, 35, 30, 3, 2, SkrimItems.RAFFLE_TICKET,
       Stream.concat(Arrays.stream(SkrimItems.ARTIFACTS), SkrimBlocks.RegistrationHandler.ARTIFACT_ITEM_BLOCK_MAP.values().stream())).toLootPool();
 
-  public static LootPool RECORD_POOL = new DynamicLootPool("record_pool", 10000, 60, 10, 2, 2,
+  public static LootPool RECORD_POOL = new DynamicLootPool("record_pool", 10000, 60, 10, 2, 2, Items.ROTTEN_FLESH,
       Stream.of(SkrimItems.SONGS)).toLootPool();
 
   private String name;
@@ -44,7 +44,7 @@ public class DynamicLootPool {
   private List<LootCondition> lootConditions = new ArrayList<>();
 
 
-  private DynamicLootPool(String name, int maxWeight, int itemWeight, int itemQuality, int maxRolls, int maxBonusRolls,
+  private DynamicLootPool(String name, int maxWeight, int itemWeight, int itemQuality, int maxRolls, int maxBonusRolls, Item defaultItem,
                           Stream<Item> items) {
     this.name = name;
     this.rolls = new RandomValueRange(1.0f, maxRolls);
@@ -56,8 +56,8 @@ public class DynamicLootPool {
           item.getUnlocalizedName()));
     });
     if (lootEntries.size() * itemWeight >= maxWeight) return;
-    this.lootEntries.add(new LootEntryItem(Items.ROTTEN_FLESH, maxWeight - lootEntries.size() * itemWeight, -1000, lootFunction,
-        lootCondition, "minecraft:rotten_flesh"));
+    this.lootEntries.add(new LootEntryItem(defaultItem, maxWeight - lootEntries.size() * itemWeight, -1000, lootFunction,
+        lootCondition, defaultItem.getUnlocalizedName()));
   }
 
   private LootPool toLootPool() {
