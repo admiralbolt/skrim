@@ -15,7 +15,6 @@ import avi.mod.skrim.items.tools.*;
 import avi.mod.skrim.items.weapons.*;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -215,6 +214,7 @@ public class SkrimItems {
   public static Item HAND_SAW = new HandSaw();
 
   public static Item OVERWRITE_BOW = new OverwriteBow();
+  public static Item SKRIM_TIPPED_ARROW = new SkrimTippedArrow();
 
 
   // Leafy bois
@@ -323,6 +323,7 @@ public class SkrimItems {
           SPLASH_SKRIM_POTION,
           LINGERING_SKRIM_POTION,
           BREWING_STAND,
+          SKRIM_TIPPED_ARROW,
 
           // Food
           OVERWRITE_PORKCHOP,

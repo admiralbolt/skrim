@@ -20,6 +20,9 @@ public class ObfuscatedMethod {
   public static ObfuscatedMethod CAN_RENDER_NAME =
       new ObfuscatedMethod("canRenderName", "func_177070_b").addToWhitelist(Modifier.PROTECTED).addParameters(EntityLivingBase.class);
 
+  public static ObfuscatedMethod SET_FIXED_COLOR =
+      new ObfuscatedMethod("setFixedColor", "func_191507_d").addParameters(int.class);
+
   private static final int MAX_DEPTH = 10;
 
   public String obName;
@@ -59,6 +62,10 @@ public class ObfuscatedMethod {
   public Object invoke(Object instance, Object... args) {
     for (int depth = 0; depth < MAX_DEPTH; depth++) {
       Class c = ReflectionUtils.getSuperX(instance, depth);
+
+      for (Method method : c.getDeclaredMethods()) {
+        System.out.println("method.name: " + method.getName());
+      }
 
       for (String methodName : this.getNames()) {
         try {
