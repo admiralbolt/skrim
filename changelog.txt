@@ -1,3 +1,6 @@
+# 1.12.2-1.3
+* Horses enhanced by methamphetamines now transfer their ridiculous stats to offfspring.
+
 # 1.12.2-1.2
 * You can no longer apply books to artifacts.
 * Fixed a bug where the server wouldn't start anymore. :p

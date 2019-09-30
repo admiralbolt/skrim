@@ -41,6 +41,7 @@ public abstract class HorseSteroid extends ArtifactItem {
     Map<IAttribute, AttributeModifier> attributeMap = new HashMap<>();
     attributeMap.put(this.getTargetAttribute(horse), this.getAttributeModifier(horse));
     Utils.applyAttributesModifiersToEntity(horse, attributeMap, 0);
+    horse.getEntityAttribute(this.getTargetAttribute(horse)).setBaseValue(this.getAttributeModifier(horse).getAmount());
     stack.damageItem(2, playerIn);
     BlockPos horsePos = horse.getPosition();
     playerIn.world.playSound(null, horsePos.getX(), horsePos.getY(), horsePos.getZ(), SoundEvents.ENTITY_HORSE_ANGRY,
