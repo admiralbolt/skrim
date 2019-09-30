@@ -1,6 +1,8 @@
 package avi.mod.skrim.items.items;
 
 import avi.mod.skrim.entities.projectile.SkrimEntityPotion;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.brewing.SkillBrewing;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -35,8 +37,9 @@ public class SplashSkrimPotion extends SkrimPotion {
         SoundCategory.PLAYERS, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
     if (!worldIn.isRemote) {
+      SkillBrewing brewing = Skills.getSkill(playerIn, Skills.BREWING, SkillBrewing.class);
       SkrimEntityPotion entitypotion = new SkrimEntityPotion(worldIn, playerIn, itemstack1);
-      entitypotion.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
+      entitypotion.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, (brewing.hasAbility(2)) ? 1.0F : 0.5F, 1.0F);
       worldIn.spawnEntity(entitypotion);
     }
 

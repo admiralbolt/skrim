@@ -1,6 +1,8 @@
 package avi.mod.skrim.entities.projectile;
 
 import avi.mod.skrim.items.SkrimItems;
+import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.skills.brewing.SkillBrewing;
 import avi.mod.skrim.skills.brewing.SkrimPotionUtils;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
@@ -144,7 +146,9 @@ public class SkrimEntityPotion extends EntityPotion {
   }
 
   private void applySplash(RayTraceResult p_190543_1_, List<PotionEffect> p_190543_2_) {
-    AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(4.0D, 2.0D, 4.0D);
+    SkillBrewing brewing = Skills.getSkill((EntityPlayer) this.thrower, Skills.BREWING, SkillBrewing.class);
+    int mult = (brewing.hasAbility(2)) ? 2 : 1;
+    AxisAlignedBB axisalignedbb = this.getEntityBoundingBox().grow(4.0D * mult, 2.0D * mult, 4.0D * mult);
     List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 
     if (!list.isEmpty()) {
@@ -180,9 +184,10 @@ public class SkrimEntityPotion extends EntityPotion {
   }
 
   private void makeAreaOfEffectCloud(ItemStack potion) {
+    SkillBrewing brewing = Skills.getSkill((EntityPlayer) this.thrower, Skills.BREWING, SkillBrewing.class);
     EntityAreaEffectCloud entityareaeffectcloud = new EntityAreaEffectCloud(this.world, this.posX, this.posY, this.posZ);
     entityareaeffectcloud.setOwner(this.getThrower());
-    entityareaeffectcloud.setRadius(3.0F);
+    entityareaeffectcloud.setRadius((brewing.hasAbility(2)) ? 6.0F : 3.0F);
     entityareaeffectcloud.setRadiusOnUse(-0.5F);
     entityareaeffectcloud.setWaitTime(10);
     entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float) entityareaeffectcloud.getDuration());
