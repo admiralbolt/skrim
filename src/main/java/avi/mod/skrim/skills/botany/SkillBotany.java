@@ -41,7 +41,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   public static SkillStorage<ISkillBotany> skillStorage = new SkillStorage<>();
   public static Set<Item> GLOW_FLOWER_ITEMS = new HashSet<>();
   public static Set<Item> ENCHANTED_FLOWER_ITEMS = new HashSet<>();
-  private static Set<String> DOUBLE_FLOWER_NAMES = ImmutableSet.of("azure_bluet", "lilac", "peony", "rose_bush", "double_rose");
+  private static Set<String> DOUBLE_FLOWER_NAMES = ImmutableSet.of("double_rose", "sunflower", "syringa", "paeonia");
 
   // The chart for flower rarity is at: http://minecraft.gamepedia.com/Flower
   private static Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
@@ -191,6 +191,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
       doublePlant = (BlockDoublePlant) placedBlock;
     }
     if (!validFlowerState(placedState) || Utils.rand.nextDouble() >= botany.getSplosionChance()) return;
+
     BlockPos placedPos = event.getPos();
     int radius = botany.getSplosionRadius();
     for (int i = -radius; i <= radius; i++) {
@@ -202,8 +203,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
         BlockPos dirtPos = airPos.down();
         Block dirtBlock = player.world.getBlockState(dirtPos).getBlock();
-        if (!(dirtBlock instanceof BlockDirt) && !(dirtBlock instanceof BlockGrass) && !(dirtBlock instanceof BlockFarmland))
-          continue;
+        if (!(dirtBlock instanceof BlockDirt) && !(dirtBlock instanceof BlockGrass) && !(dirtBlock instanceof BlockFarmland)) continue;
+
         if (placedBlock instanceof BlockDoublePlant) {
           doublePlant.placeAt(player.world, airPos, placedState.getValue(BlockDoublePlant.VARIANT), 3);
           PlayerPlacedBlocks.addBlock(player.world, airPos);

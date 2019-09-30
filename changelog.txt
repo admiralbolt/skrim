@@ -4,6 +4,7 @@
 * Buffed xp for creating potions and modifying potions.
 * Added a level 50 perk for brewing.
 * Fixed logic for getting multiple drops from double plants.
+* Fixed logic for flower splosion for double plants.
 
 # 1.12.2-1.2
 * You can no longer apply books to artifacts.
