@@ -23,6 +23,8 @@ public interface ISkill {
 
   void toggleAbility(int abilityLevel);
 
+  void toggleSkill();
+
   void setXp(double xp);
 
   void setLevel(int level);

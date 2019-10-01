@@ -84,8 +84,13 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
-    tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
+    if (this.skillEnabled) {
+      tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
+      tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
+    } else {
+      tooltip.add("§7Repairing items provides " + Utils.formatPercent(this.extraRepair()) + "% extra durability.");
+      tooltip.add("§7Smelting provides +" + Utils.formatPercent(this.extraIngot()) + "% items.");
+    }
     return tooltip;
   }
 

@@ -2,6 +2,7 @@ package avi.mod.skrim.client.gui;
 
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.ToggleAbilityPacket;
+import avi.mod.skrim.network.ToggleSkillPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.Skills;
@@ -184,7 +185,7 @@ public class SkillScreen extends GuiScreen {
    */
   private void drawSkillIcon(Skill skill, int left, int top) {
     this.mc.getTextureManager().bindTexture(new ResourceLocation("skrim:textures/guis/skills/" + Utils.snakeCase(skill.name) + ".png"));
-    GuiUtils.drawSkillIconWithBounds(this, skill, left, top, this.boundTop, this.boundBottom);
+    GuiUtils.drawSkillIconWithBounds(this, skill, left, top, this.boundTop, this.boundBottom, skill.skillEnabled);
   }
 
   /**
@@ -192,6 +193,7 @@ public class SkillScreen extends GuiScreen {
    */
   private void drawSkillHoverText(Skill skill, int left, int top, int mouseX, int mouseY) {
     if (!Utils.isPointInRegion(left, top, left + SKILL_ICON_SIZE, top + SKILL_ICON_SIZE, mouseX, mouseY)) return;
+
     this.drawHoveringText(skill.getToolTip(), mouseX, mouseY);
   }
 
@@ -295,18 +297,27 @@ public class SkillScreen extends GuiScreen {
     for (int j = 0; j < skills.size(); ++j) {
       Skill skill = skills.get(j);
       int left = this.left + SCROLL_PADDING_LEFT + SCROLL_BAR_WIDTH + SKILL_PADDING_LEFT;
+      if (Utils.isPointInRegion(left, topValues.get(j), left + SKILL_ICON_SIZE, topValues.get(j) + SKILL_ICON_SIZE, mouseX, mouseY)) {
+        skill.toggleSkill();
+        SkrimPacketHandler.INSTANCE.sendToServer(new ToggleSkillPacket(skill.name));
+        return;
+      }
+
+
       int startLeft = left + SKILL_PADDING_DESC + SKILL_ICON_SIZE;
       int abilityTop = topValues.get(j) + SKILL_HEADER_HEIGHT;
       int abilityBottom = abilityTop + ABILITY_ICON_SIZE;
 
       for (int i = 1; i <= 4; i++) {
         if (!skill.hasAbility(i)) break;
+
         int abilityLeft = startLeft + (i - 1) * (ABILITY_ICON_SIZE + ABILITY_ICON_PADDING);
         int abilityRight = abilityLeft + ABILITY_ICON_SIZE;
         if (!Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) continue;
 
         skill.toggleAbility(i);
         SkrimPacketHandler.INSTANCE.sendToServer(new ToggleAbilityPacket(skill.name, i));
+        return;
       }
     }
   }

@@ -19,7 +19,7 @@ public abstract class Skill implements ISkill {
   public String name;
   public int level;
   public double xp;
-  public boolean skillEnabled;
+  public boolean skillEnabled = true;
   public Map<Integer, Boolean> enabledMap = new HashMap<>();
   public List<String> tooltip = new ArrayList<>();
   private Map<Integer, SkillAbility> abilities = new HashMap<>();
@@ -97,6 +97,10 @@ public abstract class Skill implements ISkill {
     if (abilityLevel <= 0 || abilityLevel > 4) return;
 
     this.enabledMap.put(abilityLevel, !this.abilityEnabled(abilityLevel));
+  }
+
+  public void toggleSkill() {
+    this.skillEnabled = !this.skillEnabled;
   }
 
 

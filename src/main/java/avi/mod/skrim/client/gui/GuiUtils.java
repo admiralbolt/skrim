@@ -66,8 +66,8 @@ public class GuiUtils {
     }
   }
 
-  public static void drawSkillIconWithBounds(Gui gui, Skill skill, int xCoord, int yCoord, int boundTop, int boundBottom) {
-    drawIconWithBounds(gui, xCoord, yCoord, SKILL_ICON, boundTop, boundBottom);
+  public static void drawSkillIconWithBounds(Gui gui, Skill skill, int xCoord, int yCoord, int boundTop, int boundBottom, boolean enabled) {
+    drawIconWithBounds(gui, xCoord, yCoord, enabled ? SKILL_ICON : SKILL_ICON_DISABLED, boundTop, boundBottom);
   }
 
   public static void drawAbilityIconWithBounds(Gui gui, Skill skill, int i, int xCoord, int yCoord, int boundTop, int boundBottom) {
