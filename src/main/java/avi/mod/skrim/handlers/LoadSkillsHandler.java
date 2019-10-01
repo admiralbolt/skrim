@@ -1,5 +1,6 @@
 package avi.mod.skrim.handlers;
 
+import avi.mod.skrim.network.SkillEnablePacket;
 import avi.mod.skrim.network.SkillPacket;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.skills.ISkill;
@@ -26,6 +27,7 @@ public class LoadSkillsHandler {
         if (player.hasCapability(cap, EnumFacing.NORTH)) {
           Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
           SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
+          SkrimPacketHandler.INSTANCE.sendTo(new SkillEnablePacket(skill.name, skill.skillEnabled, skill.enabledMap), player);
         }
       }
     }
@@ -41,6 +43,7 @@ public class LoadSkillsHandler {
         if (player.hasCapability(cap, EnumFacing.NORTH)) {
           Skill skill = (Skill) player.getCapability(cap, EnumFacing.NORTH);
           SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(skill.name, skill.level, skill.xp), player);
+          SkrimPacketHandler.INSTANCE.sendTo(new SkillEnablePacket(skill.name, skill.skillEnabled, skill.enabledMap), player);
         }
       }
     }
@@ -57,6 +60,8 @@ public class LoadSkillsHandler {
       ISkill newSkill = newPlayer.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH);
       newSkill.setLevel(oldSkill.getLevel());
       newSkill.setXp(oldSkill.getXp());
+      newSkill.setAbilityEnabledMap(oldSkill.getAbilityEnabledMap());
+      newSkill.setEnabled(oldSkill.getEnabled());
     }
 
   }

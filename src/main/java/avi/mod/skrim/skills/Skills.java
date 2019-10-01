@@ -38,6 +38,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 import java.util.ArrayList;
@@ -209,6 +210,15 @@ public class Skills {
    */
   public static int entityKillXp(Entity entity) {
     return killXp.getOrDefault(entity.getClass(), 0);
+  }
+
+  public static void copyToClient(EntityJoinWorldEvent event) {
+    if (!(event.getEntity() instanceof EntityPlayer)) return;
+
+    EntityPlayer player = (EntityPlayer) event.getEntity();
+    System.out.println("world.isRemote: " + player.world.isRemote);
+    if (player.world.isRemote) return;
+
   }
 
 }

@@ -13,6 +13,10 @@ public class SkillStorage<T> implements IStorage<T> {
     final Skill saveSkill = (Skill) instance;
     compound.setDouble(saveSkill.name + "-xp", saveSkill.xp);
     compound.setInteger(saveSkill.name + "-level", saveSkill.level);
+    compound.setBoolean("ability1", saveSkill.abilityEnabled(1));
+    compound.setBoolean("ability2", saveSkill.abilityEnabled(2));
+    compound.setBoolean("ability3", saveSkill.abilityEnabled(3));
+    compound.setBoolean("ability4", saveSkill.abilityEnabled(4));
     return compound;
   }
 
@@ -21,6 +25,10 @@ public class SkillStorage<T> implements IStorage<T> {
     final Skill loadSkill = (Skill) instance;
     loadSkill.xp = compound.getDouble(loadSkill.name + "-xp");
     loadSkill.level = compound.getInteger(loadSkill.name + "-level");
+    loadSkill.enabledMap.put(1, compound.getBoolean("ability1"));
+    loadSkill.enabledMap.put(2, compound.getBoolean("ability2"));
+    loadSkill.enabledMap.put(3, compound.getBoolean("ability3"));
+    loadSkill.enabledMap.put(4, compound.getBoolean("ability4"));
   }
 
 }

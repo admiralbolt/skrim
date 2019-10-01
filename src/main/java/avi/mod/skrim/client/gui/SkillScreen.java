@@ -1,5 +1,7 @@
 package avi.mod.skrim.client.gui;
 
+import avi.mod.skrim.network.SkrimPacketHandler;
+import avi.mod.skrim.network.ToggleAbilityPacket;
 import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.Skills;
@@ -223,7 +225,7 @@ public class SkillScreen extends GuiScreen {
       int abilityRight = abilityLeft + ABILITY_ICON_SIZE;
       if (!Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) continue;
 
-      this.drawHoveringText(SkillAbility.getAbilityTooltip(skill.getAbility(i), skill.hasAbility(i)), mouseX, mouseY);
+      this.drawHoveringText(SkillAbility.getAbilityTooltip(skill.getAbility(i), skill.hasAbility(i), skill.abilityEnabled(i)), mouseX, mouseY);
     }
   }
 
@@ -275,6 +277,38 @@ public class SkillScreen extends GuiScreen {
       this.scrollY = Math.max(Math.min(this.scrollY, MAX_SCROLL), 0);
     }
     super.handleMouseInput();
+  }
+
+  @Override
+  protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+    // We have to do some stupid math to toggle abilties on / off. Good luck figuring out what the fuck is happening haha.
+    List<Integer> topValues = new ArrayList<>();
+    List<Skill> skills = new ArrayList<>();
+    for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
+      skills.add((Skill) this.player.getCapability(Skills.ALL_SKILLS.get(i), EnumFacing.NORTH));
+      int top = this.top + TITLE_HEIGHT + PADDING_TOP - this.scrollY + i * SKILL_HEIGHT;
+      if (i > 0) {
+        top += SKILL_PADDING_TOP * i;
+      }
+      topValues.add(top);
+    }
+    for (int j = 0; j < skills.size(); ++j) {
+      Skill skill = skills.get(j);
+      int left = this.left + SCROLL_PADDING_LEFT + SCROLL_BAR_WIDTH + SKILL_PADDING_LEFT;
+      int startLeft = left + SKILL_PADDING_DESC + SKILL_ICON_SIZE;
+      int abilityTop = topValues.get(j) + SKILL_HEADER_HEIGHT;
+      int abilityBottom = abilityTop + ABILITY_ICON_SIZE;
+
+      for (int i = 1; i <= 4; i++) {
+        if (!skill.hasAbility(i)) break;
+        int abilityLeft = startLeft + (i - 1) * (ABILITY_ICON_SIZE + ABILITY_ICON_PADDING);
+        int abilityRight = abilityLeft + ABILITY_ICON_SIZE;
+        if (!Utils.isPointInRegion(abilityLeft, abilityTop, abilityRight, abilityBottom, mouseX, mouseY)) continue;
+
+        skill.toggleAbility(i);
+        SkrimPacketHandler.INSTANCE.sendToServer(new ToggleAbilityPacket(skill.name, i));
+      }
+    }
   }
 
 }

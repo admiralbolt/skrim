@@ -24,18 +24,26 @@ public class SkillAbility {
     this.flavor = "\"" + flavor + "\"";
   }
 
-  public static List<String> getAbilityTooltip(SkillAbility ability, boolean hasAbility) {
+  public static List<String> getAbilityTooltip(SkillAbility ability, boolean hasAbility, boolean abilityEnabled) {
     List<String> tooltip = new ArrayList<>();
     if (ability == null) {
       tooltip.add(NOT_UNLOCKED_COLOR + "Nothin Yet" + RESET);
       return tooltip;
     }
     if (hasAbility) {
-      tooltip.add(NAME_COLOR + ability.name + RESET);
-      for (String descLine : ability.description) {
-        tooltip.add(DESC_COLOR + descLine + RESET);
+      if (abilityEnabled) {
+        tooltip.add(NAME_COLOR + ability.name + RESET);
+        for (String descLine : ability.description) {
+          tooltip.add(DESC_COLOR + descLine + RESET);
+        }
+        tooltip.add(FLAVOR_COLOR + ability.flavor + RESET);
+      } else {
+        tooltip.add(NOT_UNLOCKED_COLOR + ability.name + RESET);
+        for (String descLine : ability.description) {
+          tooltip.add(NOT_UNLOCKED_COLOR + descLine + RESET);
+        }
+        tooltip.add(NOT_UNLOCKED_COLOR + ability.flavor + RESET);
       }
-      tooltip.add(FLAVOR_COLOR + ability.flavor + RESET);
     } else {
       tooltip.add(NOT_UNLOCKED_COLOR + ability.name + RESET);
     }

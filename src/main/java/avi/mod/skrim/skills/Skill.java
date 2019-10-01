@@ -19,6 +19,8 @@ public abstract class Skill implements ISkill {
   public String name;
   public int level;
   public double xp;
+  public boolean skillEnabled;
+  public Map<Integer, Boolean> enabledMap = new HashMap<>();
   public List<String> tooltip = new ArrayList<>();
   private Map<Integer, SkillAbility> abilities = new HashMap<>();
 
@@ -39,7 +41,6 @@ public abstract class Skill implements ISkill {
   }
 
   public abstract List<String> getToolTip();
-
 
   public void addXp(EntityPlayerMP player, int xp) {
     if (xp > 0) {
@@ -88,6 +89,16 @@ public abstract class Skill implements ISkill {
     return (this.level / 25) >= abilityLevel;
   }
 
+  public boolean abilityEnabled(int abilityLevel) {
+    return this.enabledMap.getOrDefault(abilityLevel, true);
+  }
+
+  public void toggleAbility(int abilityLevel) {
+    if (abilityLevel <= 0 || abilityLevel > 4) return;
+
+    this.enabledMap.put(abilityLevel, !this.abilityEnabled(abilityLevel));
+  }
+
 
   public void levelUp(EntityPlayerMP player) {
     if (this.canLevelUp()) {
@@ -123,6 +134,22 @@ public abstract class Skill implements ISkill {
 
   public void setLevel(int level) {
     this.level = level;
+  }
+
+  public Map<Integer, Boolean> getAbilityEnabledMap() {
+    return this.enabledMap;
+  }
+
+  public void setAbilityEnabledMap(Map<Integer, Boolean> enabledMap) {
+    this.enabledMap = enabledMap;
+  }
+
+  public boolean getEnabled() {
+    return this.skillEnabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.skillEnabled = enabled;
   }
 
 }

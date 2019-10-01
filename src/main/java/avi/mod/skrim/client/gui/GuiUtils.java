@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Map;
 
@@ -24,18 +25,22 @@ public class GuiUtils {
   private static Icon SKILL_ICON_DISABLED = new Icon("skill_disabled", 32, 0, 32, 32);
   private static Icon ABILITY_ICON_1 = new Icon("ability_1", 0, 32, 16, 16);
   private static Icon ABILITY_ICON_1_LOCKED = new Icon("ability_1_locked", 16, 32, 16, 16);
+  private static Icon ABILITY_ICON_1_DISABLED = new Icon("ability_1_disabled", 32, 32, 16, 16);
   private static Icon ABILITY_ICON_2 = new Icon("ability_2", 0, 48, 16, 16);
   private static Icon ABILITY_ICON_2_LOCKED = new Icon("ability_2_locked", 16, 48, 16, 16);
+  private static Icon ABILITY_ICON_2_DISABLED = new Icon("ability_2_disabled", 32, 48, 16, 16);
   private static Icon ABILITY_ICON_3 = new Icon("ability_3", 0, 64, 16, 16);
   private static Icon ABILITY_ICON_3_LOCKED = new Icon("ability_3_locked", 16, 64, 16, 16);
+  private static Icon ABILITY_ICON_3_DISABLED = new Icon("ability_3_disabled", 32, 64, 16, 16);
   private static Icon ABILITY_ICON_4 = new Icon("ability_4", 0, 80, 16, 16);
   private static Icon ABILITY_ICON_4_LOCKED = new Icon("ability_4_locked", 16, 80, 16, 16);
+  private static Icon ABILITY_ICON_4_DISABLED = new Icon("ability_4_disabled", 32, 80, 16, 16);
 
-  private static Map<Integer, Pair<Icon, Icon>> ABILITY_ICON_MAP = ImmutableMap.<Integer, Pair<Icon, Icon>>builder()
-      .put(1, Pair.of(ABILITY_ICON_1, ABILITY_ICON_1_LOCKED))
-      .put(2, Pair.of(ABILITY_ICON_2, ABILITY_ICON_2_LOCKED))
-      .put(3, Pair.of(ABILITY_ICON_3, ABILITY_ICON_3_LOCKED))
-      .put(4, Pair.of(ABILITY_ICON_4, ABILITY_ICON_4_LOCKED))
+  private static Map<Integer, Triple<Icon, Icon, Icon>> ABILITY_ICON_MAP = ImmutableMap.<Integer, Triple<Icon, Icon, Icon>>builder()
+      .put(1, Triple.of(ABILITY_ICON_1, ABILITY_ICON_1_LOCKED, ABILITY_ICON_1_DISABLED))
+      .put(2, Triple.of(ABILITY_ICON_2, ABILITY_ICON_2_LOCKED, ABILITY_ICON_2_DISABLED))
+      .put(3, Triple.of(ABILITY_ICON_3, ABILITY_ICON_3_LOCKED, ABILITY_ICON_3_DISABLED))
+      .put(4, Triple.of(ABILITY_ICON_4, ABILITY_ICON_4_LOCKED, ABILITY_ICON_4_DISABLED))
       .build();
 
   /**
@@ -66,7 +71,8 @@ public class GuiUtils {
   }
 
   public static void drawAbilityIconWithBounds(Gui gui, Skill skill, int i, int xCoord, int yCoord, int boundTop, int boundBottom) {
-    Icon icon = skill.hasAbility(i) ? ABILITY_ICON_MAP.get(i).getLeft() : ABILITY_ICON_MAP.get(i).getRight();
+    Triple<Icon, Icon, Icon> icons = ABILITY_ICON_MAP.get(i);
+    Icon icon = skill.hasAbility(i) ? skill.abilityEnabled(i) ? icons.getLeft() : icons.getRight() : icons.getMiddle();
     drawIconWithBounds(gui, xCoord, yCoord, icon, boundTop, boundBottom);
   }
 
