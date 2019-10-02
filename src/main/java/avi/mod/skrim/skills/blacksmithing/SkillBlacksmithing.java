@@ -88,8 +88,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       tooltip.add("Repairing items provides §a" + Utils.formatPercent(this.extraRepair()) + "%§r extra durability.");
       tooltip.add("Smelting provides §a+" + Utils.formatPercent(this.extraIngot()) + "%§r items.");
     } else {
-      tooltip.add("§7Repairing items provides " + Utils.formatPercent(this.extraRepair()) + "% extra durability.");
-      tooltip.add("§7Smelting provides +" + Utils.formatPercent(this.extraIngot()) + "% items.");
+      tooltip.add(Skill.COLOR_DISABLED + "Repairing items provides " + Utils.formatPercent(this.extraRepair()) + "% extra durability.");
+      tooltip.add(Skill.COLOR_DISABLED + "Smelting provides +" + Utils.formatPercent(this.extraIngot()) + "% items.");
     }
     return tooltip;
   }
@@ -131,7 +131,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
     int stackSize = event.smelting.getCount();
     int addItemSize = (int) (blacksmithing.extraIngot() * stackSize);
-    if (addItemSize > 0) {
+    if (addItemSize > 0 && blacksmithing.skillEnabled) {
       ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
       event.player.inventory.addItemStackToInventory(newStack);
     }
@@ -152,11 +152,10 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
     EntityPlayer player = (EntityPlayer) entity;
     SkillBlacksmithing blacksmithing = Skills.getSkill(player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
-    if (!blacksmithing.hasAbility(3)) return;
+    if (!blacksmithing.activeAbility(3)) return;
 
     event.setAmount((float) (event.getAmount() * 0.75));
   }
-
 
   /**
    * A few things here: 1. We want to apply the base blacksmithing bonus when
@@ -166,8 +165,8 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   public static void enhanceRepair(AnvilRepairEvent event) {
     EntityPlayer player = event.getEntityPlayer();
     if (player.world.isRemote) return;
-    SkillBlacksmithing blacksmithing = Skills.getSkill(player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
 
+    SkillBlacksmithing blacksmithing = Skills.getSkill(player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
     ItemStack left = event.getItemInput();
     ItemStack middle = event.getIngredientInput();
     ItemStack output = event.getItemResult();
@@ -176,14 +175,16 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     int baseDamage = left.getItem() == middle.getItem() ? Math.min(left.getItemDamage(), middle.getItemDamage()) :
         left.getItemDamage();
     int baseRepair = baseDamage - output.getItemDamage();
-    int finalItemDamage = Math.max(output.getItemDamage() - (int) (baseRepair * blacksmithing.extraRepair()), 0);
+    int additionalRepair = (blacksmithing.skillEnabled) ? (int) (baseRepair * blacksmithing.extraRepair()) : 0;
+    int finalItemDamage = Math.max(output.getItemDamage() - additionalRepair, 0);
+    System.out.println("baseDamage: " + baseDamage + ", baseRepair: " + baseRepair + ", additionalRepair: " + additionalRepair + ", finalItemDamage: " + finalItemDamage);
     output.setItemDamage(finalItemDamage);
     blacksmithing.addXp((EntityPlayerMP) player, 10 * (baseDamage - finalItemDamage));
 
-    if (!blacksmithing.hasAbility(1)) return;
+    if (!blacksmithing.activeAbility(1)) return;
     event.setBreakChance(0);
 
-    if (!blacksmithing.hasAbility(2)) return;
+    if (!blacksmithing.activeAbility(2)) return;
     output.setRepairCost(1 + (output.getRepairCost() - 1) / 2);
   }
 

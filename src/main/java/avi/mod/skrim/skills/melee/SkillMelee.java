@@ -67,9 +67,15 @@ public class SkillMelee extends Skill implements ISkillMelee {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("Melee attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
-    tooltip.add("Melee attacks have a §a" + Utils.formatPercent(this.getCritChance()) + "%§r chance to critically " +
-        "strike.");
+    if (this.skillEnabled) {
+      tooltip.add("Melee attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
+      tooltip.add("Melee attacks have a §a" + Utils.formatPercent(this.getCritChance()) + "%§r chance to critically " +
+          "strike.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + "Melee attacks deal " + Utils.formatPercentTwo(this.getExtraDamage()) + "% extra damage.");
+      tooltip.add(Skill.COLOR_DISABLED + "Melee attacks have a §a" + Utils.formatPercent(this.getCritChance()) + "% chance to critically " +
+          "strike.");
+    }
     return tooltip;
   }
 
@@ -90,11 +96,16 @@ public class SkillMelee extends Skill implements ISkillMelee {
     if (player.world.isRemote) return;
 
     SkillMelee melee = Skills.getSkill(player, Skills.MELEE, SkillMelee.class);
-    event.setAmount(event.getAmount() + (float) (melee.getExtraDamage() * event.getAmount()));
+
+    if (melee.skillEnabled) {
+      event.setAmount(event.getAmount() + (float) (melee.getExtraDamage() * event.getAmount()));
+    }
     if (!SkrimGlobalConfig.ALWAYS_CRIT.value && Math.random() >= melee.getCritChance()) {
       melee.addXp((EntityPlayerMP) player, (int) event.getAmount() * 10);
       return;
     }
+
+    if (!melee.skillEnabled) return;
 
     // Handle critical strike.
     EntityLivingBase targetEntity = event.getEntityLiving();
@@ -110,7 +121,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
     if (!(player.getHeldItemMainhand().getItem() instanceof ItemSword)) return;
 
     // Spin slash.
-    if (melee.hasAbility(2)) {
+    if (melee.activeAbility(2)) {
       player.world.playSound(null, player.posX, player.posY, player.posZ,
           SkrimSoundEvents.SPIN_SLASH,
           player.getSoundCategory(), 1.0F, 1.0F);
@@ -127,7 +138,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
     }
 
     // Grand motherfucking smite.
-    if (melee.hasAbility(4)) {
+    if (melee.activeAbility(4)) {
       EntityLightningBolt smite = new EntityLightningBolt(player.world, targetEntity.posX, targetEntity.posY,
           targetEntity.posZ,
           true);
@@ -152,7 +163,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
     SkillMelee melee = Skills.getSkill(player, Skills.MELEE, SkillMelee.class);
     melee.addXp((EntityPlayerMP) player, Skills.entityKillXp(event.getEntity()));
 
-    if (melee.hasAbility(1)) {
+    if (melee.activeAbility(1)) {
       player.heal(2);
     }
   }
@@ -160,7 +171,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
   public static void handleDual(PlayerInteractEvent.RightClickItem event) {
     EntityPlayer player = event.getEntityPlayer();
     SkillMelee melee = Skills.getSkill(player, Skills.MELEE, SkillMelee.class);
-    if (!melee.hasAbility(3)) return;
+    if (!melee.activeAbility(3)) return;
 
     if (!(player.getHeldItemMainhand().getItem() instanceof ItemSword) || (!(player.getHeldItemOffhand().getItem() instanceof ItemSword)))
       return;

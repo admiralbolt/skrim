@@ -102,8 +102,13 @@ public class SkillDigging extends Skill implements ISkillDigging {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("§a+" + Utils.formatPercent(this.getSpeedBonus()) + "%§r digging speed bonus.");
-    tooltip.add("§a" + Utils.formatPercent(this.getTreasureChance()) + "%§r chance to find treasure.");
+    if (this.skillEnabled) {
+      tooltip.add("§a+" + Utils.formatPercent(this.getSpeedBonus()) + "%§r digging speed bonus.");
+      tooltip.add("§a" + Utils.formatPercent(this.getTreasureChance()) + "%§r chance to find treasure.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + "+" + Utils.formatPercent(this.getSpeedBonus()) + "% digging speed bonus.");
+      tooltip.add(Skill.COLOR_DISABLED + "" + Utils.formatPercent(this.getTreasureChance()) + "% chance to find treasure.");
+    }
     return tooltip;
   }
 
@@ -147,6 +152,8 @@ public class SkillDigging extends Skill implements ISkillDigging {
     if (!validSpeedTarget(event.getState())) return;
 
     SkillDigging digging = Skills.getSkill(player, Skills.DIGGING, SkillDigging.class);
+    if (!digging.skillEnabled) return;
+
     event.setNewSpeed((float) (event.getOriginalSpeed() * (1 + digging.getSpeedBonus())));
   }
 
@@ -159,6 +166,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
     if (!validTreasureTarget(event.getState())) return;
 
     SkillDigging digging = Skills.getSkill(player, Skills.DIGGING, SkillDigging.class);
+    if (!digging.skillEnabled) return;
     if (Math.random() >= digging.getTreasureChance()) return;
 
     ItemStack treasure = CustomLootTables.getRandomTreasure(event.getWorld(), player, digging.level);
@@ -177,7 +185,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
     if (player.world.isRemote) return;
 
     SkillDigging digging = Skills.getSkill(player, Skills.DIGGING, SkillDigging.class);
-    if (!digging.hasAbility(1)) return;
+    if (!digging.activeAbility(1)) return;
 
     event.setAmount(0f);
     event.setCanceled(true);
@@ -194,7 +202,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
     if (!player.world.isRemote) return;
 
     SkillDigging digging = Skills.getSkill(player, Skills.DIGGING, SkillDigging.class);
-    if (!digging.hasAbility(2)) return;
+    if (!digging.activeAbility(2)) return;
 
     BlockPos playerLocation = new BlockPos(player.posX, player.posY, player.posZ);
     IBlockState onState = player.world.getBlockState(playerLocation.add(0, -1, 0));
@@ -216,7 +224,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
     if (targetEntity instanceof EntityGhast || targetEntity instanceof EntityBlaze || targetEntity instanceof EntityDragon || targetEntity instanceof EntityWither)
       return;
     SkillDigging digging = Skills.getSkill(player, Skills.DIGGING, SkillDigging.class);
-    if (!digging.hasAbility(3)) return;
+    if (!digging.activeAbility(3)) return;
 
     ItemStack mainStack = player.getHeldItemMainhand();
     if (!(mainStack.getItem() instanceof ItemSpade)) return;
@@ -234,7 +242,7 @@ public class SkillDigging extends Skill implements ISkillDigging {
     if (player.world.isRemote) return;
 
     SkillDigging digging = Skills.getSkill(player, Skills.DIGGING, SkillDigging.class);
-    if (!digging.hasAbility(4)) return;
+    if (!digging.activeAbility(4)) return;
 
     BlockPos pos = event.getPos();
     Biome biome = player.world.getBiomeForCoordsBody(pos);

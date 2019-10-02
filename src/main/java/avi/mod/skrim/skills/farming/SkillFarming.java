@@ -88,11 +88,20 @@ public class SkillFarming extends Skill implements ISkillFarming {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<String>();
-    tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
-        + "§r harvest drops.");
-    tooltip.add("   This bonus stacks with fortune.");
-    if (this.getGrowthStage() > 1) {
-      tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
+    if (this.skillEnabled) {
+      tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
+          + "§r harvest drops.");
+      tooltip.add("   This bonus stacks with fortune.");
+      if (this.getGrowthStage() > 1) {
+        tooltip.add("Plants start in stage §a" + this.getGrowthStage() + "§r of growth.");
+      }
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + Utils.formatPercent(this.getFortuneChance()) + "% chance to " + Utils.getFortuneString(this.getFortuneAmount())
+          + " harvest drops.");
+      tooltip.add("   This bonus stacks with fortune.");
+      if (this.getGrowthStage() > 1) {
+        tooltip.add(Skill.COLOR_DISABLED + "Plants start in stage " + this.getGrowthStage() + " of growth.");
+      }
     }
     return tooltip;
   }
@@ -155,6 +164,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
     if (!isPlantFullyGrown(state)) return;
 
     SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+    if (!farming.skillEnabled) return;
     if (Math.random() >= farming.getFortuneChance()) return;
 
     // Crops can drop multiple types of items, so we want to copy each dropped item.
@@ -174,6 +184,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
     Block targetBlock = event.getPlacedAgainst().getBlock();
     if (validCrop(placedState) && (targetBlock instanceof BlockFarmland || targetBlock instanceof BlockOldLog)) {
       SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
+      if (!farming.skillEnabled) return;
+
       event.getWorld().setBlockState(event.getPos(), farming.cropWithGrowth(placedState));
     }
   }
@@ -235,7 +247,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
     EntityPlayer player = (EntityPlayer) entity;
     SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
-    if (!farming.hasAbility(2)) return;
+    if (!farming.activeAbility(2)) return;
 
     List<EntityItem> drops = event.getDrops();
     List<EntityItem> duplicateItems = new ArrayList<>();
@@ -255,7 +267,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
     if (player.world.isRemote) return;
 
     SkillFarming farming = Skills.getSkill(player, Skills.FARMING, SkillFarming.class);
-    if (!farming.hasAbility(3)) return;
+    if (!farming.activeAbility(3)) return;
 
     if (player.world.getTotalWorldTime() % TAN_CHECK != 0L) return;
 

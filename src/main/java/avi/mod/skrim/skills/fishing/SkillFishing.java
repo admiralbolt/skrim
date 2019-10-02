@@ -43,8 +43,13 @@ public class SkillFishing extends Skill implements ISkillFishing {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<String>();
-    tooltip.add("§a" + Utils.formatPercentTwo(this.getDelayReduction()) + "%§r reduced fishing time.");
-    tooltip.add("§a" + Utils.formatPercent(this.getTreasureChance()) + "%§r chance to fish additional treasure.");
+    if (this.skillEnabled) {
+      tooltip.add("§a" + Utils.formatPercentTwo(this.getDelayReduction()) + "%§r reduced fishing time.");
+      tooltip.add("§a" + Utils.formatPercent(this.getTreasureChance()) + "%§r chance to fish additional treasure.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + Utils.formatPercentTwo(this.getDelayReduction()) + "% reduced fishing time.");
+      tooltip.add(Skill.COLOR_DISABLED + Utils.formatPercent(this.getTreasureChance()) + "% chance to fish additional treasure.");
+    }
     return tooltip;
   }
 

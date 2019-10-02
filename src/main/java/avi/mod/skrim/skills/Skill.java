@@ -15,6 +15,7 @@ import java.util.Map;
 public abstract class Skill implements ISkill {
 
   public static final int XP_FACTOR = 10000;
+  public static final String COLOR_DISABLED = "§7";
 
   public String name;
   public int level;
@@ -87,6 +88,10 @@ public abstract class Skill implements ISkill {
 
   public boolean hasAbility(int abilityLevel) {
     return (this.level / 25) >= abilityLevel;
+  }
+
+  public boolean activeAbility(int abilityLevel) {
+    return hasAbility(abilityLevel) && abilityEnabled(abilityLevel);
   }
 
   public boolean abilityEnabled(int abilityLevel) {

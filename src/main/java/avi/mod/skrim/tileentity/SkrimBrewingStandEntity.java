@@ -173,7 +173,7 @@ public class SkrimBrewingStandEntity extends TileEntityLockable implements ITick
       SkillBrewing brewing = Skills.getSkill(this.brewingPlayer, Skills.BREWING, SkillBrewing.class);
       this.brewTime = 400;
       this.doubleBrewTime = 400;
-      this.actualBrewTime = Math.max(1, this.brewTime - (int) (this.brewTime * brewing.brewSpeed()));
+      this.actualBrewTime = Math.max(1, this.brewTime - (brewing.skillEnabled ? (int) (this.brewTime * brewing.brewSpeed()) : 0));
       this.ingredientID = itemstack1.getItem();
       this.markDirty();
     }

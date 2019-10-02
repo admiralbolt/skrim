@@ -123,7 +123,7 @@ public class Skills {
 
   public static boolean canCraft(EntityPlayer player, Capability<? extends ISkill> cap, int level) {
     Skill skill = getSkill(player, cap, Skill.class);
-    return skill.level >= level;
+    return skill.level >= level && skill.activeAbility(level / 25);
   }
 
   public static boolean hasSkill(EntityPlayer player, Capability<? extends ISkill> skill) {

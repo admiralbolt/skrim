@@ -89,6 +89,24 @@ public class SkillBotany extends Skill implements ISkillBotany {
   }
 
   @Override
+  public List<String> getToolTip() {
+    List<String> tooltip = new ArrayList<String>();
+    if (this.skillEnabled) {
+      tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
+          + "§r flower drops.");
+      tooltip.add("§a" + Utils.formatPercent(this.getSplosionChance()) + "%§r chance to cause a flowersplosion with " +
+          "radius §a" + this.getSplosionRadius()
+          + "§r.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + Utils.formatPercent(this.getFortuneChance()) + "% chance to " + Utils.getFortuneString(this.getFortuneAmount())
+          + " flower drops.");
+      tooltip.add(Skill.COLOR_DISABLED + Utils.formatPercent(this.getSplosionChance()) + "% chance to cause a flowersplosion with " +
+          "radius " + this.getSplosionRadius() + ".");
+    }
+    return tooltip;
+  }
+
+  @Override
   public void ding(EntityPlayerMP player) {
     super.ding(player);
     if (this.level >= 25) {
@@ -171,6 +189,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
     if (player == null) return;
 
     SkillBotany botany = Skills.getSkill(player, Skills.BOTANY, SkillBotany.class);
+    if (!botany.skillEnabled) return;
+
     double random = Utils.rand.nextDouble();
     if (random >= botany.getFortuneChance()) return;
 
@@ -183,6 +203,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   public static void flowerSplosion(BlockEvent.PlaceEvent event) {
     EntityPlayer player = event.getPlayer();
     SkillBotany botany = Skills.getSkill(player, Skills.BOTANY, SkillBotany.class);
+    if (!botany.skillEnabled) return;
 
     IBlockState placedState = event.getPlacedBlock();
     Block placedBlock = placedState.getBlock();
@@ -223,7 +244,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
     EntityPlayer player = (EntityPlayer) entity;
     SkillBotany botany = Skills.getSkill(player, Skills.BOTANY, SkillBotany.class);
-    if (!botany.hasAbility(2)) return;
+    if (!botany.activeAbility(2)) return;
     if (!validFlowerStack(player.getHeldItemMainhand()) && !validFlowerStack(player.getHeldItemOffhand())) return;
 
     DamageSource source = event.getSource();
@@ -245,7 +266,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
 
     EntityVillager villager = (EntityVillager) targetEntity;
     SkillBotany botany = Skills.getSkill(player, Skills.BOTANY, SkillBotany.class);
-    if (!botany.hasAbility(3)) return;
+    if (!botany.activeAbility(3)) return;
 
     ItemStack mainStack = player.getHeldItemMainhand();
     if (!validFlowerStack(mainStack)) return;
@@ -312,16 +333,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
     }
   }
 
-  @Override
-  public List<String> getToolTip() {
-    List<String> tooltip = new ArrayList<String>();
-    tooltip.add("§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount())
-        + "§r flower drops.");
-    tooltip.add("§a" + Utils.formatPercent(this.getSplosionChance()) + "%§r chance to cause a flowersplosion with " +
-        "radius §a" + this.getSplosionRadius()
-        + "§r.");
-    return tooltip;
-  }
+
 
   public int getXp(String blockName) {
     return XP_MAP.getOrDefault(blockName, 0);

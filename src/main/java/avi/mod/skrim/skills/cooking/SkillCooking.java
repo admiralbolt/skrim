@@ -128,8 +128,13 @@ public class SkillCooking extends Skill implements ISkillCooking {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraFood(this.level)) + "%§r food.");
-    tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
+    if (this.skillEnabled) {
+      tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraFood(this.level)) + "%§r food.");
+      tooltip.add("Your cooking provides §a+" + Utils.formatPercent(extraSaturation(this.level)) + "%§r saturation");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + "Your cooking provides +" + Utils.formatPercent(extraFood(this.level)) + "% food.");
+      tooltip.add(Skill.COLOR_DISABLED + "Your cooking provides +" + Utils.formatPercent(extraSaturation(this.level)) + "% saturation");
+    }
     return tooltip;
   }
 
@@ -165,18 +170,20 @@ public class SkillCooking extends Skill implements ISkillCooking {
   }
 
   private static void injectFakeFood(PlayerEvent event, ItemStack stack, EntityPlayer player) {
-    // injectFakeFood(event, event.smelting, event.player);
     ItemStack newFood = getReplaceFood(event.player, stack);
     if (newFood == null) return;
 
-    if (event.player.inventory.getItemStack().getItem() == Items.AIR) {
-      // Player shift-clicked. We'll need to add the newFood to their inventory directly and removed the wrong version.
-      event.player.inventory.addItemStackToInventory(newFood);
-      Utils.removeFromInventory(event.player.inventory, stack.getItem(), stack.getCount());
-    } else {
-      Obfuscation.CURRENT_ITEM.hackValueTo(event.player.inventory, newFood);
-    }
     SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+
+    if (cooking.skillEnabled) {
+      if (event.player.inventory.getItemStack().getItem() == Items.AIR) {
+        // Player shift-clicked. We'll need to add the newFood to their inventory directly and removed the wrong version.
+        event.player.inventory.addItemStackToInventory(newFood);
+        Utils.removeFromInventory(event.player.inventory, stack.getItem(), stack.getCount());
+      } else {
+        Obfuscation.CURRENT_ITEM.hackValueTo(event.player.inventory, newFood);
+      }
+    }
 
     if (player instanceof EntityPlayerMP) {
       cooking.addXp((EntityPlayerMP) player, getXp(getFoodName(stack)) * stack.getCount());
@@ -262,8 +269,10 @@ public class SkillCooking extends Skill implements ISkillCooking {
       ItemStack replaceFood = getReplaceFood(player, item.getItem());
       if (replaceFood == null) continue;
 
-      drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, replaceFood));
       SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+      if (cooking.skillEnabled) {
+        drops.set(i, new EntityItem(player.world, item.posX, item.posY, item.posZ, replaceFood));
+      }
       if (player instanceof EntityPlayerMP) {
         cooking.addXp((EntityPlayerMP) player, (int) (getXp(getFoodName(item.getItem())) * FIRE_COOKED_XP_MULT));
       }
@@ -285,7 +294,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
       // Some special handling here, want to trigger husbandry from player caused fire damage.
       // Stealing the logic for doubling the drops.
       SkillFarming farming = Skills.getSkill(mappedPlayer, Skills.FARMING, SkillFarming.class);
-      if (farming.hasAbility(2)) {
+      if (farming.activeAbility(2)) {
         List<EntityItem> drops = event.getDrops();
         List<EntityItem> duplicateItems = new ArrayList<>();
 
@@ -314,9 +323,12 @@ public class SkillCooking extends Skill implements ISkillCooking {
   public static void mooshroom(PlayerInteractEvent.EntityInteract event) {
     if (!(event.getTarget() instanceof EntityMooshroom)) return;
 
+    EntityPlayer player = event.getEntityPlayer();
+    SkillCooking cooking = Skills.getSkill(player, Skills.COOKING, SkillCooking.class);
+    if (!cooking.skillEnabled) return;
+
     EnumHand hand = event.getHand();
     EntityMooshroom cow = (EntityMooshroom) event.getTarget();
-    EntityPlayer player = event.getEntityPlayer();
     ItemStack itemstack = player.getHeldItem(hand);
 
     if (itemstack.getItem() != Items.BOWL || cow.getGrowingAge() < 0) return;

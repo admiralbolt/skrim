@@ -90,8 +90,13 @@ public class SkillRanged extends Skill implements ISkillRanged {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("Ranged attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
-    tooltip.add("Bows take §a" + Utils.formatPercentTwo(this.getChargeReduction()) + "%§r less time to charge.");
+    if (this.skillEnabled) {
+      tooltip.add("Ranged attacks deal §a" + Utils.formatPercentTwo(this.getExtraDamage()) + "%§r extra damage.");
+      tooltip.add("Bows take §a" + Utils.formatPercentTwo(this.getChargeReduction()) + "%§r less time to charge.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + "Ranged attacks deal " + Utils.formatPercentTwo(this.getExtraDamage()) + "% extra damage.");
+      tooltip.add(Skill.COLOR_DISABLED + "Bows take " + Utils.formatPercentTwo(this.getChargeReduction()) + "% less time to charge.");
+    }
     return tooltip;
   }
 
@@ -104,18 +109,20 @@ public class SkillRanged extends Skill implements ISkillRanged {
 
     EntityPlayer player = (EntityPlayer) entity;
     SkillRanged ranged = Skills.getSkill(player, Skills.RANGED, SkillRanged.class);
-    event.setAmount(event.getAmount() + (float) (ranged.getExtraDamage() * event.getAmount()));
+    if (ranged.skillEnabled) {
+      event.setAmount(event.getAmount() + (float) (ranged.getExtraDamage() * event.getAmount()));
+    }
     EntityLivingBase targetEntity = event.getEntityLiving();
 
 
-    if (ranged.hasAbility(1)) {
+    if (ranged.activeAbility(1)) {
       if (player.isSneaking() && targetEntity.getAttackingEntity() != player) {
         event.setAmount((float) (event.getAmount() * 1.25));
         player.world.playSound(null, player.getPosition(), SkrimSoundEvents.SNEAK_ATTACK, player.getSoundCategory(),
             0.2F,
             1.0F);
       }
-      if (ranged.hasAbility(2)) {
+      if (ranged.activeAbility(2)) {
         targetEntity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, GLOW_DURATION, 0, true, false));
       }
     }
@@ -135,7 +142,7 @@ public class SkillRanged extends Skill implements ISkillRanged {
     ranged.addXp((EntityPlayerMP) player, Skills.entityKillXp(event.getEntity()));
 
     // We only want to give stacks when a player kills a non-passive entity.
-    if (ranged.hasAbility(4) && Skills.entityKillXp(event.getEntity()) > 0) {
+    if (ranged.activeAbility(4) && Skills.entityKillXp(event.getEntity()) > 0) {
       ranged.addStacks(1);
       SkrimPacketHandler.INSTANCE.sendTo(new CriticalAscensionPacket(ranged.getStacks()), (EntityPlayerMP) player);
     }

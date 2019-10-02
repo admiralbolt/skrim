@@ -7,9 +7,7 @@ import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +25,7 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
   public static SkillStorage<ISkillBrewing> STORAGE = new SkillStorage<>();
 
   public static Map<Item, Integer> INGREDIENT_XP = ImmutableMap.<Item, Integer>builder()
-       // Primary effects are worth the most experience.
+      // Primary effects are worth the most experience.
       .put(Items.RABBIT_FOOT, 650)
       .put(Items.GHAST_TEAR, 575)
       .put(Items.MAGMA_CREAM, 525)
@@ -73,9 +71,13 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
 
   @Override
   public List<String> getToolTip() {
-    return ImmutableList.of(
+    return this.skillEnabled ? ImmutableList.of(
         "Potions take §a" + Utils.formatPercent(this.brewSpeed()) + "%§r less time to brew.",
-        "You can apply §a" + this.totalModifiers() + "§r levels of modification to your potions.");
+        "You can apply §a" + this.totalModifiers() + "§r levels of modification to your potions.") :
+        ImmutableList.of(
+            Skill.COLOR_DISABLED + "Potions take " + Utils.formatPercent(this.brewSpeed()) + "% less time to brew.",
+            Skill.COLOR_DISABLED + "You can apply " + this.totalModifiers() + " levels of modification to your potions.")
+        ;
   }
 
   public int totalModifiers() {
@@ -85,7 +87,6 @@ public class SkillBrewing extends Skill implements ISkillBrewing {
   public double brewSpeed() {
     return Math.min(this.level * 0.005, 1.00);
   }
-
 
 
 }

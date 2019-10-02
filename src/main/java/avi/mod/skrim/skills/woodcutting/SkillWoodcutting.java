@@ -97,8 +97,13 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r woodcutting speed bonus.");
-    tooltip.add("§a" + Utils.formatPercent(this.getHewingChance()) + "%§r chance to level a tree.");
+    if (this.skillEnabled) {
+      tooltip.add("§a+" + Utils.oneDigit.format(this.getSpeedBonus()) + "§r woodcutting speed bonus.");
+      tooltip.add("§a" + Utils.formatPercent(this.getHewingChance()) + "%§r chance to level a tree.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + "+" + Utils.oneDigit.format(this.getSpeedBonus()) + " woodcutting speed bonus.");
+      tooltip.add(Skill.COLOR_DISABLED + Utils.formatPercent(this.getHewingChance()) + "% chance to level a tree.");
+    }
     return tooltip;
   }
 
@@ -192,7 +197,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
     ItemStack stack = player.getHeldItemMainhand();
     Item item = stack.getItem();
     int addXp = woodcutting.getXp(getWoodName(state));
-    if (Math.random() < woodcutting.getHewingChance() && item instanceof ItemAxe) {
+    if (woodcutting.skillEnabled && Math.random() < woodcutting.getHewingChance() && item instanceof ItemAxe) {
       BlockPos start = event.getPos();
       addXp += woodcutting.hewTree(event.getWorld(), start, player, stack, (item instanceof HandSaw), 1);
     }
@@ -204,6 +209,8 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
     if (!validSpeedTarget(event.getState())) return;
 
     SkillWoodcutting woodcutting = Skills.getSkill(event.getEntityPlayer(), Skills.WOODCUTTING, SkillWoodcutting.class);
+    if (!woodcutting.skillEnabled) return;
+
     event.setNewSpeed((float) (event.getOriginalSpeed() + woodcutting.getSpeedBonus()));
   }
 
@@ -244,7 +251,7 @@ public class SkillWoodcutting extends Skill implements ISkillWoodcutting {
     if (!player.world.isRemote) return;
 
     SkillWoodcutting woodcutting = Skills.getSkill(player, Skills.WOODCUTTING, SkillWoodcutting.class);
-    if (!woodcutting.hasAbility(2)) return;
+    if (!woodcutting.activeAbility(2)) return;
 
     if (!(player.getHeldItemMainhand().getItem() instanceof ItemAxe)) return;
     player.swingArm(EnumHand.MAIN_HAND);

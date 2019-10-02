@@ -113,11 +113,19 @@ public class SkillMining extends Skill implements ISkillMining {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("§a+" + Utils.formatPercent(this.getSpeedBonus()) + "%§r mining speed bonus.");
-    tooltip.add(
-        "§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) + "§r " +
-            "ore drops.");
-    tooltip.add("   This bonus stacks with fortune.");
+    if (this.skillEnabled) {
+      tooltip.add("§a+" + Utils.formatPercent(this.getSpeedBonus()) + "%§r mining speed bonus.");
+      tooltip.add(
+          "§a" + Utils.formatPercent(this.getFortuneChance()) + "%§r chance to §a" + Utils.getFortuneString(this.getFortuneAmount()) +
+              "§r " +
+              "ore drops.");
+      tooltip.add("   This bonus stacks with fortune.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + "+" + Utils.formatPercent(this.getSpeedBonus()) + "% mining speed bonus.");
+      tooltip.add(
+          Skill.COLOR_DISABLED + Utils.formatPercent(this.getFortuneChance()) + "% chance to " + Utils.getFortuneString(this.getFortuneAmount()) + " ore drops.");
+      tooltip.add("   This bonus stacks with fortune.");
+    }
     return tooltip;
   }
 
@@ -152,6 +160,7 @@ public class SkillMining extends Skill implements ISkillMining {
     EntityPlayer player = event.getEntityPlayer();
     SkillMining mining = Skills.getSkill(player, Skills.MINING, SkillMining.class);
     if (!mining.validSpeedTarget(event.getState())) return;
+    if (!mining.skillEnabled) return;
 
     event.setNewSpeed((float) (event.getOriginalSpeed() * (1 + mining.getSpeedBonus())));
   }
@@ -163,6 +172,7 @@ public class SkillMining extends Skill implements ISkillMining {
     SkillMining mining = Skills.getSkill(player, Skills.MINING, SkillMining.class);
     IBlockState state = event.getState();
     if (!mining.validFortuneTarget(state) || Utils.rand.nextDouble() >= mining.getFortuneChance()) return;
+    if (!mining.skillEnabled) return;
 
     List<ItemStack> drops = event.getDrops();
     drops.add(new ItemStack(drops.get(0).getItem(), mining.getFortuneAmount() - 1, drops.get(0).getMetadata()));
@@ -176,7 +186,7 @@ public class SkillMining extends Skill implements ISkillMining {
 
     final EntityPlayer player = (EntityPlayer) entity;
     SkillMining mining = Skills.getSkill(player, Skills.MINING, SkillMining.class);
-    if (!mining.hasAbility(2)) return;
+    if (!mining.activeAbility(2)) return;
 
     BlockPos pos = player.getPosition();
     if (pos.getY() > 40) return;
@@ -206,7 +216,7 @@ public class SkillMining extends Skill implements ISkillMining {
     final EntityPlayer player = (EntityPlayer) entity;
     SkillMining mining = Skills.getSkill(player, Skills.MINING, SkillMining.class);
 
-    if (!mining.hasAbility(1)) return;
+    if (!mining.activeAbility(1)) return;
     // Night vision.
     BlockPos pos = player.getPosition();
     if (pos.getY() <= 40) {
@@ -220,7 +230,7 @@ public class SkillMining extends Skill implements ISkillMining {
     if (!player.world.isRemote) return;
 
     KeyBinding jumpKey = Minecraft.getMinecraft().gameSettings.keyBindJump;
-    if (!mining.hasAbility(3) || !player.collidedHorizontally || !jumpKey.isKeyDown()) return;
+    if (!mining.activeAbility(3) || !player.collidedHorizontally || !jumpKey.isKeyDown()) return;
 
     // Spooderman, spooderman.
     player.motionY = Math.min(0.2, player.motionY + 0.1);
@@ -247,7 +257,7 @@ public class SkillMining extends Skill implements ISkillMining {
     if (!player.world.isRemote) return;
 
     SkillMining mining = Skills.getSkill(player, Skills.MINING, SkillMining.class);
-    if (!mining.hasAbility(4)) return;
+    if (!mining.activeAbility(4)) return;
 
     if (!(event.getItemStack().getItem() instanceof ItemPickaxe)) return;
 

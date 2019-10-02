@@ -87,8 +87,10 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
         SkillFishing fishing = (SkillFishing) player.getCapability(Skills.FISHING, EnumFacing.NORTH);
         int ticksCaught = (int) ReflectionUtils.getSuperPrivateField(this, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
         if (ticksCaught > 0) {
-          ReflectionUtils.hackSuperValueTo(this, (int) (ticksCaught - ticksCaught * fishing.getDelayReduction()),
-              Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
+          if (fishing.skillEnabled) {
+            ReflectionUtils.hackSuperValueTo(this, (int) (ticksCaught - ticksCaught * fishing.getDelayReduction()),
+                Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
+          }
           this.hasAppliedCaught = true;
         }
       }
@@ -140,7 +142,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
             SkillFishing fishing = Skills.getSkill(angler, Skills.FISHING, SkillFishing.class);
             fishing.addXp((EntityPlayerMP) angler, 2000);
             // Roll for treasure chance
-            if (this.rand.nextDouble() < fishing.getTreasureChance()) {
+            if (fishing.skillEnabled && this.rand.nextDouble() < fishing.getTreasureChance()) {
               EntityItem treasure = new EntityItem(this.world, this.posX, this.posY, this.posZ,
                   CustomLootTables.getRandomTreasure(this.world, this.angler, fishing.level));
               treasure.motionX = d0 * 0.1D;
@@ -151,7 +153,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
             }
 
             // Apply abilities
-            if (fishing.hasAbility(2)) {
+            if (fishing.activeAbility(2)) {
               for (int q = 0; q < 2; q++) {
                 EntityItem copy = new EntityItem(this.world, this.posX, this.posY, this.posZ, itemstack);
                 copy.motionX = d0 * 0.1D;
@@ -159,7 +161,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
                 copy.motionZ = d2 * 0.1D;
                 this.world.spawnEntity(copy);
               }
-              if (fishing.hasAbility(3)) {
+              if (fishing.activeAbility(3)) {
                 angler.world.spawnEntity(
                     new EntityXPOrb(angler.world, angler.posX, angler.posY + 0.5D, angler.posZ + 0.5D, this.rand.nextInt(16) + 9));
               }
@@ -175,7 +177,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
         i = 2;
         if (angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
           SkillFishing fishing = (SkillFishing) angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
-          if (fishing.hasAbility(1)) {
+          if (fishing.activeAbility(1)) {
             MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
             ICommandManager cm = server.getCommandManager();
             BlockPos pos = this.getPosition();
@@ -201,7 +203,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
       int addY = 0;
       SkillFishing fishing = Skills.getSkill(angler, Skills.FISHING, SkillFishing.class);
 
-      if (fishing.hasAbility(4)) {
+      if (fishing.activeAbility(4)) {
         addY = 5;
       }
 

@@ -67,7 +67,7 @@ public class PotionModifier {
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.isEmpty()) return ItemStack.EMPTY;
     // Check against totalModifiers - 1 since increased_strength will count as 2 modifiers.
-    if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers() - 1) return ItemStack.EMPTY;
+    if (!brewing.skillEnabled || SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers() - 1) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
     for (PotionEffect effect : effects) {
@@ -96,7 +96,7 @@ public class PotionModifier {
     NBTTagCompound compound = input.getTagCompound().copy();
     List<PotionEffect> effects = PotionUtils.getEffectsFromStack(input);
     if (effects.isEmpty()) return ItemStack.EMPTY;
-    if (SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
+    if (!brewing.skillEnabled || SkrimPotionUtils.timesModified(input) >= brewing.totalModifiers()) return ItemStack.EMPTY;
 
     NBTTagList list = new NBTTagList();
     for (PotionEffect effect : effects) {

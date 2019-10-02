@@ -109,8 +109,8 @@ public class SkrimPotionRecipes {
       Integer duration = effect_and_duration.getValue();
       List<PotionEffect> effects = PotionUtils.getEffectsFromStack(newPotion);
       // Only allow extra effects on potions if the brewing level is high.
-      if (effects.size() >= 2 && !brewing.hasAbility(4)) return ItemStack.EMPTY;
-      if (effects.size() == 1 && !brewing.hasAbility(1)) return ItemStack.EMPTY;
+      if (effects.size() >= 2 && !brewing.activeAbility(4)) return ItemStack.EMPTY;
+      if (effects.size() == 1 && !brewing.activeAbility(1)) return ItemStack.EMPTY;
 
       // We only want to add the effect if the potion doesn't have it already.
       for (PotionEffect effect : effects) {

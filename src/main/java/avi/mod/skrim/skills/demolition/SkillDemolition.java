@@ -73,8 +73,13 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
   @Override
   public List<String> getToolTip() {
     List<String> tooltip = new ArrayList<>();
-    tooltip.add("Passively gain §a" + Utils.formatPercent(this.getResistance()) + "%§r explosive resistance.");
-    tooltip.add("Your explosions are §a" + Utils.formatPercent(this.getExtraPower()) + "%§r larger.");
+    if (this.skillEnabled) {
+      tooltip.add("Passively gain §a" + Utils.formatPercent(this.getResistance()) + "%§r explosive resistance.");
+      tooltip.add("Your explosions are §a" + Utils.formatPercent(this.getExtraPower()) + "%§r larger.");
+    } else {
+      tooltip.add(Skill.COLOR_DISABLED + "Passively gain " + Utils.formatPercent(this.getResistance()) + "% explosive resistance.");
+      tooltip.add(Skill.COLOR_DISABLED + "Your explosions are " + Utils.formatPercent(this.getExtraPower()) + "% larger.");
+    }
     return tooltip;
   }
 
@@ -85,6 +90,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
     EntityPlayer player = VALID_GO_BOOM.get(location);
     SkillDemolition demolition = Skills.getSkill(player, Skills.DEMOLITION, SkillDemolition.class);
+    if (!demolition.skillEnabled) return;
 
     if (boom instanceof CustomExplosion) {
       CustomExplosion customBoom = (CustomExplosion) boom;
@@ -120,6 +126,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
 
     EntityPlayer player = (EntityPlayer) entity;
     SkillDemolition demolition = Skills.getSkill(player, Skills.DEMOLITION, SkillDemolition.class);
+    if (!demolition.skillEnabled) return;
     event.setAmount(event.getAmount() - (float) (event.getAmount() * demolition.getResistance()));
   }
 

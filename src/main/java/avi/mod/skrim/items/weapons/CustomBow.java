@@ -150,7 +150,8 @@ public class CustomBow extends ItemBow implements ItemBase {
 
     EntityPlayer player = (EntityPlayer) shooter;
     SkillRanged ranged = Skills.getSkill(player, Skills.RANGED, SkillRanged.class);
-    return Math.max(1f, this.maxChargeTime - this.maxChargeTime * ranged.getChargeReduction());
+    float chargeTime = (ranged.skillEnabled) ? this.maxChargeTime - this.maxChargeTime * ranged.getChargeReduction() : this.maxChargeTime;
+    return Math.max(1f, chargeTime);
   }
 
   @Override
