@@ -4,6 +4,7 @@ import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.utils.Obfuscation;
 import avi.mod.skrim.utils.ReflectionUtils;
+import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.Entity;
@@ -178,10 +179,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
         if (angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
           SkillFishing fishing = (SkillFishing) angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
           if (fishing.activeAbility(1)) {
-            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-            ICommandManager cm = server.getCommandManager();
-            BlockPos pos = this.getPosition();
-            cm.executeCommand(server, "/tp " + angler.getName() + " " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+            Utils.teleport(angler, this.posX, this.posY, this.posZ);
           }
         }
       }

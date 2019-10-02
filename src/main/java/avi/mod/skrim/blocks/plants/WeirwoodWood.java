@@ -123,12 +123,9 @@ public class WeirwoodWood extends BlockBase {
     // Make sure we don't teleport a player to the tree they are standing at.
     if (teleportLoc == null || (teleportLoc.getX() == pos.getX() && teleportLoc.getZ() == pos.getZ())) return false;
 
-    MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-    ICommandManager cm = server.getCommandManager();
     int xMod = (Utils.rand.nextBoolean()) ? 1 : -1;
     int zMod = (Utils.rand.nextBoolean()) ? 1 : -1;
-    cm.executeCommand(server,
-        "/tp " + playerIn.getName() + " " + (teleportLoc.getX() + xMod) + " " + teleportLoc.getY() + " " + (teleportLoc.getZ() + zMod));
+    Utils.teleport(playerIn, teleportLoc.getX() + xMod, teleportLoc.getY(), teleportLoc.getZ() + zMod);
     worldIn.playSound(null, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 0.5F);
     worldIn.playSound(null, teleportLoc, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F,
         0.5F);
