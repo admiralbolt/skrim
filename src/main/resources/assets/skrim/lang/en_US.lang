@@ -137,6 +137,7 @@ item.spruce_leaf_armor.name=Spruce Chestplate
 item.spruce_leaf_boots.name=Spruce Boots
 item.spruce_leaf_helmet.name=Spruce Helmet
 item.spruce_leaf_pants.name=Spruce Leggings
+item.teleportal.name=Teleportal
 item.truck.desc=The Octopus Project
 item.truck.name=Truck
 item.tux.name=Tux

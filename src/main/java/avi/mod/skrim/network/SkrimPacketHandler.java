@@ -11,6 +11,7 @@ import avi.mod.skrim.network.SkillPacket.SkillPacketHandler;
 import avi.mod.skrim.network.SortChestPacket.SortChestPacketHandler;
 import avi.mod.skrim.network.SpawnEntityPacket.SpawnEntityPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket.SpawnParticlePacketHandler;
+import avi.mod.skrim.network.TeleportPacket.TeleportPacketHandler;
 import avi.mod.skrim.network.ToggleAbilityPacket.ToggleAbilityPacketHandler;
 import avi.mod.skrim.network.ToggleSkillPacket.ToggleSkillPacketHandler;
 import avi.mod.skrim.network.skillpackets.*;
@@ -52,6 +53,7 @@ public class SkrimPacketHandler {
     INSTANCE.registerMessage(ToggleAbilityPacketHandler.class, ToggleAbilityPacket.class, PACKET_ID++, Side.SERVER);
     INSTANCE.registerMessage(SkillEnablePacketHandler.class, SkillEnablePacket.class, PACKET_ID++, Side.CLIENT);
     INSTANCE.registerMessage(ToggleSkillPacketHandler.class, ToggleSkillPacket.class, PACKET_ID++, Side.SERVER);
+    INSTANCE.registerMessage(TeleportPacketHandler.class, TeleportPacket.class, PACKET_ID++, Side.SERVER);
   }
 
 }
