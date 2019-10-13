@@ -1,5 +1,5 @@
 # 1.12.2-1.3
-* Horses enhanced by methamphetamines now transfer their ridiculous stats to offfspring.
+* Horses enhanced by methamphetamines now transfer *some* of their ridiculous stats to offfspring.
 * Custom potions can now be used to create tipped arrows.
 * Buffed xp for creating potions and modifying potions.
 * Added a level 50 perk for brewing.
