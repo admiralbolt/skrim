@@ -40,10 +40,15 @@ public class SkrimPotionUtils {
   public static ItemStack convertPotion(ItemStack potion) {
     if (!TO_SKRIM_POTION.containsKey(potion.getItem())) return ItemStack.EMPTY;
 
+    NBTTagCompound original = potion.getTagCompound();
     NBTTagCompound compound = new NBTTagCompound();
 
     compound.setString("Potion",
         PotionUtils.getPotionTypeFromNBT(potion.getTagCompound()).getRegistryName().getResourcePath());
+
+    if (original != null && original.hasKey("Modified")) {
+      compound.setInteger("Modified", original.getInteger("Modified"));
+    }
 
     NBTTagList list = new NBTTagList();
 

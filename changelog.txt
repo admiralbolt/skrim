@@ -8,6 +8,7 @@
 * Buffed artifact drop chance and added raffle tickets.
 * All skills & abilities are now toggleable! Just click on them!
 * No longer see those annoying "teleport" messages when using weirwood trees or the batman ability.
+* Fixed a bug where potion modification levels were reset after applying additional effects / corrupting.
 
 # 1.12.2-1.2
 * You can no longer apply books to artifacts.
