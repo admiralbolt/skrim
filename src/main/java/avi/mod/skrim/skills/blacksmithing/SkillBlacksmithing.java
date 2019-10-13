@@ -77,7 +77,6 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
 
   public SkillBlacksmithing(int level, int currentXp) {
     super("Blacksmithing", level, currentXp);
-    System.out.println("KKKKKK");
     this.addAbilities(MASTER_CRAFTS_PERSON, PERSISTENCE, IRON_HEART, OBSIDIAN_SMITH);
   }
 

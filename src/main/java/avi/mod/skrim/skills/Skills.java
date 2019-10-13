@@ -216,7 +216,6 @@ public class Skills {
     if (!(event.getEntity() instanceof EntityPlayer)) return;
 
     EntityPlayer player = (EntityPlayer) event.getEntity();
-    System.out.println("world.isRemote: " + player.world.isRemote);
     if (player.world.isRemote) return;
 
   }
