@@ -16,18 +16,17 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.event.world.BlockEvent;
 
 import java.text.DecimalFormat;
-import java.util.EnumSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -215,11 +214,14 @@ public class Utils {
     return rand.nextInt(max - min) + min;
   }
 
-  public static void teleport(Entity entity, double x, double y, double z) {
-    if (entity instanceof EntityPlayerMP){
+  public static void teleport(Entity entity, double x, double y, double z, boolean playSound) {
+    if (entity instanceof EntityPlayerMP) {
       ((EntityPlayerMP) entity).connection.setPlayerLocation(x, y, z, entity.rotationYaw, entity.rotationPitch);
     } else {
       entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+    }
+    if (playSound) {
+      entity.getEntityWorld().playSound((EntityPlayer) null, x, y, z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
     }
   }
 }

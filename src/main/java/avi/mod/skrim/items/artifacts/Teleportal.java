@@ -5,6 +5,7 @@ import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.TeleportPacket;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -38,6 +39,7 @@ public class Teleportal extends ArtifactItem {
   @Nonnull
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, @Nonnull EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
+    worldIn.playSound(playerIn, playerIn.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, playerIn.getSoundCategory(), 1.0F, 1.0F);
     // Can only raytrace on the client side.
     if (!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 
@@ -72,7 +74,7 @@ public class Teleportal extends ArtifactItem {
     } else if (result.sideHit == EnumFacing.NORTH) {
       z -= 1;
     }
-    SkrimPacketHandler.INSTANCE.sendToServer(new TeleportPacket(x, y, z));
+    SkrimPacketHandler.INSTANCE.sendToServer(new TeleportPacket(x, y, z, true));
     itemStackIn.damageItem(1, playerIn);
     return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
   }

@@ -13,15 +13,17 @@ public class TeleportPacket implements IMessage {
   public double x;
   public double y;
   public double z;
+  public boolean playSound;
 
   public TeleportPacket() {
 
   }
 
-  public TeleportPacket(double x, double y, double z) {
+  public TeleportPacket(double x, double y, double z, boolean playSound) {
     this.x = x;
     this.y = y;
     this.z = z;
+    this.playSound = playSound;
   }
 
   @Override
@@ -29,6 +31,7 @@ public class TeleportPacket implements IMessage {
     buf.writeDouble(this.x);
     buf.writeDouble(this.y);
     buf.writeDouble(this.z);
+    buf.writeBoolean(this.playSound);
   }
 
   @Override
@@ -36,6 +39,7 @@ public class TeleportPacket implements IMessage {
     this.x = buf.readDouble();
     this.y = buf.readDouble();
     this.z = buf.readDouble();
+    this.playSound = buf.readBoolean();
   }
 
   public static class TeleportPacketHandler implements IMessageHandler<TeleportPacket, IMessage> {
@@ -48,7 +52,7 @@ public class TeleportPacket implements IMessage {
       if (player == null) return null;
       IThreadListener mainThread = player.getServerWorld();
       mainThread.addScheduledTask(() -> {
-        Utils.teleport(player, message.x, message.y, message.z);
+        Utils.teleport(player, message.x, message.y, message.z, message.playSound);
       });
       return null;
     }

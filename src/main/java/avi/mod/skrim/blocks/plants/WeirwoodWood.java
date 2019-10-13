@@ -125,7 +125,7 @@ public class WeirwoodWood extends BlockBase {
 
     int xMod = (Utils.rand.nextBoolean()) ? 1 : -1;
     int zMod = (Utils.rand.nextBoolean()) ? 1 : -1;
-    Utils.teleport(playerIn, teleportLoc.getX() + xMod, teleportLoc.getY(), teleportLoc.getZ() + zMod);
+    Utils.teleport(playerIn, teleportLoc.getX() + xMod, teleportLoc.getY(), teleportLoc.getZ() + zMod, true);
     worldIn.playSound(null, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 0.5F);
     worldIn.playSound(null, teleportLoc, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F,
         0.5F);

@@ -77,7 +77,6 @@ public class SkrimBrewingStand extends BlockContainer {
    * Returns a new instance of a block's tile entity class. Called on placing the block.
    */
   public TileEntity createNewTileEntity(World worldIn, int meta) {
-    System.out.println("creating new tile entity.");
     return new SkrimBrewingStandEntity();
   }
 

@@ -179,7 +179,7 @@ public class SkrimFishHook extends EntityFishHook implements IThrowableEntity {
         if (angler.hasCapability(Skills.FISHING, EnumFacing.NORTH)) {
           SkillFishing fishing = (SkillFishing) angler.getCapability(Skills.FISHING, EnumFacing.NORTH);
           if (fishing.activeAbility(1)) {
-            Utils.teleport(angler, this.posX, this.posY, this.posZ);
+            Utils.teleport(angler, this.posX, this.posY, this.posZ, false);
           }
         }
       }
