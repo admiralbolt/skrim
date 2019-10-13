@@ -14,19 +14,17 @@ import avi.mod.skrim.entities.passive.EntityPumpkow;
 import avi.mod.skrim.entities.passive.EntityWatermoolon;
 import avi.mod.skrim.entities.projectile.Rocket;
 import avi.mod.skrim.items.artifacts.DeathArrow;
-import avi.mod.skrim.tileentity.EnchantedFlowerTileEntity;
 import avi.mod.skrim.tileentity.MegaChestTileEntity;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CustomRenderers {
+public class SkrimRenderers {
 
   @SideOnly(Side.CLIENT)
   public static void register() {
-    ClientRegistry.bindTileEntitySpecialRenderer(EnchantedFlowerTileEntity.class,
-        new TileEntityEnchantedFlowerRenderer());
+    // ClientRegistry.bindTileEntitySpecialRenderer(EnchantedFlowerTileEntity.class, new TileEntityEnchantedFlowerRenderer());
     ClientRegistry.bindTileEntitySpecialRenderer(MegaChestTileEntity.class, new MegaChestRenderer());
 
     RenderingRegistry.registerEntityRenderingHandler(CustomTNTPrimed.class, EntityCustomTNTPrimedRenderer::new);

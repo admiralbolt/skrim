@@ -1,6 +1,6 @@
 package avi.mod.skrim.proxy;
 
-import avi.mod.skrim.client.renderer.CustomRenderers;
+import avi.mod.skrim.client.renderer.SkrimRenderers;
 import avi.mod.skrim.handlers.GuiEventHandler;
 import avi.mod.skrim.handlers.SkrimEntitySpawnHandler;
 import avi.mod.skrim.items.SkrimItems;
@@ -26,7 +26,7 @@ public class ClientProxy implements IProxy {
 
   @Override
   public void preInit() {
-    CustomRenderers.register();
+    SkrimRenderers.register();
   }
 
   /**

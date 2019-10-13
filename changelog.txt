@@ -10,6 +10,7 @@
 * No longer see those annoying "teleport" messages when using weirwood trees or the batman ability.
 * Fixed a bug where potion modification levels were reset after applying additional effects / corrupting.
 * Teleporting for weirdwood trees now has sounds. Weeeeee.
+* Removed beam rendering from enchanted flowers. Added a new particle effect instead.
 
 # 1.12.2-1.2
 * You can no longer apply books to artifacts.
