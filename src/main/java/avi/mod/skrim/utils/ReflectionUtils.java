@@ -146,11 +146,11 @@ public class ReflectionUtils {
         field = c.getDeclaredField(fieldName);
         return getFieldValue(instance, field);
       } catch (NoSuchFieldException e) {
-        System.out.println("[getSuperXField] Could not find field: " + fieldName + " on class: " + c.getName());
+        // System.out.println("[getSuperXField] Could not find field: " + fieldName + " on class: " + c.getName());
       }
     }
-    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with depth: [" + depth + "], with " +
-        "names: [" + Arrays.toString(fieldNames) + "]");
+//    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with depth: [" + depth + "], with " +
+//        "names: [" + Arrays.toString(fieldNames) + "]");
     return null;
   }
 
@@ -218,15 +218,16 @@ public class ReflectionUtils {
   // Below are functions for use debugging. They will print out all fields of an object at various levels of super-class ness.
 
   // LOL.
-  public static void findTheFuckingFieldNoMatterTheCost(Object instance, String... fieldNames) {
+  public static Object findTheFuckingFieldNoMatterTheCost(Object instance, String... fieldNames) {
     for (int depth = 0; depth < 5; ++depth) {
-      System.out.println("Checking for fields: " + fieldNames + " at depth: " + depth);
       Object fieldValue = getSuperXField(instance, depth ,fieldNames);
       if (fieldValue == null) continue;
 
-      System.out.println("Found field at depth: " + depth);
-      System.out.println("value: " + fieldValue);
+      System.out.println("Found field at depth: " + depth + ", value: " + fieldValue);
+      return fieldValue;
     }
+
+    return null;
   }
 
   public static void printFields(Object instance) {

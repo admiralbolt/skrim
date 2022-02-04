@@ -31,7 +31,6 @@ import java.util.Set;
 @GameRegistry.ObjectHolder(Skrim.MOD_ID)
 public class SkrimEntities {
 
-  public static final EntityEntry SKRIM_FISH_HOOK = null;
   public static final EntityEntry ROCKET = null;
   public static final EntityEntry NAPALM_CREEPER = null;
   public static final EntityEntry BIO_CREEPER = null;
@@ -50,7 +49,6 @@ public class SkrimEntities {
     @SubscribeEvent
     public static void registerEntities(final RegistryEvent.Register<EntityEntry> event) {
       final EntityEntry[] entries = {
-          createBuilder("skrim_fish_hook").entity(SkrimFishHook.class).tracker(64, 10, true).build(),
           createBuilder("rocket").entity(Rocket.class).tracker(48, 3, true).build(),
           createBuilder("skrim_potion").entity(SkrimEntityPotion.class).tracker(48, 3, true).build(),
           createBuilder("napalm_creeper").entity(NapalmCreeper.class).tracker(48, 3, true).egg(0xFF3000, 0xEE9000).build(),

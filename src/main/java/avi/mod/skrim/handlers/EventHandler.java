@@ -1,6 +1,5 @@
 package avi.mod.skrim.handlers;
 
-import avi.mod.skrim.entities.SkrimFishHook;
 import avi.mod.skrim.entities.monster.MegaChicken;
 import avi.mod.skrim.items.armor.LeafArmor;
 import avi.mod.skrim.items.armor.Overalls;
@@ -12,6 +11,7 @@ import avi.mod.skrim.skills.cooking.SkillCooking;
 import avi.mod.skrim.skills.demolition.SkillDemolition;
 import avi.mod.skrim.skills.digging.SkillDigging;
 import avi.mod.skrim.skills.farming.SkillFarming;
+import avi.mod.skrim.skills.fishing.SkillFishing;
 import avi.mod.skrim.skills.melee.SkillMelee;
 import avi.mod.skrim.skills.mining.SkillMining;
 import avi.mod.skrim.skills.ranged.SkillRanged;
@@ -20,6 +20,7 @@ import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerCoords;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import avi.mod.skrim.world.loot.AddTreasure;
+import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
@@ -37,6 +38,7 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class EventHandler {
@@ -87,6 +89,7 @@ public class EventHandler {
   public void onInteract(PlayerInteractEvent.RightClickItem event) {
     SkillMelee.handleDual(event);
     SkillWoodcutting.whirlingChop(event);
+    SkillFishing.handleBatmanAndFling(event);
   }
 
   @SubscribeEvent
@@ -216,6 +219,7 @@ public class EventHandler {
   @SubscribeEvent
   public void onTick(PlayerTickEvent event) {
     SkillMelee.tickLeft(event);
+    SkillFishing.reduceFishingTime(event);
   }
 
   @SubscribeEvent
@@ -252,13 +256,17 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onEntitySpawn(EntityJoinWorldEvent event) {
-    SkrimFishHook.overrideDefaultHook(event);
     Skills.copyToClient(event);
   }
 
   @SubscribeEvent
   public void onUseItem(ArrowNockEvent event) {
     SkillRanged.reduceDrawTime(event);
+  }
+
+  @SubscribeEvent
+  public void onItemFished(ItemFishedEvent event) {
+    SkillFishing.onItemFished(event);
   }
 
 }
