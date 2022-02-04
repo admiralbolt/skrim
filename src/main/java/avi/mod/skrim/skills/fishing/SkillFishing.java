@@ -138,8 +138,8 @@ public class SkillFishing extends Skill implements ISkillFishing {
 
     if (hook.caughtEntity == null || !fishing.activeAbility(4)) return;
 
-    // The method bringInHookedEntity() doesn't set the motion, just applies a force to it.
-    // Which is great for us, we also want to apply a force.
+    // The method bringInHookedEntity() doesn't set the motion of the entity,
+    // just applies a force to it. Which is great for us, we also want to apply a force.
     // A very strong, upward force.
     hook.caughtEntity.motionY += 5;
   }

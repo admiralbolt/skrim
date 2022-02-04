@@ -251,7 +251,7 @@ public class SkillScreen extends GuiScreen {
    * Handles button clicks, in this case there's only the inventory button.
    */
   @Override
-  protected void actionPerformed(GuiButton button) {
+  public void actionPerformed(GuiButton button) {
     if (button == this.inventoryTab) {
       this.mc.displayGuiScreen(new CustomGuiInventory(Minecraft.getMinecraft().player));
     }
@@ -283,7 +283,10 @@ public class SkillScreen extends GuiScreen {
 
   @Override
   protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-    // We have to do some stupid math to toggle abilties on / off. Good luck figuring out what the fuck is happening haha.
+    super.mouseClicked(mouseX, mouseY, mouseButton);
+    // We have to do some stupid math to toggle abilities on / off.
+    // Good luck figuring out what the fuck is happening haha.
+    // Fuck you, me.
     List<Integer> topValues = new ArrayList<>();
     List<Skill> skills = new ArrayList<>();
     for (int i = 0; i < Skills.ALL_SKILLS.size(); i++) {
