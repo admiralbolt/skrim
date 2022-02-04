@@ -179,31 +179,4 @@ public class CustomBow extends ItemBow implements ItemBase {
     return "weapons";
   }
 
-  @Mod.EventBusSubscriber(modid = Skrim.MOD_ID)
-  public static class CustomBowHandler {
-
-    /**
-     * Alright so here's more info than you wanted to know about how item pickup works. There are two events that can be caught:
-     * 1. EntityItemPickupEvent -- Happens when the entity item is touched before added to inventory.
-     * 2. PlayerEvent.ItemPickupEvent -- Happens when an item is actually added to the inventory.
-     * <p>
-     * In a normal world I would subscribe to the entity item event and modify the item before it gets picked up. In this world however,
-     * there's a timing issue. The itemstack that's passed to the inventory is actually initialized before the event is called. No matter
-     * how much you modify the item in the event, the actual item passed to the inventory will remain the same.
-     * <p>
-     * Instead, we do a hack: Subscribe to the ItemPickupEvent, remove the minecraft bow and add the fake bow.
-     */
-    @SubscribeEvent
-    public static void pickupBow(PlayerEvent.ItemPickupEvent event) {
-      ItemStack stack = event.getStack();
-      if (stack.getItem() == Items.BOW) {
-        Utils.removeFromInventory(event.player.inventory, Items.BOW, stack.getCount());
-        ItemStack newStack = new ItemStack(SkrimItems.OVERWRITE_BOW, stack.getCount(), stack.getMetadata());
-        newStack.setTagCompound(stack.getTagCompound());
-        event.player.addItemStackToInventory(newStack);
-      }
-    }
-
-  }
-
 }

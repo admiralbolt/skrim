@@ -11,6 +11,12 @@ import javax.annotation.Nullable;
 /**
  * Really just an extended Utils/ReflectionUtils specifically for dealing with
  * obfuscation issues.
+ *
+ * FYI, you can find names of obfuscated fields by searching through some logs in the build folder.
+ * grep -rnw build/ -e "FIELD_NAME"
+ *
+ * .//createSrgToMcp/output.srg:16423:FD: net/minecraft/entity/EntityLivingBase/field_184628_bn net/minecraft/entity/EntityLivingBase/activeItemStackUseCount
+ * .//createMcpToSrg/output.tsrg:16414:    activeItemStackUseCount field_184628_bn
  */
 public class Obfuscation {
 
@@ -32,6 +38,8 @@ public class Obfuscation {
 
   public static ObfuscatedField POTION_EFFECT_DURATION = new ObfuscatedField("duration", "field_76460_b");
   public static ObfuscatedField POTION_EFFECT_AMPLIFIER = new ObfuscatedField("amplifier", "field_76461_c");
+
+  public static ObfuscatedField ACTIVE_STACK_COUNT = new ObfuscatedField("activeItemStackUseCount", "field_184628_bn");
 
 
   public static boolean canBlockBePlaced(World world, Block block, BlockPos pos, boolean notsure, EnumFacing facing,

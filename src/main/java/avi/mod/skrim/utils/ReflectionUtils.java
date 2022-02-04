@@ -11,18 +11,48 @@ import java.util.Arrays;
 public class ReflectionUtils {
 
   /**
-   * Set the value of a field of an object.
+   * Are you sick of writing reflection utilities? Have you ever wanted to screw
+   * with a value you're not supposed to, but aren't sure which level of superclass
+   * to fuck with? Just ascend the stack until you get there.
    */
-  public static void hackValueTo(Object instance, Object value, String... fieldNames) {
+  public static void fuckingHackValueTo(Object instance, Object value, String... fieldNames) {
+    for (int depth = 0; depth < 5; ++depth) {
+      if (hackSuperXValueTo(instance, value, depth, fieldNames)) return;
+    }
+  }
+
+  public static boolean hackSuperXValueTo(Object instance, Object value, int depth, String... fieldNames) {
+    Class c = getSuperX(instance, depth);
+    Field field;
+    for (String fieldName : fieldNames) {
+      try {
+        field = c.getDeclaredField(fieldName);
+        setFieldValue(instance, field, value);
+        return true;
+      } catch (NoSuchFieldException e) {
+        // System.out.println("[getSuperXField] Could not find field: " + fieldName + " on class: " + c.getName());
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Set the value of a field of an object.
+   *
+   * Return true *if* it successfully hacks a value.
+   */
+  public static boolean hackValueTo(Object instance, Object value, String... fieldNames) {
     Field field;
     for (String fieldName : fieldNames) {
       try {
         field = instance.getClass().getDeclaredField(fieldName);
         setFieldValue(instance, field, value);
+        return true;
       } catch (NoSuchFieldException | SecurityException e) {
-        // e.printStackTrace();
+        System.out.println("[hackValueTo] Could not find field: " + fieldName);
       }
     }
+    return false;
   }
 
   /**
@@ -35,10 +65,12 @@ public class ReflectionUtils {
         field = instance.getClass().getSuperclass().getDeclaredField(fieldName);
         setFieldValue(instance, field, value);
       } catch (NoSuchFieldException | SecurityException e) {
-        // e.printStackTrace();
+        System.out.println("[hackSuperValueTo] Could not find field: " + fieldName);
       }
     }
   }
+
+
 
   /**
    * Gets a field of the object.
@@ -114,7 +146,7 @@ public class ReflectionUtils {
         field = c.getDeclaredField(fieldName);
         return getFieldValue(instance, field);
       } catch (NoSuchFieldException e) {
-        // e.printStackTrace();
+        System.out.println("[getSuperXField] Could not find field: " + fieldName + " on class: " + c.getName());
       }
     }
     System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with depth: [" + depth + "], with " +
@@ -185,6 +217,18 @@ public class ReflectionUtils {
 
   // Below are functions for use debugging. They will print out all fields of an object at various levels of super-class ness.
 
+  // LOL.
+  public static void findTheFuckingFieldNoMatterTheCost(Object instance, String... fieldNames) {
+    for (int depth = 0; depth < 5; ++depth) {
+      System.out.println("Checking for fields: " + fieldNames + " at depth: " + depth);
+      Object fieldValue = getSuperXField(instance, depth ,fieldNames);
+      if (fieldValue == null) continue;
+
+      System.out.println("Found field at depth: " + depth);
+      System.out.println("value: " + fieldValue);
+    }
+  }
+
   public static void printFields(Object instance) {
     for (Field field : instance.getClass().getDeclaredFields()) {
       try {
@@ -236,6 +280,7 @@ public class ReflectionUtils {
       }
     }
   }
+
 
   public static void printSuperXMethods(Object instance, int depth) {
     Class c = instance.getClass();

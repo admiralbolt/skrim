@@ -8,6 +8,8 @@ import avi.mod.skrim.skills.Skill;
 import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
+import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,10 +17,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 import java.util.ArrayList;
@@ -172,6 +178,17 @@ public class SkillRanged extends Skill implements ISkillRanged {
       SkillRanged ranged = Skills.getSkill(event.player, Skills.RANGED, SkillRanged.class);
       ranged.addXp((EntityPlayerMP) event.player, 500);
     }
+  }
+
+  public static void reduceDrawTime(ArrowNockEvent event) {
+    EntityPlayer player = event.getEntityPlayer();
+    SkillRanged ranged = Skills.getSkill(player, Skills.RANGED, SkillRanged.class);
+    // Not sure why this is necessary, but if it works then fuck it.
+    player.setActiveHand(event.getHand());
+    // Active item tick count ticks down, and starts at 72000.
+    // Bows have a maximum charge time of 20 ticks, so the reduction applied
+    // should ONLY be for up to 20 ticks.
+    ReflectionUtils.fuckingHackValueTo(player, player.getItemInUseCount() - (int) (20 * ranged.getChargeReduction()), Obfuscation.ACTIVE_STACK_COUNT.getFieldNames());
   }
 
 }

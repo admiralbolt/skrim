@@ -219,7 +219,6 @@ public class SkrimItems {
   public static Item OVERALLS = new Overalls();
   public static Item HAND_SAW = new HandSaw();
 
-  public static Item OVERWRITE_BOW = new OverwriteBow();
   public static Item SKRIM_TIPPED_ARROW = new SkrimTippedArrow();
 
 
@@ -324,7 +323,6 @@ public class SkrimItems {
           OVERALLS,
           HAND_SAW,
 
-          OVERWRITE_BOW,
           SKRIM_POTION,
           SPLASH_SKRIM_POTION,
           LINGERING_SKRIM_POTION,

@@ -1,6 +1,0 @@
-{
-    "parent": "skrim:item/overwrite_bow",
-    "textures": {
-        "layer0": "skrim:weapons/overwrite_bow_pulling_1"
-    }
-}

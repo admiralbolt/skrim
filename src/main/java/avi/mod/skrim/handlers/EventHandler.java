@@ -31,10 +31,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -257,6 +254,11 @@ public class EventHandler {
   public void onEntitySpawn(EntityJoinWorldEvent event) {
     SkrimFishHook.overrideDefaultHook(event);
     Skills.copyToClient(event);
+  }
+
+  @SubscribeEvent
+  public void onUseItem(ArrowNockEvent event) {
+    SkillRanged.reduceDrawTime(event);
   }
 
 }
