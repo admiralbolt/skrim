@@ -11,6 +11,7 @@ import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
@@ -87,6 +88,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
   public static void onItemFished(ItemFishedEvent event) {
     EntityPlayer angler = event.getEntityPlayer();
     SkillFishing fishing = Skills.getSkill(angler, Skills.FISHING, SkillFishing.class);
+    fishing.addXp((EntityPlayerMP) angler, 1750);
     EntityFishHook hook = event.getHookEntity();
 
     double x = angler.posX - hook.posX;
