@@ -242,7 +242,7 @@ public class SkillScreen extends GuiScreen {
 
   @Override
   public void initGui() {
-    this.inventoryTab = new GuiButton(1995, this.left, this.top - 20 - 1, 176, 20, "Inventory");
+    this.inventoryTab = new GuiButton(1995, this.left + 40, this.top - 20 - 1, 96, 20, "Inventory");
     this.buttonList.add(this.inventoryTab);
     this.player = Minecraft.getMinecraft().player;
   }

@@ -1,0 +1,20 @@
+{
+  "group": "skrim:skrim_rod",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  W",
+    " WS",
+    "W S"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:stick"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "skrim:skrim_rod"
+  }
+}

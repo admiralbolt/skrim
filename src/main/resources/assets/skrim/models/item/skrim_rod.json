@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "parent": "minecraft:item/handheld_rod",
+  "textures": {
+    "layer0": "minecraft:items/fishing_rod_uncast"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "cast": 1
+      },
+      "model": "minecraft:item/fishing_rod_cast"
+    }
+  ]
+}

@@ -20,9 +20,6 @@ public class SkrimRecipes {
     // skrim_brewing_stand_item.json.
     registry.remove(Items.BREWING_STAND.getRegistryName());
 
-    // Delete the recipe for the bow. We are replacing the default bow with a custom copy, defined in skrim_bow.json.
-    registry.remove(Items.BOW.getRegistryName());
-
     // Remove the default tipped arrow recipe with a custom one that functions with skrim potions OR vanilla potions. Both versions of these
     // recipes are not JSON, but are custom IRecipe definitions to handle all potions.
     registry.remove(new ResourceLocation("minecraft", "tippedarrow"));

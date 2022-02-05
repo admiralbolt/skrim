@@ -20,7 +20,6 @@ import avi.mod.skrim.utils.Utils;
 import avi.mod.skrim.world.PlayerCoords;
 import avi.mod.skrim.world.PlayerPlacedBlocks;
 import avi.mod.skrim.world.loot.AddTreasure;
-import com.google.common.eventbus.Subscribe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
@@ -35,10 +34,10 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class EventHandler {
@@ -216,7 +215,7 @@ public class EventHandler {
     }
   }
 
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public void onTick(PlayerTickEvent event) {
     SkillMelee.tickLeft(event);
     SkillFishing.reduceFishingTime(event);
@@ -264,7 +263,8 @@ public class EventHandler {
     SkillRanged.reduceDrawTime(event);
   }
 
-  @SubscribeEvent
+  // I will ruin this event for EVERYONE.
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public void onItemFished(ItemFishedEvent event) {
     SkillFishing.onItemFished(event);
   }

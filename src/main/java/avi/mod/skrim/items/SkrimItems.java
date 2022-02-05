@@ -218,6 +218,7 @@ public class SkrimItems {
   public static Item GREAT_BOW = new GreatBow();
   public static Item OVERALLS = new Overalls();
   public static Item HAND_SAW = new HandSaw();
+  public static Item SKRIM_ROD = new SkrimRod();
 
   public static Item SKRIM_TIPPED_ARROW = new SkrimTippedArrow();
 
@@ -322,6 +323,7 @@ public class SkrimItems {
           GREAT_BOW,
           OVERALLS,
           HAND_SAW,
+          SKRIM_ROD,
 
           SKRIM_POTION,
           SPLASH_SKRIM_POTION,

@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class CustomGuiInventory extends GuiInventory {
 
-  private static final int SKILL_BUTTON_WIDTH = 176;
+  private static final int SKILL_BUTTON_WIDTH = 96;
   private static final int SKILL_BUTTON_HEIGHT = 20;
 
   private GuiButton skillTab;
@@ -28,7 +28,7 @@ public class CustomGuiInventory extends GuiInventory {
   @Override
   public void initGui() {
     super.initGui();
-    this.skillTab = new GuiButton(1337, this.guiLeft, this.guiTop - SKILL_BUTTON_HEIGHT - 1, SKILL_BUTTON_WIDTH,
+    this.skillTab = new GuiButton(1337, this.guiLeft + 40, this.guiTop - SKILL_BUTTON_HEIGHT - 1, SKILL_BUTTON_WIDTH,
         SKILL_BUTTON_HEIGHT,
         "Skills");
     this.buttonList.add(this.skillTab);
