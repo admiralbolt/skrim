@@ -63,6 +63,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
       .put("paeonia", 3000) // peony
       // Only sunflower plains on generation
       .put("sunflower", 4000)
+      // A hack to make inspiration flowers work.
+      .put("tile.inspirations.flower", 50)
       .build();
 
   private static SkillAbility SUN_FLOWER = new SkillAbility("botany", "Sun Flower", 25, "It was either this or " +
@@ -135,7 +137,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
     } else if (block instanceof BlockDoublePlant) {
       return BlockDoublePlant.EnumPlantType.byMetadata(block.getMetaFromState(state)).getName();
     } else {
-      return "";
+      return block.getUnlocalizedName();
     }
   }
 
@@ -144,7 +146,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   }
 
   private static boolean validFlowerState(IBlockState state) {
-    return validFlowerBlock(state.getBlock()) || DOUBLE_FLOWER_NAMES.contains(getFlowerName(state));
+    return XP_MAP.containsKey(getFlowerName(state)) || validFlowerBlock(state.getBlock()) || DOUBLE_FLOWER_NAMES.contains(getFlowerName(state));
   }
 
   public static void addBotanyXp(BlockEvent.BreakEvent event) {

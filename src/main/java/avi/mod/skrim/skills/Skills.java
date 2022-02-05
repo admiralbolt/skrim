@@ -209,7 +209,7 @@ public class Skills {
    * Bonus xp for killing shit.
    */
   public static int entityKillXp(Entity entity) {
-    return killXp.getOrDefault(entity.getClass(), 0);
+    return killXp.getOrDefault(entity.getClass(), 20);
   }
 
   public static void copyToClient(EntityJoinWorldEvent event) {
