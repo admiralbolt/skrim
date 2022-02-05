@@ -42,11 +42,11 @@ public class SkillFarming extends Skill implements ISkillFarming {
       .put("crops", 200)
       .put("beetroots", 225)
       .put("cocoa", 250)
-      .put("potatoes", 300)
-      .put("carrots", 300)
-      .put("pumpkin", 500)
-      .put("melon", 500)
-      .put("nether_wart", 550)
+      .put("potatoes", 275)
+      .put("carrots", 275)
+      .put("pumpkin", 400)
+      .put("melon", 400)
+      .put("nether_wart", 450)
       .build();
 
   private static final Set<Class> FARM_ANIMALS = ImmutableSet.<Class>builder()
@@ -115,7 +115,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
   }
 
   public static int getXp(String blockName) {
-    return XP_MAP.getOrDefault(blockName, 0);
+    return XP_MAP.getOrDefault(blockName, 20);
   }
 
   public static boolean validCrop(IBlockState state) {

@@ -47,17 +47,17 @@ public class SkillDigging extends Skill implements ISkillDigging {
   public static SkillStorage<ISkillDigging> skillStorage = new SkillStorage<>();
 
   private static final Map<String, Integer> XP_MAP = ImmutableMap.<String, Integer>builder()
-      .put("dirt", 50)
-      .put("farmland", 50)
-      .put("snow", 50)
-      .put("sand", 75)
-      .put("grass_block", 75)
-      .put("gravel", 125)
-      .put("clay", 150)
-      .put("soul_sand", 200)
-      .put("podzol", 250)
-      .put("red_sand", 350)
-      .put("mycelium", 450)
+      .put("dirt", 75)
+      .put("farmland", 75)
+      .put("snow", 75)
+      .put("sand", 100)
+      .put("grass_block", 100)
+      .put("gravel", 150)
+      .put("clay", 200)
+      .put("soul_sand", 250)
+      .put("podzol", 325)
+      .put("red_sand", 400)
+      .put("mycelium", 500)
       .build();
 
   private static final int REQUIRED_SAND = 640;

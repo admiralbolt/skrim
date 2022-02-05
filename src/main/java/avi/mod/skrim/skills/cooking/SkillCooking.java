@@ -71,7 +71,7 @@ public class SkillCooking extends Skill implements ISkillCooking {
     FOOD_MAP = new HashMap<>();
     XP_MAP = new HashMap<>();
     ENTITY_FOOD_MAP = new HashMap<>();
-    addFood("bread", SkrimItems.OVERWRITE_BREAD, 200);
+    addFood("bread", SkrimItems.OVERWRITE_BREAD, 175);
     addFood("cookie", SkrimItems.OVERWRITE_COOKIE, 25);
 
     addFood("potatobaked", SkrimItems.OVERWRITE_BAKED_POTATO, 200);

@@ -62,7 +62,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
       .put("double_rose", 3000)
       .put("paeonia", 3000) // peony
       // Only sunflower plains on generation
-      .put("sunflower", 5000)
+      .put("sunflower", 4000)
       .build();
 
   private static SkillAbility SUN_FLOWER = new SkillAbility("botany", "Sun Flower", 25, "It was either this or " +

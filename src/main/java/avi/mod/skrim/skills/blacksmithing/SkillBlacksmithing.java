@@ -35,9 +35,9 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
       .put("item.netherbrick", 110)
       .put("tile.glass", 100)
       .put("item.brick", 200)
-      .put("tile.clayhardened", 500)
-      .put(GLAZED_TERRACOTA_NAME, 400)
-      .put("item.ingotiron", 700)
+      .put("tile.clayhardened", 400)
+      .put(GLAZED_TERRACOTA_NAME, 300)
+      .put("item.ingotiron", 500)
       .put("item.ingotgold", 2000)
       .build();
 
@@ -111,7 +111,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   }
 
   public static int getXp(String blockName) {
-    return XP_MAP.getOrDefault(blockName, 0);
+    return XP_MAP.getOrDefault(blockName, 10);
   }
 
   private double extraIngot() {
@@ -126,9 +126,14 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     if (event.player == null || !Skills.hasSkill(event.player, Skills.BLACKSMITHING)) return;
 
     SkillBlacksmithing blacksmithing = Skills.getSkill(event.player, Skills.BLACKSMITHING, SkillBlacksmithing.class);
-    if (!validBlacksmithingTarget(event.smelting)) return;
-
     int stackSize = event.smelting.getCount();
+
+    if (!validBlacksmithingTarget(event.smelting)) {
+      if (event.player instanceof EntityPlayerMP) {
+        blacksmithing.addXp((EntityPlayerMP) event.player, stackSize * getXp(getBlacksmithingName(event.smelting)));
+      }
+    }
+
     int addItemSize = (int) (blacksmithing.extraIngot() * stackSize);
     if (addItemSize > 0 && blacksmithing.skillEnabled) {
       ItemStack newStack = new ItemStack(event.smelting.getItem(), addItemSize);
