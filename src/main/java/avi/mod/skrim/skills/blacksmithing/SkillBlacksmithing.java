@@ -182,7 +182,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
     int baseRepair = baseDamage - output.getItemDamage();
     int additionalRepair = (blacksmithing.skillEnabled) ? (int) (baseRepair * blacksmithing.extraRepair()) : 0;
     int finalItemDamage = Math.max(output.getItemDamage() - additionalRepair, 0);
-    System.out.println("baseDamage: " + baseDamage + ", baseRepair: " + baseRepair + ", additionalRepair: " + additionalRepair + ", finalItemDamage: " + finalItemDamage);
+    // System.out.println("baseDamage: " + baseDamage + ", baseRepair: " + baseRepair + ", additionalRepair: " + additionalRepair + ", finalItemDamage: " + finalItemDamage);
     output.setItemDamage(finalItemDamage);
     blacksmithing.addXp((EntityPlayerMP) player, 10 * (baseDamage - finalItemDamage));
 

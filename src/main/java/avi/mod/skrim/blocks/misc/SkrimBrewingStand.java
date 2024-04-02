@@ -118,9 +118,7 @@ public class SkrimBrewingStand extends BlockContainer {
    * Called by ItemBlocks after a block is set in the world, to allow post-place logic
    */
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    System.out.println("BLOCK PLACED!");
     TileEntity tileentity = worldIn.getTileEntity(pos);
-    System.out.println(tileentity);
 
     if (tileentity instanceof SkrimBrewingStandEntity) {
       ((SkrimBrewingStandEntity) tileentity).setName(placer.getName() + "'s Skrim Stand");

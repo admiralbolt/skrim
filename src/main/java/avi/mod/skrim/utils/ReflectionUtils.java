@@ -49,7 +49,7 @@ public class ReflectionUtils {
         setFieldValue(instance, field, value);
         return true;
       } catch (NoSuchFieldException | SecurityException e) {
-        System.out.println("[hackValueTo] Could not find field: " + fieldName);
+        // System.out.println("[hackValueTo] Could not find field: " + fieldName);
       }
     }
     return false;
@@ -65,7 +65,7 @@ public class ReflectionUtils {
         field = instance.getClass().getSuperclass().getDeclaredField(fieldName);
         setFieldValue(instance, field, value);
       } catch (NoSuchFieldException | SecurityException e) {
-        System.out.println("[hackSuperValueTo] Could not find field: " + fieldName);
+        // System.out.println("[hackSuperValueTo] Could not find field: " + fieldName);
       }
     }
   }
@@ -85,7 +85,7 @@ public class ReflectionUtils {
         // e.printStackTrace();
       }
     }
-    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with names: [" + Arrays.toString(fieldNames) + "]");
+    // System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with names: [" + Arrays.toString(fieldNames) + "]");
     return null;
   }
 
@@ -102,7 +102,7 @@ public class ReflectionUtils {
         // e.printStackTrace();
       }
     }
-    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with names: [" + Arrays.toString(fieldNames) + "]");
+    // System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with names: [" + Arrays.toString(fieldNames) + "]");
     return null;
   }
 
@@ -119,7 +119,7 @@ public class ReflectionUtils {
         // e.printStackTrace();
       }
     }
-    System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with names: [" + Arrays.toString(fieldNames) + "]");
+    // System.out.println("[ReflectionUtils] Could not find any fields on instance: [" + instance + "], with names: [" + Arrays.toString(fieldNames) + "]");
     return null;
   }
 
@@ -127,7 +127,7 @@ public class ReflectionUtils {
     Class c = instance.getClass();
     for (int i = 0; i < depth; i++) {
       if (c.getSuperclass() == null) {
-        System.out.println("[ReflectionUtils] Max depth reached at: " + i);
+        // System.out.println("[ReflectionUtils] Max depth reached at: " + i);
         break;
       }
       c = c.getSuperclass();
@@ -223,7 +223,7 @@ public class ReflectionUtils {
       Object fieldValue = getSuperXField(instance, depth ,fieldNames);
       if (fieldValue == null) continue;
 
-      System.out.println("Found field at depth: " + depth + ", value: " + fieldValue);
+      // System.out.println("Found field at depth: " + depth + ", value: " + fieldValue);
       return fieldValue;
     }
 

@@ -46,7 +46,7 @@ public class Teleportal extends ArtifactItem {
     RayTraceResult result = playerIn.rayTrace(RANGE, 1.0F);
     if (result == null || result.typeOfHit != RayTraceResult.Type.BLOCK) return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 
-    System.out.println("hitPos: " + result.getBlockPos() + ", sideHit: " + result.sideHit);
+    // System.out.println("hitPos: " + result.getBlockPos() + ", sideHit: " + result.sideHit);
     BlockPos targetPos = result.getBlockPos();
     // We need to make a slight adjustment to the teleport location based on which face of the block we hit, otherwise we'll try to
     // teleport inside the block. We can do this with the result.sideHit which gives an enum corresponding to a cardinal direction OR up /

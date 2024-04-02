@@ -64,13 +64,13 @@ public class ObfuscatedMethod {
       Class c = ReflectionUtils.getSuperX(instance, depth);
 
       for (Method method : c.getDeclaredMethods()) {
-        System.out.println("method.name: " + method.getName());
+        // System.out.println("method.name: " + method.getName());
       }
 
       for (String methodName : this.getNames()) {
         try {
           Method method = c.getDeclaredMethod(methodName, this.parameterTypes);
-          System.out.println("Found method: " + method.getName() + ", at depth: " + depth + ", className: " + c.getName());
+          // System.out.println("Found method: " + method.getName() + ", at depth: " + depth + ", className: " + c.getName());
           if (!this.matchesModifiers(method)) continue;
 
           method.setAccessible(true);

@@ -166,13 +166,13 @@ public class SkillFishing extends Skill implements ISkillFishing {
 
     // Apply our reduction.
     int ticksCaughtDelay = (int) ReflectionUtils.findTheFuckingFieldNoMatterTheCost(hook, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
-    System.out.println("SKRIM TICKS_CAUGHT_DELAY: " + ticksCaughtDelay);
+    // System.out.println("SKRIM TICKS_CAUGHT_DELAY: " + ticksCaughtDelay);
     if (ticksCaughtDelay <= 0) return;
 
     int newDelay = (int) (ticksCaughtDelay * (1 - fishing.getDelayReduction()));
     ReflectionUtils.fuckingHackValueTo(hook, newDelay, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
     ticksCaughtDelay = (int) ReflectionUtils.findTheFuckingFieldNoMatterTheCost(hook, Obfuscation.FISH_HOOK_CAUGHT_DELAY.getFieldNames());
-    System.out.println("SKRIM TICKS_CAUGHT_DELAY: " + ticksCaughtDelay);
+    // System.out.println("SKRIM TICKS_CAUGHT_DELAY: " + ticksCaughtDelay);
     PLAYER_ACTIVE_ROD.put(event.player.getPersistentID(), hook.getPersistentID());
   }
 
