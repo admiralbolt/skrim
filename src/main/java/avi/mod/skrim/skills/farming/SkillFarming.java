@@ -14,6 +14,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,15 +50,6 @@ public class SkillFarming extends Skill implements ISkillFarming {
       .put("nether_wart", 450)
       .build();
 
-  private static final Set<Class> FARM_ANIMALS = ImmutableSet.<Class>builder()
-      .add(EntityCow.class)
-      .add(EntityChicken.class)
-      .add(EntityPig.class)
-      .add(EntityRabbit.class)
-      .add(EntityLlama.class)
-      .build();
-
-
   private static final int TAN_DURATION = 160;
   private static final long TAN_CHECK = 40L;
 
@@ -67,7 +59,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
       "While worn, right clicking with a hoe acts like applying bonemeal.");
 
   private static SkillAbility HUSBANDRY = new SkillAbility("farming", "Husbandry", 50, "Like lambs to the slaughter.", "Doubles drops " +
-      "from all farm animals.");
+      "from non mob entities.");
 
   private static SkillAbility FARMERS_TAN = new SkillAbility("farming", "Farmer's Tan", 75, "You're a plant Vash.",
       "Being in sunlight grants you a speed boost and haste.");
@@ -240,7 +232,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
   }
 
   public static void husbandry(LivingDropsEvent event) {
-    if (!FARM_ANIMALS.contains(event.getEntity().getClass())) return;
+    Entity killedEntity = event.getEntity();
+    if (killedEntity.isCreatureType(EnumCreatureType.MONSTER, false)) return;
 
     Entity entity = event.getSource().getTrueSource();
     if (!(entity instanceof EntityPlayer)) return;
