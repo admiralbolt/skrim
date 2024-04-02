@@ -146,7 +146,8 @@ public class SkillBotany extends Skill implements ISkillBotany {
   }
 
   private static boolean validFlowerState(IBlockState state) {
-    return XP_MAP.containsKey(getFlowerName(state)) || validFlowerBlock(state.getBlock()) || DOUBLE_FLOWER_NAMES.contains(getFlowerName(state));
+    // return XP_MAP.containsKey(getFlowerName(state)) || validFlowerBlock(state.getBlock()) || DOUBLE_FLOWER_NAMES.contains(getFlowerName(state));
+    return validFlowerBlock(state.getBlock()) || DOUBLE_FLOWER_NAMES.contains(getFlowerName(state));
   }
 
   public static void addBotanyXp(BlockEvent.BreakEvent event) {

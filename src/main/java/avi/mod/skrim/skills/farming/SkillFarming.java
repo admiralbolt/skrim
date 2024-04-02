@@ -7,6 +7,8 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.skills.digging.SkillDigging;
+import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -31,10 +33,7 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SkillFarming extends Skill implements ISkillFarming {
 
@@ -107,7 +106,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
   }
 
   public static int getXp(String blockName) {
-    return XP_MAP.getOrDefault(blockName, 20);
+    return XP_MAP.getOrDefault(blockName, 200);
   }
 
   public static boolean validCrop(IBlockState state) {
@@ -125,15 +124,16 @@ public class SkillFarming extends Skill implements ISkillFarming {
 
   private static boolean isPlantFullyGrown(IBlockState state) {
     Block block = state.getBlock();
-    int age = block.getMetaFromState(state);
+    if ((block instanceof BlockMelon) || (block instanceof BlockPumpkin)) return true;
 
-    // In case max ages get updated in the future, easiest place to check is the json files under blockstates/
-    return block instanceof BlockMelon
-        || block instanceof BlockPumpkin
-        || (block instanceof BlockCrops && age == 7)
-        || (block instanceof BlockBeetroot && age == 3)
-        || (block instanceof BlockNetherWart && age == 3)
-        || (block instanceof BlockCocoa && age == 2);
+    // Otherwise we check for an AGE property via reflection hacking.
+    Object maybeAgeProperty = ReflectionUtils.findTheFuckingFieldNoMatterTheCost(block, Obfuscation.CROP_AGE.getFieldNames());
+    if (!(maybeAgeProperty instanceof PropertyInteger)) return false;
+
+    PropertyInteger ageProperty = (PropertyInteger) maybeAgeProperty;
+    int age = state.getValue(ageProperty);
+    int maxAge = Collections.max(ageProperty.getAllowedValues());
+    return age >= maxAge;
   }
 
   public static void addFarmingXp(BlockEvent.BreakEvent event) {
@@ -152,6 +152,8 @@ public class SkillFarming extends Skill implements ISkillFarming {
     EntityPlayer player = event.getHarvester();
     if (player == null || player.world.isRemote) return;
 
+    Block block = event.getState().getBlock();
+
     IBlockState state = event.getState();
     if (!isPlantFullyGrown(state)) return;
 
@@ -163,7 +165,7 @@ public class SkillFarming extends Skill implements ISkillFarming {
     List<ItemStack> drops = event.getDrops();
     int dropSize = drops.size();
     for (int i = 0; i < dropSize; i++) {
-      drops.add(new ItemStack(drops.get(0).getItem(), farming.getFortuneAmount() - 1, drops.get(0).getMetadata()));
+      drops.add(new ItemStack(drops.get(i).getItem(), farming.getFortuneAmount() - 1, drops.get(i).getMetadata()));
     }
     Skills.playFortuneSound(player);
   }
