@@ -34,16 +34,16 @@ public class SkrimBrewingStandItem extends ItemBlockSpecial implements ItemBase 
      * This event is probably not super necessary since I've overriden the base game recipe, but it'll help grandfather in existing
      * brewing stands.
      */
-    @SubscribeEvent
-    public static void pickupBrewingStand(PlayerEvent.ItemPickupEvent event) {
-      ItemStack stack = event.getStack();
-      if (stack.getItem() == Items.BREWING_STAND) {
-        Utils.removeFromInventory(event.player.inventory, Items.BREWING_STAND, stack.getCount());
-        ItemStack newStack = new ItemStack(SkrimItems.BREWING_STAND, stack.getCount(), stack.getMetadata());
-        newStack.setTagCompound(stack.getTagCompound());
-        event.player.addItemStackToInventory(newStack);
-      }
-    }
+//    @SubscribeEvent
+//    public static void pickupBrewingStand(PlayerEvent.ItemPickupEvent event) {
+//      ItemStack stack = event.getStack();
+//      if (stack.getItem() == Items.BREWING_STAND) {
+//        Utils.removeFromInventory(event.player.inventory, Items.BREWING_STAND, stack.getCount());
+//        ItemStack newStack = new ItemStack(SkrimItems.BREWING_STAND, stack.getCount(), stack.getMetadata());
+//        newStack.setTagCompound(stack.getTagCompound());
+//        event.player.addItemStackToInventory(newStack);
+//      }
+//    }
 
   }
 

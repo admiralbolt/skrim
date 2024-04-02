@@ -18,7 +18,7 @@ public class SkrimRecipes {
     IForgeRegistryModifiable registry = (IForgeRegistryModifiable) event.getRegistry();
     // Delete the recipe for the brewing stand. We are replacing the default brewing stand with a custom copy, with a recipe defined in
     // skrim_brewing_stand_item.json.
-    registry.remove(Items.BREWING_STAND.getRegistryName());
+    // registry.remove(Items.BREWING_STAND.getRegistryName());
 
     // Remove the default tipped arrow recipe with a custom one that functions with skrim potions OR vanilla potions. Both versions of these
     // recipes are not JSON, but are custom IRecipe definitions to handle all potions.
