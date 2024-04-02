@@ -145,7 +145,7 @@ public class SkillBlacksmithing extends Skill implements ISkillBlacksmithing {
   }
 
   /**
-   * Reduce fire damage by half if blacksmithing level is 75.
+   * Reduce fire damage by 25% if blacksmithing level is 75.
    */
   public static void ironHeart(LivingHurtEvent event) {
     Entity entity = event.getEntity();
