@@ -37,14 +37,19 @@ public class MegaChestGui extends GuiContainer {
 
   private static String[] CHEST_TITLES = {
       "Mo chest mo problems",
-      "Mega Chest",
+      "Mega chest",
       "Chest O'Mega",
       "Slightly larger than average chest",
       "Why do you keep feeding me garbage?",
       "Cobblestone Hotel",
       "Big Ass-Chest",
       "Just a normal chest, move along",
-      "M E G A C H E S T"
+      "M E G A C H E S T",
+          "Subscribe to Wandering Blue!",
+          "Large Chest, no hair",
+          "Mega chest, mega blessed",
+          "Mega chest, mega fun",
+          "Must've defeated mega Satan"
   };
 
   public MegaChestGui(IInventory playerInventory, MegaChestTileEntity entity) {
