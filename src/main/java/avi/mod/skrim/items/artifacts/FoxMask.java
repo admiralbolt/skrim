@@ -36,42 +36,23 @@ public class FoxMask extends ArtifactArmor {
     tooltip.add("§e\"I'll wear my guy fox mask.\"");
   }
 
-  /**
-   * Handlers for fox mask
-   */
-  public static class FoxHandler {
+  @Override
+  public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+    Entity entity = entityIn;
+    if (!(entity instanceof EntityPlayer)) return;
 
-    public static List<Potion> effects = new ArrayList<Potion>();
-    public static Map<Potion, Integer> effectStrength = new HashMap<Potion, Integer>();
+    EntityPlayer player = (EntityPlayer) entity;
+    if (player.world.isRemote || !Utils.isWearingArmor(player, SkrimItems.FOX_MASK)) return;
 
-    static {
-      effects.add(MobEffects.JUMP_BOOST);
-      effectStrength.put(MobEffects.JUMP_BOOST, 1);
-
-      effects.add(MobEffects.NIGHT_VISION);
-      effectStrength.put(MobEffects.NIGHT_VISION, 0);
-
-      effects.add(MobEffects.SPEED);
-      effectStrength.put(MobEffects.SPEED, 1);
-    }
-
-    public static void beAFox(LivingUpdateEvent event) {
-      Entity entity = event.getEntity();
-      if (!(entity instanceof EntityPlayer)) return;
-      EntityPlayer player = (EntityPlayer) entity;
-
-      if (player.world.isRemote || !Utils.isWearingArmor(player, SkrimItems.FOX_MASK) || player.world.getTotalWorldTime() % 60L != 0L) return;
-      for (Potion potion : effects) {
-        PotionEffect newEffect = new PotionEffect(potion, (potion == MobEffects.NIGHT_VISION) ? 300 : 80, effectStrength.get(potion), true,
-            false);
-        Utils.addOrCombineEffect(player, newEffect);
-      }
-
-      if (!player.isSneaking()) return;
-      PotionEffect newEffect = new PotionEffect(MobEffects.INVISIBILITY, 3, 0, true, false);
+    for (Potion potion : new Potion[]{MobEffects.SPEED, MobEffects.JUMP_BOOST}) {
+      PotionEffect newEffect = new PotionEffect(potion, 10, 1, true,
+              false);
       Utils.addOrCombineEffect(player, newEffect);
     }
 
+    if (!player.isSneaking()) return;
+    PotionEffect newEffect = new PotionEffect(MobEffects.INVISIBILITY, 10, 0, true, false);
+    Utils.addOrCombineEffect(player, newEffect);
   }
 
 }

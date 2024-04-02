@@ -54,7 +54,6 @@ public class SpringheelBoots extends ArtifactArmor {
       event.setDistance(0);
       event.setCanceled(true);
     }
-
   }
 
 }

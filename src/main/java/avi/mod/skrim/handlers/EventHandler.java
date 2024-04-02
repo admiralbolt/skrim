@@ -137,7 +137,6 @@ public class EventHandler {
       // Artifact handlers
       PowerSuitChestplate.applyChozoTech(event);
       BlindingBoots.BlindingBootsHandler.goFast(event);
-      FoxMask.FoxHandler.beAFox(event);
     }
   }
 

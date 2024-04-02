@@ -106,6 +106,8 @@ public class SkrimItems {
   public static Item ESSENCE_AEGIS = new EssenceAegis();
   public static Item DETONATOR = new Detonator();
   public static Item TELEPORTAL = new Teleportal();
+  public static Item LUCKY_CLOVER = new LeafClover();
+
   // Don't actually want to add this one to the artifacts list though.
   public static Item RAFFLE_TICKET = new RaffleTicket();
 
@@ -140,7 +142,8 @@ public class SkrimItems {
       DOUBLE_XP_WEEKEND,
       WRETCHED_SCYTHE,
       DETONATOR,
-      TELEPORTAL
+      TELEPORTAL,
+          LUCKY_CLOVER
   };
 
   // La musica
