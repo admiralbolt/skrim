@@ -10,6 +10,7 @@ import avi.mod.skrim.skills.SkillAbility;
 import avi.mod.skrim.skills.SkillStorage;
 import avi.mod.skrim.skills.Skills;
 import avi.mod.skrim.utils.Obfuscation;
+import avi.mod.skrim.utils.ReflectionUtils;
 import avi.mod.skrim.utils.Utils;
 import com.google.common.collect.Sets;
 import net.minecraft.block.BlockTNT;
@@ -96,7 +97,7 @@ public class SkillDemolition extends Skill implements ISkillDemolition {
       CustomExplosion customBoom = (CustomExplosion) boom;
       customBoom.setExplosionSize((float) (customBoom.getExplosionSize() * (1 + demolition.getExtraPower())));
     } else {
-      Obfuscation.EXPLOSION_SIZE.hackValueTo(boom, 4.0 * 1 + demolition.getExtraPower());
+      Obfuscation.EXPLOSION_SIZE.hackValueTo(boom, (float) (4.0 * (1 + demolition.getExtraPower())));
     }
   }
 

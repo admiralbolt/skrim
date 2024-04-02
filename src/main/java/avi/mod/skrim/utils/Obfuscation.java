@@ -27,7 +27,7 @@ public class Obfuscation {
   public static ObfuscatedField FISH_HOOK_LURE_SPEED = new ObfuscatedField("lureSpeed", "field_191519_ax");
 
   public static ObfuscatedField HORSE_JUMP_ATTRIBUTE = new ObfuscatedField("JUMP_STRENGTH", "field_110271_bv");
-  public static ObfuscatedField EXPLOSION_SIZE = new ObfuscatedField("explosionSize", "field_77280_f");
+  public static ObfuscatedField EXPLOSION_SIZE = new ObfuscatedField("size", "field_77280_f");
   public static ObfuscatedField ENTITY_FIRE = new ObfuscatedField("fire", "field_190534_ay");
   public static ObfuscatedField VILLAGER_BUY_LIST = new ObfuscatedField("buyingList", "field_70963_i");
   public static ObfuscatedField CURRENT_ITEM = new ObfuscatedField("itemStack", "field_70457_g");
