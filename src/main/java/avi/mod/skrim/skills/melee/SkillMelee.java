@@ -126,9 +126,8 @@ public class SkillMelee extends Skill implements ISkillMelee {
           SkrimSoundEvents.SPIN_SLASH,
           player.getSoundCategory(), 1.0F, 1.0F);
       for (EntityLivingBase entitylivingbase : player.world.getEntitiesWithinAABB(EntityLivingBase.class,
-          targetEntity.getEntityBoundingBox().expand(2.5D, 0.25D, 2.5D))) {
-        if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)
-            && player.getDistanceSq(entitylivingbase) < 20.0D) {
+          targetEntity.getEntityBoundingBox().expand(3D, 0.5D, 3D).expand(-3D, -0.5D, -3D))) {
+        if (entitylivingbase != player && entitylivingbase != targetEntity && !player.isOnSameTeam(entitylivingbase)) {
           entitylivingbase.knockBack(player, 0.4F, (double) MathHelper.sin(player.rotationYaw * 0.017453292F),
               (double) (-MathHelper.cos(player.rotationYaw * 0.017453292F)));
           // Want to avoid an infinite player damage loop and want the damage to be affected by armor so we'll use cactus. :D
