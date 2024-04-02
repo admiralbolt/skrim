@@ -35,7 +35,7 @@ public class SkillMelee extends Skill implements ISkillMelee {
       "Killing an enemy restores §a1" + SkillAbility.DESC_COLOR + " heart.");
   private static SkillAbility SPIN_SLASH = new SkillAbility("melee", "Spin Slash", 50, "Spin to win.",
           "Critical hits apply 1/4 damage in a large radius.");
-  private static SkillAbility HAMSTRING = new SkillAbility("melee", "HAMSTRING", 75,
+  private static SkillAbility HAMSTRING = new SkillAbility("melee", "Hamstring", 75,
       "Not the hammies!",
       "Critical hits apply a slow based on damage dealt.");
   private static SkillAbility GRAND_SMITE = new SkillAbility("melee", "Grand Smite", 100, "DESTRUUUUCTIOOONNN",
