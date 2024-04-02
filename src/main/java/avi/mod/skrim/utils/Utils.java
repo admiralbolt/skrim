@@ -207,7 +207,14 @@ public class Utils {
   }
 
   public static boolean areSimilarStacks(ItemStack stack1, ItemStack stack2) {
-    return (stack1.getItem() == stack2.getItem() && stack1.getMetadata() == stack2.getMetadata() && stack1 != ItemStack.EMPTY && stack2 != ItemStack.EMPTY && stack1.getCount() > 0 && stack2.getCount() > 0);
+    return
+        stack1.getItem() == stack2.getItem() &&
+        stack1.getMetadata() == stack2.getMetadata() &&
+        ItemStack.areItemStackTagsEqual(stack1, stack2) &&
+        stack1 != ItemStack.EMPTY &&
+        stack2 != ItemStack.EMPTY &&
+        stack1.getCount() > 0 &&
+        stack2.getCount() > 0;
   }
 
   public static int randInt(int min, int max) {
