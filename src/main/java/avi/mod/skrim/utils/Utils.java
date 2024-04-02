@@ -150,14 +150,14 @@ public class Utils {
     return player.inventory.armorInventory.get(armorType.getIndex());
   }
 
-  public static void addOrCombineEffect(EntityPlayer player, PotionEffect effect) {
-    PotionEffect activeEffect = player.getActivePotionEffect(effect.getPotion());
+  public static void addOrCombineEffect(EntityLivingBase entity, PotionEffect effect) {
+    PotionEffect activeEffect = entity.getActivePotionEffect(effect.getPotion());
     if (activeEffect != null) {
       activeEffect.combine(effect);
     } else {
       activeEffect = effect;
     }
-    player.addPotionEffect(activeEffect);
+    entity.addPotionEffect(activeEffect);
   }
 
   public static void removeFromInventory(InventoryPlayer inventory, Item removeItem, int amount) {

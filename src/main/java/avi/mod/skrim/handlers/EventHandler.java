@@ -86,7 +86,6 @@ public class EventHandler {
 
   @SubscribeEvent
   public void onInteract(PlayerInteractEvent.RightClickItem event) {
-    SkillMelee.handleDual(event);
     SkillWoodcutting.whirlingChop(event);
     SkillFishing.handleBatmanAndFling(event);
   }

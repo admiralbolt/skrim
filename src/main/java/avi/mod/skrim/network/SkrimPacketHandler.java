@@ -20,7 +20,6 @@ import avi.mod.skrim.network.skillpackets.ApplyBonemealPacket.ApplyBonemealPacke
 import avi.mod.skrim.network.skillpackets.CriticalAscensionPacket.CriticalAscensionPacketHandler;
 import avi.mod.skrim.network.skillpackets.DrillPacket.DrillPacketHandler;
 import avi.mod.skrim.network.skillpackets.MetalDetectorPacket.MetalDetectorPacketHandler;
-import avi.mod.skrim.network.skillpackets.OffHandAttackPacket.OffHandAttackPacketHandler;
 import avi.mod.skrim.network.skillpackets.WhirlingChopPacket.WhirlingChopPacketHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -38,7 +37,6 @@ public class SkrimPacketHandler {
     INSTANCE.registerMessage(LevelUpPacketHandler.class, LevelUpPacket.class, PACKET_ID++, Side.CLIENT);
     INSTANCE.registerMessage(FallDistancePacketHandler.class, FallDistancePacket.class, PACKET_ID++, Side.SERVER);
     INSTANCE.registerMessage(SpawnParticlePacketHandler.class, SpawnParticlePacket.class, PACKET_ID++, Side.CLIENT);
-    INSTANCE.registerMessage(OffHandAttackPacketHandler.class, OffHandAttackPacket.class, PACKET_ID++, Side.SERVER);
     INSTANCE.registerMessage(DrillPacketHandler.class, DrillPacket.class, PACKET_ID++, Side.SERVER);
     INSTANCE.registerMessage(ExplosionPacketHandler.class, ExplosionPacket.class, PACKET_ID++, Side.CLIENT);
     INSTANCE.registerMessage(ApplyBonemealPacketHandler.class, ApplyBonemealPacket.class, PACKET_ID++, Side.SERVER);
