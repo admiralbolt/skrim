@@ -23,7 +23,7 @@ import java.util.List;
 
 public class CobbleFucker extends ArtifactPickaxe {
 
-  private static final int RADIUS = 2;
+  private static final int RADIUS = 5;
 
   public CobbleFucker() {
     super("cobble_fucker", SkrimItems.ARTIFACT_DEFAULT);
