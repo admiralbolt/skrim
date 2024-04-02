@@ -28,7 +28,7 @@ public class DynamicLootPool {
       SkrimItems.DEATH_ARROW, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(3, 3))}
   );
 
-  public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 20000, 35, 30, 2, 1, SkrimItems.RAFFLE_TICKET,
+  public static LootPool ARTIFACT_POOL = new DynamicLootPool("artifact_pool", 40000, 35, 30, 2, 1, SkrimItems.RAFFLE_TICKET,
       Stream.concat(Arrays.stream(SkrimItems.ARTIFACTS), SkrimBlocks.RegistrationHandler.ARTIFACT_ITEM_BLOCK_MAP.values().stream())).toLootPool();
 
   public static LootPool HIGH_CHANCE_ARTIFACT_POOL = new DynamicLootPool("high_chance_artifact_pool", 5000, 35, 30, 3, 2, SkrimItems.RAFFLE_TICKET,
