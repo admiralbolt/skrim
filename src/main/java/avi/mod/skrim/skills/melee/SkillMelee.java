@@ -77,9 +77,12 @@ public class SkillMelee extends Skill implements ISkillMelee {
 
   public static void applyMelee(LivingHurtEvent event) {
     DamageSource source = event.getSource();
-    if (source.isProjectile()) return;
-    
+    // Should probably add this check, but I won't.
+    // if (source.isProjectile()) return;
+
     Entity entity = source.getTrueSource();
+    System.out.println(entity);
+    System.out.println(source.damageType);
     if (!(entity instanceof EntityPlayer) || !source.damageType.equals("player")) return;
 
     EntityPlayer player = (EntityPlayer) entity;
