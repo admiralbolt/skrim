@@ -81,8 +81,6 @@ public class SkillMelee extends Skill implements ISkillMelee {
     // if (source.isProjectile()) return;
 
     Entity entity = source.getTrueSource();
-    System.out.println(entity);
-    System.out.println(source.damageType);
     if (!(entity instanceof EntityPlayer) || !source.damageType.equals("player")) return;
 
     EntityPlayer player = (EntityPlayer) entity;
