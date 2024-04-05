@@ -42,7 +42,7 @@ public class Obfuscation {
   public static ObfuscatedField ACTIVE_STACK_COUNT = new ObfuscatedField("activeItemStackUseCount", "field_184628_bn");
 
   // Getting age property from crops!
-  public static ObfuscatedField CROP_AGE = new ObfuscatedField("AGE", "BEETROOT_AGE", "field_176488_a", "field_185531_a", "field_176501_a");
+  public static ObfuscatedField CROP_AGE = new ObfuscatedField("AGE", "BEETROOT_AGE", "field_176486_a", "field_176488_a", "field_185531_a", "field_176501_a");
 
 
   public static boolean canBlockBePlaced(World world, Block block, BlockPos pos, boolean notsure, EnumFacing facing,
