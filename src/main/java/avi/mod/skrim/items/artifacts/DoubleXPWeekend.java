@@ -43,7 +43,7 @@ public class DoubleXPWeekend extends ArtifactItem {
   @Nonnull
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, @Nonnull EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
-    SkrimGlobalConfig.XP_MULTIPLIER.value *= 2.0;
+    SkrimGlobalConfig.XP_MULTIPLIER.value += 1.0;
     // In case multiple activations happen, we add to the duration.
     TICKS_LEFT += TICK_DURATION;
     itemStackIn.damageItem(2, playerIn);
