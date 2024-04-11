@@ -123,17 +123,21 @@ public class SkillFarming extends Skill implements ISkillFarming {
   }
 
   private static boolean isPlantFullyGrown(IBlockState state) {
-    Block block = state.getBlock();
-    if ((block instanceof BlockMelon) || (block instanceof BlockPumpkin)) return true;
+    try {
+      Block block = state.getBlock();
+      if ((block instanceof BlockMelon) || (block instanceof BlockPumpkin)) return true;
 
-    // Otherwise we check for an AGE property via reflection hacking.
-    Object maybeAgeProperty = ReflectionUtils.findTheFuckingFieldNoMatterTheCost(block, Obfuscation.CROP_AGE.getFieldNames());
-    if (!(maybeAgeProperty instanceof PropertyInteger)) return false;
+      // Otherwise we check for an AGE property via reflection hacking.
+      Object maybeAgeProperty = ReflectionUtils.findTheFuckingFieldNoMatterTheCost(block, Obfuscation.CROP_AGE.getFieldNames());
+      if (!(maybeAgeProperty instanceof PropertyInteger)) return false;
 
-    PropertyInteger ageProperty = (PropertyInteger) maybeAgeProperty;
-    int age = state.getValue(ageProperty);
-    int maxAge = Collections.max(ageProperty.getAllowedValues());
-    return age >= maxAge;
+      PropertyInteger ageProperty = (PropertyInteger) maybeAgeProperty;
+      int age = state.getValue(ageProperty);
+      int maxAge = Collections.max(ageProperty.getAllowedValues());
+      return age >= maxAge;
+    } catch (Exception e) {
+      return false;
+    }
   }
 
   public static void addFarmingXp(BlockEvent.BreakEvent event) {
