@@ -44,10 +44,9 @@ public abstract class Skill implements ISkill {
   public abstract List<String> getToolTip();
 
   public void addXp(EntityPlayerMP player, int xp) {
-    if (xp > 0) {
-      this.xp += Skills.getTotalXp(player, xp);
-      this.levelUp(player);
-    }
+    if (xp <= 0) return;
+    this.xp += Skills.getTotalXp(player, xp);
+    this.levelUp(player);
   }
 
   /**
@@ -110,11 +109,17 @@ public abstract class Skill implements ISkill {
 
 
   public void levelUp(EntityPlayerMP player) {
-    if (this.canLevelUp()) {
+    boolean didLevel = false;
+    while (this.canLevelUp()) {
       this.level++;
+      didLevel = true;
+    }
+
+    if (didLevel) {
       SkrimPacketHandler.INSTANCE.sendTo(new LevelUpPacket(this.name, this.level), player);
       this.ding(player);
     }
+
     SkrimPacketHandler.INSTANCE.sendTo(new SkillPacket(this.name, this.level, this.xp), player);
   }
 
