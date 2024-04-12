@@ -73,7 +73,7 @@ public class SkillFishing extends Skill implements ISkillFishing {
   }
 
   public double getDelayReduction() {
-    return 0.0075 * this.level;
+    return Math.min(0.0075 * this.level, 1);
   }
 
 
