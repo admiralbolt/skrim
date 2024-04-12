@@ -2,7 +2,9 @@ package avi.mod.skrim.items.artifacts;
 
 import avi.mod.skrim.items.SkrimItems;
 import avi.mod.skrim.items.items.ArtifactItem;
+import avi.mod.skrim.world.loot.CustomLootTables;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -37,10 +39,15 @@ public class RaffleTicket extends ArtifactItem {
       return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
     }
 
-    // Take 10 tickets, and give them a random artifact.
-    itemStackIn.setCount(0);
-    int random = new Random().nextInt(SkrimItems.ARTIFACTS.length);
-    playerIn.addItemStackToInventory(new ItemStack(SkrimItems.ARTIFACTS[random]));
+    if (!worldIn.isRemote) {
+      // Take 10 tickets, and give them a random artifact.
+      itemStackIn.setCount(0);
+      int random = new Random().nextInt(SkrimItems.ARTIFACTS.length);
+      EntityItem entityItem = new EntityItem(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ,
+              new ItemStack(SkrimItems.ARTIFACTS[random]));
+      worldIn.spawnEntity(entityItem);
+    }
+
     return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
   }
 }
