@@ -76,7 +76,6 @@ public class SkillFishing extends Skill implements ISkillFishing {
     return Math.min(0.0075 * this.level, 1);
   }
 
-
   /**
    * We need to handle a few things here:
    * 1. The passive for additional treasure.

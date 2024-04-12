@@ -1,6 +1,7 @@
 package avi.mod.skrim.skills.botany;
 
 import avi.mod.skrim.advancements.SkrimAdvancements;
+import avi.mod.skrim.blocks.flowers.EnchantedFlower;
 import avi.mod.skrim.blocks.flowers.GlowFlower;
 import avi.mod.skrim.network.SkrimPacketHandler;
 import avi.mod.skrim.network.SpawnParticlePacket;
@@ -142,7 +143,7 @@ public class SkillBotany extends Skill implements ISkillBotany {
   }
 
   private static boolean validFlowerBlock(Block block) {
-    return (block instanceof BlockFlower || block instanceof GlowFlower);
+    return (block instanceof BlockFlower || block instanceof GlowFlower || block instanceof EnchantedFlower);
   }
 
   private static boolean validFlowerState(IBlockState state) {
